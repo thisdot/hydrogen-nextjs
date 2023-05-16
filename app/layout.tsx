@@ -1,4 +1,4 @@
-import { Layout } from './components/Layout'
+import { Layout } from '../components/Layout'
 import './globals.css'
 import { Inter } from 'next/font/google'
 
