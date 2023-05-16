@@ -1,4 +1,4 @@
-import { formatText, missingClass } from "../libs/utils";
+import { formatText, missingClass } from "@/lib/utils";
 import clsx from 'clsx';
 
 export function Heading({
