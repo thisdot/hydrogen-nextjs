@@ -24,7 +24,7 @@ export default {
       },
     },
   },
-};
+} as Meta;
 
 const TextComponent: StoryFn = (args: {
   color?: 'default' | 'primary' | 'subtle' | 'notice' | 'contrast';
