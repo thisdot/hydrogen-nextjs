@@ -22,3 +22,5 @@ export function Input({
 
   return <input type={type} {...props} className={styles} />;
 }
+
+Input.displayName = 'Input';
