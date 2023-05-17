@@ -1,6 +1,60 @@
 import { formatText, missingClass } from "@/lib/utils";
 import clsx from 'clsx';
 
+export function Text({
+  as: Component = 'span',
+  className,
+  color = 'default',
+  format,
+  size = 'copy',
+  width = 'default',
+  children,
+  ...props
+}: {
+  as?: React.ElementType;
+  className?: string;
+  color?: 'default' | 'primary' | 'subtle' | 'notice' | 'contrast';
+  format?: boolean;
+  size?: 'lead' | 'copy' | 'fine';
+  width?: 'default' | 'narrow' | 'wide';
+  children: React.ReactNode;
+  [key: string]: any;
+}) {
+  const colors: Record<string, string> = {
+    default: 'inherit',
+    primary: 'text-primary/90',
+    subtle: 'text-primary/50',
+    notice: 'text-notice',
+    contrast: 'text-contrast/90',
+  };
+
+  const sizes: Record<string, string> = {
+    lead: 'text-lead font-medium',
+    copy: 'text-copy',
+    fine: 'text-fine subpixel-antialiased',
+  };
+
+  const widths: Record<string, string> = {
+    default: 'max-w-prose',
+    narrow: 'max-w-prose-narrow',
+    wide: 'max-w-prose-wide',
+  };
+
+  const styles = clsx(
+    missingClass(className, 'max-w-') && widths[width],
+    missingClass(className, 'whitespace-') && 'whitespace-pre-wrap',
+    missingClass(className, 'text-') && colors[color],
+    sizes[size],
+    className,
+  );
+
+  return (
+    <Component {...props} className={styles}>
+      {format ? formatText(children) : children}
+    </Component>
+  );
+}
+
 export function Heading({
   as: Component = 'h2',
   children,
@@ -98,5 +152,40 @@ export function Section({
       )}
       {children}
     </Component>
+  );
+}
+
+export function PageHeader({
+  children,
+  className,
+  heading,
+  variant = 'default',
+  ...props
+}: {
+  children?: React.ReactNode;
+  className?: string;
+  heading?: string;
+  variant?: 'default' | 'blogPost' | 'allCollections';
+  [key: string]: any;
+}) {
+  const variants: Record<string, string> = {
+    default: 'grid w-full gap-8 p-6 py-8 md:p-8 lg:p-12 justify-items-start',
+    blogPost:
+      'grid md:text-center w-full gap-4 p-6 py-8 md:p-8 lg:p-12 md:justify-items-center',
+    allCollections:
+      'flex justify-between items-baseline gap-8 p-6 md:p-8 lg:p-12',
+  };
+
+  const styles = clsx(variants[variant], className);
+
+  return (
+    <header {...props} className={styles}>
+      {heading && (
+        <Heading as="h1" width="narrow" size="heading" className="inline-block">
+          {heading}
+        </Heading>
+      )}
+      {children}
+    </header>
   );
 }
