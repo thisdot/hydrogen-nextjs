@@ -1,8 +1,8 @@
-import { Text, Heading, Section, PageHeader } from "../../components/Text";
+import { Text } from "../../components/Text";
 import { StoryFn, Meta } from '@storybook/react';
 
 export default {
-  title: "Text components",
+  title: "Typography Components/Text",
   component: Text,
   argTypes: {
     color: {
@@ -31,13 +31,7 @@ const TextComponent: StoryFn = (args: {
   size?: 'lead' | 'copy' | 'fine';
   width?: 'default' | 'narrow' | 'wide';
 }) => <Text {...args}>This is the text component</Text>
-// export const HeadingComponent = () => <Heading>This is the heading component</Heading>
-// export const SectionComponent = () => <Section heading={'heading'}>This is the section component</Section>
-// export const PageHeaderComponent = () => <PageHeader heading={'heading'}>This is the page header component</PageHeader>
-export const Default = TextComponent.bind({});
 
-Default.args = {
-  color: 'default',
-  size: 'lead',
-  width: 'default',
-};
+export const DefaultText = TextComponent.bind({});
+
+DefaultText.args = {};
