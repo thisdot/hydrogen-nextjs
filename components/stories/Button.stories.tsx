@@ -6,16 +6,12 @@ export default {
   component: Button,
   argTypes: {
     variant: {
-      control: {
-        type: 'select',
-        options: ['primary', 'secondary', 'inline'],
-      },
+      control: 'select',
+      options: ['primary', 'secondary', 'inline'],
     },
     width: {
-      control: {
-        type: 'select',
-        options: ['auto', 'full'],
-      },
+      control: 'select',
+      options: ['auto', 'full'],
     },
   },
 } as Meta;
