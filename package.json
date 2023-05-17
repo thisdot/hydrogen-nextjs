@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.5.3",
@@ -25,11 +27,20 @@
     "typescript": "5.0.4"
   },
   "devDependencies": {
+    "@storybook/addon-essentials": "^7.0.12",
+    "@storybook/addon-interactions": "^7.0.12",
+    "@storybook/addon-links": "^7.0.12",
+    "@storybook/blocks": "^7.0.12",
+    "@storybook/nextjs": "^7.0.12",
+    "@storybook/react": "^7.0.12",
+    "@storybook/testing-library": "^0.0.14-next.2",
     "@tailwindcss/nesting": "^0.0.0-insiders.565cd3e",
     "clsx": "^1.2.1",
+    "eslint-plugin-storybook": "^0.6.12",
     "postcss-import": "^15.1.0",
     "postcss-preset-env": "^8.3.2",
     "react-use": "^17.4.0",
+    "storybook": "^7.0.12",
     "typographic-base": "^1.0.4"
   }
 }
