@@ -14,7 +14,22 @@ export default {
   },
 } as Meta;
 
-const Template: StoryFn = (args) => <Input variant={'search'} {...args} />;
+const Template: StoryFn = (args) => <Input {...args} />;
+
+export const Default = Template.bind({});
+Default.args = {
+    variant: 'default',
+    placeholder: 'Default',
+    type: 'text',
+};
+
+export const Error = Template.bind({});
+Error.args = {
+    variant: 'default',
+    placeholder: 'Error',
+    type: 'text',
+    error: 'Error message',
+};
 
 export const Search = Template.bind({});
 Search.args = {
