@@ -1,4 +1,4 @@
-export default function AllProducts() {
+export default function ProductsPage() {
     return (
       <>
         HERE IS THE PRODUCTS PAGE
