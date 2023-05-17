@@ -16,12 +16,15 @@ export default {
     layout: {
       control: 'select',
       options: ['default', 'products', 'auto', 'blog'],
+    },
+    as: {
+      control: 'select',
+      disabled: true
     }
   },
 } as Meta;
 
 const Template: StoryFn = (args) => {
-  console.log(Array.from(Array(args.item).keys()), args.items)
   return (
     <Grid {...args}>
       {

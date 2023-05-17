@@ -23,6 +23,10 @@ export default {
         options: ['default', 'narrow', 'wide'],
       },
     },
+    as: {
+      control: 'select',
+      disabled: true
+    }
   },
 } as Meta;
 

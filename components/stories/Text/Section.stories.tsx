@@ -23,6 +23,10 @@ export default {
         options: ['x', 'y', 'swimlane', 'all'],
       },
     },
+    as: {
+      control: 'select',
+      disabled: true
+    }
   },
 } as Meta;
 
