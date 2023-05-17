@@ -1,4 +1,4 @@
-import { PageHeader } from "../../components/Text";
+import { PageHeader } from "../../Text";
 import { StoryFn, Meta } from '@storybook/react';
 
 export default {

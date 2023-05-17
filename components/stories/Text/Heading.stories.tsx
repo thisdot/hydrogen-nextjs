@@ -1,4 +1,4 @@
-import { Heading } from "../../components/Text";
+import { Heading } from "../../Text";
 import { StoryFn, Meta } from '@storybook/react';
 
 export default {

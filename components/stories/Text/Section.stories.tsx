@@ -1,4 +1,4 @@
-import { Section } from "../../components/Text";
+import { Section } from "../../Text";
 import { StoryFn, Meta } from '@storybook/react';
 
 export default {
