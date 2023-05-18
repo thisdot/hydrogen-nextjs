@@ -11,11 +11,14 @@ function DesktopHeader({
   return (
     <header
       role="banner"
-      className={`${isHome
-        ? 'bg-primary/80 dark:bg-contrast/60 text-contrast dark:text-primary shadow-darkHeader'
-        : 'bg-contrast/80 text-primary'
-        } ${!isHome && y > 50 && 'shadow-lightHeader'
-        } hidden h-nav lg:flex items-center sticky transition duration-300 backdrop-blur-lg z-40 top-0 justify-between w-full leading-none gap-8 px-12 py-8`}
+      className={clsx(
+        'hidden h-nav lg:flex items-center sticky transition duration-300 backdrop-blur-lg z-40 top-0 justify-between w-full leading-none gap-8 px-12 py-8',
+        {
+          'bg-primary/80 dark:bg-contrast/60 text-contrast dark:text-primary shadow-darkHeader': isHome,
+          'bg-contrast/80 text-primary': !isHome,
+          'shadow-lightHeader': !isHome && y > 50,
+        }
+      )}
     >
       <div className="flex gap-12">
         HEADER DESKTOP
