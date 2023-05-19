@@ -29,8 +29,13 @@ className={clsx('hidden h-nav lg:flex items-center sticky transition duration-30
 ```
 
 ### ***Commenting Conventions***
-
+- Use comments to explain why code is written, not what it does.
+- Use inline comments sparingly and only when necessary.
 
 
 
 ### ***Miscellaneus Conventions***
+- Avoid using global variables.
+- Use constants for values that do not change.
+- Use ES6 features when possible.
+- Use TypeScript for type checking.
