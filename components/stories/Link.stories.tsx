@@ -11,6 +11,16 @@ export default {
     href: {
       control: "text",
     },
+    as: {
+      control: {
+        disable: true,
+      },
+    },
+    locale: {
+      control: {
+        disable: true,
+      },
+    },
   },
 } as Meta;
 
