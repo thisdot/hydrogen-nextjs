@@ -29,6 +29,7 @@ specifiers:
   react-use: ^17.4.0
   storybook: ^7.0.12
   tailwindcss: 3.3.2
+  type-fest: ^3.10.0
   typescript: 5.0.4
   typographic-base: ^1.0.4
 
@@ -52,7 +53,7 @@ devDependencies:
   '@storybook/addon-links': 7.0.12_biqbaboplfbrettd7655fr4n2y
   '@storybook/addon-styling': 1.0.8_32xl2rsypatwxm4tslngv2ai6a
   '@storybook/blocks': 7.0.12_biqbaboplfbrettd7655fr4n2y
-  '@storybook/nextjs': 7.0.12_avxoewaes4v46nqpraxhl6tn3y
+  '@storybook/nextjs': 7.0.12_c6ua56562e4ct5svpgaoj34zs4
   '@storybook/react': 7.0.12_tvrvbu6r5w7oyqiu4bvze3slou
   '@storybook/testing-library': 0.0.14-next.2
   '@tailwindcss/nesting': 0.0.0-insiders.565cd3e_postcss@8.4.23
@@ -64,6 +65,7 @@ devDependencies:
   postcss-preset-env: 8.3.2_postcss@8.4.23
   react-use: 17.4.0_biqbaboplfbrettd7655fr4n2y
   storybook: 7.0.12
+  type-fest: 3.10.0_typescript@5.0.4
   typographic-base: 1.0.4
 
 packages:
@@ -3161,7 +3163,7 @@ packages:
       tslib: 2.5.0
     dev: false
 
-  /@pmmmwh/react-refresh-webpack-plugin/0.5.10_pwipppovxdjwbovranoeivw5d4:
+  /@pmmmwh/react-refresh-webpack-plugin/0.5.10_b5wif2vsxux5lvujvd4lumjnzy:
     resolution: {integrity: sha512-j0Ya0hCFZPd4x40qLzbhGsh9TMtdb+CJQiso+WxLOPNasohq9cc5SNUcwsZaRH6++Xh91Xkm/xHCkuIiIu0LUA==}
     engines: {node: '>= 10.13'}
     peerDependencies:
@@ -3197,6 +3199,7 @@ packages:
       react-refresh: 0.11.0
       schema-utils: 3.1.2
       source-map: 0.7.4
+      type-fest: 3.10.0_typescript@5.0.4
       webpack: 5.82.1
     dev: true
 
@@ -4019,7 +4022,7 @@ packages:
     resolution: {integrity: sha512-TXJJd5RAKakWx4BtpwvSNdgTDkKM6RkXU8GK34S/LhidQ5Pjz3wcnqb0TxEkfhK/ztbP8nKHqXFwLfa2CYkvQw==}
     dev: true
 
-  /@storybook/nextjs/7.0.12_avxoewaes4v46nqpraxhl6tn3y:
+  /@storybook/nextjs/7.0.12_c6ua56562e4ct5svpgaoj34zs4:
     resolution: {integrity: sha512-XFO62uKiS1Cojn2SFQCQXL1RWyylrug1ywKl88OVDmOwBVfJQ/Xm/PMJVp+4dMRFOGQFAIS86uUImNZRHyGsfA==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
@@ -4058,7 +4061,7 @@ packages:
       '@storybook/builder-webpack5': 7.0.12_tvrvbu6r5w7oyqiu4bvze3slou
       '@storybook/core-common': 7.0.12
       '@storybook/node-logger': 7.0.12
-      '@storybook/preset-react-webpack': 7.0.12_tvrvbu6r5w7oyqiu4bvze3slou
+      '@storybook/preset-react-webpack': 7.0.12_l226bag3dd476ouicumsjmrwze
       '@storybook/preview-api': 7.0.12
       '@storybook/react': 7.0.12_tvrvbu6r5w7oyqiu4bvze3slou
       '@types/node': 16.18.30
@@ -4115,7 +4118,7 @@ packages:
     resolution: {integrity: sha512-RKNvBLgABBTQwvGyF2jX4vP7OMLB3KvEEOQDoeOKjqyWfekDn5smI+eT714mtmKIH0YMcwmvzLgEdZkjmM/XhA==}
     dev: true
 
-  /@storybook/preset-react-webpack/7.0.12_tvrvbu6r5w7oyqiu4bvze3slou:
+  /@storybook/preset-react-webpack/7.0.12_l226bag3dd476ouicumsjmrwze:
     resolution: {integrity: sha512-EBgP5p8uiwJXPpM5M6mC4SrKCKSeQEJI+oQ36olUIB7PUhysiVFhLB+rOIgkXc3nhX1uRTO/PYefd9PBMwE11A==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
@@ -4131,7 +4134,7 @@ packages:
     dependencies:
       '@babel/preset-flow': 7.21.4
       '@babel/preset-react': 7.18.6
-      '@pmmmwh/react-refresh-webpack-plugin': 0.5.10_pwipppovxdjwbovranoeivw5d4
+      '@pmmmwh/react-refresh-webpack-plugin': 0.5.10_b5wif2vsxux5lvujvd4lumjnzy
       '@storybook/core-webpack': 7.0.12
       '@storybook/docs-tools': 7.0.12
       '@storybook/node-logger': 7.0.12
@@ -10778,6 +10781,15 @@ packages:
   /type-fest/2.19.0:
     resolution: {integrity: sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==}
     engines: {node: '>=12.20'}
+    dev: true
+
+  /type-fest/3.10.0_typescript@5.0.4:
+    resolution: {integrity: sha512-hmAPf1datm+gt3c2mvu0sJyhFy6lTkIGf0GzyaZWxRLnabQfPUqg6tF95RPg6sLxKI7nFLGdFxBcf2/7+GXI+A==}
+    engines: {node: '>=14.16'}
+    peerDependencies:
+      typescript: '>=4.7.0'
+    dependencies:
+      typescript: 5.0.4
     dev: true
 
   /type-is/1.6.18:

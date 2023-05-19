@@ -1,15 +1,14 @@
 import clsx from 'clsx';
-import {
-  flattenConnection,
-  Image,
-  Money,
-  ShopifyAnalyticsProduct,
-  useMoney,
-} from '@shopify/hydrogen';
-import { Text, Link, AddToCartButton } from '~/components';
-import { isDiscounted, isNewArrival } from '~/lib/utils';
-import { getProductPlaceholder } from '~/lib/placeholders';
-import type { MoneyV2, Product } from '@shopify/hydrogen/storefront-api-types';
+import { getProductPlaceholder } from '@/lib/placeholders';
+import type { Money, Product, ShopifyAnalyticsProduct } from '@/lib/shopify/types';
+import { Link } from './Link';
+import { Text } from "./Text";
+import { Image } from "./ImageComponent";
+import { Money as MoneyComponent } from "./MoneyComponent";
+import { isDiscounted, isNewArrival } from '@/lib/utils';
+import { AddToCartButton } from './AddToCartButton';
+import { flattenConnection } from '@/lib/flattenConnection';
+import { useMoney } from '@/lib/useMoney';
 
 export function ProductCard({
   product,
@@ -40,7 +39,7 @@ export function ProductCard({
 
   if (label) {
     cardLabel = label;
-  } else if (isDiscounted(price as MoneyV2, compareAtPrice as MoneyV2)) {
+  } else if (isDiscounted(price as Money, compareAtPrice as Money)) {
     cardLabel = 'Sale';
   } else if (isNewArrival(product.publishedAt)) {
     cardLabel = 'New';
@@ -60,8 +59,8 @@ export function ProductCard({
     <div className="flex flex-col gap-2">
       <Link
         onClick={onClick}
-        to={`/products/${product.handle}`}
-        prefetch="intent"
+        href={`/products/${product.handle}`}
+        prefetch
       >
         <div className={clsx('grid gap-4', className)}>
           <div className="card-image aspect-[4/5] bg-primary/5">
@@ -92,11 +91,11 @@ export function ProductCard({
             </Text>
             <div className="flex gap-4">
               <Text className="flex gap-4">
-                <Money withoutTrailingZeros data={price!} />
-                {isDiscounted(price as MoneyV2, compareAtPrice as MoneyV2) && (
+                <MoneyComponent withoutTrailingZeros data={price!} />
+                {isDiscounted(price as Money, compareAtPrice as Money) && (
                   <CompareAtPrice
                     className={'opacity-50'}
-                    data={compareAtPrice as MoneyV2}
+                    data={compareAtPrice as Money}
                   />
                 )}
               </Text>
@@ -132,7 +131,7 @@ function CompareAtPrice({
   data,
   className,
 }: {
-  data: MoneyV2;
+  data: Money;
   className?: string;
 }) {
   const { currencyNarrowSymbol, withoutTrailingZerosAndCurrency } =
