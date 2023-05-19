@@ -1,52 +1,56 @@
 name: Release Workflow
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    types:
+      - closed
 
 jobs:
   release:
     runs-on: ubuntu-latest
+    if: startsWith(github.event.pull_request.title, 'Release:')
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: "16.x"
       - name: Install dependencies
         run: npm install
       - name: Build
         run: npm run build
-      - name: Create Git Tag
+      - name: Set up Git
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git tag -a v${{ github.run_number }} -m "Release version v${{ github.run_number }}"
-          git push origin v${{ github.run_number }}
+          git config user.name "This Dot Open Source"
+          git config user.email "opensource@thisdot.co"
+      - name: Get tag
+        id: get_tag
+        run: |
+          git branch --show-current
+          git pull
+          echo "version=v$(npm pkg get version | tr -d '\"')" >> $GITHUB_OUTPUT
+      - name: Tag the commit
+        run: |
+          next_version=${{ steps.get_tag.outputs.version }}
+          git tag -a "$next_version" -m "Version $next_version"
+          git push --follow-tags
+      - name: "Build Changelog"
+        id: build_changelog
+        uses: mikepenz/release-changelog-builder-action@v3.7.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Create Release
+      - name: Create release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ github.run_number }}
-          release_name: Release v${{ github.run_number }}
+          tag_name: ${{ steps.get_tag.outputs.version }}
+          release_name: Release ${{ steps.get_tag.outputs.version }}
           body: |
-            Changes in this Release:
-            - Add feature A
-            - Fix bug B
+            Release ${{ steps.get_tag.outputs.version }}
+
+            ${{ steps.build_changelog.outputs.changelog }}
           draft: false
           prerelease: false
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/app.zip
-          asset_name: app.zip
-          asset_content_type: application/zip
