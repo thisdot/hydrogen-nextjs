@@ -25,8 +25,22 @@ export type MoneyProps<ComponentGeneric extends React.ElementType> = MoneyPropsB
  * [MoneyV2 object](https://shopify.dev/api/storefront/reference/common-objects/moneyv2) according to the
  * `locale` in the `ShopifyProvider` component.
  */
-export declare function Money<ComponentGeneric extends React.ElementType = 'div'>({ data, as, withoutCurrency, withoutTrailingZeros, measurement, measurementSeparator, ...passthroughProps }: MoneyProps<ComponentGeneric>): JSX.Element;
-
+// export declare function Money<ComponentGeneric extends React.ElementType = 'div'>({ data, as, withoutCurrency, withoutTrailingZeros, measurement, measurementSeparator, ...passthroughProps }: MoneyProps<ComponentGeneric>): JSX.Element;
+export function Money<ComponentGeneric extends React.ElementType = 'div'>({
+  data,
+  as,
+  withoutCurrency,
+  withoutTrailingZeros,
+  measurement,
+  measurementSeparator,
+  ...passthroughProps
+}: MoneyProps<ComponentGeneric>): JSX.Element {
+  return (
+    <div {...passthroughProps}>
+      {data.amount}{' '}{data.currencyCode}
+    </div>
+  );
+}
 
 export type UnitPriceMeasurement = {
   __typename?: 'UnitPriceMeasurement';

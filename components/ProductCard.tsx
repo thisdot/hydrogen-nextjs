@@ -3,14 +3,14 @@ import { getProductPlaceholder } from '@/lib/placeholders';
 import type { Money, Product, ShopifyAnalyticsProduct } from '@/lib/shopify/types';
 import { Link } from './Link';
 import { Text } from "./Text";
-import { Image } from "./ImageComponent";
+import Image from 'next/image';
 import { Money as MoneyComponent } from "./MoneyComponent";
 import { isDiscounted, isNewArrival } from '@/lib/utils';
 import { AddToCartButton } from './AddToCartButton';
-import { flattenConnection } from '@/lib/flattenConnection';
 import { useMoney } from '@/lib/useMoney';
+import { flattenConnection } from '@/lib/flattenConnection';
 
-export function ProductCard({
+export const ProductCard = ({
   product,
   label,
   className,
@@ -24,7 +24,7 @@ export function ProductCard({
   loading?: HTMLImageElement['loading'];
   onClick?: () => void;
   quickAdd?: boolean;
-}) {
+}) => {
   let cardLabel;
 
   const cardProduct: Product = product?.variants
@@ -33,6 +33,7 @@ export function ProductCard({
   if (!cardProduct?.variants?.nodes?.length) return null;
 
   const firstVariant = flattenConnection(cardProduct.variants)[0];
+
 
   if (!firstVariant) return null;
   const { image, price, compareAtPrice } = firstVariant;
@@ -66,12 +67,13 @@ export function ProductCard({
           <div className="card-image aspect-[4/5] bg-primary/5">
             {image && (
               <Image
+                src={image.url}
                 className="object-cover w-full fadeIn"
                 sizes="(min-width: 64em) 25vw, (min-width: 48em) 30vw, 45vw"
-                aspectRatio="4/5"
-                data={image}
                 alt={image.altText || `Picture of ${product.title}`}
                 loading={loading}
+                width={25}
+                height={45}
               />
             )}
             <Text
@@ -118,7 +120,7 @@ export function ProductCard({
             totalValue: parseFloat(productAnalytics.price),
           }}
         >
-          <Text as="span" className="flex items-center justify-center gap-2">
+          <Text as="span" className="flex items-center wide justify-center gap-2">
             Add to Bag
           </Text>
         </AddToCartButton>
@@ -127,15 +129,15 @@ export function ProductCard({
   );
 }
 
-function CompareAtPrice({
+const CompareAtPrice = ({
   data,
   className,
 }: {
   data: Money;
   className?: string;
-}) {
+}) => {
   const { currencyNarrowSymbol, withoutTrailingZerosAndCurrency } =
-    useMoney(data);
+    useMoney(data, 'en');
 
   const styles = clsx('strike', className);
 

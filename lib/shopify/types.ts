@@ -3,8 +3,8 @@ export type Product = Omit<ShopifyProduct, 'variants' | 'images'> & {
   variants: {
     nodes: ProductVariant[];
     edges: {
-      nodes: ProductVariant[];
-    }
+      node: ProductVariant;
+    }[]
   }
 };
 
@@ -95,4 +95,38 @@ export type ShopifyAnalyticsProduct = {
   sku?: ProductVariant['sku'];
   /** Quantity of the product in this event. */
   quantity?: number;
+};
+
+export type ProductVariantConnection = {
+  __typename?: 'ProductVariantConnection';
+  /** A list of edges. */
+  edges: Array<ProductVariantEdge>;
+  /** A list of the nodes contained in ProductVariantEdge. */
+  nodes: Array<ProductVariant>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+/**
+ * An auto-generated type which holds one ProductVariant and a cursor during pagination.
+ *
+ */
+export type ProductVariantEdge = {
+  __typename?: 'ProductVariantEdge';
+  /** A cursor for use in pagination. */
+  cursor: string;
+  /** The item at the end of ProductVariantEdge. */
+  node: ProductVariant;
+};
+
+export type PageInfo = {
+  __typename?: 'PageInfo';
+  /** The cursor corresponding to the last node in edges. */
+  endCursor?: string | null;
+  /** Whether there are more pages to fetch following the current page. */
+  hasNextPage: boolean | null;
+  /** Whether there are any pages prior to the current page. */
+  hasPreviousPage: boolean | null;
+  /** The cursor corresponding to the first node in edges. */
+  startCursor?: string | null;
 };

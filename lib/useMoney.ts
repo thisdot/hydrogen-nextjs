@@ -53,7 +53,41 @@ export type UseMoneyValue = {
  * [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat).
  * Uses `locale` from `ShopifyProvider`
  */
-export declare function useMoney(money: Money): UseMoneyValue;
+
+export function useMoney(money: Money, locale: string): UseMoneyValue {
+  const { amount, currencyCode } = money;
+  const formatter = new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: currencyCode as CurrencyCode,
+  });
+
+  const parts = formatter.formatToParts(parseInt(amount));
+  const currencySymbol = parts.find((part) => part.type === 'currency')?.value;
+  const currencyName = currencyCode;
+  const currencyNarrowSymbol = currencySymbol;
+  const localizedString = formatter.format(parseInt(amount));
+
+  const amountString = parts
+    .filter((part) => part.type === 'integer' || part.type === 'fraction')
+    .map((part) => part.value)
+    .join('');
+
+  const withoutTrailingZeros = amountString.replace(/\.00$/, '');
+  const withoutTrailingZerosAndCurrency = currencySymbol &&  withoutTrailingZeros.replace(currencySymbol, '').trim() || '';
+
+  return {
+    currencyCode: currencyCode as CurrencyCode,
+    currencyName,
+    currencySymbol,
+    currencyNarrowSymbol,
+    amount: amountString,
+    parts,
+    localizedString,
+    original: money,
+    withoutTrailingZeros,
+    withoutTrailingZerosAndCurrency,
+  };
+}
 
 
 export type CurrencyCode =
