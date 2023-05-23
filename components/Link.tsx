@@ -1,4 +1,5 @@
 "use client";
+import { usePathname } from "next/navigation";
 import { default as NextLink, LinkProps as NextLinkProps } from "next/link";
 type LinkProps = Omit<NextLinkProps, "className"> & {
   className?:
@@ -10,12 +11,12 @@ type LinkProps = Omit<NextLinkProps, "className"> & {
 
 export function Link(props: LinkProps) {
   let { href, className, ...resOfProps } = props;
-
+  const pathname = usePathname();
   let toWithLocale = href;
 
   if (typeof className === "function") {
     className = className({
-      isActive: window.location.pathname === href,
+      isActive: pathname === href,
     });
   }
 
