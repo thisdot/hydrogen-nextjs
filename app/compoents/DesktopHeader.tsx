@@ -8,7 +8,7 @@ import { useWindowScroll } from "react-use";
 
 function DesktopHeader({ isHome, shop }: { isHome: boolean; shop: Shop }) {
   const { y } = useWindowScroll();
-
+  console.log(shop);
   return (
     <header
       role="banner"
@@ -25,18 +25,31 @@ function DesktopHeader({ isHome, shop }: { isHome: boolean; shop: Shop }) {
           {shop.name}
         </Link>
         <nav className="flex gap-8">
-          {/* Top level menu items */}
-          {(shop.headerMenu?.items || []).map((item) => (
-            <Link
-              key={item.id}
-              href={item.url}
-              className={({ isActive }) =>
-                isActive ? "pb-1 border-b -mb-px" : "pb-1"
-              }
-            >
-              {item.title}
-            </Link>
-          ))}
+          <Link
+            href="/collections"
+            className={({ isActive }) =>
+              isActive ? "pb-1 border-b -mb-px" : "pb-1"
+            }
+          >
+            Collections
+          </Link>
+
+          <Link
+            href="/products"
+            className={({ isActive }) =>
+              isActive ? "pb-1 border-b -mb-px" : "pb-1"
+            }
+          >
+            Products
+          </Link>
+          <Link
+            href="/journal"
+            className={({ isActive }) =>
+              isActive ? "pb-1 border-b -mb-px" : "pb-1"
+            }
+          >
+            Journal
+          </Link>
         </nav>
       </div>
       <div className="flex items-center gap-1">
