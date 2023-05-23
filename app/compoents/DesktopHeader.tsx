@@ -5,8 +5,18 @@ import { Link } from "@/components/Link";
 import { Shop } from "@/lib/shopify/types";
 
 import { useWindowScroll } from "react-use";
+import AccountLink from "./AccountLink";
+import CartCount from "./CartCount";
 
-function DesktopHeader({ isHome, shop }: { isHome: boolean; shop: Shop }) {
+function DesktopHeader({
+  title,
+  isHome,
+  openCart,
+}: {
+  isHome: boolean;
+  title: string;
+  openCart: () => void;
+}) {
   const { y } = useWindowScroll();
   return (
     <header
@@ -21,7 +31,7 @@ function DesktopHeader({ isHome, shop }: { isHome: boolean; shop: Shop }) {
     >
       <div className="flex gap-12">
         <Link className="font-bold" href="/">
-          {shop.name}
+          {title}
         </Link>
         <nav className="flex gap-8">
           <Link
@@ -78,6 +88,8 @@ function DesktopHeader({ isHome, shop }: { isHome: boolean; shop: Shop }) {
             <IconSearch />
           </button>
         </form>
+        <AccountLink className="relative flex items-center justify-center w-8 h-8 focus:ring-primary/5" />
+        <CartCount isHome={isHome} openCart={openCart} />
       </div>
     </header>
   );

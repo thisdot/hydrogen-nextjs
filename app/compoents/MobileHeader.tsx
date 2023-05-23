@@ -1,10 +1,25 @@
-import { IconSearch } from "@/components/Icon";
+import { IconMenu, IconSearch } from "@/components/Icon";
 import { Input } from "@/components/Input";
 import { Link } from "@/components/Link";
 import { Heading } from "@/components/Text";
-import { Shop } from "@/lib/shopify/types";
+import AccountLink from "./AccountLink";
+import CartCount from "./CartCount";
 
-function MobileHeader({ isHome, shop }: { isHome: boolean; shop: Shop }) {
+function MobileHeader({
+  title,
+  isHome,
+  openCart,
+  openMenu,
+}: {
+  isHome: boolean;
+  title: string;
+  openCart: () => void;
+  openMenu: () => void;
+}) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+  }
+
   return (
     <header
       role="banner"
@@ -15,7 +30,14 @@ function MobileHeader({ isHome, shop }: { isHome: boolean; shop: Shop }) {
       } flex lg:hidden items-center h-nav sticky backdrop-blur-lg z-40 top-0 justify-between w-full leading-none gap-4 px-4 md:px-8`}
     >
       <div className="flex items-center justify-start w-full gap-4">
+        <button
+          onClick={openMenu}
+          className="relative flex items-center justify-center w-8 h-8"
+        >
+          <IconMenu />
+        </button>
         <form
+          onSubmit={handleSubmit}
           method="get"
           action={"/search"}
           className="items-center gap-2 sm:flex"
@@ -48,9 +70,14 @@ function MobileHeader({ isHome, shop }: { isHome: boolean; shop: Shop }) {
           className="font-bold text-center leading-none"
           as={isHome ? "h1" : "h2"}
         >
-          {shop.name}
+          {title}
         </Heading>
       </Link>
+
+      <div className="flex items-center justify-end w-full gap-4">
+        <AccountLink className="relative flex items-center justify-center w-8 h-8" />
+        <CartCount isHome={isHome} openCart={openCart} />
+      </div>
     </header>
   );
 }

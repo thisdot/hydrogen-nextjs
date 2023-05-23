@@ -1,11 +1,10 @@
 import "./globals.css";
 import "./custom-font.css";
 import { Inter } from "next/font/google";
-import DesktopHeader from "./compoents/DesktopHeader";
-import MobileHeader from "./compoents/MobileHeader";
+
 import { getLayoutData } from "@/lib/shopify";
-import { Shop } from "@/lib/shopify/types";
 import Footer from "./compoents/Footer";
+import Header from "./compoents/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,17 +36,5 @@ export default async function RootLayout({
         <Footer shop={data.body.data.shop} />
       </body>
     </html>
-  );
-}
-
-function Header({ shop }: { shop: Shop }) {
-  //Fake data, remove when real data is available
-  const isHome = true;
-
-  return (
-    <>
-      <DesktopHeader isHome={isHome} shop={shop} />
-      <MobileHeader isHome={isHome} shop={shop} />
-    </>
   );
 }
