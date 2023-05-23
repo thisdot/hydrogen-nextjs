@@ -64,9 +64,8 @@ export function MenuDrawer({
           {menu.items.map((item) => {
             const pathname = new URL(item.url).pathname;
             return (
-              <span className="block">
+              <span className="block" key={item.id}>
                 <Link
-                  key={item.id}
                   href={pathname}
                   className={({ isActive }) =>
                     isActive ? "pb-1 border-b -mb-px" : "pb-1"
