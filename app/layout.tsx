@@ -3,13 +3,9 @@ import "./custom-font.css";
 import { Inter } from "next/font/google";
 import DesktopHeader from "./compoents/DesktopHeader";
 import MobileHeader from "./compoents/MobileHeader";
-import { Section } from "@/components/Text";
 import { getLayoutData } from "@/lib/shopify";
-import {
-  Shop,
-  ShopifyFooterMenu,
-  ShopifyHeaderMenu,
-} from "@/lib/shopify/types";
+import { Shop } from "@/lib/shopify/types";
+import Footer from "./compoents/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -38,7 +34,7 @@ export default async function RootLayout({
             {children}
           </main>
         </div>
-        <Footer menu={data.body.data.shop.footerMenu} />
+        <Footer shop={data.body.data.shop} />
       </body>
     </html>
   );
@@ -53,33 +49,5 @@ function Header({ shop }: { shop: Shop }) {
       <DesktopHeader isHome={isHome} shop={shop} />
       <MobileHeader isHome={isHome} shop={shop} />
     </>
-  );
-}
-
-function Footer({ menu }: { menu: ShopifyFooterMenu }) {
-  //Fake data, remove when real data is available
-  const isHome = true;
-  //Fake data, remove when real data is available
-  const itemsCount = menu
-    ? menu?.items?.length + 1 > 4
-      ? 4
-      : menu?.items?.length + 1
-    : [];
-
-  return (
-    <Section
-      divider={isHome ? "none" : "top"}
-      as="footer"
-      role="contentinfo"
-      className={`grid min-h-[25rem] items-start grid-flow-row w-full gap-6 py-8 px-6 md:px-8 lg:px-12 md:gap-8 lg:gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-${itemsCount}
-        bg-primary dark:bg-contrast dark:text-primary text-contrast overflow-hidden`}
-    >
-      <div
-        className={`self-end pt-8 opacity-50 md:col-span-2 lg:col-span-${itemsCount}`}
-      >
-        {new Date().getFullYear()} / This Dot Labs, Inc. Hydrogen Next.js 13
-        Template is an MIT Licensed Open Source project.
-      </div>
-    </Section>
   );
 }

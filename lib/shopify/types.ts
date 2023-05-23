@@ -56,6 +56,23 @@ export type ShopifyFooterMenu = {
   }>;
 };
 
+export type ShopifyFooterItem = {
+  id: string;
+  resourceId: string | null;
+  tags: Array<string>;
+  title: string;
+  type: string;
+  url: string;
+  items?: Array<{
+    id: string;
+    resourceId: string | null;
+    tags: Array<string>;
+    title: string;
+    type: string;
+    url: string;
+  }>;
+};
+
 export type ShopifyLayoutOperation = {
   data: {
     shop: Shop;

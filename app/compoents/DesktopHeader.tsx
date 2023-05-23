@@ -8,7 +8,6 @@ import { useWindowScroll } from "react-use";
 
 function DesktopHeader({ isHome, shop }: { isHome: boolean; shop: Shop }) {
   const { y } = useWindowScroll();
-  console.log(shop);
   return (
     <header
       role="banner"
