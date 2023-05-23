@@ -1,5 +1,6 @@
 // @ts-expect-error types not available
 import typographicBase from 'typographic-base';
+import { Money } from './shopify/types';
 
 export function missingClass(string?: string, prefix?: string) {
   if (!string) {
@@ -24,6 +25,20 @@ export function formatText(input?: string | React.ReactNode) {
     /\s([^\s<]+)\s*$/g,
     '\u00A0$1',
   );
+}
+
+export function isNewArrival(date: string, daysOld = 30) {
+  return (
+    new Date(date).valueOf() >
+    new Date().setDate(new Date().getDate() - daysOld).valueOf()
+  );
+}
+
+export function isDiscounted(price: Money, compareAtPrice: Money) {
+  if (compareAtPrice?.amount > price?.amount) {
+    return true;
+  }
+  return false;
 }
 
 export const INPUT_STYLE_CLASSES =
