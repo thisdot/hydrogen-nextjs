@@ -28,12 +28,15 @@ export default async function RootLayout({
               Skip to content
             </a>
           </div>
-          <Header shop={data.body.data.shop} />
+          <Header
+            menu={data.body.data.headerMenu}
+            title={data.body.data.shop.name}
+          />
           <main role="main" id="mainContent" className="flex-grow">
             {children}
           </main>
         </div>
-        <Footer shop={data.body.data.shop} />
+        <Footer footerMenu={data.body.data.footerMenu} />
       </body>
     </html>
   );

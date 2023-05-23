@@ -12,8 +12,6 @@ export type Shop = {
       };
     };
   };
-  headerMenu: ShopifyHeaderMenu;
-  footerMenu: ShopifyFooterMenu;
 };
 
 export type ShopifyHeaderMenu = {
@@ -76,6 +74,8 @@ export type ShopifyFooterItem = {
 export type ShopifyLayoutOperation = {
   data: {
     shop: Shop;
+    headerMenu: ShopifyHeaderMenu;
+    footerMenu: ShopifyFooterMenu;
   };
   variables: {
     headerMenuHandle: string;

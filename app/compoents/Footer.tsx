@@ -7,10 +7,10 @@ import { IconCaret } from "@/components/Icon";
 import { Suspense } from "react";
 import { Heading, Section } from "@/components/Text";
 
-function Footer({ shop }: { shop?: Shop }) {
+function Footer({ footerMenu }: { footerMenu: ShopifyFooterMenu }) {
   const pathname = usePathname();
   const isHome = pathname === "/";
-  const menu = shop?.footerMenu as ShopifyFooterMenu;
+  const menu = footerMenu as ShopifyFooterMenu;
   const itemsCount = menu?.items?.length || 0;
 
   return (
@@ -21,7 +21,7 @@ function Footer({ shop }: { shop?: Shop }) {
       className={`grid min-h-[25rem] items-start grid-flow-row w-full gap-6 py-8 px-6 md:px-8 lg:px-12 md:gap-8 lg:gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-${itemsCount}
           bg-primary dark:bg-contrast dark:text-primary text-contrast overflow-hidden`}
     >
-      <FooterMenu menu={shop?.footerMenu as ShopifyFooterMenu} />
+      <FooterMenu menu={footerMenu as ShopifyFooterMenu} />
       {/* <CountrySelector /> */}
       <div className={`self-end pt-8 opacity-50 md:col-span-2 lg:col-span-4`}>
         &copy; {new Date().getFullYear()} / This Dot Labs, Inc. Hydrogen Next.js

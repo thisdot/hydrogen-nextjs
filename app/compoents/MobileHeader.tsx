@@ -4,17 +4,20 @@ import { Link } from "@/components/Link";
 import { Heading } from "@/components/Text";
 import AccountLink from "./AccountLink";
 import CartCount from "./CartCount";
+import { ShopifyHeaderMenu } from "@/lib/shopify/types";
 
 function MobileHeader({
   title,
   isHome,
   openCart,
   openMenu,
+  menu,
 }: {
   isHome: boolean;
   title: string;
   openCart: () => void;
   openMenu: () => void;
+  menu: ShopifyHeaderMenu;
 }) {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

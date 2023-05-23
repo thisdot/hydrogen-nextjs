@@ -2,63 +2,56 @@
 import { IconSearch } from "@/components/Icon";
 import { Input } from "@/components/Input";
 import { Link } from "@/components/Link";
-import { Shop } from "@/lib/shopify/types";
+import { Shop, ShopifyHeaderMenu } from "@/lib/shopify/types";
 
 import { useWindowScroll } from "react-use";
 import AccountLink from "./AccountLink";
 import CartCount from "./CartCount";
+import clsx from "clsx";
 
 function DesktopHeader({
   title,
   isHome,
   openCart,
+  menu,
 }: {
   isHome: boolean;
   title: string;
   openCart: () => void;
+  menu: ShopifyHeaderMenu;
 }) {
   const { y } = useWindowScroll();
   return (
     <header
       role="banner"
-      className={`${
-        isHome
-          ? "bg-primary/80 dark:bg-contrast/60 text-contrast dark:text-primary shadow-darkHeader"
-          : "bg-contrast/80 text-primary"
-      } ${
-        !isHome && y > 50 && "shadow-lightHeader"
-      } hidden h-nav lg:flex items-center sticky transition duration-300 backdrop-blur-lg z-40 top-0 justify-between w-full leading-none gap-8 px-12 py-8`}
+      className={clsx(
+        "hidden h-nav lg:flex items-center sticky transition duration-300 backdrop-blur-lg z-40 top-0 justify-between w-full leading-none gap-8 px-12 py-8",
+        {
+          "bg-primary/80 dark:bg-contrast/60 text-contrast dark:text-primary shadow-darkHeader":
+            isHome,
+          "bg-contrast/80 text-primary": !isHome,
+          "shadow-lightHeader": !isHome && y > 50,
+        }
+      )}
     >
       <div className="flex gap-12">
         <Link className="font-bold" href="/">
           {title}
         </Link>
         <nav className="flex gap-8">
-          <Link
-            href="/collections"
-            className={({ isActive }) =>
-              isActive ? "pb-1 border-b -mb-px" : "pb-1"
-            }
-          >
-            Collections
-          </Link>
-
-          <Link
-            href="/products"
-            className={({ isActive }) =>
-              isActive ? "pb-1 border-b -mb-px" : "pb-1"
-            }
-          >
-            Products
-          </Link>
-          <Link
-            href="/journal"
-            className={({ isActive }) =>
-              isActive ? "pb-1 border-b -mb-px" : "pb-1"
-            }
-          >
-            Journal
-          </Link>
+          {menu.items.map((item) => {
+            const pathname = new URL(item.url).pathname;
+            return (
+              <Link
+                href={pathname}
+                className={({ isActive }) =>
+                  isActive ? "pb-1 border-b -mb-px" : "pb-1"
+                }
+              >
+                {item.title}
+              </Link>
+            );
+          })}
         </nav>
       </div>
       <div className="flex items-center gap-1">

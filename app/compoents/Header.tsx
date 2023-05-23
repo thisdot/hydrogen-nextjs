@@ -4,10 +4,9 @@ import { Link } from "@/components/Link";
 import DesktopHeader from "./DesktopHeader";
 import MobileHeader from "./MobileHeader";
 import { Drawer, useDrawer } from "@/components/Drawer";
-import { Shop } from "@/lib/shopify/types";
-import { Text } from "@/components/Text";
+import { ShopifyHeaderMenu } from "@/lib/shopify/types";
 
-function Header({ shop }: { shop: Shop }) {
+function Header({ menu, title }: { menu: ShopifyHeaderMenu; title: string }) {
   //Fake data, remove when real data is available
   const isHome = true;
 
@@ -27,12 +26,18 @@ function Header({ shop }: { shop: Shop }) {
     <>
       <CartDrawer isOpen={isCartOpen} onClose={closeCart} />
 
-      <MenuDrawer isOpen={isMenuOpen} onClose={closeMenu} />
+      <MenuDrawer isOpen={isMenuOpen} onClose={closeMenu} menu={menu} />
 
-      <DesktopHeader isHome={isHome} title={shop.name} openCart={openCart} />
-      <MobileHeader
+      <DesktopHeader
         isHome={isHome}
-        title={shop.name}
+        title={title}
+        openCart={openCart}
+        menu={menu}
+      />
+      <MobileHeader
+        menu={menu}
+        isHome={isHome}
+        title={title}
         openCart={openCart}
         openMenu={openMenu}
       />
@@ -45,57 +50,32 @@ export default Header;
 export function MenuDrawer({
   isOpen,
   onClose,
+  menu,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  menu: ShopifyHeaderMenu;
 }) {
   return (
     <Drawer open={isOpen} onClose={onClose} openFrom="left" heading="Menu">
       <div className="grid">
         <nav className="grid gap-4 p-6 sm:gap-6 sm:px-12 sm:py-8">
           {/* Top level menu items */}
-
-          <span className="block">
-            <Link
-              href="/collections"
-              onClick={onClose}
-              className={({ isActive }) =>
-                isActive ? "pb-1 border-b -mb-px" : "pb-1"
-              }
-            >
-              <Text as="span" size="copy">
-                Collections
-              </Text>
-            </Link>
-          </span>
-
-          <span className="block">
-            <Link
-              href="/products"
-              onClick={onClose}
-              className={({ isActive }) =>
-                isActive ? "pb-1 border-b -mb-px" : "pb-1"
-              }
-            >
-              <Text as="span" size="copy">
-                Products
-              </Text>
-            </Link>
-          </span>
-
-          <span className="block">
-            <Link
-              href="/journal"
-              onClick={onClose}
-              className={({ isActive }) =>
-                isActive ? "pb-1 border-b -mb-px" : "pb-1"
-              }
-            >
-              <Text as="span" size="copy">
-                Journal
-              </Text>
-            </Link>
-          </span>
+          {menu.items.map((item) => {
+            const pathname = new URL(item.url).pathname;
+            return (
+              <span className="block">
+                <Link
+                  href={pathname}
+                  className={({ isActive }) =>
+                    isActive ? "pb-1 border-b -mb-px" : "pb-1"
+                  }
+                >
+                  {item.title}
+                </Link>
+              </span>
+            );
+          })}
         </nav>
       </div>
     </Drawer>

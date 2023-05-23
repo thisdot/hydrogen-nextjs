@@ -78,6 +78,5 @@ export async function getLayoutData() {
       footerMenuHandle: "footer",
     },
   });
-
   return data;
 }
