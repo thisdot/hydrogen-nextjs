@@ -69,9 +69,6 @@ function FooterMenu({ menu }: { menu: ShopifyFooterMenu }) {
                   <Suspense data-comment="This suspense fixes a hydration bug in Disclosure.Panel with static prop">
                     <Disclosure.Panel static>
                       <nav className={styles.nav}>
-                        <FooterLink item="Link 1" href="https://github.com/" />
-                        <FooterLink item="Link 2" href="https://github.com/" />
-                        <FooterLink item="Link 3" href="https://github.com/" />
                         {item.items?.map((subItem) => (
                           <FooterLink
                             key={subItem.id}
