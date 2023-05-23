@@ -1,11 +1,95 @@
-export type Product = Omit<ShopifyProduct, 'variants' | 'images'> & {
+export type Shop = {
+  id: string;
+  name: string;
+  description: string | null;
+  primaryDomain: {
+    url: string;
+  };
+  brand: {
+    logo?: {
+      image: {
+        url: string;
+      };
+    };
+  };
+};
+
+export type ShopifyHeaderMenu = {
+  id: string;
+  items: Array<{
+    id: string;
+    resourceId: string | null;
+    tags: Array<string>;
+    title: string;
+    type: string;
+    url: string;
+    items: Array<{
+      id: string;
+      resourceId: string | null;
+      tags: Array<string>;
+      title: string;
+      type: string;
+      url: string;
+    }>;
+  }>;
+};
+
+export type ShopifyFooterMenu = {
+  id: string;
+  items: Array<{
+    id: string;
+    resourceId: string | null;
+    tags: Array<string>;
+    title: string;
+    type: string;
+    url: string;
+    items?: Array<{
+      id: string;
+      resourceId: string | null;
+      tags: Array<string>;
+      title: string;
+      type: string;
+      url: string;
+    }>;
+  }>;
+};
+
+export type ShopifyFooterItem = {
+  id: string;
+  resourceId: string | null;
+  tags: Array<string>;
+  title: string;
+  type: string;
+  url: string;
+  items?: Array<{
+    id: string;
+    resourceId: string | null;
+    tags: Array<string>;
+    title: string;
+    type: string;
+    url: string;
+  }>;
+};
+
+export type ShopifyLayoutOperation = {
+  data: {
+    shop: Shop;
+    headerMenu: ShopifyHeaderMenu;
+    footerMenu: ShopifyFooterMenu;
+  };
+  variables: {
+    headerMenuHandle: string;
+    footerMenuHandle: string;
+  };
+};
+export type Product = Omit<ShopifyProduct, "variants" | "images"> & {
   images: Image[];
   variants: {
     nodes: ProductVariant[];
     edges: {
       node: ProductVariant;
-    }[]
-  }
+    }[];
+  };
 };
 
 export type ProductVariant = {
@@ -78,27 +162,27 @@ export type SEO = {
 
 export type ShopifyAnalyticsProduct = {
   /** Product id in the form of `gid://shopify/Product/<id>`. */
-  productGid: Product['id'];
+  productGid: Product["id"];
   /** Variant id in the form of `gid://shopify/ProductVariant/<id>`. */
-  variantGid?: ProductVariant['id'];
+  variantGid?: ProductVariant["id"];
   /** Product name. */
-  name: Product['title'];
+  name: Product["title"];
   /** Variant name. */
-  variantName?: ProductVariant['title'];
+  variantName?: ProductVariant["title"];
   /** Product brand or vendor. */
-  brand: Product['vendor'];
+  brand: Product["vendor"];
   /** Product category or type. */
-  category?: Product['productType'];
+  category?: Product["productType"];
   /** Product price. */
-  price: ProductVariant['price']['amount'];
+  price: ProductVariant["price"]["amount"];
   /** Product sku. */
-  sku?: ProductVariant['sku'];
+  sku?: ProductVariant["sku"];
   /** Quantity of the product in this event. */
   quantity?: number;
 };
 
 export type ProductVariantConnection = {
-  __typename?: 'ProductVariantConnection';
+  __typename?: "ProductVariantConnection";
   /** A list of edges. */
   edges: Array<ProductVariantEdge>;
   /** A list of the nodes contained in ProductVariantEdge. */
@@ -112,7 +196,7 @@ export type ProductVariantConnection = {
  *
  */
 export type ProductVariantEdge = {
-  __typename?: 'ProductVariantEdge';
+  __typename?: "ProductVariantEdge";
   /** A cursor for use in pagination. */
   cursor: string;
   /** The item at the end of ProductVariantEdge. */
@@ -120,7 +204,7 @@ export type ProductVariantEdge = {
 };
 
 export type PageInfo = {
-  __typename?: 'PageInfo';
+  __typename?: "PageInfo";
   /** The cursor corresponding to the last node in edges. */
   endCursor?: string | null;
   /** Whether there are more pages to fetch following the current page. */
