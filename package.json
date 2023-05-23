@@ -46,6 +46,7 @@
     "postcss-preset-env": "^8.3.2",
     "react-use": "^17.4.0",
     "storybook": "^7.0.12",
+    "type-fest": "^3.10.0",
     "typographic-base": "^1.0.4"
   }
 }
