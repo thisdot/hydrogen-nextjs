@@ -32,7 +32,7 @@ const mockedProduct = {
     },
   },
   featuredImage: {
-    url: 'https://placehold.co/600x400',
+    url: 'https://cdn.shopify.com/s/files/1/0759/6589/0841/products/Main_589fc064-24a2-4236-9eaf-13b2bd35d21d.jpg?v=1683819483&width=990',
     altText: 'test',
     width: 100,
     height: 100,
@@ -48,7 +48,7 @@ const mockedProduct = {
   publishedAt: '2022-01-01T00:00:00Z',
   images: [
     {
-      url: 'https://placehold.co/600x400',
+      url: 'https://cdn.shopify.com/s/files/1/0759/6589/0841/products/Main_589fc064-24a2-4236-9eaf-13b2bd35d21d.jpg?v=1683819483&width=990',
       altText: 'test',
       width: 100,
       height: 100,
@@ -66,7 +66,7 @@ const mockedProduct = {
           currencyCode: 'USD'
         },
         image: {
-          url: 'https://placehold.co/200x300',
+          url: 'https://cdn.shopify.com/s/files/1/0759/6589/0841/products/Main_589fc064-24a2-4236-9eaf-13b2bd35d21d.jpg?v=1683819483&width=990',
           altText: 'test',
           width: 100,
           height: 100,
@@ -89,7 +89,7 @@ const mockedProduct = {
           currencyCode: 'USD'
         },
         image: {
-          url: 'https://placehold.co/600x400',
+          url: 'https://cdn.shopify.com/s/files/1/0759/6589/0841/products/Main_589fc064-24a2-4236-9eaf-13b2bd35d21d.jpg?v=1683819483&width=990',
           altText: 'test',
           width: 100,
           height: 100,
