@@ -1,3 +1,4 @@
+import { IconSearch } from "@/components/Icon";
 import { Input } from "@/components/Input";
 import { Link } from "@/components/Link";
 import { Heading } from "@/components/Text";
@@ -23,7 +24,7 @@ function MobileHeader({ isHome, shop }: { isHome: boolean; shop: Shop }) {
             type="submit"
             className="relative flex items-center justify-center w-8 h-8"
           >
-            {/* <IconSearch /> */}
+            <IconSearch />
           </button>
           <Input
             className={

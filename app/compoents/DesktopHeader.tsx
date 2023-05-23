@@ -1,4 +1,5 @@
 "use client";
+import { IconSearch } from "@/components/Icon";
 import { Input } from "@/components/Input";
 import { Link } from "@/components/Link";
 import { Shop } from "@/lib/shopify/types";
@@ -40,6 +41,9 @@ function DesktopHeader({ isHome, shop }: { isHome: boolean; shop: Shop }) {
       </div>
       <div className="flex items-center gap-1">
         <form
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
           method="get"
           action={"/search"}
           className="flex items-center gap-2"
@@ -59,7 +63,7 @@ function DesktopHeader({ isHome, shop }: { isHome: boolean; shop: Shop }) {
             type="submit"
             className="relative flex items-center justify-center w-8 h-8 focus:ring-primary/5"
           >
-            {/* <IconSearch /> */}
+            <IconSearch />
           </button>
         </form>
       </div>
