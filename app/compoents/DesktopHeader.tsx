@@ -43,6 +43,7 @@ function DesktopHeader({
             const pathname = new URL(item.url).pathname;
             return (
               <Link
+                key={item.id}
                 href={pathname}
                 className={({ isActive }) =>
                   isActive ? "pb-1 border-b -mb-px" : "pb-1"

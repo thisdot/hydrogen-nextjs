@@ -66,6 +66,7 @@ export function MenuDrawer({
             return (
               <span className="block">
                 <Link
+                  key={item.id}
                   href={pathname}
                   className={({ isActive }) =>
                     isActive ? "pb-1 border-b -mb-px" : "pb-1"
