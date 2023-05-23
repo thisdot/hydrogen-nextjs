@@ -25,8 +25,8 @@ function Footer({ shop }: { shop?: Shop }) {
       <FooterMenu menu={menu} />
       {/* <CountrySelector /> */}
       <div className={`self-end pt-8 opacity-50 md:col-span-2 lg:col-span-4`}>
-        &copy; {new Date().getFullYear()} / Shopify, Inc. Hydrogen is an MIT
-        Licensed Open Source project.
+        &copy; {new Date().getFullYear()} / This Dot Labs, Inc. Hydrogen Next.js
+        13 Template is an MIT Licensed Open Source project.
       </div>
     </Section>
   );
