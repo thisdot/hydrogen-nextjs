@@ -1,4 +1,5 @@
 import { IconBag } from "@/components/Icon";
+import clsx from "clsx";
 import { useMemo } from "react";
 
 function CartCount({
@@ -29,11 +30,14 @@ function Badge({
       <>
         <IconBag />
         <div
-          className={`${
-            dark
-              ? "text-primary bg-contrast dark:text-contrast dark:bg-primary"
-              : "text-contrast bg-primary"
-          } absolute bottom-1 right-1 text-[0.625rem] font-medium subpixel-antialiased h-3 min-w-[0.75rem] flex items-center justify-center leading-none text-center rounded-full w-auto px-[0.125rem] pb-px`}
+          className={clsx(
+            "absolute bottom-1 right-1 text-[0.625rem] font-medium subpixel-antialiased h-3 min-w-[0.75rem] flex items-center justify-center leading-none text-center rounded-full w-auto px-[0.125rem] pb-px",
+            {
+              "text-primary bg-contrast dark:text-contrast dark:bg-primary":
+                dark,
+              "text-contrast bg-primary": !dark,
+            }
+          )}
         >
           <span>{count || 0}</span>
         </div>
