@@ -22,7 +22,7 @@ straightforward as possible.
 
 ### Fixed -->
 
-## [0.1.0] - 2023-05-12
+## [v0.1.0] - 2023-05-12
 
 Here we write upgrading notes for brands. It's a team effort to make them as
 straightforward as possible.
@@ -36,6 +36,6 @@ straightforward as possible.
 
 ### Fixed
 
-## [0.1.0] - 2023-05-12
+## [v0.1.0] - 2023-05-12
 
 Create Next.js Hydrogen template repo

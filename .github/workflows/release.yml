@@ -35,6 +35,10 @@ jobs:
           next_version=${{ steps.get_tag.outputs.version }}
           git tag -a "$next_version" -m "Version $next_version"
           git push --follow-tags
+      - name: Create changelog diff
+        id: changelog_diff
+        run: |
+          sed -n '/^## \[${{ steps.get_tag.outputs.version }}\]/,/^## \[$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))\]/{/^## \[$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))\]/!p;}' CHANGELOG.md > release_notes.md
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
@@ -43,8 +47,8 @@ jobs:
         with:
           tag_name: ${{ steps.get_tag.outputs.version }}
           release_name: Release ${{ steps.get_tag.outputs.version }}
-          body: |
-            Release ${{ steps.get_tag.outputs.version }}
-          body_path: ./CHANGELOG.md
+          body_path: ./release_notes.md
           draft: false
           prerelease: false
+      - name: Delete release_notes file
+        run: rm release_notes.md
