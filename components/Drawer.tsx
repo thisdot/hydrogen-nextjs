@@ -3,6 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 
 import { Heading } from "@/components/Text";
 import { IconClose } from "@/components/Icon";
+import clsx from "clsx";
 
 /**
  * Drawer component that opens on user click.
@@ -48,9 +49,9 @@ export function Drawer({
         <div className="fixed inset-0">
           <div className="absolute inset-0 overflow-hidden">
             <div
-              className={`fixed inset-y-0 flex max-w-full ${
-                openFrom === "right" ? "right-0" : ""
-              }`}
+              className={clsx("fixed inset-y-0 flex max-w-full", {
+                "right-0": openFrom === "right",
+              })}
             >
               <Transition.Child
                 as={Fragment}
@@ -63,9 +64,13 @@ export function Drawer({
               >
                 <Dialog.Panel className="w-screen max-w-lg text-left align-middle transition-all transform shadow-xl h-screen-dynamic bg-contrast">
                   <header
-                    className={`sticky top-0 flex items-center px-6 h-nav sm:px-8 md:px-12 ${
-                      heading ? "justify-between" : "justify-end"
-                    }`}
+                    className={clsx(
+                      "sticky top-0 flex items-center px-6 h-nav sm:px-8 md:px-12",
+                      {
+                        "justify-between": heading,
+                        "justify-end": !heading,
+                      }
+                    )}
                   >
                     {heading !== null && (
                       <Dialog.Title>

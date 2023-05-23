@@ -6,6 +6,7 @@ import { Disclosure } from "@headlessui/react";
 import { IconCaret } from "@/components/Icon";
 import { Suspense } from "react";
 import { Heading, Section } from "@/components/Text";
+import clsx from "clsx";
 
 function Footer({ footerMenu }: { footerMenu: ShopifyFooterMenu }) {
   const pathname = usePathname();
@@ -18,12 +19,12 @@ function Footer({ footerMenu }: { footerMenu: ShopifyFooterMenu }) {
       divider={isHome ? "none" : "top"}
       as="footer"
       role="contentinfo"
-      className={`grid min-h-[25rem] items-start grid-flow-row w-full gap-6 py-8 px-6 md:px-8 lg:px-12 md:gap-8 lg:gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-${itemsCount}
-          bg-primary dark:bg-contrast dark:text-primary text-contrast overflow-hidden`}
+      className="grid min-h-[25rem] items-start grid-flow-row w-full gap-6 py-8 px-6 md:px-8 lg:px-12 md:gap-8 lg:gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-${itemsCount}
+          bg-primary dark:bg-contrast dark:text-primary text-contrast overflow-hidden"
     >
       <FooterMenu menu={footerMenu as ShopifyFooterMenu} />
       {/* <CountrySelector /> */}
-      <div className={`self-end pt-8 opacity-50 md:col-span-2 lg:col-span-4`}>
+      <div className="self-end pt-8 opacity-50 md:col-span-2 lg:col-span-4">
         &copy; {new Date().getFullYear()} / This Dot Labs, Inc. Hydrogen Next.js
         13 Template is an MIT Licensed Open Source project.
       </div>
@@ -62,9 +63,13 @@ function FooterMenu({ menu }: { menu: ShopifyFooterMenu }) {
                 </Disclosure.Button>
 
                 <div
-                  className={`${
-                    open ? `max-h-48 h-fit` : `max-h-0 md:max-h-fit`
-                  } overflow-hidden transition-all duration-300`}
+                  className={clsx(
+                    "overflow-hidden transition-all duration-300",
+                    {
+                      "max-h-48 h-fit": open,
+                      "max-h-0 md:max-h-fit": !open,
+                    }
+                  )}
                 >
                   <Suspense data-comment="This suspense fixes a hydration bug in Disclosure.Panel with static prop">
                     <Disclosure.Panel static>

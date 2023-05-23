@@ -79,7 +79,7 @@ export function IconArrow({ direction = "right" }: IconProps) {
   }
 
   return (
-    <Icon className={`w-5 h-5 ${rotate}`}>
+    <Icon className={clsx("w-5 h-5", rotate)}>
       <title>Arrow</title>
       <path d="M7 3L14 10L7 17" strokeWidth="1.25" />
     </Icon>
@@ -113,7 +113,7 @@ export function IconCaret({
   return (
     <Icon
       {...props}
-      className={`w-5 h-5 transition ${rotate}`}
+      className={clsx("w-5 h-5 transition", rotate)}
       fill="transparent"
       stroke={stroke}
     >
