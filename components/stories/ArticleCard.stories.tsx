@@ -11,7 +11,15 @@ const Template: StoryFn<{
   blogHandle: string;
   article: Article;
   loading?: HTMLImageElement["loading"];
-}> = (args) => <ArticleCard {...args} />;
+}> = (args) => (
+  <div
+    style={{
+      maxWidth: "600px",
+    }}
+  >
+    <ArticleCard {...args} />
+  </div>
+);
 
 export const Default = Template.bind({});
 Default.args = {
