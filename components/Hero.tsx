@@ -1,9 +1,8 @@
 import clsx from 'clsx';
-import type { SerializeFrom } from '@shopify/remix-oxygen';
-import { MediaFile } from '@shopify/hydrogen';
 import { Link } from './Link';
 import { Heading, Text } from './Text';
-import { Media, Video as MediaVideo, Metafield } from '@/lib/shopify/types';
+import { Image as ImageType, Metafield } from '@/lib/shopify/types';
+import Image from 'next/image';
 
 
 export interface CollectionHero {
@@ -13,8 +12,8 @@ export interface CollectionHero {
   heading: Metafield;
   height?: 'full';
   loading?: 'eager' | 'lazy';
-  spread: Metafield;
-  spreadSecondary: Metafield;
+  spread: any;
+  spreadSecondary: any;
   top?: boolean;
 }
 
@@ -27,11 +26,11 @@ export function Hero({
   handle,
   heading,
   height,
-  loading,
   spread,
   spreadSecondary,
   top,
-}: SerializeFrom<CollectionHero>) {
+}: CollectionHero) {
+
   return (
     <Link href={`/collections/${handle}`}>
       <section
@@ -47,22 +46,16 @@ export function Hero({
           {spread?.reference && (
             <div>
               <SpreadMedia
-                sizes={
-                  spreadSecondary?.reference
-                    ? '(min-width: 48em) 50vw, 100vw'
-                    : '100vw'
-                }
-                data={spread.reference as Media}
-                loading={loading}
+                className={clsx('w-full', { '(min-width: 48em) 50vw, 100vw': spreadSecondary?.reference })}
+                data={spread.reference.image}
               />
             </div>
           )}
           {spreadSecondary?.reference && (
             <div className="hidden md:block">
               <SpreadMedia
-                sizes="50vw"
-                data={spreadSecondary.reference as Media}
-                loading={loading}
+                className='w-1/2'
+                data={spreadSecondary.reference.image}
               />
             </div>
           )}
@@ -85,33 +78,14 @@ export function Hero({
   );
 }
 
-interface SpreadMediaProps {
-  data: Media | MediaImage | MediaVideo;
-  loading?: HTMLImageElement['loading'];
-  sizes: string;
-}
 
-function SpreadMedia({ data, loading, sizes }: SpreadMediaProps) {
+function SpreadMedia({ data, className }: { data: ImageType, className: string }) {
   return (
-    <MediaFile
-      data={data}
-      className="block object-cover w-full h-full"
-      mediaOptions={{
-        video: {
-          controls: false,
-          muted: true,
-          loop: true,
-          playsInline: true,
-          autoPlay: true,
-          previewImageOptions: { src: data.previewImage?.url ?? '' },
-        },
-        image: {
-          loading,
-          crop: 'center',
-          sizes,
-          alt: data.alt || '',
-        },
-      }}
+    <Image
+      src={data.url}
+      alt={data.altText}
+      className={clsx("block object-cover w-full h-full", className)}
+      fill
     />
   );
 }

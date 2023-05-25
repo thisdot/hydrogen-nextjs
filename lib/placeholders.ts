@@ -182,3 +182,42 @@ const PLACEHOLDERS = {
 export function getProductPlaceholder(): Product {
   return PLACEHOLDERS.PRODUCT as unknown as Product;
 }
+
+export function getHeroPlaceholder(heros: any[]) {
+  if (!heros?.length) return [];
+
+  // when we pass a collection without metafields,
+  // we merge it with placeholder data
+  return heros.map((hero, index) => {
+    // assume passed hero has metafields data already
+    if (hero?.heading?.value) {
+      return hero;
+    }
+
+    // hero placeholder
+    const placeholder = PLACEHOLDERS.HEROS[index];
+
+    // prioritize metafield data if available, else the hero hero values
+    // otherwise the placeholder values
+    const byLine =
+      hero?.byLine || hero?.descriptionHtml
+        ? {value: hero.descriptionHtml}
+        : placeholder.byline;
+
+    const heading =
+      hero?.heading || hero?.title ? {value: hero.title} : placeholder.heading;
+
+    // merge hero placeholder with hero data
+    return {
+      heading,
+      byLine,
+      cta: hero?.cta || placeholder.cta,
+      handle: hero?.handle || placeholder.handle,
+      id: hero?.id || index,
+      spread: hero?.spread || placeholder.spread,
+      spreadSecondary: hero?.spreadSecondary || placeholder.spreadSecondary,
+      height: placeholder?.height || undefined,
+      top: placeholder?.top || undefined,
+    };
+  });
+}

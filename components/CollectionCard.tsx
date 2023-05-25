@@ -2,10 +2,9 @@ import { Link } from "./Link"
 import Image from "next/image"
 import { Heading } from "./Text"
 import { Collection } from "@/lib/shopify/types"
-// Fix this any type once Product Card ticket is merged
-const CollectionCard = ({ collection }: { collection: Collection }) => {
+const CollectionCard = ({ collection, key }: { collection: Collection, key: string }) => {
   return (
-    <Link key={collection.id} href={`/collections/${collection.handle}`}>
+    <Link key={key} href={`/collections/${collection.handle}`}>
       <div className="grid gap-4">
         <div className="card-image bg-primary/5 aspect-[3/2]">
           {collection?.image && (

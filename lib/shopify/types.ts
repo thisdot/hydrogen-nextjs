@@ -1,3 +1,5 @@
+import { CollectionHero } from "@/components/Hero";
+
 export type Shop = {
   id: string;
   name: string;
@@ -603,4 +605,73 @@ export type Video = Media &
   url: string;
   /** The width of the video. */
   width: number;
+};
+
+export type CollectionConnection = {
+  __typename?: 'CollectionConnection';
+  /** A list of edges. */
+  edges: Array<CollectionEdge>;
+  /** A list of the nodes contained in CollectionEdge. */
+  nodes: Array<Collection>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+export type CollectionEdge = {
+  __typename?: 'CollectionEdge';
+  /** A cursor for use in pagination. */
+  cursor: string;
+  /** The item at the end of CollectionEdge. */
+  node: Collection;
+};
+
+
+export type ShopifyHomePageSeoOperation = {
+  data: {
+    shop: HomeSeoData;
+    hero: CollectionHero;
+  };
+  variables: {
+    handle: string;
+    country?: string,
+    language?: string,
+  };
+};
+
+export interface HomeSeoData {
+  shop: {
+    name: string;
+    description: string;
+  };
+}
+
+export type ShopifyFeaturedProductOperation = {
+  data: {
+    products: ProductConnection;
+  };
+  variables: {
+    country?: string,
+    language?: string,
+  };
+};
+
+export type ShopifyFeaturedCollectionOperation = {
+  data: {
+    collections: CollectionConnection;
+  };
+  variables: {
+    country?: string,
+    language?: string,
+  };
+};
+
+export type ShopifyHeroOperation = {
+  data: {
+    hero: CollectionHero;
+  };
+  variables: {
+    handle: string,
+    country?: string,
+    language?: string,
+  };
 };

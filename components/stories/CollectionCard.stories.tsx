@@ -29,7 +29,7 @@ const mockedCollection = {
 
 const Template: StoryFn = (args) => (
   <div className="flex flex-col gap-2 max-w-sm">
-    <CollectionCard collection={mockedCollection} />
+    <CollectionCard collection={mockedCollection} key={mockedCollection.id} />
   </div>
 );
 
