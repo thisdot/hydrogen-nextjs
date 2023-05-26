@@ -2,7 +2,11 @@ import { SHOPIFY_GRAPHQL_API_ENDPOINT } from "@/lib/constants";
 import { isShopifyError } from "@/lib/type-guards";
 import { LAYOUT_QUERY } from "./queries/layout";
 import { ShopifyFeaturedCollectionOperation, ShopifyFeaturedProductOperation, ShopifyHeroOperation, ShopifyHomePageSeoOperation, ShopifyLayoutOperation } from "./types";
-import { MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT } from "./queries/fragments";
+import { 
+  HOMEPAGE_FEATURED_PRODUCTS_QUERY,
+  COLLECTION_HERO_QUERY,
+  FEATURED_COLLECTIONS_QUERY 
+} from "./queries/homepage";
 
 const domain = `https://${process.env.PUBLIC_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
@@ -84,7 +88,7 @@ export async function getLayoutData() {
 
 export async function getHomepageSeo() {
   const data = await shopifyFetch<ShopifyHomePageSeoOperation>({
-    query: HOMEPAGE_SEO_QUERY,
+    query: COLLECTION_HERO_QUERY,
     variables: { 
       handle: 'hydrogen',
     },  
@@ -125,92 +129,3 @@ export async function getTertiaryHero() {
   })
   return data;
 };
-
-const COLLECTION_CONTENT_FRAGMENT = `#graphql
-  ${MEDIA_FRAGMENT}
-  fragment CollectionContent on Collection {
-    id
-    handle
-    title
-    descriptionHtml
-    heading: metafield(namespace: "hero", key: "title") {
-      value
-    }
-    byline: metafield(namespace: "hero", key: "byline") {
-      value
-    }
-    cta: metafield(namespace: "hero", key: "cta") {
-      value
-    }
-    spread: metafield(namespace: "hero", key: "spread") {
-      reference {
-        ...Media
-      }
-    }
-    spreadSecondary: metafield(namespace: "hero", key: "spread_secondary") {
-      reference {
-        ...Media
-      }
-    }
-  }
-`;
-
-const HOMEPAGE_SEO_QUERY = `#graphql
-  ${COLLECTION_CONTENT_FRAGMENT}
-  query collectionContent($handle: String, $country: CountryCode, $language: LanguageCode)
-  @inContext(country: $country, language: $language) {
-    hero: collection(handle: $handle) {
-      ...CollectionContent
-    }
-    shop {
-      name
-      description
-    }
-  }
-`;
-
-const COLLECTION_HERO_QUERY = `#graphql
-  ${COLLECTION_CONTENT_FRAGMENT}
-  query collectionContent($handle: String, $country: CountryCode, $language: LanguageCode)
-  @inContext(country: $country, language: $language) {
-    hero: collection(handle: $handle) {
-      ...CollectionContent
-    }
-  }
-`;
-
-// @see: https://shopify.dev/api/storefront/2023-04/queries/products
-export const HOMEPAGE_FEATURED_PRODUCTS_QUERY = `#graphql
-  ${PRODUCT_CARD_FRAGMENT}
-  query homepageFeaturedProducts($country: CountryCode, $language: LanguageCode)
-  @inContext(country: $country, language: $language) {
-    products(first: 8) {
-      nodes {
-        ...ProductCard
-      }
-    }
-  }
-`;
-
-// @see: https://shopify.dev/api/storefront/2023-04/queries/collections
-export const FEATURED_COLLECTIONS_QUERY = `#graphql
-  query homepageFeaturedCollections($country: CountryCode, $language: LanguageCode)
-  @inContext(country: $country, language: $language) {
-    collections(
-      first: 4,
-      sortKey: UPDATED_AT
-    ) {
-      nodes {
-        id
-        title
-        handle
-        image {
-          altText
-          width
-          height
-          url
-        }
-      }
-    }
-  }
-`;

@@ -8,8 +8,15 @@ import {
   getSecondaryHero,
   getTertiaryHero,
 } from '@/lib/shopify';
+import Head from 'next/head';
 
 export default async function Homepage() {
+
+  const seoStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Home page',
+  };
 
   const primaryHero = await getHomepageSeo()
   const featuredProducts = await getFeaturedProducts()
@@ -17,11 +24,16 @@ export default async function Homepage() {
   const featuredCollections = await getFeaturedCollections()
   const tertiaryHero = await getTertiaryHero()
 
-
   return (
     <>
+      <Head>
+        <title>Home | This Dot Demo Store</title>
+        <meta name="description" content="The best place to buy snowboarding products offered by This Dot" />
+        <meta name="robots" content="index, follow" />
+        <script type="application/ld+json">{JSON.stringify(seoStructuredData)}</script>
+      </Head>
       {primaryHero && (
-        <Hero {...primaryHero.body.data.hero} height="full" top loading="eager" />
+        <Hero {...primaryHero.body.data.hero} height="full" top />
       )}
 
       {featuredProducts && featuredProducts.body.data.products.nodes && (

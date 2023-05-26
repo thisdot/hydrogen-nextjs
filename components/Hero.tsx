@@ -11,7 +11,6 @@ export interface CollectionHero {
   handle: string;
   heading: Metafield;
   height?: 'full';
-  loading?: 'eager' | 'lazy';
   spread: any;
   spreadSecondary: any;
   top?: boolean;
@@ -46,7 +45,11 @@ export function Hero({
           {spread?.reference && (
             <div>
               <SpreadMedia
-                className={clsx('w-full', { '(min-width: 48em) 50vw, 100vw': spreadSecondary?.reference })}
+                sizes={
+                  spreadSecondary?.reference
+                    ? '(min-width: 48em) 50vw, 100vw'
+                    : '100vw'
+                }
                 data={spread.reference.image}
               />
             </div>
@@ -54,7 +57,7 @@ export function Hero({
           {spreadSecondary?.reference && (
             <div className="hidden md:block">
               <SpreadMedia
-                className='w-1/2'
+                sizes="50vw"
                 data={spreadSecondary.reference.image}
               />
             </div>
@@ -79,13 +82,15 @@ export function Hero({
 }
 
 
-function SpreadMedia({ data, className }: { data: ImageType, className: string }) {
+function SpreadMedia({ data, sizes }: { data: ImageType, sizes: string }) {
   return (
     <Image
       src={data.url}
       alt={data.altText}
-      className={clsx("block object-cover w-full h-full", className)}
-      fill
+      className="block object-cover w-full h-full"
+      sizes={sizes}
+      width={100}
+      height={100}
     />
   );
 }

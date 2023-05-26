@@ -12,6 +12,7 @@ export const MEDIA_FRAGMENT = `#graphql
         url
         width
         height
+        altText
       }
     }
     ... on Video {
