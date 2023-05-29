@@ -1,16 +1,33 @@
+"use server";
+
 import { Button } from "@/components/Button";
 import { Grid } from "@/components/Grid";
 import { Pagination } from "@/components/Pagination";
 import { ProductCard } from "@/components/ProductCard";
 import { PageHeader, Section } from "@/components/Text";
 import { getImageLoadingPriority } from "@/lib/const";
+import { getPaginationVariables } from "@/lib/getPaginationVariables";
+import { getAllProducts } from "@/lib/shopify";
+import { NextPageContext } from "next";
 
-export default function ProductsPage() {
+// import { useRouter } from "next/navigation";
+
+const PAGE_BY = 8;
+
+export default async function ProductsPage({
+  searchParams,
+}: {
+  searchParams: NextPageContext["query"];
+}) {
+  // const router = useRouter();
+  const data = await getAllProducts({
+    variables: getPaginationVariables(searchParams, PAGE_BY),
+  });
   return (
     <>
       <PageHeader heading="All Products" variant="allCollections" />
       <Section>
-        <Pagination connection={products}>
+        <Pagination connection={data.body}>
           {({
             endCursor,
             hasNextPage,

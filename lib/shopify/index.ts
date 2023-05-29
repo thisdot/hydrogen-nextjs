@@ -1,7 +1,8 @@
 import { SHOPIFY_GRAPHQL_API_ENDPOINT } from "@/lib/constants";
 import { isShopifyError } from "@/lib/type-guards";
 import { LAYOUT_QUERY } from "./queries/layout";
-import { ShopifyLayoutOperation } from "./types";
+import { ProductConnection, ShopifyLayoutOperation } from "./types";
+import { ALL_PRODUCTS_QUERY } from "./queries/product";
 
 const domain = `https://${process.env.PUBLIC_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
@@ -76,6 +77,30 @@ export async function getLayoutData() {
     variables: {
       headerMenuHandle: "main-menu",
       footerMenuHandle: "footer",
+    },
+  });
+  return data;
+}
+
+export async function getAllProducts({
+  variables,
+}: {
+  variables:
+    | {
+        last: number;
+        startCursor: string | null;
+      }
+    | {
+        first: number;
+        endCursor: string | null;
+      };
+}) {
+  const data = await shopifyFetch<{
+    products: ProductConnection;
+  }>({
+    query: ALL_PRODUCTS_QUERY,
+    variables: {
+      ...variables,
     },
   });
   return data;

@@ -1,6 +1,13 @@
+"use client";
 import { useEffect, useMemo, useState } from "react";
+import type { Maybe, PageInfo, ProductConnection } from "@/lib/shopify/types";
+
+import {
+  useInView,
+  type IntersectionOptions,
+} from "react-intersection-observer";
 import { useRouter } from "next/router";
-import { PageInfo, ProductConnection } from "@/lib/shopify/types";
+// import {useNavigation, useLocation, useNavigate} from '@remix-run/react';
 
 type Connection = {
   nodes: ProductConnection["nodes"] | any[];
@@ -14,11 +21,11 @@ type PaginationState = {
 
 type Props<Resource extends Connection> = {
   connection: Resource;
-  autoLoadOnScroll?: boolean;
+  autoLoadOnScroll?: boolean | IntersectionOptions;
 };
 
 interface PaginationInfo {
-  endCursor?: string;
+  endCursor: Maybe<string> | undefined;
   hasNextPage: boolean;
   hasPreviousPage: boolean;
   isLoading: boolean;
@@ -26,7 +33,7 @@ interface PaginationInfo {
   nextPageUrl: string;
   nodes: ProductConnection["nodes"] | any[];
   prevPageUrl: string;
-  startCursor?: string;
+  startCursor: Maybe<string> | undefined;
 }
 
 export function Pagination<Resource extends Connection>({
@@ -45,10 +52,17 @@ export function Pagination<Resource extends Connection>({
     startCursor,
   }: PaginationInfo) => JSX.Element | null;
 }) {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const [nextLinkRef, setNextLinkRef] = useState(null);
-  const [inView, setInView] = useState(false);
+  const isLoading = false; // TODO: implement
+  const autoScrollEnabled = Boolean(autoLoadOnScroll);
+  const autoScrollConfig = (
+    autoScrollEnabled
+      ? autoLoadOnScroll
+      : {
+          threshold: 0,
+          rootMargin: "1000px 0px 0px 0px",
+        }
+  ) as IntersectionOptions;
+  const { ref: nextLinkRef, inView } = useInView(autoScrollConfig);
   const {
     endCursor,
     hasNextPage,
@@ -60,40 +74,22 @@ export function Pagination<Resource extends Connection>({
   } = usePagination(connection);
 
   // auto load next page if in view
-  useEffect(() => {
-    if (!autoLoadOnScroll) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && hasNextPage && !isLoading) {
-          setIsLoading(true);
-          router.push(nextPageUrl).then(() => setIsLoading(false));
-        }
-      },
-      {
-        rootMargin: "1000px 0px 0px 0px",
-      }
-    );
-
-    if (nextLinkRef) {
-      observer.observe(nextLinkRef);
-      return () => observer.unobserve(nextLinkRef);
-    }
-  }, [
-    autoLoadOnScroll,
-    hasNextPage,
+  useLoadMoreWhenInView({
+    disabled: !autoScrollEnabled,
+    connection: {
+      pageInfo: { startCursor, endCursor, hasPreviousPage, hasNextPage },
+      nodes,
+    },
+    inView,
     isLoading,
-    nextPageUrl,
-    nextLinkRef,
-    router,
-  ]);
+  });
 
   return children({
     endCursor,
     hasNextPage,
     hasPreviousPage,
     isLoading,
-    nextLinkRef: setNextLinkRef,
+    nextLinkRef,
     nextPageUrl,
     nodes,
     prevPageUrl,
@@ -108,16 +104,13 @@ export function usePagination(
   connection: Connection
 ): Omit<PaginationInfo, "isLoading" | "nextLinkRef"> {
   const [nodes, setNodes] = useState(connection.nodes);
+  // const {state, search} = useLocation() as {
+  //   state: PaginationState;
+  //   search: string;
+  // };
   const router = useRouter();
-  const { nodes: stateNodes, pageInfo: statePageInfo } = router.query;
-  const state = useMemo(
-    () => ({
-      nodes: stateNodes || [],
-      pageInfo: statePageInfo || null,
-    }),
-    [stateNodes, statePageInfo]
-  );
-  const params = new URLSearchParams(router.asPath.split("?")[1] || "");
+  const [state, setState] = useState<PaginationState | undefined>();
+  const params = new URLSearchParams(router.asPath.split(/\?/)[1]);
   const direction = params.get("direction");
   const isPrevious = direction === "previous";
 
@@ -162,19 +155,19 @@ export function usePagination(
   }, [isPrevious, state, hasNextPage, hasPreviousPage, startCursor, endCursor]);
 
   const prevPageUrl = useMemo(() => {
-    const params = new URLSearchParams(router.asPath.split("?")[1] || "");
+    const params = new URLSearchParams(router.asPath.split(/\?/)[1]);
     params.set("direction", "previous");
     currentPageInfo.startCursor &&
       params.set("cursor", currentPageInfo.startCursor);
-    return `${router.pathname}?${params.toString()}`;
+    return `?${params.toString()}`;
   }, [router, currentPageInfo.startCursor]);
 
   const nextPageUrl = useMemo(() => {
-    const params = new URLSearchParams(router.asPath.split("?")[1] || "");
+    const params = new URLSearchParams(router.asPath.split(/\?/)[1]);
     params.set("direction", "next");
     currentPageInfo.endCursor &&
       params.set("cursor", currentPageInfo.endCursor);
-    return `${router.pathname}?${params.toString()}`;
+    return `?${params.toString()}`;
   }, [router, currentPageInfo.endCursor]);
 
   // the only way to prevent hydration mismatches
@@ -192,4 +185,64 @@ export function usePagination(
   }, [state, isPrevious, connection.nodes]);
 
   return { ...currentPageInfo, prevPageUrl, nextPageUrl, nodes };
+}
+
+/**
+ * Auto load the next pagination page when in view and autoLoadOnScroll is true
+ * @param disabled disable auto loading
+ * @param inView trigger element is in viewport
+ * @param isIdle page transition is idle
+ * @param connection Storefront API connection
+ */
+function useLoadMoreWhenInView<Resource extends Connection>({
+  disabled,
+  inView,
+  isLoading,
+  connection,
+}: Pick<Props<Resource>, "autoLoadOnScroll" | "connection"> & {
+  disabled: boolean;
+  inView: boolean;
+  isLoading: boolean;
+}) {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const {
+    pageInfo: { startCursor, endCursor, hasPreviousPage, hasNextPage },
+    nodes,
+  } = connection;
+
+  // load next when in view and autoLoadOnScroll
+  useEffect(() => {
+    if (!inView) return;
+    if (!hasNextPage) return;
+    if (!endCursor) return;
+    if (disabled) return;
+    if (isLoading) return;
+
+    const nextPageUrl =
+      location.pathname + `?index&cursor=${endCursor}&direction=next`;
+
+    navigate(nextPageUrl, {
+      state: {
+        pageInfo: {
+          endCursor,
+          hasPreviousPage,
+          startCursor,
+        },
+        nodes,
+      },
+    });
+  }, [
+    disabled,
+    endCursor,
+    hasNextPage,
+    hasPreviousPage,
+    inView,
+    isLoading,
+    nodes,
+    location.pathname,
+    navigate,
+    startCursor,
+  ]);
 }
