@@ -1,3 +1,5 @@
+import { CollectionHero } from "@/components/Hero";
+
 export type Shop = {
   id: string;
   name: string;
@@ -537,10 +539,139 @@ export type CommentEdge = {
   node: Comment;
 };
 
-export type Seo = {
-  __typename?: "SEO";
-  /** The meta description. */
-  description?: Maybe<string>;
-  /** The SEO title. */
-  title?: Maybe<string>;
+  export type Seo = {
+    __typename?: 'SEO';
+    /** The meta description. */
+    description?: Maybe<string>;
+    /** The SEO title. */
+    title?: Maybe<string>;
+  };
+
+  export type Media = {
+  /** A word or phrase to share the nature or contents of a media. */
+  alt?: Maybe<string>;
+  /** The media content type. */
+  mediaContentType: MediaContentType;
+  /** The presentation for a media. */
+  presentation?: Maybe<MediaPresentation>;
+  /** The preview image for the media. */
+  previewImage?: Maybe<Image>;
+};
+
+export type MediaContentType =
+  /** An externally hosted video. */
+  | 'EXTERNAL_VIDEO'
+  /** A Shopify hosted image. */
+  | 'IMAGE'
+  /** A 3d model. */
+  | 'MODEL_3D'
+  /** A Shopify hosted video. */
+  | 'VIDEO';
+
+  export type MediaPresentation = Node & {
+  __typename?: 'MediaPresentation';
+  /** A JSON object representing a presentation view. */
+  asJson?: Maybe<unknown>;
+  /** A globally-unique identifier. */
+  id: string;
+};
+
+export type Video = Media &
+  Node & {
+    __typename?: 'Video';
+    /** A word or phrase to share the nature or contents of a media. */
+    alt?: Maybe<string>;
+    /** A globally-unique identifier. */
+    id: string;
+    /** The media content type. */
+    mediaContentType: MediaContentType;
+    /** The presentation for a media. */
+    presentation?: Maybe<MediaPresentation>;
+    /** The preview image for the media. */
+    previewImage?: Maybe<Image>;
+    /** The sources for a video. */
+    sources: Array<VideoSource>;
+  };
+
+  export type VideoSource = {
+  __typename?: 'VideoSource';
+  /** The format of the video source. */
+  format: string;
+  /** The height of the video. */
+  height: number;
+  /** The video MIME type. */
+  mimeType: string;
+  /** The URL of the video. */
+  url: string;
+  /** The width of the video. */
+  width: number;
+};
+
+export type CollectionConnection = {
+  __typename?: 'CollectionConnection';
+  /** A list of edges. */
+  edges: Array<CollectionEdge>;
+  /** A list of the nodes contained in CollectionEdge. */
+  nodes: Array<Collection>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+export type CollectionEdge = {
+  __typename?: 'CollectionEdge';
+  /** A cursor for use in pagination. */
+  cursor: string;
+  /** The item at the end of CollectionEdge. */
+  node: Collection;
+};
+
+
+export type ShopifyHomePageSeoOperation = {
+  data: {
+    shop: HomeSeoData;
+    hero: CollectionHero;
+  };
+  variables: {
+    handle: string;
+    country?: string,
+    language?: string,
+  };
+};
+
+export interface HomeSeoData {
+  shop: {
+    name: string;
+    description: string;
+  };
+}
+
+export type ShopifyFeaturedProductOperation = {
+  data: {
+    products: ProductConnection;
+  };
+  variables: {
+    country?: string,
+    language?: string,
+  };
+};
+
+export type ShopifyFeaturedCollectionOperation = {
+  data: {
+    collections: CollectionConnection;
+  };
+  variables: {
+    country?: string,
+    language?: string,
+  };
+};
+
+export type ShopifyHeroOperation = {
+  data: {
+    hero: CollectionHero;
+  };
+  variables: {
+    handle: string,
+    country?: string,
+    language?: string,
+  };
 };
