@@ -1,8 +1,7 @@
 import clsx from "clsx";
-import { useLocation } from "react-use";
 import ProductOptionLink from "./ProductOptionLink";
 import { Text } from "./Text";
-import { useCallback } from "react";
+import useProductOption from "@/hooks/useProductOption";
 
 interface IOption {
   optionName: string;
@@ -13,31 +12,7 @@ export interface IItemTabHeading {
 }
 
 const ItemTabHeading = ({ options = [] }: IItemTabHeading) => {
-  const { search } = useLocation();
-
-  const searchParamExists = useCallback(
-    (name: string) => {
-      const clonedParams = new URLSearchParams(search);
-      const hasSearch = clonedParams.get(name);
-      return hasSearch;
-    },
-    [search]
-  );
-
-  const isChecked = (name: string, value: string) => {
-    const clonedParams = new URLSearchParams(search);
-    const checked = clonedParams.get(name) === value;
-
-    return checked;
-  };
-
-  const searchDefaultOption = (
-    name: string,
-    value: string,
-    optionValue: string
-  ) => {
-    return !searchParamExists(name) && value === optionValue;
-  };
+  const { isChecked, searchDefaultOption } = useProductOption();
 
   return (
     <div className="flex flex-wrap items-baseline gap-4">
