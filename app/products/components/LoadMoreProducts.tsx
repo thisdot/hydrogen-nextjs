@@ -22,7 +22,7 @@ function LoadMoreProducts({ startCursor }: Props) {
       fetch(`/api/products?cursor=${cursor}`).then((res) => {
         res.json().then((data) => {
           setProducts((prev) => [...prev, ...data.products]);
-          setHasNextPage(data.hasNextPage);
+          setHasNextPage(data.pageInfo.hasNextPage);
           setCursor(data.endCursor);
           setIsLoading(false);
         });

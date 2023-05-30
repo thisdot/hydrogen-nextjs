@@ -14,5 +14,6 @@ export async function GET(request: NextResponse) {
   });
   return NextResponse.json({
     products: data.body.data.products.nodes,
+    pageInfo: data.body.data.products.pageInfo,
   });
 }
