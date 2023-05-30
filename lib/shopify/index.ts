@@ -85,18 +85,23 @@ export async function getLayoutData() {
 export async function getAllProducts({
   variables,
 }: {
-  variables:
-    | {
-        last: number;
-        startCursor: string | null;
-      }
-    | {
-        first: number;
-        endCursor: string | null;
-      };
+  variables: {
+    last?: number;
+    startCursor?: string;
+    first?: number;
+    endCursor?: string;
+  };
 }) {
   const data = await shopifyFetch<{
-    products: ProductConnection;
+    data: {
+      products: ProductConnection;
+    };
+    variables: {
+      last?: number;
+      startCursor?: string;
+      first?: number;
+      endCursor?: string;
+    };
   }>({
     query: ALL_PRODUCTS_QUERY,
     variables: {
