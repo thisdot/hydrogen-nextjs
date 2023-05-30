@@ -1,12 +1,5 @@
 import { SyntheticEvent, useMemo, useState } from 'react';
 import { Menu } from '@headlessui/react';
-
-// import {
-//   useLocation,
-//   useSearchParams,
-//   Location,
-//   useNavigate,
-// } from '@remix-run/react';
 import { useDebounce, useLocation } from 'react-use';
 import { Disclosure } from '@headlessui/react';
 import { IconCaret, IconFilters, IconXMark } from './Icon';
@@ -14,6 +7,7 @@ import { Heading, Text } from './Text';
 import { Link } from './Link';
 import { Filter, Collection, FilterType } from '@/lib/shopify/types';
 import { useRouter } from 'next/router';
+import { LocationSensorState } from 'react-use/lib/useLocation';
 
 export type AppliedFilter = {
   label: string;
@@ -85,9 +79,8 @@ export function FiltersDrawer({
   appliedFilters: AppliedFilter[];
   collections: Collection[];
 }) {
-  const [params] = useSearchParams();
   const location = useLocation();
-
+  const params = new URLSearchParams(location.search);
   const filterMarkup = (filter: Filter, option: Filter['values'][0]) => {
     switch (filter.type) {
       case 'PRICE_RANGE':
@@ -181,8 +174,8 @@ export function FiltersDrawer({
 }
 
 function AppliedFilters({ filters = [] }: { filters: AppliedFilter[] }) {
-  const [params] = useSearchParams();
   const location = useLocation();
+  const params = new URLSearchParams(location.search);
   return (
     <>
       <Heading as="h4" size="lead" className="pb-4">
@@ -211,7 +204,7 @@ function AppliedFilters({ filters = [] }: { filters: AppliedFilter[] }) {
 function getAppliedFilterLink(
   filter: AppliedFilter,
   params: URLSearchParams,
-  location: Location,
+  location: LocationSensorState,
 ) {
   const paramsClone = new URLSearchParams(params);
   if (filter.urlParam.key === 'variantOption') {
@@ -232,7 +225,7 @@ function getAppliedFilterLink(
 function getSortLink(
   sort: SortParam,
   params: URLSearchParams,
-  location: Location,
+  location: LocationSensorState,
 ) {
   params.set('sort', sort);
   return `${location.pathname}?${params.toString()}`;
@@ -371,8 +364,8 @@ export default function SortMenu() {
       key: 'newest',
     },
   ];
-  const [params] = useSearchParams();
   const location = useLocation();
+  const params = new URLSearchParams(location.search);
   const activeItem = items.find((item) => item.key === params.get('sort'));
 
   return (
