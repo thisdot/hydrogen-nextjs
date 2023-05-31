@@ -2,7 +2,9 @@ import { SHOPIFY_GRAPHQL_API_ENDPOINT } from "@/lib/constants";
 import { isShopifyError } from "@/lib/type-guards";
 import { LAYOUT_QUERY } from "./queries/layout";
 import { ALL_PRODUCTS_QUERY } from "./queries/product";
+import { COLLECTIONS_QUERY } from "./queries/collection";
 import {
+  CollectionConnection,
   ProductConnection,
   ShopifyFeaturedCollectionOperation,
   ShopifyFeaturedProductOperation,
@@ -122,6 +124,36 @@ export async function getAllProducts({
   });
   return data;
 }
+
+export async function getAllCollections({
+  variables,
+}: {
+  variables: {
+    last?: number;
+    startCursor?: string;
+    first?: number;
+    endCursor?: string;
+  };
+}) {
+  const data = await shopifyFetch<{
+    data: {
+      collections: CollectionConnection;
+    };
+    variables: {
+      last?: number;
+      startCursor?: string;
+      first?: number;
+      endCursor?: string;
+    };
+  }>({
+    query: COLLECTIONS_QUERY,
+    variables: {
+      ...variables,
+    },
+  });
+  return data;
+}
+
 export async function getHomepageSeo() {
   const data = await shopifyFetch<ShopifyHomePageSeoOperation>({
     query: COLLECTION_HERO_QUERY,
