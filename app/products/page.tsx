@@ -4,8 +4,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { PageHeader, Section } from "@/components/Text";
 import { getAllProducts } from "@/lib/shopify";
 import LoadMoreProducts from "./components/LoadMoreProducts";
-
-const PAGE_BY = 8;
+import { PAGE_BY } from "@/lib/const";
 
 export default async function ProductsPage() {
   const data = await getAllProducts({

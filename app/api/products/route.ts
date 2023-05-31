@@ -1,7 +1,6 @@
+import { PAGE_BY } from "@/lib/const";
 import { getAllProducts } from "@/lib/shopify";
 import { NextResponse } from "next/server";
-
-const PAGE_BY = 8;
 
 export async function GET(request: NextResponse) {
   const params = new URL(request.url).searchParams;
