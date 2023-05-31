@@ -1,9 +1,10 @@
+import { Collection, Product } from "@/lib/shopify/types";
 import { FeaturedCollections } from "./FeaturedCollection";
 import { ProductSwimlane } from "./ProductSwimlane";
 
 interface Iprops {
-  featuredCollections: any[];
-  featuredProducts: any[];
+  featuredCollections: Collection[];
+  featuredProducts: Product[];
 }
 export function FeaturedSection({ featuredCollections = [], featuredProducts = [] }: Iprops) {
   
