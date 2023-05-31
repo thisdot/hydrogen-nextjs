@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from "@storybook/react";
 
-import ItemTabHeading, { IItemTabHeading } from "../ItemTabHeading";
+import ItemTabHeading from "../ItemTabHeading";
 
 export default {
   title: "Components/ItemTabHeading",

@@ -539,15 +539,15 @@ export type CommentEdge = {
   node: Comment;
 };
 
-  export type Seo = {
-    __typename?: 'SEO';
-    /** The meta description. */
-    description?: Maybe<string>;
-    /** The SEO title. */
-    title?: Maybe<string>;
-  };
+export type Seo = {
+  __typename?: "SEO";
+  /** The meta description. */
+  description?: Maybe<string>;
+  /** The SEO title. */
+  title?: Maybe<string>;
+};
 
-  export type Media = {
+export type Media = {
   /** A word or phrase to share the nature or contents of a media. */
   alt?: Maybe<string>;
   /** The media content type. */
@@ -560,16 +560,16 @@ export type CommentEdge = {
 
 export type MediaContentType =
   /** An externally hosted video. */
-  | 'EXTERNAL_VIDEO'
+  | "EXTERNAL_VIDEO"
   /** A Shopify hosted image. */
-  | 'IMAGE'
+  | "IMAGE"
   /** A 3d model. */
-  | 'MODEL_3D'
+  | "MODEL_3D"
   /** A Shopify hosted video. */
-  | 'VIDEO';
+  | "VIDEO";
 
-  export type MediaPresentation = Node & {
-  __typename?: 'MediaPresentation';
+export type MediaPresentation = Node & {
+  __typename?: "MediaPresentation";
   /** A JSON object representing a presentation view. */
   asJson?: Maybe<unknown>;
   /** A globally-unique identifier. */
@@ -578,7 +578,7 @@ export type MediaContentType =
 
 export type Video = Media &
   Node & {
-    __typename?: 'Video';
+    __typename?: "Video";
     /** A word or phrase to share the nature or contents of a media. */
     alt?: Maybe<string>;
     /** A globally-unique identifier. */
@@ -593,8 +593,8 @@ export type Video = Media &
     sources: Array<VideoSource>;
   };
 
-  export type VideoSource = {
-  __typename?: 'VideoSource';
+export type VideoSource = {
+  __typename?: "VideoSource";
   /** The format of the video source. */
   format: string;
   /** The height of the video. */
@@ -608,7 +608,7 @@ export type Video = Media &
 };
 
 export type CollectionConnection = {
-  __typename?: 'CollectionConnection';
+  __typename?: "CollectionConnection";
   /** A list of edges. */
   edges: Array<CollectionEdge>;
   /** A list of the nodes contained in CollectionEdge. */
@@ -618,13 +618,12 @@ export type CollectionConnection = {
 };
 
 export type CollectionEdge = {
-  __typename?: 'CollectionEdge';
+  __typename?: "CollectionEdge";
   /** A cursor for use in pagination. */
   cursor: string;
   /** The item at the end of CollectionEdge. */
   node: Collection;
 };
-
 
 export type ShopifyHomePageSeoOperation = {
   data: {
@@ -633,8 +632,8 @@ export type ShopifyHomePageSeoOperation = {
   };
   variables: {
     handle: string;
-    country?: string,
-    language?: string,
+    country?: string;
+    language?: string;
   };
 };
 
@@ -650,8 +649,8 @@ export type ShopifyFeaturedProductOperation = {
     products: ProductConnection;
   };
   variables: {
-    country?: string,
-    language?: string,
+    country?: string;
+    language?: string;
   };
 };
 
@@ -660,8 +659,8 @@ export type ShopifyFeaturedCollectionOperation = {
     collections: CollectionConnection;
   };
   variables: {
-    country?: string,
-    language?: string,
+    country?: string;
+    language?: string;
   };
 };
 
@@ -670,8 +669,8 @@ export type ShopifyHeroOperation = {
     hero: CollectionHero;
   };
   variables: {
-    handle: string,
-    country?: string,
-    language?: string,
+    handle: string;
+    country?: string;
+    language?: string;
   };
 };

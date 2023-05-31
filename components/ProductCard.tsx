@@ -1,27 +1,29 @@
-import clsx from 'clsx';
-import { getProductPlaceholder } from '@/lib/placeholders';
-import type { Money, Product, ShopifyAnalyticsProduct } from '@/lib/shopify/types';
-import { Link } from './Link';
+import clsx from "clsx";
+import { getProductPlaceholder } from "@/lib/placeholders";
+import type {
+  Money,
+  Product,
+  ShopifyAnalyticsProduct,
+} from "@/lib/shopify/types";
+import { Link } from "./Link";
 import { Text } from "./Text";
-import Image from 'next/image';
+import Image from "next/image";
 import { Money as MoneyComponent } from "./MoneyComponent";
-import { isDiscounted, isNewArrival } from '@/lib/utils';
-import { AddToCartButton } from './AddToCartButton';
-import { useMoney } from '@/lib/useMoney';
-import { flattenConnection } from '@/lib/flattenConnection';
+import { isDiscounted, isNewArrival } from "@/lib/utils";
+import { AddToCartButton } from "./AddToCartButton";
+import { useMoney } from "@/lib/useMoney";
+import { flattenConnection } from "@/lib/flattenConnection";
 
 export const ProductCard = ({
   product,
   label,
   className,
-  loading,
   onClick,
   quickAdd,
 }: {
   product: Product;
   label?: string;
   className?: string;
-  loading?: HTMLImageElement['loading'];
   onClick?: () => void;
   quickAdd?: boolean;
 }) => {
@@ -34,16 +36,15 @@ export const ProductCard = ({
 
   const firstVariant = flattenConnection(cardProduct.variants)[0];
 
-
   if (!firstVariant) return null;
   const { image, price, compareAtPrice } = firstVariant;
 
   if (label) {
     cardLabel = label;
   } else if (isDiscounted(price as Money, compareAtPrice as Money)) {
-    cardLabel = 'Sale';
+    cardLabel = "Sale";
   } else if (isNewArrival(product.publishedAt)) {
-    cardLabel = 'New';
+    cardLabel = "New";
   }
 
   const productAnalytics: ShopifyAnalyticsProduct = {
@@ -58,12 +59,8 @@ export const ProductCard = ({
 
   return (
     <div className="flex flex-col gap-2">
-      <Link
-        onClick={onClick}
-        href={`/products/${product.handle}`}
-        prefetch
-      >
-        <div className={clsx('grid gap-4', className)}>
+      <Link onClick={onClick} href={`/products/${product.handle}`} prefetch>
+        <div className={clsx("grid gap-4", className)}>
           <div className="card-image aspect-[4/5] bg-primary/5">
             {image && (
               <Image
@@ -71,7 +68,6 @@ export const ProductCard = ({
                 className="object-cover w-full fadeIn"
                 sizes="(min-width: 64em) 25vw, (min-width: 48em) 30vw, 45vw"
                 alt={image.altText || `Picture of ${product.title}`}
-                loading={loading}
                 width={25}
                 height={45}
               />
@@ -96,7 +92,7 @@ export const ProductCard = ({
                 <MoneyComponent withoutTrailingZeros data={price!} />
                 {isDiscounted(price as Money, compareAtPrice as Money) && (
                   <CompareAtPrice
-                    className={'opacity-50'}
+                    className={"opacity-50"}
                     data={compareAtPrice as Money}
                   />
                 )}
@@ -120,14 +116,17 @@ export const ProductCard = ({
             totalValue: parseFloat(productAnalytics.price),
           }}
         >
-          <Text as="span" className="flex items-center wide justify-center gap-2">
+          <Text
+            as="span"
+            className="flex items-center wide justify-center gap-2"
+          >
             Add to Bag
           </Text>
         </AddToCartButton>
       )}
     </div>
   );
-}
+};
 
 const CompareAtPrice = ({
   data,
@@ -136,10 +135,12 @@ const CompareAtPrice = ({
   data: Money;
   className?: string;
 }) => {
-  const { currencyNarrowSymbol, withoutTrailingZerosAndCurrency } =
-    useMoney(data, 'en');
+  const { currencyNarrowSymbol, withoutTrailingZerosAndCurrency } = useMoney(
+    data,
+    "en"
+  );
 
-  const styles = clsx('strike', className);
+  const styles = clsx("strike", className);
 
   return (
     <span className={styles}>
@@ -147,4 +148,4 @@ const CompareAtPrice = ({
       {withoutTrailingZerosAndCurrency}
     </span>
   );
-}
+};
