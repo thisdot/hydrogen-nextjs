@@ -28,3 +28,4 @@ straightforward as possible.
 
 - Infinte scroll on product page
 - build out Not Found page
+- build out Generic Error page

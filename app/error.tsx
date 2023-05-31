@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/Button";
+import { FeaturedSection } from "@/components/FeaturedSection";
 import { PageHeader, Text } from "@/components/Text";
 import {
   Collection,
@@ -85,7 +86,7 @@ export default function Error({
           Take me to the home page
         </Button>
       </PageHeader>
-      {/* <FeaturedSection /> */}
+      <FeaturedSection featuredCollections={featuredCollections} featuredProducts={featuredProducts} />
     </>
   );
 }
