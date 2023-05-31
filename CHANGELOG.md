@@ -22,6 +22,12 @@ straightforward as possible.
 
 ### Fixed -->
 
+## [Unreleased]
+
+### Added
+
+- Infinte scroll on product page
+
 ## [v0.1.0] - 2023-05-12
 
 Here we write upgrading notes for brands. It's a team effort to make them as
