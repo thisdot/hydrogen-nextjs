@@ -32,6 +32,8 @@ Default.args = {
     image: {
       altText: "Article Image",
       url: "https://via.placeholder.com/300x200",
+      width: 300,
+      height: 200,
     },
-  },
+  } as Article,
 };

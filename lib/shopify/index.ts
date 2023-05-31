@@ -4,6 +4,7 @@ import { LAYOUT_QUERY } from "./queries/layout";
 import { ALL_PRODUCTS_QUERY } from "./queries/product";
 import { COLLECTIONS_QUERY } from "./queries/collection";
 import {
+  Blog,
   CollectionConnection,
   ProductConnection,
   ShopifyFeaturedCollectionOperation,
@@ -17,6 +18,7 @@ import {
   COLLECTION_HERO_QUERY,
   FEATURED_COLLECTIONS_QUERY,
 } from "./queries/homepage";
+import { BLOGS_QUERY } from "./queries/blog";
 
 const domain = `https://${process.env.PUBLIC_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
@@ -25,12 +27,6 @@ const key = process.env.PUBLIC_STOREFRONT_API_TOKEN!;
 type ExtractVariables<T> = T extends { variables: object }
   ? T["variables"]
   : never;
-
-type LayoutVariables = {
-  headerMenuHandle: string;
-  footerMenuHandle: string;
-  language: string;
-};
 
 export async function shopifyFetch<T>({
   query,
@@ -194,6 +190,34 @@ export async function getTertiaryHero() {
     variables: {
       handle: "frontpage",
     },
+  });
+  return data;
+}
+
+export async function getAllPosts({
+  variables,
+}: {
+  variables: {
+    cursor?: string;
+    pageBy?: number;
+    blogHandle: string;
+  };
+}) {
+  const data = await shopifyFetch<{
+    data: {
+      blog: Blog;
+    };
+    variables: {
+      cursor?: string;
+      pageBy?: number;
+      blogHandle: string;
+    };
+  }>({
+    query: BLOGS_QUERY,
+    variables: {
+      ...variables,
+    },
+    cache: "no-cache",
   });
   return data;
 }
