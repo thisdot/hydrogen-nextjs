@@ -27,3 +27,4 @@ straightforward as possible.
 ### Added
 
 - Infinte scroll on product page
+- build out Not Found page
