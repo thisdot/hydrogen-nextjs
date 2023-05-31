@@ -27,21 +27,3 @@ straightforward as possible.
 ### Added
 
 - Infinte scroll on product page
-
-## [v0.1.0] - 2023-05-12
-
-Here we write upgrading notes for brands. It's a team effort to make them as
-straightforward as possible.
-
-### Added
-
-- [Hydrogen-Nextjs#1](https://github.com/thisdot/hydrogen-nextjs/issues/1)
-  Create Next.js Hydrogen template repo
-
-### Changed
-
-### Fixed
-
-## [v0.1.0] - 2023-05-12
-
-Create Next.js Hydrogen template repo
