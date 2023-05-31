@@ -8,6 +8,7 @@ import { Link } from './Link';
 import { Filter, Collection, FilterType } from '@/lib/shopify/types';
 import { useRouter } from 'next/router';
 import { LocationSensorState } from 'react-use/lib/useLocation';
+import clsx from 'clsx';
 
 export type AppliedFilter = {
   label: string;
@@ -53,10 +54,10 @@ export function SortFilter({
       </div>
       <div className="flex flex-col flex-wrap md:flex-row">
         <div
-          className={`transition-all duration-200 ${isOpen
-            ? 'opacity-100 min-w-full md:min-w-[240px] md:w-[240px] md:pr-8 max-h-full'
-            : 'opacity-0 md:min-w-[0px] md:w-[0px] pr-0 max-h-0 md:max-h-full'
-            }`}
+          className={clsx('transition-all duration-200', {
+            'opacity-100 min-w-full md:min-w-[240px] md:w-[240px] md:pr-8 max-h-full': isOpen,
+            'opacity-0 md:min-w-[0px] md:w-[0px] pr-0 max-h-0 md:max-h-full': !isOpen
+          })}
         >
           <FiltersDrawer
             collections={collections}
@@ -219,7 +220,7 @@ function getAppliedFilterLink(
   } else {
     paramsClone.delete(filter.urlParam.key);
   }
-  return `${location.pathname}?${paramsClone.toString()}`;
+  return `${location.pathname} ? ${paramsClone.toString()}`;
 }
 
 function getSortLink(
@@ -228,7 +229,7 @@ function getSortLink(
   location: LocationSensorState,
 ) {
   params.set('sort', sort);
-  return `${location.pathname}?${params.toString()}`;
+  return `${location.pathname} ? ${params.toString()}`;
 }
 
 function getFilterLink(
@@ -239,7 +240,7 @@ function getFilterLink(
 ) {
   const paramsClone = new URLSearchParams(params);
   const newParams = filterInputToParams(filter.type, rawInput, paramsClone);
-  return `${location.pathname}?${newParams.toString()}`;
+  return `${location.pathname} ? ${newParams.toString()}`;
 }
 
 const PRICE_RANGE_FILTER_DEBOUNCE = 500;
@@ -268,7 +269,7 @@ function PriceRangeFilter({ max, min }: { max?: number; min?: number }) {
       if (maxPrice !== '') price.max = maxPrice;
 
       const newParams = filterInputToParams('PRICE_RANGE', { price }, params);
-      router.push(`${location.pathname}?${newParams.toString()}`);
+      router.push(`${location.pathname} ? ${newParams.toString()}`);
     },
     PRICE_RANGE_FILTER_DEBOUNCE,
     [minPrice, maxPrice],
@@ -386,8 +387,10 @@ export default function SortMenu() {
           <Menu.Item key={item.label}>
             {() => (
               <Link
-                className={`block text-sm pb-2 px-3 ${activeItem?.key === item.key ? 'font-bold' : 'font-normal'
-                  }`}
+                className={clsx('block text-sm pb-2 px-3', {
+                  'font-bold': activeItem?.key === item.key,
+                  'font-normal': activeItem?.key !== item.key,
+                })}
                 href={getSortLink(item.key, params, location)}
               >
                 {item.label}
