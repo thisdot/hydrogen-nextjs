@@ -17,7 +17,7 @@ export default async function Collections() {
       <PageHeader heading="Collections" />
       <Section>
         <Grid items={data.body.data.collections.nodes.length === 3 ? 3 : 2}>
-          {data.body.data.collections.nodes.map((collection, i) => (
+          {data.body.data.collections.nodes.map((collection) => (
             <CollectionCard collection={collection} key={collection.id} />
           ))}
         </Grid>
