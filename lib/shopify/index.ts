@@ -1,8 +1,20 @@
 import { SHOPIFY_GRAPHQL_API_ENDPOINT } from "@/lib/constants";
 import { isShopifyError } from "@/lib/type-guards";
 import { LAYOUT_QUERY } from "./queries/layout";
-import { ProductConnection, ShopifyLayoutOperation } from "./types";
 import { ALL_PRODUCTS_QUERY } from "./queries/product";
+import {
+  ProductConnection,
+  ShopifyFeaturedCollectionOperation,
+  ShopifyFeaturedProductOperation,
+  ShopifyHeroOperation,
+  ShopifyHomePageSeoOperation,
+  ShopifyLayoutOperation,
+} from "./types";
+import {
+  HOMEPAGE_FEATURED_PRODUCTS_QUERY,
+  COLLECTION_HERO_QUERY,
+  FEATURED_COLLECTIONS_QUERY,
+} from "./queries/homepage";
 
 const domain = `https://${process.env.PUBLIC_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
@@ -106,6 +118,49 @@ export async function getAllProducts({
     query: ALL_PRODUCTS_QUERY,
     variables: {
       ...variables,
+    },
+  });
+  return data;
+}
+export async function getHomepageSeo() {
+  const data = await shopifyFetch<ShopifyHomePageSeoOperation>({
+    query: COLLECTION_HERO_QUERY,
+    variables: {
+      handle: "hydrogen",
+    },
+  });
+  return data;
+}
+
+export async function getFeaturedProducts() {
+  const data = await shopifyFetch<ShopifyFeaturedProductOperation>({
+    query: HOMEPAGE_FEATURED_PRODUCTS_QUERY,
+  });
+  return data;
+}
+
+export async function getSecondaryHero() {
+  const data = await shopifyFetch<ShopifyHeroOperation>({
+    query: COLLECTION_HERO_QUERY,
+    variables: {
+      handle: "automated-collection",
+    },
+  });
+  return data;
+}
+
+export async function getFeaturedCollections() {
+  const data = await shopifyFetch<ShopifyFeaturedCollectionOperation>({
+    query: FEATURED_COLLECTIONS_QUERY,
+  });
+  return data;
+}
+
+export async function getTertiaryHero() {
+  const data = await shopifyFetch<ShopifyHeroOperation>({
+    query: COLLECTION_HERO_QUERY,
+    variables: {
+      handle: "frontpage",
     },
   });
   return data;

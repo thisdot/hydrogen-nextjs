@@ -4,6 +4,7 @@ const nextConfig = {
     serverActions: true,
   },
   images: {
+    dangerouslyAllowSVG: true,
     domains: ["cdn.shopify.com"],
   },
 };
