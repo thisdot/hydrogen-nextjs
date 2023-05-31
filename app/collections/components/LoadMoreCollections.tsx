@@ -33,7 +33,7 @@ function LoadMoreCollections({ startCursor }: Props) {
   return (
     <>
       <Grid items={3}>
-        {collections.map((collection, i) => (
+        {collections.map((collection) => (
           <CollectionCard key={collection.id} collection={collection} />
         ))}
       </Grid>
