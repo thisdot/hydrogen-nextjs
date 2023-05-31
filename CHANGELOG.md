@@ -26,4 +26,5 @@ straightforward as possible.
 
 ### Added
 
+- Build out journal page
 - Infinte scroll on product page
