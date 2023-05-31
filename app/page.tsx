@@ -49,7 +49,7 @@ export default async function Homepage() {
       )}
 
       {featuredCollections && featuredCollections.body.data.collections.nodes && (
-        <FeaturedCollections
+        <FeaturedCollection
           collections={featuredCollections.body.data.collections.nodes}
           title="Collections"
         />
