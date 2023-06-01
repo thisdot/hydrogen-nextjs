@@ -17,7 +17,7 @@ export default async function JournalPage() {
       <PageHeader heading="Journal" />
       <Section>
         <Grid as="ol" layout="blog">
-          {data.body.data.blog.articles.edges.map((article, i) => (
+          {data.body.data.blog.articles.edges.map((article) => (
             <ArticleCard
               blogHandle={BLOG_HANDLE.toLowerCase()}
               article={article.node}

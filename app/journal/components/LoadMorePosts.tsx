@@ -33,7 +33,7 @@ function LoadMorePosts({ startCursor }: Props) {
   return (
     <>
       <Grid as="ol" layout="blog">
-        {posts.map((article, i) => (
+        {posts.map((article) => (
           <ArticleCard
             blogHandle={BLOG_HANDLE.toLowerCase()}
             article={article.node}
