@@ -1,8 +1,27 @@
 import { PageHeader, Section } from "@/components/Text";
+import { BLOG_HANDLE } from "@/lib/const";
+import { getArticleByHandle } from "@/lib/shopify";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Image from "next/image";
+import sanitizeHtml from "sanitize-html";
 
-export default async function JournalHandlePage() {
+export default async function JournalHandlePage({
+  params,
+}: {
+  params: { journalHandle: string };
+}) {
+  console.log(params);
+  const data = await getArticleByHandle({
+    variables: {
+      articleHandle: params.journalHandle,
+      blogHandle: BLOG_HANDLE,
+    },
+  });
+
+  const content = sanitizeHtml(
+    data.body.data.blog.articleByHandle?.contentHtml as string
+  );
+
   return (
     <>
       <PageHeader heading="Blog post title" variant="blogPost">
@@ -19,12 +38,8 @@ export default async function JournalHandlePage() {
           />
         )} */}
         <div className="article">
-          {/* @ts-expect-error Server Component */}
-          <MDXRemote
-            source={`
-        # Hello, world!
-        `}
-          />
+          {/* @ts-expect-error Server component */}
+          <MDXRemote source={content} />
         </div>
       </Section>
     </>
