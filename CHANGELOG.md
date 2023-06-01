@@ -26,5 +26,6 @@ straightforward as possible.
 
 ### Added
 
+- Build out journal page
 - Infinte scroll on product page
 - build out Not Found page
