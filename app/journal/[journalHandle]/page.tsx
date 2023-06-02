@@ -1,7 +1,6 @@
 import { PageHeader, Section } from "@/components/Text";
 import { BLOG_HANDLE } from "@/lib/const";
 import { getArticleByHandle } from "@/lib/shopify";
-import { MDXRemote } from "next-mdx-remote/rsc";
 import Image from "next/image";
 import sanitizeHtml from "sanitize-html";
 
@@ -10,7 +9,6 @@ export default async function JournalHandlePage({
 }: {
   params: { journalHandle: string };
 }) {
-  console.log(params);
   const data = await getArticleByHandle({
     variables: {
       articleHandle: params.journalHandle,
@@ -22,25 +20,44 @@ export default async function JournalHandlePage({
     data.body.data.blog.articleByHandle?.contentHtml as string
   );
 
+  const date = new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(new Date(data.body.data.blog.articleByHandle?.publishedAt!));
+
   return (
     <>
-      <PageHeader heading="Blog post title" variant="blogPost">
-        <span>Date here &middot; auther name here</span>
+      <PageHeader
+        heading={data.body.data.blog.articleByHandle?.title as string}
+        variant="blogPost"
+      >
+        <span>
+          {date}
+          &middot; {data.body.data.blog.articleByHandle?.author?.name}
+        </span>
       </PageHeader>
 
       <Section as="article" padding="x">
-        {/* {image && (
+        {data.body.data.blog.articleByHandle?.image?.url && (
           <Image
-            src={image}
+            src={data.body.data.blog.articleByHandle?.image?.url as string}
             className="w-full mx-auto mt-8 md:mt-16 max-w-7xl"
+            alt={data.body.data.blog.articleByHandle?.image?.altText as string}
             sizes="90vw"
-            loading="eager"
+            height={
+              (data.body.data.blog.articleByHandle?.image?.height as number) ??
+              400
+            }
+            width={data.body.data.blog.articleByHandle?.image?.width as number}
           />
-        )} */}
-        <div className="article">
-          {/* @ts-expect-error Server component */}
-          <MDXRemote source={content} />
-        </div>
+        )}
+        <div
+          className="article"
+          dangerouslySetInnerHTML={{
+            __html: content,
+          }}
+        />
       </Section>
     </>
   );
