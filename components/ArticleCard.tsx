@@ -5,12 +5,15 @@ import { Article } from "@/lib/shopify/types";
 function ArticleCard({
   blogHandle,
   article,
-  loading,
 }: {
   blogHandle: string;
   article: Article;
-  loading?: HTMLImageElement["loading"];
 }) {
+  const date = new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(new Date(article.publishedAt!));
   return (
     <Link href={`/${blogHandle}/${article.handle}`}>
       {article.image && (
@@ -19,13 +22,12 @@ function ArticleCard({
             alt={article.image.altText || article.title}
             className="object-cover w-full"
             src={article.image.url}
-            loading={loading}
-            layout="fill"
+            fill
           />
         </div>
       )}
       <h2 className="mt-4 font-medium">{article.title}</h2>
-      <span className="block mt-1">{article.publishedAt}</span>
+      <span className="block mt-1">{date}</span>
     </Link>
   );
 }
