@@ -1,8 +1,14 @@
-import { Link } from "./Link"
-import Image from "next/image"
-import { Heading } from "./Text"
-import { Collection } from "@/lib/shopify/types"
-const CollectionCard = ({ collection, key }: { collection: Collection, key: string }) => {
+import { Link } from "./Link";
+import Image from "next/image";
+import { Heading } from "./Text";
+import { Collection } from "@/lib/shopify/types";
+const CollectionCard = ({
+  collection,
+  key,
+}: {
+  collection: Collection;
+  key: string;
+}) => {
   return (
     <Link key={key} href={`/collections/${collection.handle}`}>
       <div className="grid gap-4">
@@ -19,7 +25,7 @@ const CollectionCard = ({ collection, key }: { collection: Collection, key: stri
         <Heading size="copy">{collection.title}</Heading>
       </div>
     </Link>
-  )
-}
+  );
+};
 
-export default CollectionCard
+export default CollectionCard;

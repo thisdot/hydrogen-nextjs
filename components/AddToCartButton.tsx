@@ -4,9 +4,9 @@ import { Button } from "./Button";
 export function AddToCartButton({
   children,
   lines,
-  className = '',
-  variant = 'primary',
-  width = 'full',
+  className = "",
+  variant = "primary",
+  width = "full",
   disabled,
   analytics,
   ...props
@@ -15,13 +15,12 @@ export function AddToCartButton({
   // this type should be CartLineInput from @shopify/hydrogen/storefront-api-types
   lines: any;
   className?: string;
-  variant?: 'primary' | 'secondary' | 'inline';
-  width?: 'auto' | 'full';
+  variant?: "primary" | "secondary" | "inline";
+  width?: "auto" | "full";
   disabled?: boolean;
   analytics?: unknown;
   [key: string]: any;
 }) {
-
   return (
     <Button
       as="button"

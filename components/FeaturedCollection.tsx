@@ -1,11 +1,11 @@
-import CollectionCard from './CollectionCard';
-import { Section } from './Text';
-import { Grid } from './Grid';
-import { Collection } from '@/lib/shopify/types';
+import CollectionCard from "./CollectionCard";
+import { Section } from "./Text";
+import { Grid } from "./Grid";
+import { Collection } from "@/lib/shopify/types";
 
 export function FeaturedCollections({
   collections,
-  title = 'Collections',
+  title = "Collections",
   ...props
 }: {
   collections: Collection[];
@@ -23,9 +23,7 @@ export function FeaturedCollections({
           if (!collection?.image) {
             return null;
           }
-          return (
-            <CollectionCard collection={collection} key={collection.id} />
-          );
+          return <CollectionCard collection={collection} key={collection.id} />;
         })}
       </Grid>
     </Section>

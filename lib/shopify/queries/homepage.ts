@@ -29,7 +29,6 @@ export const COLLECTION_CONTENT_FRAGMENT = `#graphql
   }
 `;
 
-
 export const COLLECTION_HERO_QUERY = `#graphql
   ${COLLECTION_CONTENT_FRAGMENT}
   query collectionContent($handle: String, $country: CountryCode, $language: LanguageCode)

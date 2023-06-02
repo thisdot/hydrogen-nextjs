@@ -1,32 +1,43 @@
-import { type ReactNode } from 'react';
-import type { Money } from '@/lib/shopify/types';
-import type { PartialDeep } from 'type-fest';
+import { type ReactNode } from "react";
+import type { Money } from "@/lib/shopify/types";
+import type { PartialDeep } from "type-fest";
 export interface MoneyPropsBase<ComponentGeneric extends React.ElementType> {
   /** An HTML tag or React Component to be rendered as the base element wrapper. The default is `div`. */
   as?: ComponentGeneric;
   /** An object with fields that correspond to the Storefront API's [MoneyV2 object](https://shopify.dev/api/storefront/reference/common-objects/moneyv2). */
-  data: PartialDeep<Money, {
-    recurseIntoArrays: true;
-  }>;
+  data: PartialDeep<
+    Money,
+    {
+      recurseIntoArrays: true;
+    }
+  >;
   /** Whether to remove the currency symbol from the output. */
   withoutCurrency?: boolean;
   /** Whether to remove trailing zeros (fractional money) from the output. */
   withoutTrailingZeros?: boolean;
   /** A [UnitPriceMeasurement object](https://shopify.dev/api/storefront/2023-04/objects/unitpricemeasurement). */
-  measurement?: PartialDeep<UnitPriceMeasurement, {
-    recurseIntoArrays: true;
-  }>;
+  measurement?: PartialDeep<
+    UnitPriceMeasurement,
+    {
+      recurseIntoArrays: true;
+    }
+  >;
   /** Customizes the separator between the money output and the measurement output. Used with the `measurement` prop. Defaults to `'/'`. */
   measurementSeparator?: ReactNode;
 }
-export type MoneyProps<ComponentGeneric extends React.ElementType> = MoneyPropsBase<ComponentGeneric> & Omit<React.ComponentPropsWithoutRef<ComponentGeneric>, keyof MoneyPropsBase<ComponentGeneric>>;
+export type MoneyProps<ComponentGeneric extends React.ElementType> =
+  MoneyPropsBase<ComponentGeneric> &
+    Omit<
+      React.ComponentPropsWithoutRef<ComponentGeneric>,
+      keyof MoneyPropsBase<ComponentGeneric>
+    >;
 /**
  * The `Money` component renders a string of the Storefront API's
  * [MoneyV2 object](https://shopify.dev/api/storefront/reference/common-objects/moneyv2) according to the
  * `locale` in the `ShopifyProvider` component.
  */
 // export declare function Money<ComponentGeneric extends React.ElementType = 'div'>({ data, as, withoutCurrency, withoutTrailingZeros, measurement, measurementSeparator, ...passthroughProps }: MoneyProps<ComponentGeneric>): JSX.Element;
-export function Money<ComponentGeneric extends React.ElementType = 'div'>({
+export function Money<ComponentGeneric extends React.ElementType = "div">({
   data,
   as,
   withoutCurrency,
@@ -37,13 +48,13 @@ export function Money<ComponentGeneric extends React.ElementType = 'div'>({
 }: MoneyProps<ComponentGeneric>): JSX.Element {
   return (
     <div {...passthroughProps}>
-      {data.amount}{' '}{data.currencyCode}
+      {data.amount} {data.currencyCode}
     </div>
   );
 }
 
 export type UnitPriceMeasurement = {
-  __typename?: 'UnitPriceMeasurement';
+  __typename?: "UnitPriceMeasurement";
   /** The type of unit of measurement for the unit price measurement. */
   measuredType?: UnitPriceMeasurementMeasuredType | null;
   /** The quantity unit for the unit price measurement. */
@@ -58,35 +69,35 @@ export type UnitPriceMeasurement = {
 
 export type UnitPriceMeasurementMeasuredType =
   /** Unit of measurements representing areas. */
-  | 'AREA'
+  | "AREA"
   /** Unit of measurements representing lengths. */
-  | 'LENGTH'
+  | "LENGTH"
   /** Unit of measurements representing volumes. */
-  | 'VOLUME'
+  | "VOLUME"
   /** Unit of measurements representing weights. */
-  | 'WEIGHT';
+  | "WEIGHT";
 
 /** The valid units of measurement for a unit price measurement. */
 export type UnitPriceMeasurementMeasuredUnit =
   /** 100 centiliters equals 1 liter. */
-  | 'CL'
+  | "CL"
   /** 100 centimeters equals 1 meter. */
-  | 'CM'
+  | "CM"
   /** Metric system unit of weight. */
-  | 'G'
+  | "G"
   /** 1 kilogram equals 1000 grams. */
-  | 'KG'
+  | "KG"
   /** Metric system unit of volume. */
-  | 'L'
+  | "L"
   /** Metric system unit of length. */
-  | 'M'
+  | "M"
   /** Metric system unit of area. */
-  | 'M2'
+  | "M2"
   /** 1 cubic meter equals 1000 liters. */
-  | 'M3'
+  | "M3"
   /** 1000 milligrams equals 1 gram. */
-  | 'MG'
+  | "MG"
   /** 1000 milliliters equals 1 liter. */
-  | 'ML'
+  | "ML"
   /** 1000 millimeters equals 1 meter. */
-  | 'MM';
+  | "MM";

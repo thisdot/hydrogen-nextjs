@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version name'
+        description: "Version name"
         required: true
-        default: 'minor'
+        default: "minor"
         type: choice
         options:
           - major
@@ -35,8 +35,8 @@ jobs:
           echo "version=$(npm version ${{ github.event.inputs.version }} --no-git-tag-version)" >> $GITHUB_OUTPUT
       - name: Update Changelog
         id: update_changelog
-        run: | 
-            sed -i 's/Unreleased/${{ steps.update_version.outputs.version }}/g' CHANGELOG.md
+        run: |
+          sed -i 's/Unreleased/${{ steps.update_version.outputs.version }}/g' CHANGELOG.md
       - name: Create pull request
         id: create_pr
         uses: peter-evans/create-pull-request@v5
@@ -46,4 +46,3 @@ jobs:
           title: "Release: ${{ steps.update_version.outputs.version }} Pull Request"
           body: "This pull request contains the updated package.json with the new release version. By merging this PR the release flow will start"
           base: main
-          

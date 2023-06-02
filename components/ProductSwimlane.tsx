@@ -1,11 +1,11 @@
-import { Product } from '@/lib/shopify/types';
-import { ProductCard } from './ProductCard';
-import { Section } from './Text';
+import { Product } from "@/lib/shopify/types";
+import { ProductCard } from "./ProductCard";
+import { Section } from "./Text";
 
-const mockProducts = new Array(12).fill('');
+const mockProducts = new Array(12).fill("");
 
 export function ProductSwimlane({
-  title = 'Featured Products',
+  title = "Featured Products",
   products = mockProducts,
   count = 12,
   ...props

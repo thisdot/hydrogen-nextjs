@@ -1,16 +1,15 @@
-import clsx from 'clsx';
-import { Link } from './Link';
-import { Heading, Text } from './Text';
-import { Image as ImageType, Metafield } from '@/lib/shopify/types';
-import Image from 'next/image';
-
+import clsx from "clsx";
+import { Link } from "./Link";
+import { Heading, Text } from "./Text";
+import { Image as ImageType, Metafield } from "@/lib/shopify/types";
+import Image from "next/image";
 
 export interface CollectionHero {
   byline: Metafield;
   cta: Metafield;
   handle: string;
   heading: Metafield;
-  height?: 'full';
+  height?: "full";
   spread: any;
   spreadSecondary: any;
   top?: boolean;
@@ -29,16 +28,15 @@ export function Hero({
   spreadSecondary,
   top,
 }: CollectionHero) {
-
   return (
     <Link href={`/collections/${handle}`}>
       <section
         className={clsx(
-          'relative justify-end flex flex-col w-full',
-          top && '-mt-nav',
-          height === 'full'
-            ? 'h-screen'
-            : 'aspect-[4/5] sm:aspect-square md:aspect-[5/4] lg:aspect-[3/2] xl:aspect-[2/1]',
+          "relative justify-end flex flex-col w-full",
+          top && "-mt-nav",
+          height === "full"
+            ? "h-screen"
+            : "aspect-[4/5] sm:aspect-square md:aspect-[5/4] lg:aspect-[3/2] xl:aspect-[2/1]"
         )}
       >
         <div className="absolute inset-0 grid flex-grow grid-flow-col pointer-events-none auto-cols-fr -z-10 content-stretch overflow-clip">
@@ -47,8 +45,8 @@ export function Hero({
               <SpreadMedia
                 sizes={
                   spreadSecondary?.reference
-                    ? '(min-width: 48em) 50vw, 100vw'
-                    : '100vw'
+                    ? "(min-width: 48em) 50vw, 100vw"
+                    : "100vw"
                 }
                 data={spread.reference.image}
               />
@@ -81,8 +79,7 @@ export function Hero({
   );
 }
 
-
-function SpreadMedia({ data, sizes }: { data: ImageType, sizes: string }) {
+function SpreadMedia({ data, sizes }: { data: ImageType; sizes: string }) {
   return (
     <Image
       src={data.url}

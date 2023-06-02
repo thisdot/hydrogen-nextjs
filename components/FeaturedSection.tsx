@@ -6,11 +6,13 @@ interface Iprops {
   featuredCollections: Collection[];
   featuredProducts: Product[];
 }
-export function FeaturedSection({ featuredCollections = [], featuredProducts = [] }: Iprops) {
-  
+export function FeaturedSection({
+  featuredCollections = [],
+  featuredProducts = [],
+}: Iprops) {
   return (
     <>
-      {(featuredCollections.length < 4 && featuredCollections.length !== 0) && (
+      {featuredCollections.length < 4 && featuredCollections.length !== 0 && (
         <FeaturedCollections
           title="Popular Collections"
           collections={featuredCollections}

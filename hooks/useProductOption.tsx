@@ -26,7 +26,7 @@ const useProductOption = () => {
     return !searchParamExists(name) && value === firstValue;
   };
 
-  return {isChecked, searchDefaultOption, searchParamExists}
+  return { isChecked, searchDefaultOption, searchParamExists };
 };
 
 export default useProductOption;

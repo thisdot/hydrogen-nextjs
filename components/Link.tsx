@@ -3,9 +3,9 @@ import { usePathname } from "next/navigation";
 import { default as NextLink, LinkProps as NextLinkProps } from "next/link";
 type LinkProps = Omit<NextLinkProps, "className"> & {
   className?:
-  | string
-  | ((props: { isActive: boolean }) => string | undefined)
-  | undefined;
+    | string
+    | ((props: { isActive: boolean }) => string | undefined)
+    | undefined;
   children: React.ReactNode;
 };
 

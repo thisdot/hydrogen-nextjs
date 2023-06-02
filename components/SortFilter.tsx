@@ -1,14 +1,14 @@
-import { SyntheticEvent, useMemo, useState } from 'react';
-import { Menu } from '@headlessui/react';
-import { useDebounce, useLocation } from 'react-use';
-import { Disclosure } from '@headlessui/react';
-import { IconCaret, IconFilters, IconXMark } from './Icon';
-import { Heading, Text } from './Text';
-import { Link } from './Link';
-import { Filter, Collection, FilterType } from '@/lib/shopify/types';
-import { useRouter } from 'next/router';
-import { LocationSensorState } from 'react-use/lib/useLocation';
-import clsx from 'clsx';
+import { SyntheticEvent, useMemo, useState } from "react";
+import { Menu } from "@headlessui/react";
+import { useDebounce, useLocation } from "react-use";
+import { Disclosure } from "@headlessui/react";
+import { IconCaret, IconFilters, IconXMark } from "./Icon";
+import { Heading, Text } from "./Text";
+import { Link } from "./Link";
+import { Filter, Collection, FilterType } from "@/lib/shopify/types";
+import { useRouter } from "next/router";
+import { LocationSensorState } from "react-use/lib/useLocation";
+import clsx from "clsx";
 
 export type AppliedFilter = {
   label: string;
@@ -19,11 +19,11 @@ export type AppliedFilter = {
 };
 
 export type SortParam =
-  | 'price-low-high'
-  | 'price-high-low'
-  | 'best-selling'
-  | 'newest'
-  | 'featured';
+  | "price-low-high"
+  | "price-high-low"
+  | "best-selling"
+  | "newest"
+  | "featured";
 
 type Props = {
   filters: Filter[];
@@ -45,7 +45,7 @@ export function SortFilter({
         <button
           onClick={() => setIsOpen(!isOpen)}
           className={
-            'relative flex items-center justify-center w-8 h-8 focus:ring-primary/5'
+            "relative flex items-center justify-center w-8 h-8 focus:ring-primary/5"
           }
         >
           <IconFilters />
@@ -54,9 +54,11 @@ export function SortFilter({
       </div>
       <div className="flex flex-col flex-wrap md:flex-row">
         <div
-          className={clsx('transition-all duration-200', {
-            'opacity-100 min-w-full md:min-w-[240px] md:w-[240px] md:pr-8 max-h-full': isOpen,
-            'opacity-0 md:min-w-[0px] md:w-[0px] pr-0 max-h-0 md:max-h-full': !isOpen
+          className={clsx("transition-all duration-200", {
+            "opacity-100 min-w-full md:min-w-[240px] md:w-[240px] md:pr-8 max-h-full":
+              isOpen,
+            "opacity-0 md:min-w-[0px] md:w-[0px] pr-0 max-h-0 md:max-h-full":
+              !isOpen,
           })}
         >
           <FiltersDrawer
@@ -82,17 +84,17 @@ export function FiltersDrawer({
 }) {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const filterMarkup = (filter: Filter, option: Filter['values'][0]) => {
+  const filterMarkup = (filter: Filter, option: Filter["values"][0]) => {
     switch (filter.type) {
-      case 'PRICE_RANGE':
+      case "PRICE_RANGE":
         const min =
-          params.has('minPrice') && !isNaN(Number(params.get('minPrice')))
-            ? Number(params.get('minPrice'))
+          params.has("minPrice") && !isNaN(Number(params.get("minPrice")))
+            ? Number(params.get("minPrice"))
             : undefined;
 
         const max =
-          params.has('maxPrice') && !isNaN(Number(params.get('maxPrice')))
-            ? Number(params.get('maxPrice'))
+          params.has("maxPrice") && !isNaN(Number(params.get("maxPrice")))
+            ? Number(params.get("maxPrice"))
             : undefined;
 
         return <PriceRangeFilter min={min} max={max} />;
@@ -102,13 +104,10 @@ export function FiltersDrawer({
           filter,
           option.input as string,
           params,
-          location,
+          location
         );
         return (
-          <Link
-            className="focus:underline hover:underline"
-            href={to}
-          >
+          <Link className="focus:underline hover:underline" href={to}>
             {option.label}
           </Link>
         );
@@ -150,7 +149,7 @@ export function FiltersDrawer({
                     <>
                       <Disclosure.Button className="flex justify-between w-full py-4">
                         <Text size="lead">{filter.label}</Text>
-                        <IconCaret direction={open ? 'up' : 'down'} />
+                        <IconCaret direction={open ? "up" : "down"} />
                       </Disclosure.Button>
                       <Disclosure.Panel key={filter.id}>
                         <ul key={filter.id} className="py-2">
@@ -166,7 +165,7 @@ export function FiltersDrawer({
                     </>
                   )}
                 </Disclosure>
-              ),
+              )
           )}
         </div>
       </nav>
@@ -205,13 +204,13 @@ function AppliedFilters({ filters = [] }: { filters: AppliedFilter[] }) {
 function getAppliedFilterLink(
   filter: AppliedFilter,
   params: URLSearchParams,
-  location: LocationSensorState,
+  location: LocationSensorState
 ) {
   const paramsClone = new URLSearchParams(params);
-  if (filter.urlParam.key === 'variantOption') {
-    const variantOptions = paramsClone.getAll('variantOption');
+  if (filter.urlParam.key === "variantOption") {
+    const variantOptions = paramsClone.getAll("variantOption");
     const filteredVariantOptions = variantOptions.filter(
-      (options) => !options.includes(filter.urlParam.value),
+      (options) => !options.includes(filter.urlParam.value)
     );
     paramsClone.delete(filter.urlParam.key);
     for (const filteredVariantOption of filteredVariantOptions) {
@@ -226,9 +225,9 @@ function getAppliedFilterLink(
 function getSortLink(
   sort: SortParam,
   params: URLSearchParams,
-  location: LocationSensorState,
+  location: LocationSensorState
 ) {
-  params.set('sort', sort);
+  params.set("sort", sort);
   return `${location.pathname} ? ${params.toString()}`;
 }
 
@@ -236,7 +235,7 @@ function getFilterLink(
   filter: Filter,
   rawInput: string | Record<string, any>,
   params: URLSearchParams,
-  location: ReturnType<typeof useLocation>,
+  location: ReturnType<typeof useLocation>
 ) {
   const paramsClone = new URLSearchParams(params);
   const newParams = filterInputToParams(filter.type, rawInput, paramsClone);
@@ -249,30 +248,30 @@ function PriceRangeFilter({ max, min }: { max?: number; min?: number }) {
   const location = useLocation();
   const params = useMemo(
     () => new URLSearchParams(location.search),
-    [location.search],
+    [location.search]
   );
   const router = useRouter();
 
-  const [minPrice, setMinPrice] = useState(min ? String(min) : '');
-  const [maxPrice, setMaxPrice] = useState(max ? String(max) : '');
+  const [minPrice, setMinPrice] = useState(min ? String(min) : "");
+  const [maxPrice, setMaxPrice] = useState(max ? String(max) : "");
 
   useDebounce(
     () => {
       if (
-        (minPrice === '' || minPrice === String(min)) &&
-        (maxPrice === '' || maxPrice === String(max))
+        (minPrice === "" || minPrice === String(min)) &&
+        (maxPrice === "" || maxPrice === String(max))
       )
         return;
 
       const price: { min?: string; max?: string } = {};
-      if (minPrice !== '') price.min = minPrice;
-      if (maxPrice !== '') price.max = maxPrice;
+      if (minPrice !== "") price.min = minPrice;
+      if (maxPrice !== "") price.max = maxPrice;
 
-      const newParams = filterInputToParams('PRICE_RANGE', { price }, params);
+      const newParams = filterInputToParams("PRICE_RANGE", { price }, params);
       router.push(`${location.pathname} ? ${newParams.toString()}`);
     },
     PRICE_RANGE_FILTER_DEBOUNCE,
-    [minPrice, maxPrice],
+    [minPrice, maxPrice]
   );
 
   const onChangeMax = (event: SyntheticEvent) => {
@@ -294,7 +293,7 @@ function PriceRangeFilter({ max, min }: { max?: number; min?: number }) {
           className="text-black"
           type="text"
           defaultValue={min}
-          placeholder={'$'}
+          placeholder={"$"}
           onChange={onChangeMin}
         />
       </label>
@@ -305,7 +304,7 @@ function PriceRangeFilter({ max, min }: { max?: number; min?: number }) {
           className="text-black"
           type="number"
           defaultValue={max}
-          placeholder={'$'}
+          placeholder={"$"}
           onChange={onChangeMax}
         />
       </label>
@@ -316,26 +315,26 @@ function PriceRangeFilter({ max, min }: { max?: number; min?: number }) {
 function filterInputToParams(
   type: FilterType,
   rawInput: string | Record<string, any>,
-  params: URLSearchParams,
+  params: URLSearchParams
 ) {
-  const input = typeof rawInput === 'string' ? JSON.parse(rawInput) : rawInput;
+  const input = typeof rawInput === "string" ? JSON.parse(rawInput) : rawInput;
   switch (type) {
-    case 'PRICE_RANGE':
-      if (input.price.min) params.set('minPrice', input.price.min);
-      if (input.price.max) params.set('maxPrice', input.price.max);
+    case "PRICE_RANGE":
+      if (input.price.min) params.set("minPrice", input.price.min);
+      if (input.price.max) params.set("maxPrice", input.price.max);
       break;
-    case 'LIST':
+    case "LIST":
       Object.entries(input).forEach(([key, value]) => {
-        if (typeof value === 'string') {
+        if (typeof value === "string") {
           params.set(key, value);
-        } else if (typeof value === 'boolean') {
+        } else if (typeof value === "boolean") {
           params.set(key, value.toString());
         } else {
           const { name, value: val } = value as { name: string; value: string };
           const allVariants = params.getAll(`variantOption`);
           const newVariant = `${name}:${val}`;
           if (!allVariants.includes(newVariant)) {
-            params.append('variantOption', newVariant);
+            params.append("variantOption", newVariant);
           }
         }
       });
@@ -347,27 +346,27 @@ function filterInputToParams(
 
 export default function SortMenu() {
   const items: { label: string; key: SortParam }[] = [
-    { label: 'Featured', key: 'featured' },
+    { label: "Featured", key: "featured" },
     {
-      label: 'Price: Low - High',
-      key: 'price-low-high',
+      label: "Price: Low - High",
+      key: "price-low-high",
     },
     {
-      label: 'Price: High - Low',
-      key: 'price-high-low',
+      label: "Price: High - Low",
+      key: "price-high-low",
     },
     {
-      label: 'Best Selling',
-      key: 'best-selling',
+      label: "Best Selling",
+      key: "best-selling",
     },
     {
-      label: 'Newest',
-      key: 'newest',
+      label: "Newest",
+      key: "newest",
     },
   ];
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const activeItem = items.find((item) => item.key === params.get('sort'));
+  const activeItem = items.find((item) => item.key === params.get("sort"));
 
   return (
     <Menu as="div" className="relative z-40">
@@ -387,9 +386,9 @@ export default function SortMenu() {
           <Menu.Item key={item.label}>
             {() => (
               <Link
-                className={clsx('block text-sm pb-2 px-3', {
-                  'font-bold': activeItem?.key === item.key,
-                  'font-normal': activeItem?.key !== item.key,
+                className={clsx("block text-sm pb-2 px-3", {
+                  "font-bold": activeItem?.key === item.key,
+                  "font-normal": activeItem?.key !== item.key,
                 })}
                 href={getSortLink(item.key, params, location)}
               >

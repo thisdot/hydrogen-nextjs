@@ -10,8 +10,8 @@ export default {
       control: {
         disable: true,
       },
-    }
-  }
+    },
+  },
 } as Meta;
 
 const mockedCollection = {
@@ -19,13 +19,14 @@ const mockedCollection = {
   title: "Backcountry Collection",
   handle: "backcountry",
   image: {
-    "altText": "A skier hikes up a mountain through the snow with skis over their shoulder.",
-    "width": 2500,
-    "height": 2500,
-    url: "https://cdn.shopify.com/s/files/1/0551/4566/0472/collections/full.png?v=1654902705"
+    altText:
+      "A skier hikes up a mountain through the snow with skis over their shoulder.",
+    width: 2500,
+    height: 2500,
+    url: "https://cdn.shopify.com/s/files/1/0551/4566/0472/collections/full.png?v=1654902705",
   },
-  metafields: [null]
-} as Collection
+  metafields: [null],
+} as Collection;
 
 const Template: StoryFn = (args) => (
   <div className="flex flex-col gap-2 max-w-sm">
