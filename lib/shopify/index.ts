@@ -5,6 +5,7 @@ import { ALL_PRODUCTS_QUERY } from "./queries/product";
 import { COLLECTIONS_QUERY } from "./queries/collection";
 import {
   Cart,
+  Blog,
   CollectionConnection,
   Connection,
   ProductConnection,
@@ -27,6 +28,7 @@ import {
 } from "./queries/homepage";
 import { createCartMutation, addToCartMutation, removeFromCartMutation, editCartItemsMutation } from "./mutations/cart";
 import { getCartQuery } from "./queries/cart";
+import { BLOGS_QUERY } from "./queries/blog";
 
 const domain = `https://${process.env.PUBLIC_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
@@ -35,12 +37,6 @@ const key = process.env.PUBLIC_STOREFRONT_API_TOKEN!;
 type ExtractVariables<T> = T extends { variables: object }
   ? T["variables"]
   : never;
-
-type LayoutVariables = {
-  headerMenuHandle: string;
-  footerMenuHandle: string;
-  language: string;
-};
 
 const removeEdgesAndNodes = (array: Connection<any>) => {
   return array.edges.map((edge) => edge?.node);
@@ -227,7 +223,6 @@ export async function getTertiaryHero() {
   return data;
 }
 
-
 export async function createCart(): Promise<Cart> {
   const res = await shopifyFetch<ShopifyCreateCartOperation>({
     query: createCartMutation,
@@ -296,4 +291,31 @@ export async function getCart(cartId: string): Promise<Cart | null> {
   }
 
   return reshapeCart(res.body.data.cart);
+}
+export async function getAllPosts({
+  variables,
+}: {
+  variables: {
+    cursor?: string;
+    pageBy?: number;
+    blogHandle: string;
+  };
+}) {
+  const data = await shopifyFetch<{
+    data: {
+      blog: Blog;
+    };
+    variables: {
+      cursor?: string;
+      pageBy?: number;
+      blogHandle: string;
+    };
+  }>({
+    query: BLOGS_QUERY,
+    variables: {
+      ...variables,
+    },
+    cache: "no-cache",
+  });
+  return data;
 }
