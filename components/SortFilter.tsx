@@ -80,7 +80,7 @@ export function FiltersDrawer({
   appliedFilters: AppliedFilter[];
   collections: Collection[];
 }) {
-  const location = window.location;
+  const location = window.location || '';
   const params = new URLSearchParams(location.search);
   const filterMarkup = (filter: Filter, option: Filter['values'][0]) => {
     switch (filter.type) {

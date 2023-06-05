@@ -4,17 +4,18 @@ import { NextResponse } from "next/server";
 
 export async function GET(request: NextResponse) {
   const params = new URL(request.url).searchParams;
-  console.log(params)
+
   const data = await getCollectionProducts({
     variables: {
-      pageBy: 2,
+      pageBy: 4,
       cursor: params.get("cursor") ?? null,
-      filters: [],
-      sortKey: params.get("sortkey") ?? 'RELEVANCE',
+      filters: params.get("filters") ? JSON.parse(params.get("filters")!) : [] as FiltersQueryParams,
+      sortKey: params.get("sort") ?? 'RELEVANCE',
       handle: params.get("handle") ?? '',
+      reverse: Boolean(params.get("reverse")),
     },
   });
-  console.log(data)
+  
   return NextResponse.json({
     products: data.body.data.collection.products.nodes,
     pageInfo: data.body.data.collection.products.pageInfo,

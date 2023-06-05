@@ -1,40 +1,72 @@
 'use client'
-import { Collection } from '@/lib/shopify/types';
-import { Link } from './Link';
+import { Product } from '@/lib/shopify/types';
 import { Grid } from './Grid';
 import { ProductCard } from './ProductCard';
-import { useState } from 'react';
-import LoadMoreCollectionProducts from '@/app/collections/components/LoadMoreCollectionProducts';
-import { AppliedFilter, SortParam } from './SortFilter';
+import { useEffect, useState } from 'react';
+import { Button } from './Button';
+import { useInView } from 'react-intersection-observer';
+import { useSearchParams } from 'next/navigation';
+import { handleCollectionProductsSearchParams } from '@/lib/handleCollectionProductsSearchParams';
+import { Link } from './Link';
 
 export default function ProductGrid({
-  collection,
-  appliedFilters,
   ...props
 }: {
-  collection: Collection;
-  appliedFilters: AppliedFilter[];
-  sortKey: string;
-  reverse: boolean;
   handle: string
 }) {
 
-  const [initialProducts, setInitialProducts] = useState(
-    collection?.products?.nodes || [],
-  );
+  const [cursor, setCursor] = useState<string | null | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [hasNextPage, setHasNextPage] = useState<boolean>(false);
+  const { ref: nextLinkRef, inView } = useInView();
+  const [products, setProducts] = useState<Product[]>([])
+  const searchParams = useSearchParams();
 
-  const [products, setProducts] = useState(initialProducts);
+  useEffect(() => {
+    if (inView && hasNextPage && !isLoading) {
+      const { sortKey, reverse, filters } = handleCollectionProductsSearchParams(searchParams);
+      const apiSearchParams = new URLSearchParams();
+      if (filters) { apiSearchParams.set('filters', JSON.stringify(filters)) };
+      if (sortKey) { apiSearchParams.set('sort', sortKey) };
+      if (reverse) { apiSearchParams.set('reverse', reverse.toString()) };
+      apiSearchParams.set('handle', props.handle);
+      if (cursor) apiSearchParams.set('cursor', cursor);
+      setIsLoading(true);
+      fetch(`/api/collectionProducts?${apiSearchParams.toString()}`).then((res) => {
+        res.json().then((data) => {
+          setProducts((prev) => [...prev, ...data.products]);
+          setHasNextPage(data.pageInfo.hasNextPage);
+          setCursor(data.pageInfo.endCursor);
+          setIsLoading(false);
+        });
+      });
+    }
+  }, [inView, hasNextPage, isLoading, searchParams, props.handle]);
 
-  const productProps = collection?.products?.nodes || [];
-  if (initialProducts !== productProps) {
-    setInitialProducts(productProps);
-    setProducts(productProps);
-  }
+  useEffect(() => {
+    setProducts([]);
+    setHasNextPage(false);
+    setCursor(undefined);
+    const { sortKey, reverse, filters } = handleCollectionProductsSearchParams(searchParams);
+    const apiSearchParams = new URLSearchParams();
+    if (filters) { apiSearchParams.set('filters', JSON.stringify(filters)) };
+    if (sortKey) { apiSearchParams.set('sort', sortKey) };
+    if (reverse) { apiSearchParams.set('reverse', reverse.toString()) };
+    apiSearchParams.set('handle', props.handle);
+    setIsLoading(true);
+    fetch(`/api/collectionProducts?${apiSearchParams.toString()}`).then((res) => {
+      res.json().then((data) => {
+        setProducts((prev) => [...prev, ...data.products]);
+        setHasNextPage(data.pageInfo.hasNextPage);
+        setCursor(data.pageInfo.endCursor);
+        setIsLoading(false);
+      });
+    });
+  }, [props.handle, searchParams])
 
+  const haveProducts = products.length > 0;
 
-  const haveProducts = initialProducts.length > 0;
-
-  if (!haveProducts) {
+  if (!haveProducts && !isLoading) {
     return (
       <>
         <p>No products found on this collection</p>
@@ -55,16 +87,13 @@ export default function ProductGrid({
           />
         ))}
       </Grid>
-
-      {/* {collection?.products?.pageInfo?.hasNextPage && (
-        <LoadMoreCollectionProducts
-          appliedFilters={appliedFilters}
-          sortKey={props.sortKey}
-          reverse={props.reverse}
-          handle={props.handle}
-          startCursor={collection.products.pageInfo.endCursor}
-        />
-      )} */}
+      <div className="flex items-center justify-center mt-6" ref={nextLinkRef}>
+        {isLoading && (
+          <Button variant="secondary" width="full">
+            Loading
+          </Button>
+        )}
+      </div>
     </>
   );
 }
