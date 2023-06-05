@@ -18,8 +18,8 @@ import {
   COLLECTION_HERO_QUERY,
   FEATURED_COLLECTIONS_QUERY,
 } from "./queries/homepage";
-import { BLOGS_QUERY } from "./queries/blog";
 import { SEARCH_QUERY } from "./queries/search";
+import { ARTICLE_QUERY, BLOGS_QUERY } from "./queries/blog";
 
 const domain = `https://${process.env.PUBLIC_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
@@ -218,7 +218,31 @@ export async function getAllPosts({
     variables: {
       ...variables,
     },
-    cache: "no-cache",
+  });
+  return data;
+}
+
+export async function getArticleByHandle({
+  variables,
+}: {
+  variables: {
+    articleHandle: string;
+    blogHandle: string;
+  };
+}) {
+  const data = await shopifyFetch<{
+    data: {
+      blog: Blog;
+    };
+    variables: {
+      articleHandle: string;
+      blogHandle: string;
+    };
+  }>({
+    query: ARTICLE_QUERY,
+    variables: {
+      ...variables,
+    },
   });
   return data;
 }
