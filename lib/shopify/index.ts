@@ -30,7 +30,6 @@ import {
 import { createCartMutation, addToCartMutation, removeFromCartMutation, editCartItemsMutation } from "./mutations/cart";
 import { getCartQuery } from "./queries/cart";
 import { ARTICLE_QUERY, BLOGS_QUERY } from "./queries/blog";
-import { SortParam } from "@/components/SortFilter";
 import { FiltersQueryParams } from "@/app/collections/[collectionHandle]/page";
 
 const domain = `https://${process.env.PUBLIC_STORE_DOMAIN!}`;
