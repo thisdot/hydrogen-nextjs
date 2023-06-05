@@ -19,6 +19,7 @@ import {
   FEATURED_COLLECTIONS_QUERY,
 } from "./queries/homepage";
 import { BLOGS_QUERY } from "./queries/blog";
+import { SEARCH_QUERY } from "./queries/search";
 
 const domain = `https://${process.env.PUBLIC_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
@@ -218,6 +219,39 @@ export async function getAllPosts({
       ...variables,
     },
     cache: "no-cache",
+  });
+  return data;
+}
+
+
+
+export async function getSearchedProducts({
+  variables,
+}: {
+  variables: {
+    last?: number;
+    startCursor?: string;
+    first?: number;
+    searchTerm?: string;
+    endCursor?: string;
+  };
+}) {
+  const data = await shopifyFetch<{
+    data: {
+      products: ProductConnection;
+    };
+    variables: {
+      last?: number;
+      startCursor?: string;
+      first?: number;
+      endCursor?: string;
+      searchTerm?: string;
+    };
+  }>({
+    query: SEARCH_QUERY,
+    variables: {
+      ...variables,
+    },
   });
   return data;
 }

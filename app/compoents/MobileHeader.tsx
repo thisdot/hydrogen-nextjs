@@ -6,6 +6,7 @@ import AccountLink from "./AccountLink";
 import CartCount from "./CartCount";
 import { ShopifyHeaderMenu } from "@/lib/shopify/types";
 import clsx from "clsx";
+import { useSearchParam } from "react-use";
 
 function MobileHeader({
   title,
@@ -20,9 +21,7 @@ function MobileHeader({
   openMenu: () => void;
   menu: ShopifyHeaderMenu;
 }) {
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-  }
+  const searchTerm = useSearchParam("q");
 
   return (
     <header
@@ -44,7 +43,6 @@ function MobileHeader({
           <IconMenu />
         </button>
         <form
-          onSubmit={handleSubmit}
           method="get"
           action={"/search"}
           className="items-center gap-2 sm:flex"
@@ -56,6 +54,7 @@ function MobileHeader({
             <IconSearch />
           </button>
           <Input
+            defaultValue={searchTerm}
             className={
               isHome
                 ? "focus:border-contrast/20 dark:focus:border-primary/20"
