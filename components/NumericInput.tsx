@@ -10,7 +10,7 @@ const NumericIput = ({ line }: { line: any }) => {
         Quantity, {quantity}
       </label>
       <div className="flex items-center border rounded">
-        <div>
+        <UpdateCartButton lines={[{ id: lineId, quantity: prevQuantity }]}>
           <button
             name="decrease-quantity"
             aria-label="Decrease quantity"
@@ -20,13 +20,13 @@ const NumericIput = ({ line }: { line: any }) => {
           >
             <span>&#8722;</span>
           </button>
-        </div>
+        </UpdateCartButton>
 
         <div className="px-2 text-center" data-test="item-quantity">
           {quantity}
         </div>
 
-        <div>
+        <UpdateCartButton lines={[{ id: lineId, quantity: nextQuantity }]}>
           <button
             className="w-10 h-10 transition text-primary/50 hover:text-primary"
             name="increase-quantity"
@@ -35,10 +35,27 @@ const NumericIput = ({ line }: { line: any }) => {
           >
             <span>&#43;</span>
           </button>
-        </div>
+        </UpdateCartButton>
       </div>
     </>
   );
 };
 
 export default NumericIput;
+
+function UpdateCartButton({
+  children,
+  lines,
+}: {
+  children: React.ReactNode;
+  lines: {id: string; quantity: number}[];
+}) {
+
+  return (
+    <form action="/cart" method="post">
+      <input type="hidden" name="cartAction" value={CartAction.UPDATE_CART} />
+      <input type="hidden" name="lines" value={JSON.stringify(lines)} />
+      {children}
+    </form>
+  );
+}
