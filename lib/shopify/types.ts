@@ -1,4 +1,6 @@
+import { FiltersQueryParams } from "@/app/collections/[collectionHandle]/page";
 import { CollectionHero } from "@/components/Hero";
+import { SortParam } from "@/components/SortFilter";
 
 export type Shop = {
   id: string;
@@ -674,3 +676,108 @@ export type ShopifyHeroOperation = {
     language?: string;
   };
 };
+
+export type ShopifyCartOperation = {
+  data: {
+    cart: ShopifyCart;
+  };
+  variables: {
+    cartId: string;
+  };
+};
+
+export type ShopifyCreateCartOperation = {
+  data: { cartCreate: { cart: ShopifyCart } };
+};
+
+export type ShopifyAddToCartOperation = {
+  data: {
+    cartLinesAdd: {
+      cart: ShopifyCart;
+    };
+  };
+  variables: {
+    cartId: string;
+    lines: {
+      merchandiseId: string;
+      quantity: number;
+    }[];
+  };
+};
+
+export type ShopifyRemoveFromCartOperation = {
+  data: {
+    cartLinesRemove: {
+      cart: ShopifyCart;
+    };
+  };
+  variables: {
+    cartId: string;
+    lineIds: string[];
+  };
+};
+
+export type ShopifyUpdateCartOperation = {
+  data: {
+    cartLinesUpdate: {
+      cart: ShopifyCart;
+    };
+  };
+  variables: {
+    cartId: string;
+    lines: {
+      id: string;
+      merchandiseId: string;
+      quantity: number;
+    }[];
+  };
+};
+
+
+export type ShopifyCart = {
+  id: string;
+  checkoutUrl: string;
+  cost: {
+    subtotalAmount: Money;
+    totalAmount: Money;
+    totalTaxAmount: Money;
+  };
+  lines: Connection<CartItem>;
+  totalQuantity: number;
+};
+
+export type Cart = Omit<ShopifyCart, "lines"> & {
+  lines: CartItem[];
+};
+
+export type CartItem = {
+  id: string;
+  quantity: number;
+  cost: {
+    totalAmount: Money;
+  };
+  merchandise: {
+    id: string;
+    title: string;
+    selectedOptions: {
+      name: string;
+      value: string;
+    }[];
+    product: Product;
+  };
+};
+
+export type ShopifyCollectionProducts = {
+  data: {
+    collections: CollectionConnection;
+    collection: Collection;
+  };
+  variables: {
+    handle: string,
+    pageBy: number,
+    cursor: string | null,
+    filters: FiltersQueryParams,
+    sortKey: string,
+    reverse?: boolean,
+  };
+}

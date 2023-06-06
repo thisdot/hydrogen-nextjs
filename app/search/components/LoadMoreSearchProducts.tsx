@@ -5,25 +5,30 @@ import { ProductCard } from "@/components/ProductCard";
 import { Product } from "@/lib/shopify/types";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
+import { useLocation } from "react-use";
 
 interface Props {
   startCursor?: string | null;
 }
 
-function LoadMoreProducts({ startCursor }: Props) {
+function LoadMoreSearchProducts({ startCursor }: Props) {
+  const { search } = useLocation();
   const [cursor, setCursor] = useState<string | null | undefined>(startCursor);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
   const [products, setProducts] = useState<Product[]>([]);
   const { ref: nextLinkRef, inView } = useInView();
   useEffect(() => {
-    if (inView && hasNextPage && !isLoading) {
+    const query = new URLSearchParams(search);
+    if (inView && hasNextPage && !isLoading && query.get("q") !== undefined) {
       setIsLoading(true);
-      fetch(`/api/products?cursor=${cursor}`).then((res) => {
-        res.json().then((data) => {
-          setProducts((prev) => [...prev, ...data.products]);
-          setHasNextPage(data.pageInfo.hasNextPage);
-          setCursor(data.endCursor);
+      fetch(`/api/search?q=${query.get("q")}&cursor=${cursor}`, {
+        method: "POST",
+      }).then((res) => {
+        res.json().then(({ products, pageInfo }) => {
+          setProducts((prev) => [...prev, ...products]);
+          setHasNextPage(pageInfo.hasNextPage);
+          setCursor(pageInfo.endCursor);
           setIsLoading(false);
         });
       });
@@ -33,7 +38,7 @@ function LoadMoreProducts({ startCursor }: Props) {
   return (
     <>
       <Grid>
-        {products.map((product) => (
+        {products.map((product, i) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </Grid>
@@ -48,4 +53,4 @@ function LoadMoreProducts({ startCursor }: Props) {
   );
 }
 
-export default LoadMoreProducts;
+export default LoadMoreSearchProducts;

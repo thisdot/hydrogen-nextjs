@@ -1,3 +1,4 @@
+'use client'
 import { SyntheticEvent, useMemo, useState } from 'react';
 import { Menu } from '@headlessui/react';
 import { useDebounce, useLocation } from 'react-use';
@@ -7,7 +8,6 @@ import { Heading, Text } from './Text';
 import { Link } from './Link';
 import { Filter, Collection, FilterType } from '@/lib/shopify/types';
 import { useRouter } from 'next/router';
-import { LocationSensorState } from 'react-use/lib/useLocation';
 import clsx from 'clsx';
 
 export type AppliedFilter = {
@@ -80,7 +80,7 @@ export function FiltersDrawer({
   appliedFilters: AppliedFilter[];
   collections: Collection[];
 }) {
-  const location = useLocation();
+  const location = window.location || '';
   const params = new URLSearchParams(location.search);
   const filterMarkup = (filter: Filter, option: Filter['values'][0]) => {
     switch (filter.type) {
@@ -175,7 +175,7 @@ export function FiltersDrawer({
 }
 
 function AppliedFilters({ filters = [] }: { filters: AppliedFilter[] }) {
-  const location = useLocation();
+  const location = window.location;
   const params = new URLSearchParams(location.search);
   return (
     <>
@@ -205,7 +205,7 @@ function AppliedFilters({ filters = [] }: { filters: AppliedFilter[] }) {
 function getAppliedFilterLink(
   filter: AppliedFilter,
   params: URLSearchParams,
-  location: LocationSensorState,
+  location: Location,
 ) {
   const paramsClone = new URLSearchParams(params);
   if (filter.urlParam.key === 'variantOption') {
@@ -220,33 +220,33 @@ function getAppliedFilterLink(
   } else {
     paramsClone.delete(filter.urlParam.key);
   }
-  return `${location.pathname} ? ${paramsClone.toString()}`;
+  return `${location.pathname}?${paramsClone.toString()}`;
 }
 
 function getSortLink(
   sort: SortParam,
   params: URLSearchParams,
-  location: LocationSensorState,
+  location: Location,
 ) {
   params.set('sort', sort);
-  return `${location.pathname} ? ${params.toString()}`;
+  return `${location.pathname}?${params.toString()}`;
 }
 
 function getFilterLink(
   filter: Filter,
   rawInput: string | Record<string, any>,
   params: URLSearchParams,
-  location: ReturnType<typeof useLocation>,
+  location: Location,
 ) {
   const paramsClone = new URLSearchParams(params);
   const newParams = filterInputToParams(filter.type, rawInput, paramsClone);
-  return `${location.pathname} ? ${newParams.toString()}`;
+  return `${location.pathname}?${newParams.toString()}`;
 }
 
 const PRICE_RANGE_FILTER_DEBOUNCE = 500;
 
 function PriceRangeFilter({ max, min }: { max?: number; min?: number }) {
-  const location = useLocation();
+  const location = window.location;
   const params = useMemo(
     () => new URLSearchParams(location.search),
     [location.search],
@@ -269,7 +269,7 @@ function PriceRangeFilter({ max, min }: { max?: number; min?: number }) {
       if (maxPrice !== '') price.max = maxPrice;
 
       const newParams = filterInputToParams('PRICE_RANGE', { price }, params);
-      router.push(`${location.pathname} ? ${newParams.toString()}`);
+      router.push(`${location.pathname}?${newParams.toString()}`);
     },
     PRICE_RANGE_FILTER_DEBOUNCE,
     [minPrice, maxPrice],
@@ -345,7 +345,7 @@ function filterInputToParams(
   return params;
 }
 
-export default function SortMenu() {
+function SortMenu() {
   const items: { label: string; key: SortParam }[] = [
     { label: 'Featured', key: 'featured' },
     {
@@ -365,7 +365,8 @@ export default function SortMenu() {
       key: 'newest',
     },
   ];
-  const location = useLocation();
+
+  const location = useLocation()
   const params = new URLSearchParams(location.search);
   const activeItem = items.find((item) => item.key === params.get('sort'));
 
@@ -391,7 +392,7 @@ export default function SortMenu() {
                   'font-bold': activeItem?.key === item.key,
                   'font-normal': activeItem?.key !== item.key,
                 })}
-                href={getSortLink(item.key, params, location)}
+                href={getSortLink(item.key, params, window.location)}
               >
                 {item.label}
               </Link>

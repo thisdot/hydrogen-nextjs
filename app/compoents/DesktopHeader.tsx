@@ -4,7 +4,7 @@ import { Input } from "@/components/Input";
 import { Link } from "@/components/Link";
 import { Shop, ShopifyHeaderMenu } from "@/lib/shopify/types";
 
-import { useWindowScroll } from "react-use";
+import { useSearchParam, useWindowScroll } from "react-use";
 import AccountLink from "./AccountLink";
 import CartCount from "./CartCount";
 import clsx from "clsx";
@@ -20,6 +20,7 @@ function DesktopHeader({
   openCart: () => void;
   menu: ShopifyHeaderMenu;
 }) {
+  const searchTerm = useSearchParam("q");
   const { y } = useWindowScroll();
   return (
     <header
@@ -57,14 +58,12 @@ function DesktopHeader({
       </div>
       <div className="flex items-center gap-1">
         <form
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
           method="get"
           action={"/search"}
           className="flex items-center gap-2"
         >
           <Input
+            defaultValue={searchTerm}
             className={
               isHome
                 ? "focus:border-contrast/20 dark:focus:border-primary/20"
