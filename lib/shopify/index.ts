@@ -28,7 +28,7 @@ import {
 } from "./queries/homepage";
 import { createCartMutation, addToCartMutation, removeFromCartMutation, editCartItemsMutation } from "./mutations/cart";
 import { getCartQuery } from "./queries/cart";
-import { BLOGS_QUERY } from "./queries/blog";
+import { ARTICLE_QUERY, BLOGS_QUERY } from "./queries/blog";
 
 const domain = `https://${process.env.PUBLIC_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
@@ -315,7 +315,31 @@ export async function getAllPosts({
     variables: {
       ...variables,
     },
-    cache: "no-cache",
+  });
+  return data;
+}
+
+export async function getArticleByHandle({
+  variables,
+}: {
+  variables: {
+    articleHandle: string;
+    blogHandle: string;
+  };
+}) {
+  const data = await shopifyFetch<{
+    data: {
+      blog: Blog;
+    };
+    variables: {
+      articleHandle: string;
+      blogHandle: string;
+    };
+  }>({
+    query: ARTICLE_QUERY,
+    variables: {
+      ...variables,
+    },
   });
   return data;
 }
