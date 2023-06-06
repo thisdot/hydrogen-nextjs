@@ -1,3 +1,5 @@
+import { PRODUCT_CARD_FRAGMENT } from "./fragments";
+
 export const COLLECTIONS_QUERY = `#graphql
   query Collections(
     $country: CountryCode
@@ -30,6 +32,72 @@ export const COLLECTIONS_QUERY = `#graphql
         hasNextPage
         startCursor
         endCursor
+      }
+    }
+  }
+`;
+
+export const COLLECTION_QUERY = `#graphql
+  ${PRODUCT_CARD_FRAGMENT}
+  query CollectionDetails(
+    $handle: String!
+    $country: CountryCode
+    $language: LanguageCode
+    $pageBy: Int!
+    $cursor: String
+    $filters: [ProductFilter!]
+    $sortKey: ProductCollectionSortKeys!
+    $reverse: Boolean
+  ) @inContext(country: $country, language: $language) {
+    collection(handle: $handle) {
+      id
+      handle
+      title
+      description
+      seo {
+        description
+        title
+      }
+      image {
+        id
+        url
+        width
+        height
+        altText
+      }
+      products(
+        first: $pageBy,
+        after: $cursor,
+        filters: $filters,
+        sortKey: $sortKey,
+        reverse: $reverse
+      ) {
+        filters {
+          id
+          label
+          type
+          values {
+            id
+            label
+            count
+            input
+          }
+        }
+        nodes {
+          ...ProductCard
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+    collections(first: 100) {
+      edges {
+        node {
+          title
+          handle
+        }
       }
     }
   }

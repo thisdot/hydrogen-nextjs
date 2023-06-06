@@ -2,7 +2,7 @@ import { SHOPIFY_GRAPHQL_API_ENDPOINT } from "@/lib/constants";
 import { isShopifyError } from "@/lib/type-guards";
 import { LAYOUT_QUERY } from "./queries/layout";
 import { ALL_PRODUCTS_QUERY } from "./queries/product";
-import { COLLECTIONS_QUERY } from "./queries/collection";
+import { COLLECTIONS_QUERY, COLLECTION_QUERY } from "./queries/collection";
 import {
   Cart,
   Blog,
@@ -13,6 +13,7 @@ import {
   ShopifyCart,
   ShopifyCartOperation,
   ShopifyCreateCartOperation,
+  ShopifyCollectionProducts,
   ShopifyFeaturedCollectionOperation,
   ShopifyFeaturedProductOperation,
   ShopifyHeroOperation,
@@ -30,6 +31,7 @@ import { SEARCH_QUERY } from "./queries/search";
 import { createCartMutation, addToCartMutation, removeFromCartMutation, editCartItemsMutation } from "./mutations/cart";
 import { getCartQuery } from "./queries/cart";
 import { ARTICLE_QUERY, BLOGS_QUERY } from "./queries/blog";
+import { FiltersQueryParams } from "@/app/collections/[collectionHandle]/page";
 
 const domain = `https://${process.env.PUBLIC_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
@@ -345,8 +347,6 @@ export async function getArticleByHandle({
   return data;
 }
 
-
-
 export async function getSearchedProducts({
   variables,
 }: {
@@ -376,4 +376,22 @@ export async function getSearchedProducts({
     },
   });
   return data;
+}
+
+export async function getCollectionProducts(
+  {variables}: {
+    variables: {
+      handle: string,
+      pageBy: number,
+      cursor: string | null,
+      filters: FiltersQueryParams,
+      sortKey: string,
+      reverse?: boolean,
+    }})
+  {
+    const data = await shopifyFetch<ShopifyCollectionProducts>({
+      query: COLLECTION_QUERY,
+      variables
+    });
+    return data;
 }
