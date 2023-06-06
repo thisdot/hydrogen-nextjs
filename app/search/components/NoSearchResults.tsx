@@ -8,17 +8,19 @@ import {
 interface INoSearchResults {
   featuredProducts: Product[];
   featuredCollections: Collection[];
+  noResult: boolean;
 }
 const NoSearchResults = ({
   featuredProducts,
   featuredCollections,
+  noResult,
 }: INoSearchResults) => {
 
   return (
     <>
-      <Section padding="x">
+      { noResult && (<Section padding="x">
         <Text className="opacity-50">No results, try a different search.</Text>
-      </Section>
+      </Section>)}
 
       <FeaturedSection
         featuredCollections={featuredCollections}

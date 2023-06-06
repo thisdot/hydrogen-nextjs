@@ -45,14 +45,16 @@ export default function SearchPage() {
       {loadingSearchedProducts ? (
         <div className="m-8">
           <Grid>
-            {[1,2,3,4].map((res) => <CardLoader key={res} />)}
+            {[1, 2, 3, 4].map((res) => (
+              <CardLoader key={res} />
+            ))}
           </Grid>
         </div>
       ) : (
         <>
-          {searchTerm === undefined ||
-          products.length === 0 ? (
+          {!searchTerm || products.length === 0 ? (
             <NoSearchResults
+              noResult={products.length === 0}
               featuredProducts={featuredProducts}
               featuredCollections={featuredCollections}
             />
