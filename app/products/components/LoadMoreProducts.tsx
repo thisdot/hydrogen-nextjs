@@ -33,7 +33,7 @@ function LoadMoreProducts({ startCursor }: Props) {
   return (
     <>
       <Grid>
-        {products.map((product, i) => (
+        {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </Grid>

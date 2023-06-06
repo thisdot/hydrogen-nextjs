@@ -1,4 +1,6 @@
+import { FiltersQueryParams } from "@/app/collections/[collectionHandle]/page";
 import { CollectionHero } from "@/components/Hero";
+import { SortParam } from "@/components/SortFilter";
 
 export type Shop = {
   id: string;
@@ -675,8 +677,6 @@ export type ShopifyHeroOperation = {
   };
 };
 
-
-
 export type ShopifyCartOperation = {
   data: {
     cart: ShopifyCart;
@@ -766,3 +766,18 @@ export type CartItem = {
     product: Product;
   };
 };
+
+export type ShopifyCollectionProducts = {
+  data: {
+    collections: CollectionConnection;
+    collection: Collection;
+  };
+  variables: {
+    handle: string,
+    pageBy: number,
+    cursor: string | null,
+    filters: FiltersQueryParams,
+    sortKey: string,
+    reverse?: boolean,
+  };
+}
