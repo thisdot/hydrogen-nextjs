@@ -11,7 +11,7 @@ import { useLocation } from "react-use";
 
 const useLoadSearchData = () => {
   const { search } = useLocation();
-
+  const [loadingSearchedProducts, setLoadingSearchedProducts] = useState(true);
   const [products, setProducts] = useState<Product[]>([]);
   const [pageInfo, setPageInfo] = useState<PageInfo | any>(null);
   const [featuredProducts, setfeaturedProducts] = useState<Product[]>([]);
@@ -53,18 +53,28 @@ const useLoadSearchData = () => {
   useEffect(() => {
     const query = new URLSearchParams(search);
     if (query.get("q") !== undefined) {
+      setLoadingSearchedProducts(true);
       fetch(`/api/search?q=${query.get("q")}`, {
         method: "POST",
       }).then((res) => {
         res.json().then(({ products, pageInfo }) => {
           setProducts(products);
           setPageInfo(pageInfo);
+          setLoadingSearchedProducts(false);
         });
+      }).catch(() => {
+        setLoadingSearchedProducts(false);
       });
     }
   }, [search]);
 
-  return { products, pageInfo, featuredProducts, featuredCollections }
+  return {
+    products,
+    pageInfo,
+    featuredProducts,
+    featuredCollections,
+    loadingSearchedProducts,
+  };
 };
 
 export default useLoadSearchData;

@@ -5,12 +5,19 @@ import useLoadSearchData from "@/hooks/useLoadSearchData";
 import { useSearchParam } from "react-use";
 import NoSearchResults from "./components/NoSearchResults";
 import SearchResult from "./components/SearchResult";
+import { Grid } from "@/components/Grid";
+import CardLoader from "./components/CardLoader";
 
 export default function SearchPage() {
   const searchTerm = useSearchParam("q");
 
-  const { products, pageInfo, featuredProducts, featuredCollections } =
-    useLoadSearchData();
+  const {
+    products,
+    pageInfo,
+    featuredProducts,
+    featuredCollections,
+    loadingSearchedProducts,
+  } = useLoadSearchData();
 
   return (
     <>
@@ -35,13 +42,24 @@ export default function SearchPage() {
           </button>
         </form>
       </PageHeader>
-      {searchTerm === undefined || products.length === 0 ? (
-        <NoSearchResults
-          featuredProducts={featuredProducts}
-          featuredCollections={featuredCollections}
-        />
+      {loadingSearchedProducts ? (
+        <div className="m-8">
+          <Grid>
+            {[1,2,3,4].map((res) => <CardLoader key={res} />)}
+          </Grid>
+        </div>
       ) : (
-        <SearchResult products={products} pageInfo={pageInfo} />
+        <>
+          {searchTerm === undefined ||
+          products.length === 0 ? (
+            <NoSearchResults
+              featuredProducts={featuredProducts}
+              featuredCollections={featuredCollections}
+            />
+          ) : (
+            <SearchResult products={products} pageInfo={pageInfo} />
+          )}
+        </>
       )}
     </>
   );
