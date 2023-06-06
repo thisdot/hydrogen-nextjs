@@ -27,6 +27,7 @@ import {
   COLLECTION_HERO_QUERY,
   FEATURED_COLLECTIONS_QUERY,
 } from "./queries/homepage";
+import { SEARCH_QUERY } from "./queries/search";
 import { createCartMutation, addToCartMutation, removeFromCartMutation, editCartItemsMutation } from "./mutations/cart";
 import { getCartQuery } from "./queries/cart";
 import { ARTICLE_QUERY, BLOGS_QUERY } from "./queries/blog";
@@ -345,6 +346,38 @@ export async function getArticleByHandle({
   });
   return data;
 }
+
+export async function getSearchedProducts({
+  variables,
+}: {
+  variables: {
+    last?: number;
+    startCursor?: string;
+    first?: number;
+    searchTerm?: string;
+    endCursor?: string;
+  };
+}) {
+  const data = await shopifyFetch<{
+    data: {
+      products: ProductConnection;
+    };
+    variables: {
+      last?: number;
+      startCursor?: string;
+      first?: number;
+      endCursor?: string;
+      searchTerm?: string;
+    };
+  }>({
+    query: SEARCH_QUERY,
+    variables: {
+      ...variables,
+    },
+  });
+  return data;
+}
+
 export async function getCollectionProducts(
   {variables}: {
     variables: {
