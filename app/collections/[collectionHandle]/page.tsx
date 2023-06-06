@@ -1,14 +1,13 @@
 import { PageHeader, Text, Section } from '@/components/Text';
 import ProductGrid from '@/components/ProductGrid';
-import { Collection, Filter } from '@/lib/shopify/types';
+import { Collection as CollectionType, Collection, Filter } from '@/lib/shopify/types';
 import { SortFilter } from '@/components/SortFilter';
 import { getCollectionProducts } from '@/lib/shopify';
 import { flattenConnection } from '@/lib/flattenConnection';
 import { handleCollectionProductsSearchParams } from '@/lib/handleCollectionProductsSearchParams';
-
-// const seo = seoPayload.collection({ collection, url: request.url });
-
-const PAGINATION_SIZE = 4;
+import { PAGE_BY } from '@/lib/const';
+import Head from 'next/head';
+import { truncate } from '@/lib/truncate';
 
 type VariantFilterParam = Record<string, string | boolean>;
 type PriceFiltersQueryParam = Record<'price', { max?: number; min?: number }>;
@@ -19,8 +18,7 @@ type VariantOptionFiltersQueryParam = Record<
 export type FiltersQueryParams = Array<
   VariantFilterParam | PriceFiltersQueryParam | VariantOptionFiltersQueryParam
 >;
-export default async function Collection({ params, searchParams }: { params: { collectionHandle: string }, searchParams: any }) {
-  // const urlSearchParams = new URLSearchParams(searchParams);
+export default async function Collection({ params, searchParams }: { params: { collectionHandle: string }, searchParams: Record<string, string> }) {
 
   const { sortKey,
     reverse,
@@ -33,7 +31,7 @@ export default async function Collection({ params, searchParams }: { params: { c
     {
       variables: {
         handle: params.collectionHandle,
-        pageBy: PAGINATION_SIZE,
+        pageBy: PAGE_BY,
         filters,
         sortKey,
         cursor,
@@ -45,8 +43,82 @@ export default async function Collection({ params, searchParams }: { params: { c
   const collection = data.body.data.collection;
   const collections = flattenConnection(data.body.data.collections);
 
+  const seo = {
+    title: collection?.seo?.title,
+    description: truncate(
+      collection?.seo?.description ?? collection?.description ?? '',
+    ),
+    openGraph: {
+      title: collection?.seo?.title,
+      description: truncate(
+        collection?.seo?.description ?? collection?.description ?? '',
+      ),
+      type: 'website',
+      url: `/collections/${collection.handle}`,
+      images: collection?.image
+        ? [
+          {
+            url: collection?.image?.url,
+            width: collection?.image?.width,
+            height: collection?.image?.height,
+            alt: collection?.image?.altText,
+          },
+        ]
+        : [],
+    },
+  }
+
+  const itemListElement: CollectionType[] = collections.map(
+    (collection: CollectionType, index: number) => {
+      return {
+        '@type': 'ListItem',
+        position: index + 1,
+        url: `/collections/${collection.handle}`,
+      };
+    },
+  );
+
+  const seoStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Collections',
+    description: 'All collections',
+    url: seo.openGraph?.url,
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement,
+    },
+  };
+
   return (
     <>
+      <Head>
+        <title>{seo.title}</title>
+        <meta name="description" content={seo.description} />
+        {seo.openGraph?.title && (
+          <meta property="og:title" content={seo.openGraph.title} />
+        )}
+        {seo.openGraph?.description && (
+          <meta
+            property="og:description"
+            content={seo.openGraph.description}
+          />
+        )}
+        {seo.openGraph?.type && (
+          <meta property="og:type" content={seo.openGraph.type} />
+        )}
+        {seo.openGraph?.url && (
+          <meta property="og:url" content={seo.openGraph.url} />
+        )}
+        {seo.openGraph?.images?.map((image, index) => (
+          <meta
+            property="og:image"
+            content={image.url}
+            key={`og-image-${index}`}
+          />
+        ))}
+        <script type="application/ld+json">{JSON.stringify(seoStructuredData)}</script>
+      </Head>
       <PageHeader heading={collection.title}>
         {collection?.description && (
           <div className="flex items-baseline justify-between w-full">

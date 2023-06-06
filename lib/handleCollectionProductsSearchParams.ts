@@ -1,7 +1,7 @@
 import { FiltersQueryParams } from "@/app/collections/[collectionHandle]/page";
 import { AppliedFilter, SortParam } from "@/components/SortFilter";
 
-export const handleCollectionProductsSearchParams = (params: any) => {
+export const handleCollectionProductsSearchParams = (params: Record<string, string>) => {
   const urlSearchParams = new URLSearchParams(params);
 
   const variantOption = 'variantOption';

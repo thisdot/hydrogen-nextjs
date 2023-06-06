@@ -1,4 +1,5 @@
 import { FiltersQueryParams } from "@/app/collections/[collectionHandle]/page";
+import { PAGE_BY } from "@/lib/const";
 import {  getCollectionProducts } from "@/lib/shopify";
 import { NextResponse } from "next/server";
 
@@ -7,7 +8,7 @@ export async function GET(request: NextResponse) {
 
   const data = await getCollectionProducts({
     variables: {
-      pageBy: 4,
+      pageBy: PAGE_BY,
       cursor: params.get("cursor") ?? null,
       filters: params.get("filters") ? JSON.parse(params.get("filters")!) : [] as FiltersQueryParams,
       sortKey: params.get("sort") ?? 'RELEVANCE',
