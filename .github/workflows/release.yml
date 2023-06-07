@@ -15,9 +15,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16.x"
+          node-version: '16.x'
       - name: Install dependencies
         run: npm install
+      - name: Check formatting
+        run: npm run format:check
       - name: Build
         run: npm run build
       - name: Set up Git

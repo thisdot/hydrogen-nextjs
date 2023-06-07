@@ -1,4 +1,4 @@
-import { MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT } from "./fragments";
+import { MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT } from './fragments';
 
 export const COLLECTION_CONTENT_FRAGMENT = `#graphql
   ${MEDIA_FRAGMENT}

@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Version name"
+        description: 'Version name'
         required: true
-        default: "minor"
+        default: 'minor'
         type: choice
         options:
           - major
@@ -22,7 +22,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16.x"
+          node-version: '16.x'
       - name: Install dependencies
         run: npm install
       - name: Set up Git
@@ -43,6 +43,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: release/${{ steps.update_version.outputs.version }}
-          title: "Release: ${{ steps.update_version.outputs.version }} Pull Request"
-          body: "This pull request contains the updated package.json with the new release version. By merging this PR the release flow will start"
+          title: 'Release: ${{ steps.update_version.outputs.version }} Pull Request'
+          body: 'This pull request contains the updated package.json with the new release version. By merging this PR the release flow will start'
           base: main
