@@ -21,6 +21,7 @@ import {
   ShopifyLayoutOperation,
   ShopifyRemoveFromCartOperation,
   ShopifyUpdateCartOperation,
+  Product,
 } from "./types";
 import {
   HOMEPAGE_FEATURED_PRODUCTS_QUERY,
@@ -394,4 +395,28 @@ export async function getCollectionProducts(
       variables
     });
     return data;
+}
+
+export async function getProduct(handle: string): Promise<Product | undefined> {
+  const res = await shopifyFetch<ShopifyProductOperation>({
+    query: getProductQuery,
+    variables: {
+      handle,
+    },
+  });
+
+  return reshapeProduct(res.body.data.product, false);
+}
+
+export async function getProductRecommendations(
+  productId: string
+): Promise<Product[]> {
+  const res = await shopifyFetch<ShopifyProductRecommendationsOperation>({
+    query: getProductRecommendationsQuery,
+    variables: {
+      productId,
+    },
+  });
+
+  return reshapeProducts(res.body.data.productRecommendations);
 }

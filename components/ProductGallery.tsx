@@ -1,4 +1,5 @@
-import { Image } from "./ImageComponent";
+import cn from 'clsx';
+import Image from "next/image";
 
 const ProductGallery = ({
   media,
@@ -23,7 +24,6 @@ const ProductGallery = ({
         const data = {
           ...med,
           image: {
-            // @ts-ignore
             ...med.image,
             altText: med.alt || "Product image",
           },
@@ -38,21 +38,22 @@ const ProductGallery = ({
         return (
           <div
             className={style}
-            // @ts-ignore
             key={med.id || med.image.id}
           >
             {med.image && (
               <Image
                 alt={med.alt}
                 loading={i === 0 ? "eager" : "lazy"}
-                data={data.image!}
-                aspectRatio={!isFirst && !isFourth ? "4/5" : undefined}
+                src={data.image!}
                 sizes={
                   isFirst || isFourth
                     ? "(min-width: 48em) 60vw, 90vw"
                     : "(min-width: 48em) 30vw, 90vw"
                 }
-                className="object-cover w-full h-full aspect-square fadeIn"
+                className={cn(
+                  "object-cover w-full h-full aspect-square fadeIn",
+                  { "aspect-[4/5]": !isFirst && !isFourth }
+                )}
               />
             )}
           </div>
