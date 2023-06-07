@@ -77,26 +77,3 @@ QuickAddButton.args = {
   variant: 'secondary',
   lines: [{ merchandiseId: 'idtest' }]
 };
-
-const SoldOut: StoryFn<{
-  variant?: 'primary' | 'secondary' | 'inline';
-  lines: CartLineInput[];
-}> = (args) => (
-  <div
-    style={{
-      maxWidth: "600px",
-    }}
-  >
-    <AddToCartButton {...args}>
-      <Text as="span" className="flex items-center justify-center gap-2">
-        Sold out
-      </Text>
-    </AddToCartButton>
-  </div>
-);
-
-export const SoldOutButton = SoldOut.bind({});
-SoldOutButton.args = {
-  variant: 'secondary',
-  lines: [{ merchandiseId: 'idtest' }]
-};

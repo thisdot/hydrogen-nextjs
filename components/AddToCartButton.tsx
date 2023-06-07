@@ -21,21 +21,15 @@ export function AddToCartButton({
 }) {
 
   return (
-    <form action="/cart" method="post">
-      <input type="hidden" name="cartAction" value={'ADD_TO_CART'} />
-      <input type="hidden" name="countryCode" value={'US'} />
-      <input type="hidden" name="lines" value={JSON.stringify(lines)} />
-      <Button
-        as="button"
-        type="submit"
-        width={width}
-        variant={variant}
-        className={className}
-        disabled={disabled}
-        {...props}
-      >
-        {children}
-      </Button>
-    </form>
+    <Button
+      as="button"
+      width={width}
+      variant={variant}
+      className={className}
+      disabled={disabled}
+      {...props}
+    >
+      {children}
+    </Button>
   );
 }
