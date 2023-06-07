@@ -1,13 +1,14 @@
 import { type ReactNode } from 'react';
 import type { Money } from '@/lib/shopify/types';
 import type { PartialDeep } from 'type-fest';
+import { useMoney } from '@/lib/useMoney';
 export interface MoneyPropsBase<ComponentGeneric extends React.ElementType> {
   /** An HTML tag or React Component to be rendered as the base element wrapper. The default is `div`. */
   as?: ComponentGeneric;
   /** An object with fields that correspond to the Storefront API's [MoneyV2 object](https://shopify.dev/api/storefront/reference/common-objects/moneyv2). */
   data: PartialDeep<Money, {
     recurseIntoArrays: true;
-  }>;
+  }> & Money;
   /** Whether to remove the currency symbol from the output. */
   withoutCurrency?: boolean;
   /** Whether to remove trailing zeros (fractional money) from the output. */
@@ -35,9 +36,13 @@ export function Money<ComponentGeneric extends React.ElementType = 'div'>({
   measurementSeparator,
   ...passthroughProps
 }: MoneyProps<ComponentGeneric>): JSX.Element {
+  const { currencyNarrowSymbol } = useMoney(
+    data,
+    "en"
+  );
   return (
     <div {...passthroughProps}>
-      {data.amount}{' '}{data.currencyCode}
+      {currencyNarrowSymbol} {data.amount}
     </div>
   );
 }
