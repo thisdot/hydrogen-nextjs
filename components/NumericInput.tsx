@@ -1,9 +1,12 @@
-import useCartFetcher from "@/hooks/useCartFetcher";
-import { CartItem } from "@/lib/shopify/types";
 import { useState } from "react";
 
-const NumericIput = ({ line }: { line: CartItem | any }) => {
-  const { editCartItem } = useCartFetcher();
+type IAction = "plus" | "minus";
+interface INumericIput {
+  line: any;
+  onClick: (action: IAction) => void;
+}
+
+const NumericIput = ({ line, onClick }: INumericIput) => {
   const [itemQuantity, setItemQuantity] = useState<number>(line.quantity || 0);
 
   if (!line || typeof line?.quantity === "undefined") return null;
@@ -11,7 +14,7 @@ const NumericIput = ({ line }: { line: CartItem | any }) => {
   const prevQuantity = Number(Math.max(0, quantity - 1).toFixed(0));
   const nextQuantity = Number((quantity + 1).toFixed(0));
 
-  const modifyQuantity = (action: "plus" | "minus") => {
+  const modifyQuantity = (action: IAction) => {
     setItemQuantity((prev) =>
       action === "plus"
         ? prev + 1
@@ -20,7 +23,7 @@ const NumericIput = ({ line }: { line: CartItem | any }) => {
         : 0
     );
 
-    editCartItem({ action, item: line });
+    onClick(action);
   };
 
   return (
