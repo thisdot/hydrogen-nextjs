@@ -46,6 +46,7 @@ export function Money<ComponentGeneric extends React.ElementType = "div">({
   measurementSeparator,
   ...passthroughProps
 }: MoneyProps<ComponentGeneric>): JSX.Element {
+  const { currencyNarrowSymbol } = useMoney(data, "en");
   return (
     <div {...passthroughProps}>
       {data.amount} {data.currencyCode}

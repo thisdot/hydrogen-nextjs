@@ -1,3 +1,4 @@
+import { FiltersQueryParams } from "@/app/collections/[collectionHandle]/page";
 import { CollectionHero } from "@/components/Hero";
 
 export type Shop = {
@@ -673,4 +674,128 @@ export type ShopifyHeroOperation = {
     country?: string;
     language?: string;
   };
+};
+
+export type ShopifyCartOperation = {
+  data: {
+    cart: ShopifyCart;
+  };
+  variables: {
+    cartId: string;
+  };
+};
+
+export type ShopifyCreateCartOperation = {
+  data: { cartCreate: { cart: ShopifyCart } };
+};
+
+export type ShopifyAddToCartOperation = {
+  data: {
+    cartLinesAdd: {
+      cart: ShopifyCart;
+    };
+  };
+  variables: {
+    cartId: string;
+    lines: {
+      merchandiseId: string;
+      quantity: number;
+    }[];
+  };
+};
+
+export type ShopifyRemoveFromCartOperation = {
+  data: {
+    cartLinesRemove: {
+      cart: ShopifyCart;
+    };
+  };
+  variables: {
+    cartId: string;
+    lineIds: string[];
+  };
+};
+
+export type ShopifyUpdateCartOperation = {
+  data: {
+    cartLinesUpdate: {
+      cart: ShopifyCart;
+    };
+  };
+  variables: {
+    cartId: string;
+    lines: {
+      id: string;
+      merchandiseId: string;
+      quantity: number;
+    }[];
+  };
+};
+
+
+export type ShopifyCart = {
+  id: string;
+  checkoutUrl: string;
+  cost: {
+    subtotalAmount: Money;
+    totalAmount: Money;
+    totalTaxAmount: Money;
+  };
+  lines: Connection<CartItem>;
+  totalQuantity: number;
+};
+
+export type Cart = Omit<ShopifyCart, "lines"> & {
+  lines: CartItem[];
+};
+
+export type CartItem = {
+  id: string;
+  quantity: number;
+  cost: {
+    totalAmount: Money;
+  };
+  merchandise: {
+    id: string;
+    title: string;
+    selectedOptions: {
+      name: string;
+      value: string;
+    }[];
+    product: Product;
+  };
+};
+
+export type ShopifyCollectionProducts = {
+  data: {
+    collections: CollectionConnection;
+    collection: Collection;
+  };
+  variables: {
+    handle: string,
+    pageBy: number,
+    cursor: string | null,
+    filters: FiltersQueryParams,
+    sortKey: string,
+    reverse?: boolean,
+  };
+}
+export type InputMaybe<T> = Maybe<T>;
+
+export type AttributeInput = {
+  /** Key or name of the attribute. */
+  key: string;
+  /** Value of the attribute. */
+  value: string;
+};
+
+export type CartLineInput = {
+  /** An array of key-value pairs that contains additional information about the merchandise line. */
+  attributes?: InputMaybe<Array<AttributeInput>>;
+  /** The identifier of the merchandise that the buyer intends to purchase. */
+  merchandiseId: string;
+  /** The quantity of the merchandise. */
+  quantity?: InputMaybe<number>;
+  /** The identifier of the selling plan that the merchandise is being purchased with. */
+  sellingPlanId?: InputMaybe<string>;
 };

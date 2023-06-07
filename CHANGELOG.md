@@ -29,3 +29,5 @@ straightforward as possible.
 - Build out journal page
 - Infinte scroll on product page
 - build out Not Found page
+- build out Generic Error page
+- Build out Specific Collection Page

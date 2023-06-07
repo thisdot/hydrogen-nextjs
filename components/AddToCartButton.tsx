@@ -1,6 +1,5 @@
+import { CartLineInput } from "@/lib/shopify/types";
 import { Button } from "./Button";
-
-// this component will be wrapped inside a Form but for now we need only the UI
 export function AddToCartButton({
   children,
   lines,
@@ -12,8 +11,7 @@ export function AddToCartButton({
   ...props
 }: {
   children: React.ReactNode;
-  // this type should be CartLineInput from @shopify/hydrogen/storefront-api-types
-  lines: any;
+  lines: CartLineInput[];
   className?: string;
   variant?: "primary" | "secondary" | "inline";
   width?: "auto" | "full";
@@ -24,7 +22,6 @@ export function AddToCartButton({
   return (
     <Button
       as="button"
-      type="submit"
       width={width}
       variant={variant}
       className={className}
