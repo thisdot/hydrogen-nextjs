@@ -2,11 +2,22 @@ import { Heading, Text } from "./Text";
 import { Link } from "./Link";
 import { IconRemove } from "./Icon";
 import { Money } from "./MoneyComponent";
-import useCartFetcher from "@/hooks/useCartFetcher";
-import { Image } from "./ImageComponent";
+import NumericIput from "./NumericInput";
+import Image from "next/image";
 
-const CartLineItem = ({ line }: { line: any }) => {
-  const { deleteCartItem } = useCartFetcher();
+
+type IAction = "plus" | "minus";
+interface ICartLineItem {
+  line: any;
+  adjustItemQuantity: (action: IAction) => void;
+  deleteItem: () => void;
+}
+
+const CartLineItem = ({
+  line,
+  adjustItemQuantity,
+  deleteItem,
+}: ICartLineItem) => {
   if (!line?.id) return null;
 
   const { id, quantity, merchandise } = line;
@@ -20,7 +31,7 @@ const CartLineItem = ({ line }: { line: any }) => {
           <Image
             width={110}
             height={110}
-            data={merchandise.image}
+            src={merchandise.image}
             className="object-cover object-center w-24 h-24 border rounded md:w-28 md:h-28"
             alt={merchandise.title}
           />
@@ -49,12 +60,12 @@ const CartLineItem = ({ line }: { line: any }) => {
 
           <div className="flex items-center gap-2">
             <div className="flex justify-start text-copy">
-              {/* <CartLineQuantityAdjust line={line} /> */}
+              <NumericIput line={line} onClick={adjustItemQuantity} />
             </div>
             <button
               className="flex items-center justify-center w-10 h-10 border rounded"
               type="submit"
-              onClick={() => deleteCartItem({item: line})}
+              onClick={deleteItem}
             >
               <span className="sr-only">Remove</span>
               <IconRemove aria-hidden="true" />

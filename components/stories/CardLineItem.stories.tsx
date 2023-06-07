@@ -45,9 +45,13 @@ export default {
 } as Meta;
 
 const Template: StoryFn = () => (
-  <CardLineItem
-    line={mockedLine}
-  />
+  <div className=" w-96">
+    <CardLineItem
+      line={mockedLine}
+      adjustItemQuantity={() => null}
+      deleteItem={() => null}
+    />
+  </div>
 );
 
 export const Default = Template.bind({});
