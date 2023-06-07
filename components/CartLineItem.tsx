@@ -1,12 +1,12 @@
-import Image from "next/image";
 import { Heading, Text } from "./Text";
 import { Link } from "./Link";
 import { IconRemove } from "./Icon";
 import { Money } from "./MoneyComponent";
 import useCartFetcher from "@/hooks/useCartFetcher";
+import { Image } from "./ImageComponent";
 
 const CartLineItem = ({ line }: { line: any }) => {
-  // const { deleteCartItem } = useCartFetcher();
+  const { deleteCartItem } = useCartFetcher();
   if (!line?.id) return null;
 
   const { id, quantity, merchandise } = line;
@@ -20,7 +20,7 @@ const CartLineItem = ({ line }: { line: any }) => {
           <Image
             width={110}
             height={110}
-            src={merchandise.image}
+            data={merchandise.image}
             className="object-cover object-center w-24 h-24 border rounded md:w-28 md:h-28"
             alt={merchandise.title}
           />
@@ -54,7 +54,7 @@ const CartLineItem = ({ line }: { line: any }) => {
             <button
               className="flex items-center justify-center w-10 h-10 border rounded"
               type="submit"
-              // onClick={() => deleteCartItem({item: line})}
+              onClick={() => deleteCartItem({item: line})}
             >
               <span className="sr-only">Remove</span>
               <IconRemove aria-hidden="true" />
