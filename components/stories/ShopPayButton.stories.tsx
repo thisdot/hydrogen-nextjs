@@ -10,6 +10,7 @@ export default {
 const Template: StoryFn<{
   variantIds: string[];
   storeDomain: string;
+  width: 'full' | 'auto';
 }> = (args) => (
   <div
     style={{
@@ -24,4 +25,5 @@ export const Default = Template.bind({});
 Default.args = {
   variantIds: ['variant1', 'variant2'],
   storeDomain: 'example.myshopify.com',
+  width: 'full'
 };
