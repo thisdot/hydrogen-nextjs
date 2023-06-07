@@ -1,6 +1,5 @@
 import { FiltersQueryParams } from "@/app/collections/[collectionHandle]/page";
 import { CollectionHero } from "@/components/Hero";
-import { SortParam } from "@/components/SortFilter";
 
 export type Shop = {
   id: string;
@@ -781,3 +780,22 @@ export type ShopifyCollectionProducts = {
     reverse?: boolean,
   };
 }
+export type InputMaybe<T> = Maybe<T>;
+
+export type AttributeInput = {
+  /** Key or name of the attribute. */
+  key: string;
+  /** Value of the attribute. */
+  value: string;
+};
+
+export type CartLineInput = {
+  /** An array of key-value pairs that contains additional information about the merchandise line. */
+  attributes?: InputMaybe<Array<AttributeInput>>;
+  /** The identifier of the merchandise that the buyer intends to purchase. */
+  merchandiseId: string;
+  /** The quantity of the merchandise. */
+  quantity?: InputMaybe<number>;
+  /** The identifier of the selling plan that the merchandise is being purchased with. */
+  sellingPlanId?: InputMaybe<string>;
+};
