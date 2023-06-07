@@ -9,7 +9,7 @@ export default {
 
 const Template: StoryFn<{
   variantIds: string[];
-  storeDomain: string
+  storeDomain: string;
 }> = (args) => (
   <div
     style={{
