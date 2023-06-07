@@ -1,25 +1,18 @@
 import { AnalyticsEventName, SHOPIFY_S, SHOPIFY_Y } from "../../const";
 import {
+  ClientBrowserParameters,
+  ShopifyAddToCartPayload,
   ShopifyAnalytics,
   ShopifyMonorailEvent,
   ShopifyPageViewPayload,
 } from "../types";
-// import type {
-//   ClientBrowserParameters,
-//   ShopifyAddToCartPayload,
-//   ShopifyAnalytics,
-//   ShopifyPageViewPayload,
-//   ShopifyMonorailEvent,
-// } from './analytics-types.js';
-// import {AnalyticsEventName} from './analytics-constants.js';
-// import {errorIfServer} from './analytics-utils.js';
-// import {getShopifyCookies} from './cookies-utils.js';
-
-// import {pageView as trekkiePageView} from './analytics-schema-trekkie-storefront-page-view.js';
-// import {
-//   pageView as customerPageView,
-//   addToCart as customerAddToCart,
-// } from './analytics-schema-custom-storefront-customer-tracking.js';
+import { pageView as trekkiePageView } from "./analytics-schema-trekkie-storefront-page-view";
+import {
+  pageView as customerPageView,
+  addToCart as customerAddToCart,
+} from "./analytics-schema-custom-storefront-customer-tracking";
+import { errorIfServer } from "./analytics-utils";
+import { getShopifyCookies } from "./cookies-utils";
 
 /**
  * Set user and session cookies and refresh the expiry time
@@ -106,9 +99,6 @@ function sendToShopify(
       })
       .catch((err) => {
         console.error(ERROR_MESSAGE, err);
-        if (__HYDROGEN_DEV__) {
-          throw new Error(ERROR_MESSAGE);
-        }
       });
   } catch (error) {
     // Do nothing

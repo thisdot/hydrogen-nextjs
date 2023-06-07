@@ -39,6 +39,7 @@ specifiers:
   typescript: 5.0.4
   typographic-base: ^1.0.4
   webpack: '>=5.0.0 <6.0.0'
+  worktop: ^0.7.3
   zustand: ^4.3.8
 
 dependencies:
@@ -60,6 +61,7 @@ dependencies:
   tailwindcss: 3.3.2
   typescript: 5.0.4
   webpack: 5.82.1
+  worktop: 0.7.3
 
 devDependencies:
   '@storybook/addon-essentials': 7.0.12_biqbaboplfbrettd7655fr4n2y
@@ -8906,6 +8908,11 @@ packages:
       define-properties: 1.2.0
       functions-have-names: 1.2.3
 
+  /regexparam/2.0.1:
+    resolution: {integrity: sha512-zRgSaYemnNYxUv+/5SeoHI0eJIgTL/A2pUtXUPLHQxUldagouJ9p+K6IbIZ/JiQuCEv2E2B1O11SjVQy3aMCkw==}
+    engines: {node: '>=8'}
+    dev: false
+
   /regexpu-core/5.3.2:
     resolution: {integrity: sha512-RAM5FlZz+Lhmo7db9L298p2vHP5ZywrVXmVXpmAD9GuL5MPH6t9ROw1iA/wfHkQ76Qe7AaPF0nGuim96/IrQMQ==}
     engines: {node: '>=4'}
@@ -10339,6 +10346,13 @@ packages:
   /wordwrap/1.0.0:
     resolution: {integrity: sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q==}
     dev: true
+
+  /worktop/0.7.3:
+    resolution: {integrity: sha512-WBHP1hk8pLP7ahAw13fugDWcO0SUAOiCD6DHT/bfLWoCIA/PL9u7GKdudT2nGZ8EGR1APbGCAI6ZzKG1+X+PnQ==}
+    engines: {node: '>=12'}
+    dependencies:
+      regexparam: 2.0.1
+    dev: false
 
   /wrap-ansi/7.0.0:
     resolution: {integrity: sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==}

@@ -26,3 +26,8 @@ interface AnalyticsEventName {
   /** Add to cart */
   ADD_TO_CART: "ADD_TO_CART";
 }
+
+export const ShopifyAppId = {
+  hydrogen: "6167201",
+  headless: "12875497473",
+} as const;

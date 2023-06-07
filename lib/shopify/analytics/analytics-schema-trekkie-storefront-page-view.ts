@@ -1,17 +1,11 @@
-// import {
-//     ShopifyPageViewPayload,
-//     ShopifyMonorailPayload,
-//     ShopifyMonorailEvent,
-//   } from './analytics-types.js';
-//   import {ShopifyAppId} from './analytics-constants.js';
-//   import {addDataIf, schemaWrapper, parseGid} from './analytics-utils.js';
-//   import {buildUUID} from './cookies-utils.js';
-
+import { ShopifyAppId } from "@/lib/const";
 import {
   ShopifyMonorailEvent,
   ShopifyMonorailPayload,
   ShopifyPageViewPayload,
 } from "../types";
+import { addDataIf, parseGid, schemaWrapper } from "./analytics-utils";
+import { buildUUID } from "./cookies-utils";
 
 const SCHEMA_ID = "trekkie_storefront_page_view/1.4";
 const OXYGEN_DOMAIN = "myshopify.dev";

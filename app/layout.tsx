@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import { getLayoutData } from "@/lib/shopify";
 import Footer from "./compoents/Footer";
 import Header from "./compoents/Header";
+import AnalyticsClient from "@/components/AnalyticsClient";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,6 +33,7 @@ export default async function RootLayout({
             menu={data.body.data.headerMenu}
             title={data.body.data.shop.name}
           />
+          <AnalyticsClient />
           <main role="main" id="mainContent" className="flex-grow">
             {children}
           </main>
