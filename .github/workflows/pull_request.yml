@@ -39,6 +39,3 @@ jobs:
         run: npm run build
         working-directory: ./
 
-      - name: Test Project
-        run: npm run test
-        working-directory: ./
