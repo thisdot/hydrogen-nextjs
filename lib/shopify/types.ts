@@ -817,3 +817,655 @@ export type ShopifyProductRecommendationsOperation = {
 		count?: number;
 	};
 };
+
+export type CartCost = {
+  __typename?: 'CartCost';
+  /** The estimated amount, before taxes and discounts, for the customer to pay at checkout. The checkout charge amount doesn't include any deferred payments that'll be paid at a later date. If the cart has no deferred payments, then the checkout charge amount is equivalent to `subtotalAmount`. */
+  checkoutChargeAmount: Money;
+  /** The amount, before taxes and cart-level discounts, for the customer to pay. */
+  subtotalAmount: Money;
+  /** Whether the subtotal amount is estimated. */
+  subtotalAmountEstimated: boolean;
+  /** The total amount for the customer to pay. */
+  totalAmount: Money;
+  /** Whether the total amount is estimated. */
+  totalAmountEstimated: boolean;
+  /** The duty amount for the customer to pay at checkout. */
+  totalDutyAmount?: Maybe<Money>;
+  /** Whether the total duty amount is estimated. */
+  totalDutyAmountEstimated: boolean;
+  /** The tax amount for the customer to pay at checkout. */
+  totalTaxAmount?: Maybe<Money>;
+  /** Whether the total tax amount is estimated. */
+  totalTaxAmountEstimated: boolean;
+};
+
+export type CartType = HasMetafields &
+  Node & {
+    __typename?: 'Cart';
+    /** An attribute associated with the cart. */
+    attribute?: Maybe<Attribute>;
+    /** The attributes associated with the cart. Attributes are represented as key-value pairs. */
+    attributes: Array<Attribute>;
+    /** Information about the buyer that is interacting with the cart. */
+    buyerIdentity: CartBuyerIdentity;
+    /** The URL of the checkout for the cart. */
+    checkoutUrl: string;
+    /** The estimated costs that the buyer will pay at checkout. The costs are subject to change and changes will be reflected at checkout. The `cost` field uses the `buyerIdentity` field to determine [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing). */
+    cost: CartCost;
+    /** The date and time when the cart was created. */
+    createdAt: string;
+    /**
+     * The delivery groups available for the cart, based on the buyer identity default
+     * delivery address preference or the default address of the logged-in customer.
+     *
+     */
+    deliveryGroups: CartDeliveryGroupConnection;
+    /** The discounts that have been applied to the entire cart. */
+    discountAllocations: Array<
+      | CartAutomaticDiscountAllocation
+      | CartCodeDiscountAllocation
+      | CartCustomDiscountAllocation
+    >;
+    /**
+     * The case-insensitive discount codes that the customer added at checkout.
+     *
+     */
+    discountCodes: Array<CartDiscountCode>;
+    /**
+     * The estimated costs that the buyer will pay at checkout.
+     * The estimated costs are subject to change and changes will be reflected at checkout.
+     * The `estimatedCost` field uses the `buyerIdentity` field to determine
+     * [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing).
+     *
+     * @deprecated Use `cost` instead.
+     */
+    estimatedCost: CartEstimatedCost;
+    /** A globally-unique identifier. */
+    id: string;
+    /** A list of lines containing information about the items the customer intends to purchase. */
+    lines: BaseCartLineConnection;
+    /** Returns a metafield found by namespace and key. */
+    metafield?: Maybe<Metafield>;
+    /**
+     * The metafields associated with the resource matching the supplied list of namespaces and keys.
+     *
+     */
+    metafields: Array<Maybe<Metafield>>;
+    /** A note that is associated with the cart. For example, the note can be a personalized message to the buyer. */
+    note?: Maybe<string>;
+    /** The total number of items in the cart. */
+    totalQuantity: number;
+    /** The date and time when the cart was updated. */
+    updatedAt: string;
+  };
+
+  export type Attribute = {
+  __typename?: 'Attribute';
+  /** Key or name of the attribute. */
+  key: string;
+  /** Value of the attribute. */
+  value?: string;
+};
+
+export type CartBuyerIdentity = {
+  __typename?: 'CartBuyerIdentity';
+  /** The country where the buyer is located. */
+  countryCode?: Maybe<CountryCode>;
+  /** The customer account associated with the cart. */
+  customer?: Maybe<Customer>;
+  /**
+   * An ordered set of delivery addresses tied to the buyer that is interacting with the cart.
+   * The rank of the preferences is determined by the order of the addresses in the array. Preferences
+   * can be used to populate relevant fields in the checkout flow.
+   *
+   */
+  deliveryAddressPreferences: Array<DeliveryAddress>;
+  /** The email address of the buyer that is interacting with the cart. */
+  email?: Maybe<string>;
+  /** The phone number of the buyer that is interacting with the cart. */
+  phone?: Maybe<string>;
+  /**
+   * A set of wallet preferences tied to the buyer that is interacting with the cart.
+   * Preferences can be used to populate relevant payment fields in the checkout flow.
+   *
+   */
+  walletPreferences: Array<string>;
+};
+
+export type CountryCode =
+  /** Ascension Island. */
+  | 'AC'
+  /** Andorra. */
+  | 'AD'
+  /** United Arab Emirates. */
+  | 'AE'
+  /** Afghanistan. */
+  | 'AF'
+  /** Antigua & Barbuda. */
+  | 'AG'
+  /** Anguilla. */
+  | 'AI'
+  /** Albania. */
+  | 'AL'
+  /** Armenia. */
+  | 'AM'
+  /** Netherlands Antilles. */
+  | 'AN'
+  /** Angola. */
+  | 'AO'
+  /** Argentina. */
+  | 'AR'
+  /** Austria. */
+  | 'AT'
+  /** Australia. */
+  | 'AU'
+  /** Aruba. */
+  | 'AW'
+  /** Åland Islands. */
+  | 'AX'
+  /** Azerbaijan. */
+  | 'AZ'
+  /** Bosnia & Herzegovina. */
+  | 'BA'
+  /** Barbados. */
+  | 'BB'
+  /** Bangladesh. */
+  | 'BD'
+  /** Belgium. */
+  | 'BE'
+  /** Burkina Faso. */
+  | 'BF'
+  /** Bulgaria. */
+  | 'BG'
+  /** Bahrain. */
+  | 'BH'
+  /** Burundi. */
+  | 'BI'
+  /** Benin. */
+  | 'BJ'
+  /** St. Barthélemy. */
+  | 'BL'
+  /** Bermuda. */
+  | 'BM'
+  /** Brunei. */
+  | 'BN'
+  /** Bolivia. */
+  | 'BO'
+  /** Caribbean Netherlands. */
+  | 'BQ'
+  /** Brazil. */
+  | 'BR'
+  /** Bahamas. */
+  | 'BS'
+  /** Bhutan. */
+  | 'BT'
+  /** Bouvet Island. */
+  | 'BV'
+  /** Botswana. */
+  | 'BW'
+  /** Belarus. */
+  | 'BY'
+  /** Belize. */
+  | 'BZ'
+  /** Canada. */
+  | 'CA'
+  /** Cocos (Keeling) Islands. */
+  | 'CC'
+  /** Congo - Kinshasa. */
+  | 'CD'
+  /** Central African Republic. */
+  | 'CF'
+  /** Congo - Brazzaville. */
+  | 'CG'
+  /** Switzerland. */
+  | 'CH'
+  /** Côte d’Ivoire. */
+  | 'CI'
+  /** Cook Islands. */
+  | 'CK'
+  /** Chile. */
+  | 'CL'
+  /** Cameroon. */
+  | 'CM'
+  /** China. */
+  | 'CN'
+  /** Colombia. */
+  | 'CO'
+  /** Costa Rica. */
+  | 'CR'
+  /** Cuba. */
+  | 'CU'
+  /** Cape Verde. */
+  | 'CV'
+  /** Curaçao. */
+  | 'CW'
+  /** Christmas Island. */
+  | 'CX'
+  /** Cyprus. */
+  | 'CY'
+  /** Czechia. */
+  | 'CZ'
+  /** Germany. */
+  | 'DE'
+  /** Djibouti. */
+  | 'DJ'
+  /** Denmark. */
+  | 'DK'
+  /** Dominica. */
+  | 'DM'
+  /** Dominican Republic. */
+  | 'DO'
+  /** Algeria. */
+  | 'DZ'
+  /** Ecuador. */
+  | 'EC'
+  /** Estonia. */
+  | 'EE'
+  /** Egypt. */
+  | 'EG'
+  /** Western Sahara. */
+  | 'EH'
+  /** Eritrea. */
+  | 'ER'
+  /** Spain. */
+  | 'ES'
+  /** Ethiopia. */
+  | 'ET'
+  /** Finland. */
+  | 'FI'
+  /** Fiji. */
+  | 'FJ'
+  /** Falkland Islands. */
+  | 'FK'
+  /** Faroe Islands. */
+  | 'FO'
+  /** France. */
+  | 'FR'
+  /** Gabon. */
+  | 'GA'
+  /** United Kingdom. */
+  | 'GB'
+  /** Grenada. */
+  | 'GD'
+  /** Georgia. */
+  | 'GE'
+  /** French Guiana. */
+  | 'GF'
+  /** Guernsey. */
+  | 'GG'
+  /** Ghana. */
+  | 'GH'
+  /** Gibraltar. */
+  | 'GI'
+  /** Greenland. */
+  | 'GL'
+  /** Gambia. */
+  | 'GM'
+  /** Guinea. */
+  | 'GN'
+  /** Guadeloupe. */
+  | 'GP'
+  /** Equatorial Guinea. */
+  | 'GQ'
+  /** Greece. */
+  | 'GR'
+  /** South Georgia & South Sandwich Islands. */
+  | 'GS'
+  /** Guatemala. */
+  | 'GT'
+  /** Guinea-Bissau. */
+  | 'GW'
+  /** Guyana. */
+  | 'GY'
+  /** Hong Kong SAR. */
+  | 'HK'
+  /** Heard & McDonald Islands. */
+  | 'HM'
+  /** Honduras. */
+  | 'HN'
+  /** Croatia. */
+  | 'HR'
+  /** Haiti. */
+  | 'HT'
+  /** Hungary. */
+  | 'HU'
+  /** Indonesia. */
+  | 'ID'
+  /** Ireland. */
+  | 'IE'
+  /** Israel. */
+  | 'IL'
+  /** Isle of Man. */
+  | 'IM'
+  /** India. */
+  | 'IN'
+  /** British Indian Ocean Territory. */
+  | 'IO'
+  /** Iraq. */
+  | 'IQ'
+  /** Iran. */
+  | 'IR'
+  /** Iceland. */
+  | 'IS'
+  /** Italy. */
+  | 'IT'
+  /** Jersey. */
+  | 'JE'
+  /** Jamaica. */
+  | 'JM'
+  /** Jordan. */
+  | 'JO'
+  /** Japan. */
+  | 'JP'
+  /** Kenya. */
+  | 'KE'
+  /** Kyrgyzstan. */
+  | 'KG'
+  /** Cambodia. */
+  | 'KH'
+  /** Kiribati. */
+  | 'KI'
+  /** Comoros. */
+  | 'KM'
+  /** St. Kitts & Nevis. */
+  | 'KN'
+  /** North Korea. */
+  | 'KP'
+  /** South Korea. */
+  | 'KR'
+  /** Kuwait. */
+  | 'KW'
+  /** Cayman Islands. */
+  | 'KY'
+  /** Kazakhstan. */
+  | 'KZ'
+  /** Laos. */
+  | 'LA'
+  /** Lebanon. */
+  | 'LB'
+  /** St. Lucia. */
+  | 'LC'
+  /** Liechtenstein. */
+  | 'LI'
+  /** Sri Lanka. */
+  | 'LK'
+  /** Liberia. */
+  | 'LR'
+  /** Lesotho. */
+  | 'LS'
+  /** Lithuania. */
+  | 'LT'
+  /** Luxembourg. */
+  | 'LU'
+  /** Latvia. */
+  | 'LV'
+  /** Libya. */
+  | 'LY'
+  /** Morocco. */
+  | 'MA'
+  /** Monaco. */
+  | 'MC'
+  /** Moldova. */
+  | 'MD'
+  /** Montenegro. */
+  | 'ME'
+  /** St. Martin. */
+  | 'MF'
+  /** Madagascar. */
+  | 'MG'
+  /** North Macedonia. */
+  | 'MK'
+  /** Mali. */
+  | 'ML'
+  /** Myanmar (Burma). */
+  | 'MM'
+  /** Mongolia. */
+  | 'MN'
+  /** Macao SAR. */
+  | 'MO'
+  /** Martinique. */
+  | 'MQ'
+  /** Mauritania. */
+  | 'MR'
+  /** Montserrat. */
+  | 'MS'
+  /** Malta. */
+  | 'MT'
+  /** Mauritius. */
+  | 'MU'
+  /** Maldives. */
+  | 'MV'
+  /** Malawi. */
+  | 'MW'
+  /** Mexico. */
+  | 'MX'
+  /** Malaysia. */
+  | 'MY'
+  /** Mozambique. */
+  | 'MZ'
+  /** Namibia. */
+  | 'NA'
+  /** New Caledonia. */
+  | 'NC'
+  /** Niger. */
+  | 'NE'
+  /** Norfolk Island. */
+  | 'NF'
+  /** Nigeria. */
+  | 'NG'
+  /** Nicaragua. */
+  | 'NI'
+  /** Netherlands. */
+  | 'NL'
+  /** Norway. */
+  | 'NO'
+  /** Nepal. */
+  | 'NP'
+  /** Nauru. */
+  | 'NR'
+  /** Niue. */
+  | 'NU'
+  /** New Zealand. */
+  | 'NZ'
+  /** Oman. */
+  | 'OM'
+  /** Panama. */
+  | 'PA'
+  /** Peru. */
+  | 'PE'
+  /** French Polynesia. */
+  | 'PF'
+  /** Papua New Guinea. */
+  | 'PG'
+  /** Philippines. */
+  | 'PH'
+  /** Pakistan. */
+  | 'PK'
+  /** Poland. */
+  | 'PL'
+  /** St. Pierre & Miquelon. */
+  | 'PM'
+  /** Pitcairn Islands. */
+  | 'PN'
+  /** Palestinian Territories. */
+  | 'PS'
+  /** Portugal. */
+  | 'PT'
+  /** Paraguay. */
+  | 'PY'
+  /** Qatar. */
+  | 'QA'
+  /** Réunion. */
+  | 'RE'
+  /** Romania. */
+  | 'RO'
+  /** Serbia. */
+  | 'RS'
+  /** Russia. */
+  | 'RU'
+  /** Rwanda. */
+  | 'RW'
+  /** Saudi Arabia. */
+  | 'SA'
+  /** Solomon Islands. */
+  | 'SB'
+  /** Seychelles. */
+  | 'SC'
+  /** Sudan. */
+  | 'SD'
+  /** Sweden. */
+  | 'SE'
+  /** Singapore. */
+  | 'SG'
+  /** St. Helena. */
+  | 'SH'
+  /** Slovenia. */
+  | 'SI'
+  /** Svalbard & Jan Mayen. */
+  | 'SJ'
+  /** Slovakia. */
+  | 'SK'
+  /** Sierra Leone. */
+  | 'SL'
+  /** San Marino. */
+  | 'SM'
+  /** Senegal. */
+  | 'SN'
+  /** Somalia. */
+  | 'SO'
+  /** Suriname. */
+  | 'SR'
+  /** South Sudan. */
+  | 'SS'
+  /** São Tomé & Príncipe. */
+  | 'ST'
+  /** El Salvador. */
+  | 'SV'
+  /** Sint Maarten. */
+  | 'SX'
+  /** Syria. */
+  | 'SY'
+  /** Eswatini. */
+  | 'SZ'
+  /** Tristan da Cunha. */
+  | 'TA'
+  /** Turks & Caicos Islands. */
+  | 'TC'
+  /** Chad. */
+  | 'TD'
+  /** French Southern Territories. */
+  | 'TF'
+  /** Togo. */
+  | 'TG'
+  /** Thailand. */
+  | 'TH'
+  /** Tajikistan. */
+  | 'TJ'
+  /** Tokelau. */
+  | 'TK'
+  /** Timor-Leste. */
+  | 'TL'
+  /** Turkmenistan. */
+  | 'TM'
+  /** Tunisia. */
+  | 'TN'
+  /** Tonga. */
+  | 'TO'
+  /** Turkey. */
+  | 'TR'
+  /** Trinidad & Tobago. */
+  | 'TT'
+  /** Tuvalu. */
+  | 'TV'
+  /** Taiwan. */
+  | 'TW'
+  /** Tanzania. */
+  | 'TZ'
+  /** Ukraine. */
+  | 'UA'
+  /** Uganda. */
+  | 'UG'
+  /** U.S. Outlying Islands. */
+  | 'UM'
+  /** United States. */
+  | 'US'
+  /** Uruguay. */
+  | 'UY'
+  /** Uzbekistan. */
+  | 'UZ'
+  /** Vatican City. */
+  | 'VA'
+  /** St. Vincent & Grenadines. */
+  | 'VC'
+  /** Venezuela. */
+  | 'VE'
+  /** British Virgin Islands. */
+  | 'VG'
+  /** Vietnam. */
+  | 'VN'
+  /** Vanuatu. */
+  | 'VU'
+  /** Wallis & Futuna. */
+  | 'WF'
+  /** Samoa. */
+  | 'WS'
+  /** Kosovo. */
+  | 'XK'
+  /** Yemen. */
+  | 'YE'
+  /** Mayotte. */
+  | 'YT'
+  /** South Africa. */
+  | 'ZA'
+  /** Zambia. */
+  | 'ZM'
+  /** Zimbabwe. */
+  | 'ZW'
+  /** Unknown Region. */
+  | 'ZZ';
+
+  export type Customer = HasMetafields & {
+    __typename?: 'Customer';
+    /** Indicates whether the customer has consented to be sent marketing material via email. */
+    acceptsMarketing: boolean;
+    /** A list of addresses for the customer. */
+    addresses: MailingAddressConnection;
+    /** The date and time when the customer was created. */
+    createdAt: string;
+    /** The customer’s default address. */
+    defaultAddress?: Maybe<MailingAddress>;
+    /** The customer’s name, email or phone number. */
+    displayName: string;
+    /** The customer’s email address. */
+    email?: Maybe<string>;
+    /** The customer’s first name. */
+    firstName?: Maybe<string>;
+    /** A unique identifier for the customer. */
+    id: string;
+    /** The customer's most recently updated, incomplete checkout. */
+    lastIncompleteCheckout?: Maybe<Checkout>;
+    /** The customer’s last name. */
+    lastName?: Maybe<string>;
+    /** Returns a metafield found by namespace and key. */
+    metafield?: Maybe<Metafield>;
+    /**
+     * The metafields associated with the resource matching the supplied list of namespaces and keys.
+     *
+     */
+    metafields: Array<Maybe<Metafield>>;
+    /** The number of orders that the customer has made at the store in their lifetime. */
+    numberOfOrders: string;
+    /** The orders associated with the customer. */
+    orders: OrderConnection;
+    /** The customer’s phone number. */
+    phone?: Maybe<string>;
+    /**
+     * A comma separated list of tags that have been added to the customer.
+     * Additional access scope required: unauthenticated_read_customer_tags.
+     *
+     */
+    tags: Array<string>;
+    /** The date and time when the customer information was updated. */
+    updatedAt: string;
+  };
