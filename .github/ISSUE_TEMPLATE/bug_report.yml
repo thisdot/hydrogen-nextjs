@@ -1,6 +1,6 @@
 name: Bug report
 description: A template for registering issues, bugs or feature requests
-title: "[Bug]: "
+title: '[Bug]: '
 labels: New Issue, bug
 body:
   - type: markdown
@@ -9,13 +9,13 @@ body:
   - type: input
     attributes:
       label: What browser are you using?
-      description: "For example: Chrome, Safari"
+      description: 'For example: Chrome, Safari'
     validations:
       required: true
   - type: input
     attributes:
       label: What operating system are you using?
-      description: "For example: macOS, Windows, Ubuntu"
+      description: 'For example: macOS, Windows, Ubuntu'
     validations:
       required: true
   - type: textarea

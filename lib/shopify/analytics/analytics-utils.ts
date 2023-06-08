@@ -1,8 +1,8 @@
 import type {
-  ShopifyMonorailPayload,
-  ShopifyMonorailEvent,
-  ShopifyGid,
-} from "../types";
+	ShopifyMonorailPayload,
+	ShopifyMonorailEvent,
+	ShopifyGid,
+} from '../types';
 
 /**
  * Builds a Shopify Monorail event from a Shopify Monorail payload and a schema ID.
@@ -11,16 +11,16 @@ import type {
  * @returns The formatted payload
  **/
 export function schemaWrapper(
-  schemaId: string,
-  payload: ShopifyMonorailPayload
+	schemaId: string,
+	payload: ShopifyMonorailPayload
 ): ShopifyMonorailEvent {
-  return {
-    schema_id: schemaId,
-    payload,
-    metadata: {
-      event_created_at_ms: Date.now(),
-    },
-  };
+	return {
+		schema_id: schemaId,
+		payload,
+		metadata: {
+			event_created_at_ms: Date.now(),
+		},
+	};
 }
 
 /**
@@ -38,23 +38,23 @@ export function schemaWrapper(
  * ```
  **/
 export function parseGid(gid: string | undefined): ShopifyGid {
-  const defaultReturn = { id: "", resource: null };
+	const defaultReturn = { id: '', resource: null };
 
-  if (typeof gid !== "string") {
-    return defaultReturn;
-  }
+	if (typeof gid !== 'string') {
+		return defaultReturn;
+	}
 
-  // TODO: add support for parsing query parameters on complex gids
-  // Reference: https://shopify.dev/api/usage/gids
-  const matches = gid.match(/^gid:\/\/shopify\/(\w+)\/([^/]+)/);
+	// TODO: add support for parsing query parameters on complex gids
+	// Reference: https://shopify.dev/api/usage/gids
+	const matches = gid.match(/^gid:\/\/shopify\/(\w+)\/([^/]+)/);
 
-  if (!matches || matches.length === 1) {
-    return defaultReturn;
-  }
-  const id = matches[2] ?? null;
-  const resource = matches[1] ?? null;
+	if (!matches || matches.length === 1) {
+		return defaultReturn;
+	}
+	const id = matches[2] ?? null;
+	const resource = matches[1] ?? null;
 
-  return { id, resource };
+	return { id, resource };
 }
 
 /**
@@ -64,18 +64,18 @@ export function parseGid(gid: string | undefined): ShopifyGid {
  * @returns The formatted object
  **/
 export function addDataIf(
-  keyValuePairs: ShopifyMonorailPayload,
-  formattedData: ShopifyMonorailPayload
+	keyValuePairs: ShopifyMonorailPayload,
+	formattedData: ShopifyMonorailPayload
 ): ShopifyMonorailPayload {
-  if (typeof keyValuePairs !== "object") {
-    return {};
-  }
-  Object.entries(keyValuePairs).forEach(([key, value]) => {
-    if (value) {
-      formattedData[key] = value;
-    }
-  });
-  return formattedData;
+	if (typeof keyValuePairs !== 'object') {
+		return {};
+	}
+	Object.entries(keyValuePairs).forEach(([key, value]) => {
+		if (value) {
+			formattedData[key] = value;
+		}
+	});
+	return formattedData;
 }
 
 /**
@@ -84,11 +84,11 @@ export function addDataIf(
  * @returns A boolean
  **/
 export function errorIfServer(fnName: string): boolean {
-  if (typeof document === "undefined") {
-    console.error(
-      `${fnName} should only be used within the useEffect callback or event handlers`
-    );
-    return true;
-  }
-  return false;
+	if (typeof document === 'undefined') {
+		console.error(
+			`${fnName} should only be used within the useEffect callback or event handlers`
+		);
+		return true;
+	}
+	return false;
 }

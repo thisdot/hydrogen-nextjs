@@ -89,7 +89,6 @@ export const seoFragment = `#graphql
   }
 `;
 
-
 export const productFragment = `#graphql
   fragment product on Product {
     id
@@ -199,4 +198,3 @@ export const cartFragment = `#graphql
   }
   ${productFragment}
 `;
-
