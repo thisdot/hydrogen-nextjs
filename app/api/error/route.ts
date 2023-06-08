@@ -1,12 +1,12 @@
-import { getFeaturedProducts, getFeaturedCollections } from "@/lib/shopify";
-import { NextResponse } from "next/server";
+import { getFeaturedProducts, getFeaturedCollections } from '@/lib/shopify';
+import { NextResponse } from 'next/server';
 
 export async function GET(request: NextResponse) {
-  const featuredProductsResponse = await getFeaturedProducts();
-  const featuredCollectionsResponse = await getFeaturedCollections();
+	const featuredProductsResponse = await getFeaturedProducts();
+	const featuredCollectionsResponse = await getFeaturedCollections();
 
-  return NextResponse.json({
-    featuredProductsResponse,
-    featuredCollectionsResponse,
-  });
+	return NextResponse.json({
+		featuredProductsResponse,
+		featuredCollectionsResponse,
+	});
 }
