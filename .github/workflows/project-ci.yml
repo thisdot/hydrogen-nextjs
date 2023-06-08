@@ -38,4 +38,3 @@ jobs:
       - name: Build Project
         run: npm run build
         working-directory: ./
-
