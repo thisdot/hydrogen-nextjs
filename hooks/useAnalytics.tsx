@@ -40,7 +40,7 @@ export function useAnalytics(hasUserConsent: boolean, locale: I18nLocale) {
     const payload: ShopifyPageViewPayload = {
       ...getClientBrowserParameters(),
       ...pageAnalytics,
-      shopId: "",
+      shopId: process.env.NEXT_PUBLIC_SHOPIFY_SHOP_ID as string,
     };
 
     sendShopifyAnalytics({
