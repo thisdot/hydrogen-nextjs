@@ -36,15 +36,14 @@ const ProductGallery = ({
         ].join(" ");
 
         return (
-          <div
-            className={style}
-            key={med.id || med.image.id}
-          >
+          <div className={style} key={med.id || med.image.id}>
             {med.image && (
               <Image
                 alt={med.alt}
                 loading={i === 0 ? "eager" : "lazy"}
-                src={data.image!}
+                src={data.image.url!}
+                width={data.image.width}
+                height={data.image.height}
                 sizes={
                   isFirst || isFourth
                     ? "(min-width: 48em) 60vw, 90vw"

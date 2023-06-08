@@ -1,4 +1,4 @@
-import { MEDIA_FRAGMENT } from "./fragments";
+import { productFragment } from "./fragments";
 
 export const PRODUCT_CARD_FRAGMENT = `#graphql
   fragment ProductCard on Product {
@@ -97,76 +97,20 @@ export const PRODUCT_VARIANT_FRAGMENT = `#graphql
   }
 `;
 
-export const PRODUCT_QUERY = `#graphql
-  query Product(
-    $country: CountryCode
-    $language: LanguageCode
-    $handle: String!
-    $selectedOptions: [SelectedOptionInput!]!
-  ) @inContext(country: $country, language: $language) {
+export const getProductQuery = /* GraphQL */ `
+  query getProduct($handle: String!) {
     product(handle: $handle) {
-      id
-      title
-      vendor
-      handle
-      descriptionHtml
-      description
-      options {
-        name
-        values
-      }
-      selectedVariant: variantBySelectedOptions(selectedOptions: $selectedOptions) {
-        ...ProductVariantFragment
-      }
-      media(first: 7) {
-        nodes {
-          ...Media
-        }
-      }
-      variants(first: 1) {
-        nodes {
-          ...ProductVariantFragment
-        }
-      }
-      seo {
-        description
-        title
-      }
-    }
-    shop {
-      name
-      primaryDomain {
-        url
-      }
-      shippingPolicy {
-        body
-        handle
-      }
-      refundPolicy {
-        body
-        handle
-      }
+      ...product
     }
   }
-  ${MEDIA_FRAGMENT}
-  ${PRODUCT_VARIANT_FRAGMENT}
+  ${productFragment}
 `;
 
-export const RECOMMENDED_PRODUCTS_QUERY = `#graphql
-  query productRecommendations(
-    $productId: ID!
-    $count: Int
-    $country: CountryCode
-    $language: LanguageCode
-  ) @inContext(country: $country, language: $language) {
-    recommended: productRecommendations(productId: $productId) {
-      ...ProductCard
-    }
-    additional: products(first: $count, sortKey: BEST_SELLING) {
-      nodes {
-        ...ProductCard
-      }
+export const getProductRecommendationsQuery = /* GraphQL */ `
+  query getProductRecommendations($productId: ID!) {
+    productRecommendations(productId: $productId) {
+      ...product
     }
   }
-  ${PRODUCT_CARD_FRAGMENT}
+  ${productFragment}
 `;

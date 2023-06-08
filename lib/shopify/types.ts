@@ -799,3 +799,22 @@ export type CartLineInput = {
   /** The identifier of the selling plan that the merchandise is being purchased with. */
   sellingPlanId?: InputMaybe<string>;
 };
+
+export type ShopifyProductOperation = {
+  data: { product: ShopifyProduct; shop: Shop };
+  variables: {
+    handle: string;
+    selectedOptions: any[];
+  };
+};
+
+export type ShopifyProductRecommendationsOperation = {
+  data: {
+    recommended: Product[];
+    additional: ProductConnection;
+  };
+  variables: {
+    productId: string;
+    count?: number;
+  };
+};
