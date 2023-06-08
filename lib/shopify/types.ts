@@ -798,3 +798,894 @@ export type CartLineInput = {
 	/** The identifier of the selling plan that the merchandise is being purchased with. */
 	sellingPlanId?: InputMaybe<string>;
 };
+
+/** Return type for `customerCreate` mutation. */
+export type CustomerCreatePayload = {
+	__typename?: 'CustomerCreatePayload';
+	/** The created customer object. */
+	customer?: Maybe<Customer>;
+	/** The list of errors that occurred from executing the mutation. */
+	customerUserErrors: Array<CustomerUserError>;
+	/**
+	 * The list of errors that occurred from executing the mutation.
+	 * @deprecated Use `customerUserErrors` instead.
+	 */
+	userErrors: Array<UserError>;
+};
+
+/** A customer represents a customer account with the shop. Customer accounts store contact information for the customer, saving logged-in customers the trouble of having to provide it at every checkout. */
+export type Customer = HasMetafields & {
+	__typename?: 'Customer';
+	/** Indicates whether the customer has consented to be sent marketing material via email. */
+	acceptsMarketing: Scalars['Boolean'];
+	/** A list of addresses for the customer. */
+	addresses: MailingAddressConnection;
+	/** The date and time when the customer was created. */
+	createdAt: Scalars['DateTime'];
+	/** The customer’s default address. */
+	defaultAddress?: Maybe<MailingAddress>;
+	/** The customer’s name, email or phone number. */
+	displayName: Scalars['String'];
+	/** The customer’s email address. */
+	email?: Maybe<Scalars['String']>;
+	/** The customer’s first name. */
+	firstName?: Maybe<Scalars['String']>;
+	/** A unique identifier for the customer. */
+	id: Scalars['ID'];
+	/** The customer's most recently updated, incomplete checkout. */
+	lastIncompleteCheckout?: Maybe<Checkout>;
+	/** The customer’s last name. */
+	lastName?: Maybe<Scalars['String']>;
+	/** Returns a metafield found by namespace and key. */
+	metafield?: Maybe<Metafield>;
+	/**
+	 * The metafields associated with the resource matching the supplied list of namespaces and keys.
+	 *
+	 */
+	metafields: Array<Maybe<Metafield>>;
+	/** The number of orders that the customer has made at the store in their lifetime. */
+	numberOfOrders: Scalars['UnsignedInt64'];
+	/** The orders associated with the customer. */
+	orders: OrderConnection;
+	/** The customer’s phone number. */
+	phone?: Maybe<Scalars['String']>;
+	/**
+	 * A comma separated list of tags that have been added to the customer.
+	 * Additional access scope required: unauthenticated_read_customer_tags.
+	 *
+	 */
+	tags: Array<Scalars['String']>;
+	/** The date and time when the customer information was updated. */
+	updatedAt: Scalars['DateTime'];
+};
+
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+	ID: string;
+	String: string;
+	Boolean: boolean;
+	Int: number;
+	Float: number;
+	Color: string;
+	DateTime: string;
+	Decimal: string;
+	HTML: string;
+	JSON: unknown;
+	URL: string;
+	UnsignedInt64: string;
+};
+
+/** Represents an error that happens during execution of a customer mutation. */
+export type CustomerUserError = DisplayableError & {
+	__typename?: 'CustomerUserError';
+	/** The error code. */
+	code?: Maybe<CustomerErrorCode>;
+	/** The path to the input field that caused the error. */
+	field?: Maybe<Array<Scalars['String']>>;
+	/** The error message. */
+	message: Scalars['String'];
+};
+
+/** Represents an error in the input of a mutation. */
+export type UserError = DisplayableError & {
+	__typename?: 'UserError';
+	/** The path to the input field that caused the error. */
+	field?: Maybe<Array<Scalars['String']>>;
+	/** The error message. */
+	message: Scalars['String'];
+};
+
+/** A filter used to view a subset of products in a collection matching a specific variant option. */
+export type VariantOptionFilter = {
+	/** The name of the variant option to filter on. */
+	name: Scalars['String'];
+	/** The value of the variant option to filter on. */
+	value: Scalars['String'];
+};
+
+/**
+ * An auto-generated type for paginating through multiple MailingAddresses.
+ *
+ */
+export type MailingAddressConnection = {
+	__typename?: 'MailingAddressConnection';
+	/** A list of edges. */
+	edges: Array<MailingAddressEdge>;
+	/** A list of the nodes contained in MailingAddressEdge. */
+	nodes: Array<MailingAddress>;
+	/** Information to aid in pagination. */
+	pageInfo: PageInfo;
+};
+
+/** Represents a mailing address for customers and shipping. */
+export type MailingAddress = Node & {
+	__typename?: 'MailingAddress';
+	/** The first line of the address. Typically the street address or PO Box number. */
+	address1?: Maybe<Scalars['String']>;
+	/**
+	 * The second line of the address. Typically the number of the apartment, suite, or unit.
+	 *
+	 */
+	address2?: Maybe<Scalars['String']>;
+	/**
+	 * The name of the city, district, village, or town.
+	 *
+	 */
+	city?: Maybe<Scalars['String']>;
+	/**
+	 * The name of the customer's company or organization.
+	 *
+	 */
+	company?: Maybe<Scalars['String']>;
+	/**
+	 * The name of the country.
+	 *
+	 */
+	country?: Maybe<Scalars['String']>;
+	/**
+	 * The two-letter code for the country of the address.
+	 *
+	 * For example, US.
+	 *
+	 * @deprecated Use `countryCodeV2` instead.
+	 */
+	countryCode?: Maybe<Scalars['String']>;
+	/**
+	 * The two-letter code for the country of the address.
+	 *
+	 * For example, US.
+	 *
+	 */
+	countryCodeV2?: Maybe<CountryCode>;
+	/** The first name of the customer. */
+	firstName?: Maybe<Scalars['String']>;
+	/** A formatted version of the address, customized by the provided arguments. */
+	formatted: Array<Scalars['String']>;
+	/** A comma-separated list of the values for city, province, and country. */
+	formattedArea?: Maybe<Scalars['String']>;
+	/** A globally-unique identifier. */
+	id: Scalars['ID'];
+	/** The last name of the customer. */
+	lastName?: Maybe<Scalars['String']>;
+	/** The latitude coordinate of the customer address. */
+	latitude?: Maybe<Scalars['Float']>;
+	/** The longitude coordinate of the customer address. */
+	longitude?: Maybe<Scalars['Float']>;
+	/**
+	 * The full name of the customer, based on firstName and lastName.
+	 *
+	 */
+	name?: Maybe<Scalars['String']>;
+	/**
+	 * A unique phone number for the customer.
+	 *
+	 * Formatted using E.164 standard. For example, _+16135551111_.
+	 *
+	 */
+	phone?: Maybe<Scalars['String']>;
+	/** The region of the address, such as the province, state, or district. */
+	province?: Maybe<Scalars['String']>;
+	/**
+	 * The two-letter code for the region.
+	 *
+	 * For example, ON.
+	 *
+	 */
+	provinceCode?: Maybe<Scalars['String']>;
+	/** The zip or postal code of the address. */
+	zip?: Maybe<Scalars['String']>;
+};
+
+/** A container for all the information required to checkout items and pay. */
+export type Checkout = Node & {
+	__typename?: 'Checkout';
+	/** The gift cards used on the checkout. */
+	appliedGiftCards: Array<AppliedGiftCard>;
+	/**
+	 * The available shipping rates for this Checkout.
+	 * Should only be used when checkout `requiresShipping` is `true` and
+	 * the shipping address is valid.
+	 *
+	 */
+	availableShippingRates?: Maybe<AvailableShippingRates>;
+	/** The identity of the customer associated with the checkout. */
+	buyerIdentity: CheckoutBuyerIdentity;
+	/** The date and time when the checkout was completed. */
+	completedAt?: Maybe<Scalars['DateTime']>;
+	/** The date and time when the checkout was created. */
+	createdAt: Scalars['DateTime'];
+	/** The currency code for the checkout. */
+	currencyCode: CurrencyCode;
+	/** A list of extra information that is added to the checkout. */
+	customAttributes: Array<Attribute>;
+	/** Discounts that have been applied on the checkout. */
+	discountApplications: DiscountApplicationConnection;
+	/** The email attached to this checkout. */
+	email?: Maybe<Scalars['String']>;
+	/** A globally-unique identifier. */
+	id: Scalars['ID'];
+	/** A list of line item objects, each one containing information about an item in the checkout. */
+	lineItems: CheckoutLineItemConnection;
+	/** The sum of all the prices of all the items in the checkout. Duties, taxes, shipping and discounts excluded. */
+	lineItemsSubtotalPrice: MoneyV2;
+	/** The note associated with the checkout. */
+	note?: Maybe<Scalars['String']>;
+	/** The resulting order from a paid checkout. */
+	order?: Maybe<Order>;
+	/** The Order Status Page for this Checkout, null when checkout is not completed. */
+	orderStatusUrl?: Maybe<Scalars['URL']>;
+	/** The amount left to be paid. This is equal to the cost of the line items, taxes, and shipping, minus discounts and gift cards. */
+	paymentDue: MoneyV2;
+	/**
+	 * The amount left to be paid. This is equal to the cost of the line items, duties, taxes, and shipping, minus discounts and gift cards.
+	 * @deprecated Use `paymentDue` instead.
+	 */
+	paymentDueV2: MoneyV2;
+	/**
+	 * Whether or not the Checkout is ready and can be completed. Checkouts may
+	 * have asynchronous operations that can take time to finish. If you want
+	 * to complete a checkout or ensure all the fields are populated and up to
+	 * date, polling is required until the value is true.
+	 *
+	 */
+	ready: Scalars['Boolean'];
+	/** States whether or not the fulfillment requires shipping. */
+	requiresShipping: Scalars['Boolean'];
+	/** The shipping address to where the line items will be shipped. */
+	shippingAddress?: Maybe<MailingAddress>;
+	/**
+	 * The discounts that have been allocated onto the shipping line by discount applications.
+	 *
+	 */
+	shippingDiscountAllocations: Array<DiscountAllocation>;
+	/** Once a shipping rate is selected by the customer it is transitioned to a `shipping_line` object. */
+	shippingLine?: Maybe<ShippingRate>;
+	/** The price at checkout before shipping and taxes. */
+	subtotalPrice: MoneyV2;
+	/**
+	 * The price at checkout before duties, shipping, and taxes.
+	 * @deprecated Use `subtotalPrice` instead.
+	 */
+	subtotalPriceV2: MoneyV2;
+	/** Whether the checkout is tax exempt. */
+	taxExempt: Scalars['Boolean'];
+	/** Whether taxes are included in the line item and shipping line prices. */
+	taxesIncluded: Scalars['Boolean'];
+	/** The sum of all the duties applied to the line items in the checkout. */
+	totalDuties?: Maybe<MoneyV2>;
+	/** The sum of all the prices of all the items in the checkout, including taxes and duties. */
+	totalPrice: MoneyV2;
+	/**
+	 * The sum of all the prices of all the items in the checkout, including taxes and duties.
+	 * @deprecated Use `totalPrice` instead.
+	 */
+	totalPriceV2: MoneyV2;
+	/** The sum of all the taxes applied to the line items and shipping lines in the checkout. */
+	totalTax: MoneyV2;
+	/**
+	 * The sum of all the taxes applied to the line items and shipping lines in the checkout.
+	 * @deprecated Use `totalTax` instead.
+	 */
+	totalTaxV2: MoneyV2;
+	/** The date and time when the checkout was last updated. */
+	updatedAt: Scalars['DateTime'];
+	/** The url pointing to the checkout accessible from the web. */
+	webUrl: Scalars['URL'];
+};
+
+/**
+ * An auto-generated type for paginating through multiple Orders.
+ *
+ */
+export type OrderConnection = {
+	__typename?: 'OrderConnection';
+	/** A list of edges. */
+	edges: Array<OrderEdge>;
+	/** A list of the nodes contained in OrderEdge. */
+	nodes: Array<Order>;
+	/** Information to aid in pagination. */
+	pageInfo: PageInfo;
+	/** The total count of Orders. */
+	totalCount: Scalars['UnsignedInt64'];
+};
+
+/** Represents an error in the input of a mutation. */
+export type DisplayableError = {
+	/** The path to the input field that caused the error. */
+	field?: Maybe<Array<Scalars['String']>>;
+	/** The error message. */
+	message: Scalars['String'];
+};
+
+/** Represents a web address. */
+export type Domain = {
+	__typename?: 'Domain';
+	/** The host name of the domain (eg: `example.com`). */
+	host: Scalars['String'];
+	/** Whether SSL is enabled or not. */
+	sslEnabled: Scalars['Boolean'];
+	/** The URL of the domain (eg: `https://example.com`). */
+	url: Scalars['URL'];
+};
+
+/** Possible error codes that can be returned by `CustomerUserError`. */
+export type CustomerErrorCode =
+	/** Customer already enabled. */
+	| 'ALREADY_ENABLED'
+	/** Input email contains an invalid domain name. */
+	| 'BAD_DOMAIN'
+	/** The input value is blank. */
+	| 'BLANK'
+	/** Input contains HTML tags. */
+	| 'CONTAINS_HTML_TAGS'
+	/** Input contains URL. */
+	| 'CONTAINS_URL'
+	/** Customer is disabled. */
+	| 'CUSTOMER_DISABLED'
+	/** The input value is invalid. */
+	| 'INVALID'
+	/** Multipass token is not valid. */
+	| 'INVALID_MULTIPASS_REQUEST'
+	/** Address does not exist. */
+	| 'NOT_FOUND'
+	/** Input password starts or ends with whitespace. */
+	| 'PASSWORD_STARTS_OR_ENDS_WITH_WHITESPACE'
+	/** The input value is already taken. */
+	| 'TAKEN'
+	/** Invalid activation token. */
+	| 'TOKEN_INVALID'
+	/** The input value is too long. */
+	| 'TOO_LONG'
+	/** The input value is too short. */
+	| 'TOO_SHORT'
+	/** Unidentified customer. */
+	| 'UNIDENTIFIED_CUSTOMER';
+
+/**
+ * An auto-generated type which holds one MailingAddress and a cursor during pagination.
+ *
+ */
+export type MailingAddressEdge = {
+	__typename?: 'MailingAddressEdge';
+	/** A cursor for use in pagination. */
+	cursor: Scalars['String'];
+	/** The item at the end of MailingAddressEdge. */
+	node: MailingAddress;
+};
+
+export type CountryCode =
+	/** Ascension Island. */
+	| 'AC'
+	/** Andorra. */
+	| 'AD'
+	/** United Arab Emirates. */
+	| 'AE'
+	/** Afghanistan. */
+	| 'AF'
+	/** Antigua & Barbuda. */
+	| 'AG'
+	/** Anguilla. */
+	| 'AI'
+	/** Albania. */
+	| 'AL'
+	/** Armenia. */
+	| 'AM'
+	/** Netherlands Antilles. */
+	| 'AN'
+	/** Angola. */
+	| 'AO'
+	/** Argentina. */
+	| 'AR'
+	/** Austria. */
+	| 'AT'
+	/** Australia. */
+	| 'AU'
+	/** Aruba. */
+	| 'AW'
+	/** Åland Islands. */
+	| 'AX'
+	/** Azerbaijan. */
+	| 'AZ'
+	/** Bosnia & Herzegovina. */
+	| 'BA'
+	/** Barbados. */
+	| 'BB'
+	/** Bangladesh. */
+	| 'BD'
+	/** Belgium. */
+	| 'BE'
+	/** Burkina Faso. */
+	| 'BF'
+	/** Bulgaria. */
+	| 'BG'
+	/** Bahrain. */
+	| 'BH'
+	/** Burundi. */
+	| 'BI'
+	/** Benin. */
+	| 'BJ'
+	/** St. Barthélemy. */
+	| 'BL'
+	/** Bermuda. */
+	| 'BM'
+	/** Brunei. */
+	| 'BN'
+	/** Bolivia. */
+	| 'BO'
+	/** Caribbean Netherlands. */
+	| 'BQ'
+	/** Brazil. */
+	| 'BR'
+	/** Bahamas. */
+	| 'BS'
+	/** Bhutan. */
+	| 'BT'
+	/** Bouvet Island. */
+	| 'BV'
+	/** Botswana. */
+	| 'BW'
+	/** Belarus. */
+	| 'BY'
+	/** Belize. */
+	| 'BZ'
+	/** Canada. */
+	| 'CA'
+	/** Cocos (Keeling) Islands. */
+	| 'CC'
+	/** Congo - Kinshasa. */
+	| 'CD'
+	/** Central African Republic. */
+	| 'CF'
+	/** Congo - Brazzaville. */
+	| 'CG'
+	/** Switzerland. */
+	| 'CH'
+	/** Côte d’Ivoire. */
+	| 'CI'
+	/** Cook Islands. */
+	| 'CK'
+	/** Chile. */
+	| 'CL'
+	/** Cameroon. */
+	| 'CM'
+	/** China. */
+	| 'CN'
+	/** Colombia. */
+	| 'CO'
+	/** Costa Rica. */
+	| 'CR'
+	/** Cuba. */
+	| 'CU'
+	/** Cape Verde. */
+	| 'CV'
+	/** Curaçao. */
+	| 'CW'
+	/** Christmas Island. */
+	| 'CX'
+	/** Cyprus. */
+	| 'CY'
+	/** Czechia. */
+	| 'CZ'
+	/** Germany. */
+	| 'DE'
+	/** Djibouti. */
+	| 'DJ'
+	/** Denmark. */
+	| 'DK'
+	/** Dominica. */
+	| 'DM'
+	/** Dominican Republic. */
+	| 'DO'
+	/** Algeria. */
+	| 'DZ'
+	/** Ecuador. */
+	| 'EC'
+	/** Estonia. */
+	| 'EE'
+	/** Egypt. */
+	| 'EG'
+	/** Western Sahara. */
+	| 'EH'
+	/** Eritrea. */
+	| 'ER'
+	/** Spain. */
+	| 'ES'
+	/** Ethiopia. */
+	| 'ET'
+	/** Finland. */
+	| 'FI'
+	/** Fiji. */
+	| 'FJ'
+	/** Falkland Islands. */
+	| 'FK'
+	/** Faroe Islands. */
+	| 'FO'
+	/** France. */
+	| 'FR'
+	/** Gabon. */
+	| 'GA'
+	/** United Kingdom. */
+	| 'GB'
+	/** Grenada. */
+	| 'GD'
+	/** Georgia. */
+	| 'GE'
+	/** French Guiana. */
+	| 'GF'
+	/** Guernsey. */
+	| 'GG'
+	/** Ghana. */
+	| 'GH'
+	/** Gibraltar. */
+	| 'GI'
+	/** Greenland. */
+	| 'GL'
+	/** Gambia. */
+	| 'GM'
+	/** Guinea. */
+	| 'GN'
+	/** Guadeloupe. */
+	| 'GP'
+	/** Equatorial Guinea. */
+	| 'GQ'
+	/** Greece. */
+	| 'GR'
+	/** South Georgia & South Sandwich Islands. */
+	| 'GS'
+	/** Guatemala. */
+	| 'GT'
+	/** Guinea-Bissau. */
+	| 'GW'
+	/** Guyana. */
+	| 'GY'
+	/** Hong Kong SAR. */
+	| 'HK'
+	/** Heard & McDonald Islands. */
+	| 'HM'
+	/** Honduras. */
+	| 'HN'
+	/** Croatia. */
+	| 'HR'
+	/** Haiti. */
+	| 'HT'
+	/** Hungary. */
+	| 'HU'
+	/** Indonesia. */
+	| 'ID'
+	/** Ireland. */
+	| 'IE'
+	/** Israel. */
+	| 'IL'
+	/** Isle of Man. */
+	| 'IM'
+	/** India. */
+	| 'IN'
+	/** British Indian Ocean Territory. */
+	| 'IO'
+	/** Iraq. */
+	| 'IQ'
+	/** Iran. */
+	| 'IR'
+	/** Iceland. */
+	| 'IS'
+	/** Italy. */
+	| 'IT'
+	/** Jersey. */
+	| 'JE'
+	/** Jamaica. */
+	| 'JM'
+	/** Jordan. */
+	| 'JO'
+	/** Japan. */
+	| 'JP'
+	/** Kenya. */
+	| 'KE'
+	/** Kyrgyzstan. */
+	| 'KG'
+	/** Cambodia. */
+	| 'KH'
+	/** Kiribati. */
+	| 'KI'
+	/** Comoros. */
+	| 'KM'
+	/** St. Kitts & Nevis. */
+	| 'KN'
+	/** North Korea. */
+	| 'KP'
+	/** South Korea. */
+	| 'KR'
+	/** Kuwait. */
+	| 'KW'
+	/** Cayman Islands. */
+	| 'KY'
+	/** Kazakhstan. */
+	| 'KZ'
+	/** Laos. */
+	| 'LA'
+	/** Lebanon. */
+	| 'LB'
+	/** St. Lucia. */
+	| 'LC'
+	/** Liechtenstein. */
+	| 'LI'
+	/** Sri Lanka. */
+	| 'LK'
+	/** Liberia. */
+	| 'LR'
+	/** Lesotho. */
+	| 'LS'
+	/** Lithuania. */
+	| 'LT'
+	/** Luxembourg. */
+	| 'LU'
+	/** Latvia. */
+	| 'LV'
+	/** Libya. */
+	| 'LY'
+	/** Morocco. */
+	| 'MA'
+	/** Monaco. */
+	| 'MC'
+	/** Moldova. */
+	| 'MD'
+	/** Montenegro. */
+	| 'ME'
+	/** St. Martin. */
+	| 'MF'
+	/** Madagascar. */
+	| 'MG'
+	/** North Macedonia. */
+	| 'MK'
+	/** Mali. */
+	| 'ML'
+	/** Myanmar (Burma). */
+	| 'MM'
+	/** Mongolia. */
+	| 'MN'
+	/** Macao SAR. */
+	| 'MO'
+	/** Martinique. */
+	| 'MQ'
+	/** Mauritania. */
+	| 'MR'
+	/** Montserrat. */
+	| 'MS'
+	/** Malta. */
+	| 'MT'
+	/** Mauritius. */
+	| 'MU'
+	/** Maldives. */
+	| 'MV'
+	/** Malawi. */
+	| 'MW'
+	/** Mexico. */
+	| 'MX'
+	/** Malaysia. */
+	| 'MY'
+	/** Mozambique. */
+	| 'MZ'
+	/** Namibia. */
+	| 'NA'
+	/** New Caledonia. */
+	| 'NC'
+	/** Niger. */
+	| 'NE'
+	/** Norfolk Island. */
+	| 'NF'
+	/** Nigeria. */
+	| 'NG'
+	/** Nicaragua. */
+	| 'NI'
+	/** Netherlands. */
+	| 'NL'
+	/** Norway. */
+	| 'NO'
+	/** Nepal. */
+	| 'NP'
+	/** Nauru. */
+	| 'NR'
+	/** Niue. */
+	| 'NU'
+	/** New Zealand. */
+	| 'NZ'
+	/** Oman. */
+	| 'OM'
+	/** Panama. */
+	| 'PA'
+	/** Peru. */
+	| 'PE'
+	/** French Polynesia. */
+	| 'PF'
+	/** Papua New Guinea. */
+	| 'PG'
+	/** Philippines. */
+	| 'PH'
+	/** Pakistan. */
+	| 'PK'
+	/** Poland. */
+	| 'PL'
+	/** St. Pierre & Miquelon. */
+	| 'PM'
+	/** Pitcairn Islands. */
+	| 'PN'
+	/** Palestinian Territories. */
+	| 'PS'
+	/** Portugal. */
+	| 'PT'
+	/** Paraguay. */
+	| 'PY'
+	/** Qatar. */
+	| 'QA'
+	/** Réunion. */
+	| 'RE'
+	/** Romania. */
+	| 'RO'
+	/** Serbia. */
+	| 'RS'
+	/** Russia. */
+	| 'RU'
+	/** Rwanda. */
+	| 'RW'
+	/** Saudi Arabia. */
+	| 'SA'
+	/** Solomon Islands. */
+	| 'SB'
+	/** Seychelles. */
+	| 'SC'
+	/** Sudan. */
+	| 'SD'
+	/** Sweden. */
+	| 'SE'
+	/** Singapore. */
+	| 'SG'
+	/** St. Helena. */
+	| 'SH'
+	/** Slovenia. */
+	| 'SI'
+	/** Svalbard & Jan Mayen. */
+	| 'SJ'
+	/** Slovakia. */
+	| 'SK'
+	/** Sierra Leone. */
+	| 'SL'
+	/** San Marino. */
+	| 'SM'
+	/** Senegal. */
+	| 'SN'
+	/** Somalia. */
+	| 'SO'
+	/** Suriname. */
+	| 'SR'
+	/** South Sudan. */
+	| 'SS'
+	/** São Tomé & Príncipe. */
+	| 'ST'
+	/** El Salvador. */
+	| 'SV'
+	/** Sint Maarten. */
+	| 'SX'
+	/** Syria. */
+	| 'SY'
+	/** Eswatini. */
+	| 'SZ'
+	/** Tristan da Cunha. */
+	| 'TA'
+	/** Turks & Caicos Islands. */
+	| 'TC'
+	/** Chad. */
+	| 'TD'
+	/** French Southern Territories. */
+	| 'TF'
+	/** Togo. */
+	| 'TG'
+	/** Thailand. */
+	| 'TH'
+	/** Tajikistan. */
+	| 'TJ'
+	/** Tokelau. */
+	| 'TK'
+	/** Timor-Leste. */
+	| 'TL'
+	/** Turkmenistan. */
+	| 'TM'
+	/** Tunisia. */
+	| 'TN'
+	/** Tonga. */
+	| 'TO'
+	/** Turkey. */
+	| 'TR'
+	/** Trinidad & Tobago. */
+	| 'TT'
+	/** Tuvalu. */
+	| 'TV'
+	/** Taiwan. */
+	| 'TW'
+	/** Tanzania. */
+	| 'TZ'
+	/** Ukraine. */
+	| 'UA'
+	/** Uganda. */
+	| 'UG'
+	/** U.S. Outlying Islands. */
+	| 'UM'
+	/** United States. */
+	| 'US'
+	/** Uruguay. */
+	| 'UY'
+	/** Uzbekistan. */
+	| 'UZ'
+	/** Vatican City. */
+	| 'VA'
+	/** St. Vincent & Grenadines. */
+	| 'VC'
+	/** Venezuela. */
+	| 'VE'
+	/** British Virgin Islands. */
+	| 'VG'
+	/** Vietnam. */
+	| 'VN'
+	/** Vanuatu. */
+	| 'VU'
+	/** Wallis & Futuna. */
+	| 'WF'
+	/** Samoa. */
+	| 'WS'
+	/** Kosovo. */
+	| 'XK'
+	/** Yemen. */
+	| 'YE'
+	/** Mayotte. */
+	| 'YT'
+	/** South Africa. */
+	| 'ZA'
+	/** Zambia. */
+	| 'ZM'
+	/** Zimbabwe. */
+	| 'ZW'
+	/** Unknown Region. */
+	| 'ZZ';
+
+/** Details about the gift card used on the checkout. */
+export type AppliedGiftCard = Node & {
+	__typename?: 'AppliedGiftCard';
+	/** The amount that was taken from the gift card by applying it. */
+	amountUsed: MoneyV2;
+	/**
+	 * The amount that was taken from the gift card by applying it.
+	 * @deprecated Use `amountUsed` instead.
+	 */
+	amountUsedV2: MoneyV2;
+	/** The amount left on the gift card. */
+	balance: MoneyV2;
+	/**
+	 * The amount left on the gift card.
+	 * @deprecated Use `balance` instead.
+	 */
+	balanceV2: MoneyV2;
+	/** A globally-unique identifier. */
+	id: Scalars['ID'];
+	/** The last characters of the gift card. */
+	lastCharacters: Scalars['String'];
+	/** The amount that was applied to the checkout in its currency. */
+	presentmentAmountUsed: MoneyV2;
+};

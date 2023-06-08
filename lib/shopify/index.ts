@@ -21,6 +21,7 @@ import {
 	ShopifyLayoutOperation,
 	ShopifyRemoveFromCartOperation,
 	ShopifyUpdateCartOperation,
+	CustomerCreatePayload,
 } from './types';
 import {
 	HOMEPAGE_FEATURED_PRODUCTS_QUERY,
@@ -37,6 +38,7 @@ import {
 import { getCartQuery } from './queries/cart';
 import { ARTICLE_QUERY, BLOGS_QUERY } from './queries/blog';
 import { FiltersQueryParams } from '@/app/collections/[collectionHandle]/page';
+import { CUSTOMER_CREATE_MUTATION } from './mutations/auth';
 
 const domain = `https://${process.env.PUBLIC_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
@@ -396,6 +398,33 @@ export async function getCollectionProducts({
 }) {
 	const data = await shopifyFetch<ShopifyCollectionProducts>({
 		query: COLLECTION_QUERY,
+		variables,
+	});
+	return data;
+}
+
+export async function createCustomer({
+	variables,
+}: {
+	variables: {
+		input: {
+			email: string;
+			password: string;
+		};
+	};
+}) {
+	const data = await shopifyFetch<{
+		data: {
+			customerCreate: CustomerCreatePayload;
+		};
+		variables: {
+			input: {
+				email: string;
+				password: string;
+			};
+		};
+	}>({
+		query: CUSTOMER_CREATE_MUTATION,
 		variables,
 	});
 	return data;
