@@ -13,6 +13,7 @@ import ProductListBox from '@/components/ProductListBox';
 import { truncate } from '@/lib/truncate';
 import Head from 'next/head';
 import { Product, ProductOption, ProductVariant } from '@/lib/shopify/types';
+import useCartFetcher from '@/hooks/useCartFetcher';
 
 export default async function Product({
 	params,
@@ -258,7 +259,7 @@ export function ProductForm({
 					</div>
 				)}
 			</div>
-		</div>
+		</div >
 	);
 }
 

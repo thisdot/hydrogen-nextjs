@@ -5,6 +5,7 @@ import MobileHeader from './MobileHeader';
 import { Drawer, useDrawer } from '@/components/Drawer';
 import { ShopifyHeaderMenu } from '@/lib/shopify/types';
 import { Cart } from '@/components/Cart';
+import useCartStore from '@/store/cart-store';
 
 function Header({ menu, title }: { menu: ShopifyHeaderMenu; title: string }) {
 	const isHome = true;
@@ -91,7 +92,7 @@ function CartDrawer({
 	return (
 		<Drawer open={isOpen} onClose={onClose} heading="Cart" openFrom="right">
 			<div className="grid">
-				<Cart layout="drawer" cart={null} onClose={onClose} />
+				<Cart layout="drawer" onClose={onClose} />
 			</div>
 		</Drawer>
 	);

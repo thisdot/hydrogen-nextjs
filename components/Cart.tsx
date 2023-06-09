@@ -1,6 +1,6 @@
 import clsx from 'clsx';
-import { useEffect, useRef } from 'react';
-import { useCookie, useScroll } from 'react-use';
+import { useRef } from 'react';
+import { useScroll } from 'react-use';
 // import { getInputStyleClasses } from '~/lib/utils';
 import CartLineItem from './CartLineItem';
 import { IconRemove } from './Icon';
@@ -8,60 +8,34 @@ import { Text } from './Text';
 import { flattenConnection } from '@/lib/flattenConnection';
 import { Money } from './MoneyComponent';
 import { Button } from './Button';
-import { CartCost, CartLine, CartType } from '@/lib/shopify/types';
-import { cookies } from 'next/headers';
+import { BaseCartLineConnection, CartCost, CartLine, CartType } from '@/lib/shopify/types';
+import useCartStore from '@/store/cart-store';
+import useCartFetcher from '@/hooks/useCartFetcher';
+import { FeaturedProducts } from './FeaturedProducts';
 
 type Layouts = 'page' | 'drawer';
 
 export function Cart({
 	layout,
 	onClose,
-	cart,
 }: {
 	layout: Layouts;
 	onClose?: () => void;
-	cart: CartType | null;
 }) {
-	const [cookies, setCookie] = useCookie('cartId');
-	const linesCount = Boolean(cart?.lines?.edges?.length || 0);
-
-	useEffect(() => {
-		const cartId = cookies;
-		// If cart not created
-		if (!cartId) {
-			const createCart = async () => {
-				const response = await fetch(`/api/create-cart`, {
-					method: 'POST',
-				});
-				if (response.status === 200) {
-					const data = await response.json();
-					setCookie(data.cart.id, {
-						path: '/',
-						sameSite: 'strict',
-						secure: process.env.NODE_ENV === 'production',
-					});
-				}
-			};
-
-			createCart();
-		}
-	}, []);
-
 	return (
 		<>
-			<CartEmpty hidden={linesCount} onClose={onClose} layout={layout} />
-			<CartDetails cart={cart} layout={layout} />
+			<CartEmpty onClose={onClose} layout={layout} />
+			<CartDetails layout={layout} />
 		</>
 	);
 }
 
 export function CartDetails({
 	layout,
-	cart,
 }: {
 	layout: Layouts;
-	cart: CartType | null;
 }) {
+	const cart = useCartStore((state) => state.cart);
 	// @todo: get optimistic cart cost
 	const cartHasItems = !!cart && cart.totalQuantity > 0;
 	const container = {
@@ -71,7 +45,7 @@ export function CartDetails({
 
 	return (
 		<div className={container[layout]}>
-			<CartLines lines={cart?.lines} layout={layout} />
+			<CartLines layout={layout} />
 			{cartHasItems && (
 				<CartSummary cost={cart.cost} layout={layout}>
 					<CartDiscounts discountCodes={cart.discountCodes} />
@@ -152,12 +126,12 @@ function CartDiscounts({
 
 function CartLines({
 	layout = 'drawer',
-	lines: cartLines,
 }: {
 	layout: Layouts;
-	lines: CartType['lines'] | undefined;
 }) {
-	const currentLines = cartLines ? flattenConnection(cartLines) : [];
+	const { editCartItem, deleteCartItem } = useCartFetcher()
+	const cart = useCartStore((state) => state.cart);
+	const currentLines: any = cart?.lines || [];
 	const scrollRef = useRef(null);
 	const { y } = useScroll(scrollRef);
 
@@ -179,8 +153,8 @@ function CartLines({
 					<CartLineItem
 						key={line.id}
 						line={line as CartLine}
-						adjustItemQuantity={() => console.log('adjust')}
-						deleteItem={() => console.log('delete')}
+						adjustItemQuantity={(action) => editCartItem({ action: action, item: line })}
+						deleteItem={() => deleteCartItem({ item: line })}
 					/>
 				))}
 			</ul>
@@ -239,39 +213,18 @@ function CartSummary({
 	);
 }
 
-// function ItemRemoveButton({ lineIds }: { lineIds: CartLine['id'][] }) {
-//   const fetcher = useFetcher();
-
-//   return (
-//     <fetcher.Form action="/cart" method="post">
-//       <input
-//         type="hidden"
-//         name="cartAction"
-//         value={CartAction.REMOVE_FROM_CART}
-//       />
-//       <input type="hidden" name="linesIds" value={JSON.stringify(lineIds)} />
-//       <button
-//         className="flex items-center justify-center w-10 h-10 border rounded"
-//         type="submit"
-//       >
-//         <span className="sr-only">Remove</span>
-//         <IconRemove aria-hidden="true" />
-//       </button>
-//     </fetcher.Form>
-//   );
-// }
-
 export function CartEmpty({
-	hidden = false,
 	layout = 'drawer',
 	onClose,
 }: {
-	hidden: boolean;
 	layout?: Layouts;
 	onClose?: () => void;
 }) {
+	const cart = useCartStore((state) => state.cart);
 	const scrollRef = useRef(null);
 	const { y } = useScroll(scrollRef);
+
+	const hidden = Boolean(cart?.lines?.length || 0)
 
 	const container = {
 		drawer: clsx([
@@ -296,13 +249,14 @@ export function CartEmpty({
 				</div>
 			</section>
 			<section className="grid gap-8 pt-16">
-				{/* <FeaturedProducts
-          count={4}
-          heading="Shop Best Sellers"
-          layout={layout}
-          onClose={onClose}
-          sortKey="BEST_SELLING"
-        /> */}
+
+				<FeaturedProducts
+					count={4}
+					heading="Shop Best Sellers"
+					layout={layout}
+					onClose={onClose}
+					sortKey="BEST_SELLING"
+				/>
 			</section>
 		</div>
 	);

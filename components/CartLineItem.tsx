@@ -30,7 +30,7 @@ const CartLineItem = ({
 					<Image
 						width={110}
 						height={110}
-						src={merchandise.image}
+						src={merchandise.image.url}
 						className="object-cover object-center w-24 h-24 border rounded md:w-28 md:h-28"
 						alt={merchandise.title}
 					/>

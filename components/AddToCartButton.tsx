@@ -1,5 +1,7 @@
+'use client'
 import { CartLineInput } from '@/lib/shopify/types';
 import { Button } from './Button';
+import useCartFetcher from '@/hooks/useCartFetcher';
 export function AddToCartButton({
 	children,
 	lines,
@@ -19,8 +21,12 @@ export function AddToCartButton({
 	analytics?: unknown;
 	[key: string]: any;
 }) {
+
+	const { addCatItem } = useCartFetcher()
+
 	return (
 		<Button
+			onClick={() => addCatItem({ variantId: lines[0].merchandiseId })}
 			as="button"
 			width={width}
 			variant={variant}

@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 type IAction = 'plus' | 'minus';
 interface INumericIput {
 	line: any;
@@ -7,29 +5,19 @@ interface INumericIput {
 }
 
 const NumericIput = ({ line, onClick }: INumericIput) => {
-	const [itemQuantity, setItemQuantity] = useState<number>(line.quantity || 0);
-
 	if (!line || typeof line?.quantity === 'undefined') return null;
 	const { id: lineId, quantity } = line;
 	const prevQuantity = Number(Math.max(0, quantity - 1).toFixed(0));
 	const nextQuantity = Number((quantity + 1).toFixed(0));
 
 	const modifyQuantity = (action: IAction) => {
-		setItemQuantity(prev =>
-			action === 'plus'
-				? prev + 1
-				: action === 'minus' && prev > 1
-				? prev - 1
-				: 0
-		);
-
 		onClick(action);
 	};
 
 	return (
 		<>
 			<label htmlFor={`quantity-${lineId}`} className="sr-only">
-				Quantity, {itemQuantity}
+				Quantity, {quantity}
 			</label>
 			<div className="flex justify-center items-center border rounded">
 				<button
@@ -37,14 +25,14 @@ const NumericIput = ({ line, onClick }: INumericIput) => {
 					aria-label="Decrease quantity"
 					className="w-10 h-10 transition text-primary/50 hover:text-primary disabled:text-primary/10 outline-none"
 					value={prevQuantity}
-					disabled={itemQuantity <= 1}
+					disabled={quantity <= 1}
 					onClick={() => modifyQuantity('minus')}
 				>
 					<span>&#8722;</span>
 				</button>
 
 				<div className="px-2 text-center" data-test="item-quantity">
-					{itemQuantity}
+					{quantity}
 				</div>
 
 				<button
