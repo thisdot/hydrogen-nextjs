@@ -1,10 +1,10 @@
-import { Meta, StoryFn } from "@storybook/react";
+import { Meta, StoryFn } from '@storybook/react';
 
-import ItemTabHeading from "../ItemTabHeading";
+import ItemTabHeading from '../ItemTabHeading';
 
 export default {
-  title: "Components/ItemTabHeading",
-  component: ItemTabHeading,
+	title: 'Components/ItemTabHeading',
+	component: ItemTabHeading,
 } as Meta;
 
 const SizeTemplate: StoryFn = () => (

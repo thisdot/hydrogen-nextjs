@@ -3,10 +3,10 @@
 import { Listbox } from "@headlessui/react";
 import { useRef } from "react";
 
-import clsx from "clsx";
-import { IconCaret, IconCheck } from ".";
-import ProductOptionLink from "./ProductOptionLink";
-import useProductOption from "@/hooks/useProductOption";
+import clsx from 'clsx';
+import { IconCaret, IconCheck } from '.';
+import ProductOptionLink from './ProductOptionLink';
+import useProductOption from '@/hooks/useProductOption';
 
 
 interface IOption {

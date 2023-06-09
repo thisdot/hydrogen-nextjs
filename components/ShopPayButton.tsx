@@ -3,19 +3,19 @@ import { Button } from './Button';
 import { Link } from './Link';
 
 interface ShopPayButtonProps {
-  variantIds: string[];
-  className?: string;
-  variantIdsAndQuantities?: { [variantId: string]: number };
-  width?: 'full' | 'auto';
-  storeDomain: string;
+	variantIds: string[];
+	className?: string;
+	variantIdsAndQuantities?: { [variantId: string]: number };
+	width?: 'full' | 'auto';
+	storeDomain: string;
 }
 const ShopPayButton: FC<ShopPayButtonProps> = ({
-  variantIds,
-  className,
-  variantIdsAndQuantities,
-  width,
-  storeDomain,
-  ...props
+	variantIds,
+	className,
+	variantIdsAndQuantities,
+	width,
+	storeDomain,
+	...props
 }) => {
   return (
     <Link href={`https://${storeDomain}/checkout?step=contact_information&selectedProductIds=${variantIds.join(',')}`}>

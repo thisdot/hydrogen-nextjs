@@ -28,6 +28,7 @@ specifiers:
   postcss: 8.4.23
   postcss-import: ^15.1.0
   postcss-preset-env: ^8.3.2
+  prettier: ^2.8.8
   react: 18.2.0
   react-dom: 18.2.0
   react-intersection-observer: ^9.4.3
@@ -78,6 +79,7 @@ devDependencies:
   postcss: 8.4.23
   postcss-import: 15.1.0_postcss@8.4.23
   postcss-preset-env: 8.3.2_postcss@8.4.23
+  prettier: 2.8.8
   react-use: 17.4.0_biqbaboplfbrettd7655fr4n2y
   storybook: 7.0.12
   type-fest: 3.10.0_typescript@5.0.4

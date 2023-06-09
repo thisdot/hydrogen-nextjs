@@ -21,7 +21,7 @@ export default  async function Product({
   searchParams: Record<string, string>;
 }) {
 
-  
+
 
   const search = new URLSearchParams(searchParams);
 
@@ -196,7 +196,7 @@ export default  async function Product({
 
 export function ProductForm({product}: {product: any}) {
   const STORE_DOMAIN = `${process.env.PUBLIC_STORE_DOMAIN!}`;
-  
+
   const firstVariant = product.variants.nodes[0];
 
   /**
@@ -302,4 +302,4 @@ export function ProductForm({product}: {product: any}) {
       </>
     );
   }
-  
+

@@ -1,18 +1,18 @@
-import { PAGE_BY } from "@/lib/const";
-import { getAllProducts } from "@/lib/shopify";
-import { NextResponse } from "next/server";
+import { PAGE_BY } from '@/lib/const';
+import { getAllProducts } from '@/lib/shopify';
+import { NextResponse } from 'next/server';
 
 export async function GET(request: NextResponse) {
-  const params = new URL(request.url).searchParams;
+	const params = new URL(request.url).searchParams;
 
-  const data = await getAllProducts({
-    variables: {
-      first: PAGE_BY,
-      endCursor: params.get("cursor") ?? undefined,
-    },
-  });
-  return NextResponse.json({
-    products: data.body.data.products.nodes,
-    pageInfo: data.body.data.products.pageInfo,
-  });
+	const data = await getAllProducts({
+		variables: {
+			first: PAGE_BY,
+			endCursor: params.get('cursor') ?? undefined,
+		},
+	});
+	return NextResponse.json({
+		products: data.body.data.products.nodes,
+		pageInfo: data.body.data.products.pageInfo,
+	});
 }
