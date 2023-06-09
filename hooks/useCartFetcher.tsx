@@ -1,30 +1,28 @@
-import { createCart, getCart } from '@/lib/shopify';
-import { Cart, CartItem } from '@/lib/shopify/types';
-import useCartStore from '@/store/cart-store';
-import { cookies } from 'next/headers';
-import { useCookie } from 'react-use';
+import { CartItem } from "@/lib/shopify/types";
+import useCartStore from "@/store/cart-store";
+import { cookies } from "next/headers";
+import { useCookie } from "react-use";
 
 const useCartFetcher = () => {
-	const [, setCookie] = useCookie('cartId');
-	const cartId = cookies().get('cartId')?.value;
+	// const cartId = cookies().get("cartId")?.value;
 	// If cart not created
-	if (!cartId) {
-		const createCart = async () => {
-			const response = await fetch(`/api/create-cart`, {
-				method: 'POST',
-			});
-			if (response.status === 200) {
-				const data = await response.json();
-				setCookie(data.cart.id, {
-					path: '/',
-					sameSite: 'strict',
-					secure: process.env.NODE_ENV === 'production',
-				});
-			}
-		};
+	// if (!cartId) {
+	//   const createCart = async () => {
+	//     const response = await fetch(`/api/create-cart`, {
+	//       method: "POST",
+	//     });
+	//     if (response.status === 200) {
+	//       const data = await response.json();
+	//       setCookie(data.cart.id, {
+	//         path: "/",
+	//         sameSite: "strict",
+	//         secure: process.env.NODE_ENV === "production",
+	//       });
+	//     }
+	//   };
 
-		createCart();
-	}
+	//   createCart();
+	// }
 
 	const getStoreCart = async () => {
 		const response = await fetch(`/api/cart`, {

@@ -1,6 +1,6 @@
 import clsx from 'clsx';
-import { useRef } from 'react';
-import { useScroll } from 'react-use';
+import { useEffect, useRef } from 'react';
+import { useCookie, useScroll } from 'react-use';
 // import { getInputStyleClasses } from '~/lib/utils';
 import CartLineItem from './CartLineItem';
 import { IconRemove } from './Icon';
@@ -8,7 +8,8 @@ import { Text } from './Text';
 import { flattenConnection } from '@/lib/flattenConnection';
 import { Money } from './MoneyComponent';
 import { Button } from './Button';
-import { CartCost, CartType } from '@/lib/shopify/types';
+import { CartCost, CartLine, CartType } from '@/lib/shopify/types';
+import { cookies } from 'next/headers';
 
 type Layouts = 'page' | 'drawer';
 
@@ -21,7 +22,30 @@ export function Cart({
   onClose?: () => void;
   cart: CartType | null;
 }) {
+  const [cookies, setCookie] = useCookie("cartId");
   const linesCount = Boolean(cart?.lines?.edges?.length || 0);
+
+  useEffect(() => {
+    const cartId = cookies;
+    // If cart not created
+    if (!cartId) {
+      const createCart = async () => {
+        const response = await fetch(`/api/create-cart`, {
+          method: "POST",
+        });
+        if (response.status === 200) {
+          const data = await response.json();
+          setCookie(data.cart.id, {
+            path: "/",
+            sameSite: "strict",
+            secure: process.env.NODE_ENV === "production",
+          });
+        }
+      };
+
+      createCart();
+    }
+  }, [])
 
   return (
     <>
@@ -77,21 +101,21 @@ function CartDiscounts({
         <div className="flex items-center justify-between font-medium">
           <Text as="dt">Discount(s)</Text>
           <div className="flex items-center justify-between">
-            <UpdateDiscountForm>
+            {/* <UpdateDiscountForm>
               <button>
                 <IconRemove
                   aria-hidden="true"
                   style={{ height: 18, marginRight: 4 }}
                 />
               </button>
-            </UpdateDiscountForm>
+            </UpdateDiscountForm> */}
             <Text as="dd">{codes}</Text>
           </div>
         </div>
       </dl>
 
       {/* No discounts, show an input to apply a discount */}
-      <UpdateDiscountForm>
+      {/* <UpdateDiscountForm>
         <div
           className={clsx(
             codes ? 'hidden' : 'flex',
@@ -108,7 +132,7 @@ function CartDiscounts({
             Apply Discount
           </button>
         </div>
-      </UpdateDiscountForm>
+      </UpdateDiscountForm> */}
     </>
   );
 }
@@ -151,8 +175,13 @@ function CartLines({
       className={className}
     >
       <ul className="grid gap-6 md:gap-10">
-        {currentLines.map((line) => (
-          <CartLineItem key={line.id} line={line as CartLine} />
+        {currentLines.map((line: CartLine) => (
+          <CartLineItem
+            key={line.id}
+            line={line as CartLine}
+            adjustItemQuantity={() => console.log('adjust')}
+            deleteItem={() => console.log('delete')}
+          />
         ))}
       </ul>
     </section>
@@ -267,13 +296,13 @@ export function CartEmpty({
         </div>
       </section>
       <section className="grid gap-8 pt-16">
-        <FeaturedProducts
+        {/* <FeaturedProducts
           count={4}
           heading="Shop Best Sellers"
           layout={layout}
           onClose={onClose}
           sortKey="BEST_SELLING"
-        />
+        /> */}
       </section>
     </div>
   );

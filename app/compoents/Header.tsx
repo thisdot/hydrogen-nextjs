@@ -1,14 +1,14 @@
-'use client';
-
-import { Link } from '@/components/Link';
-import DesktopHeader from './DesktopHeader';
-import MobileHeader from './MobileHeader';
-import { Drawer, useDrawer } from '@/components/Drawer';
-import { ShopifyHeaderMenu } from '@/lib/shopify/types';
+"use client";
+import { Link } from "@/components/Link";
+import DesktopHeader from "./DesktopHeader";
+import MobileHeader from "./MobileHeader";
+import { Drawer, useDrawer } from "@/components/Drawer";
+import { ShopifyHeaderMenu } from "@/lib/shopify/types";
+import { Cart } from "@/components/Cart";
 
 function Header({ menu, title }: { menu: ShopifyHeaderMenu; title: string }) {
-	//Fake data, remove when real data is available
-	const isHome = true;
+
+	const isHome = true
 
 	const {
 		isOpen: isCartOpen,
@@ -91,7 +91,9 @@ function CartDrawer({
 }) {
 	return (
 		<Drawer open={isOpen} onClose={onClose} heading="Cart" openFrom="right">
-			<div className="grid">Cart</div>
+			<div className="grid">
+				<Cart layout="drawer" cart={null} onClose={onClose} />
+			</div>
 		</Drawer>
 	);
 }
