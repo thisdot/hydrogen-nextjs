@@ -12,6 +12,7 @@ import ItemTabHeading from '@/components/ItemTabHeading';
 import ProductListBox from '@/components/ProductListBox';
 import { truncate } from '@/lib/truncate';
 import Head from 'next/head';
+import { Product, ProductOption, ProductVariant } from '@/lib/shopify/types';
 
 export default async function Product({
 	params,
@@ -22,7 +23,7 @@ export default async function Product({
 }) {
 	const search = new URLSearchParams(searchParams);
 
-	const selectedOptions: any[] = [];
+	const selectedOptions: Record<string, string>[] = [];
 	search.forEach((value, name) => {
 		selectedOptions.push({ name, value });
 	});
@@ -183,7 +184,11 @@ export default async function Product({
 	);
 }
 
-export function ProductForm({ product }: { product: any }) {
+export function ProductForm({
+	product,
+}: {
+	product: Product & { selectedVariant: ProductVariant };
+}) {
 	const STORE_DOMAIN = `${process.env.PUBLIC_STORE_DOMAIN!}`;
 
 	const firstVariant = product.variants.nodes[0];
@@ -257,7 +262,7 @@ export function ProductForm({ product }: { product: any }) {
 	);
 }
 
-const ProductOptions = ({ options }: { options: any[] }) => {
+const ProductOptions = ({ options }: { options: ProductOption[] }) => {
 	return (
 		<>
 			{options
