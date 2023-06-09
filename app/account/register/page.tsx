@@ -35,9 +35,6 @@ export default async function RegisterPage() {
 				}
 			});
 		}
-		// nativeEmailError = res.body.data.customerUserErrors[0].message;
-		console.log(res.body.data);
-
 		revalidatePath('/account/register');
 	}
 
@@ -90,7 +87,6 @@ export default async function RegisterPage() {
 						<button
 							className="bg-primary text-contrast rounded py-2 px-4 focus:shadow-outline block w-full"
 							type="submit"
-							disabled={!!(nativePasswordError || nativeEmailError)}
 						>
 							Create Account
 						</button>
