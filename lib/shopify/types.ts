@@ -800,20 +800,20 @@ export type CartLineInput = {
 };
 
 export type ShopifyProductOperation = {
-  data: { product: ShopifyProduct; shop: Shop };
-  variables: {
-    handle: string;
-    selectedOptions: any[];
-  };
+	data: { product: ShopifyProduct; shop: Shop };
+	variables: {
+		handle: string;
+		selectedOptions: any[];
+	};
 };
 
 export type ShopifyProductRecommendationsOperation = {
-  data: {
-    recommended: Product[];
-    additional: ProductConnection;
-  };
-  variables: {
-    productId: string;
-    count?: number;
-  };
+	data: {
+		recommended: Product[];
+		additional: ProductConnection;
+	};
+	variables: {
+		productId: string;
+		count?: number;
+	};
 };

@@ -1,42 +1,50 @@
-import { HIDDEN_PRODUCT_TAG, SHOPIFY_GRAPHQL_API_ENDPOINT } from "@/lib/constants";
-import { isShopifyError } from "@/lib/type-guards";
-import { LAYOUT_QUERY } from "./queries/layout";
-import { ALL_PRODUCTS_QUERY } from "./queries/product";
-import { COLLECTIONS_QUERY, COLLECTION_QUERY } from "./queries/collection";
 import {
-  Cart,
-  Blog,
-  CollectionConnection,
-  Connection,
-  ProductConnection,
-  ShopifyAddToCartOperation,
-  ShopifyCart,
-  ShopifyCartOperation,
-  ShopifyCreateCartOperation,
-  ShopifyCollectionProducts,
-  ShopifyFeaturedCollectionOperation,
-  ShopifyFeaturedProductOperation,
-  ShopifyHeroOperation,
-  ShopifyHomePageSeoOperation,
-  ShopifyLayoutOperation,
-  ShopifyRemoveFromCartOperation,
-  ShopifyUpdateCartOperation,
-  Product,
-  ShopifyProductOperation,
-  ShopifyProductRecommendationsOperation,
-  ShopifyProduct,
-} from "./types";
+	HIDDEN_PRODUCT_TAG,
+	SHOPIFY_GRAPHQL_API_ENDPOINT,
+} from '@/lib/constants';
+import { isShopifyError } from '@/lib/type-guards';
+import { LAYOUT_QUERY } from './queries/layout';
+import { ALL_PRODUCTS_QUERY } from './queries/product';
+import { COLLECTIONS_QUERY, COLLECTION_QUERY } from './queries/collection';
 import {
-  HOMEPAGE_FEATURED_PRODUCTS_QUERY,
-  COLLECTION_HERO_QUERY,
-  FEATURED_COLLECTIONS_QUERY,
-} from "./queries/homepage";
-import { SEARCH_QUERY } from "./queries/search";
-import { createCartMutation, addToCartMutation, removeFromCartMutation, editCartItemsMutation } from "./mutations/cart";
-import { getCartQuery } from "./queries/cart";
-import { ARTICLE_QUERY, BLOGS_QUERY } from "./queries/blog";
-import { FiltersQueryParams } from "@/app/collections/[collectionHandle]/page";
-import { PRODUCT_QUERY, RECOMMENDED_PRODUCTS_QUERY } from "./queries/fragments";
+	Cart,
+	Blog,
+	CollectionConnection,
+	Connection,
+	ProductConnection,
+	ShopifyAddToCartOperation,
+	ShopifyCart,
+	ShopifyCartOperation,
+	ShopifyCreateCartOperation,
+	ShopifyCollectionProducts,
+	ShopifyFeaturedCollectionOperation,
+	ShopifyFeaturedProductOperation,
+	ShopifyHeroOperation,
+	ShopifyHomePageSeoOperation,
+	ShopifyLayoutOperation,
+	ShopifyRemoveFromCartOperation,
+	ShopifyUpdateCartOperation,
+	Product,
+	ShopifyProductOperation,
+	ShopifyProductRecommendationsOperation,
+	ShopifyProduct,
+} from './types';
+import {
+	HOMEPAGE_FEATURED_PRODUCTS_QUERY,
+	COLLECTION_HERO_QUERY,
+	FEATURED_COLLECTIONS_QUERY,
+} from './queries/homepage';
+import { SEARCH_QUERY } from './queries/search';
+import {
+	createCartMutation,
+	addToCartMutation,
+	removeFromCartMutation,
+	editCartItemsMutation,
+} from './mutations/cart';
+import { getCartQuery } from './queries/cart';
+import { ARTICLE_QUERY, BLOGS_QUERY } from './queries/blog';
+import { FiltersQueryParams } from '@/app/collections/[collectionHandle]/page';
+import { PRODUCT_QUERY, RECOMMENDED_PRODUCTS_QUERY } from './queries/fragments';
 
 const domain = `https://${process.env.PUBLIC_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
@@ -65,39 +73,39 @@ const reshapeCart = (cart: ShopifyCart): Cart => {
 };
 
 const reshapeProduct = (
-  product: ShopifyProduct,
-  filterHiddenProducts: boolean = true
+	product: ShopifyProduct,
+	filterHiddenProducts: boolean = true
 ) => {
-  if (
-    !product ||
-    (filterHiddenProducts && product.tags.includes(HIDDEN_PRODUCT_TAG))
-  ) {
-    return undefined;
-  }
+	if (
+		!product ||
+		(filterHiddenProducts && product.tags.includes(HIDDEN_PRODUCT_TAG))
+	) {
+		return undefined;
+	}
 
-  const { images, variants, ...rest } = product;
+	const { images, variants, ...rest } = product;
 
-  return {
-    ...rest,
-    images: removeEdgesAndNodes(images),
-    variants: removeEdgesAndNodes(variants),
-  };
+	return {
+		...rest,
+		images: removeEdgesAndNodes(images),
+		variants: removeEdgesAndNodes(variants),
+	};
 };
 
 const reshapeProducts = (products: ShopifyProduct[]) => {
-  const reshapedProducts = [];
+	const reshapedProducts = [];
 
-  for (const product of products) {
-    if (product) {
-      const reshapedProduct = reshapeProduct(product);
+	for (const product of products) {
+		if (product) {
+			const reshapedProduct = reshapeProduct(product);
 
-      if (reshapedProduct) {
-        reshapedProducts.push(reshapedProduct);
-      }
-    }
-  }
+			if (reshapedProduct) {
+				reshapedProducts.push(reshapedProduct);
+			}
+		}
+	}
 
-  return reshapedProducts;
+	return reshapedProducts;
 };
 
 export async function shopifyFetch<T>({
@@ -438,49 +446,48 @@ export async function getCollectionProducts({
 }
 
 export async function getProduct(
-  handle: string,
-  selectedOptions: any[]
+	handle: string,
+	selectedOptions: any[]
 ): Promise<Product | any | undefined> {
-  const res = await shopifyFetch<ShopifyProductOperation>({
-    query: PRODUCT_QUERY,
-    variables: {
-      handle,
-      selectedOptions,
-    },
-  });
+	const res = await shopifyFetch<ShopifyProductOperation>({
+		query: PRODUCT_QUERY,
+		variables: {
+			handle,
+			selectedOptions,
+		},
+	});
 
-  return {
-    product: res.body.data.product,
-    shop: res.body.data.shop,
-  };
+	return {
+		product: res.body.data.product,
+		shop: res.body.data.shop,
+	};
 }
 
 export async function getProductRecommendations(
-  productId: string
+	productId: string
 ): Promise<Product[] | any> {
-  const res = await shopifyFetch<ShopifyProductRecommendationsOperation>({
-    query: RECOMMENDED_PRODUCTS_QUERY,
-    variables: {
-      productId,
-      count: 12,
-    },
-  });
+	const res = await shopifyFetch<ShopifyProductRecommendationsOperation>({
+		query: RECOMMENDED_PRODUCTS_QUERY,
+		variables: {
+			productId,
+			count: 12,
+		},
+	});
 
-  const products = res.body.data;
+	const products = res.body.data;
 
+	const mergedProducts = products.recommended
+		.concat(products.additional.nodes)
+		.filter(
+			(value, index, array) =>
+				array.findIndex(value2 => value2.id === value.id) === index
+		);
 
-  const mergedProducts = products.recommended
-    .concat(products.additional.nodes)
-    .filter(
-      (value, index, array) =>
-        array.findIndex((value2) => value2.id === value.id) === index
-    );
+	const originalProduct = mergedProducts
+		.map((item: any) => item.id)
+		.indexOf(productId);
 
-  const originalProduct = mergedProducts
-    .map((item: any) => item.id)
-    .indexOf(productId);
+	mergedProducts.splice(originalProduct, 1);
 
-  mergedProducts.splice(originalProduct, 1);
-
-  return mergedProducts;
+	return mergedProducts;
 }

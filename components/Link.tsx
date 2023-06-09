@@ -14,11 +14,11 @@ export function Link(props: LinkProps) {
 	const pathname = usePathname();
 	let toWithLocale = href;
 
-  if (typeof className === "function") {
-    className = className({
-      isActive: pathname.includes(href.toString()),
-    });
-  }
+	if (typeof className === 'function') {
+		className = className({
+			isActive: pathname.includes(href.toString()),
+		});
+	}
 
 	return (
 		<NextLink href={toWithLocale} className={className} {...resOfProps}>

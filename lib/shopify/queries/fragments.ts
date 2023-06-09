@@ -199,7 +199,6 @@ export const cartFragment = `#graphql
   ${productFragment}
 `;
 
-
 export const PRODUCT_VARIANT_FRAGMENT = `#graphql
   fragment ProductVariantFragment on ProductVariant {
     id
@@ -235,7 +234,6 @@ export const PRODUCT_VARIANT_FRAGMENT = `#graphql
     }
   }
 `;
-
 
 export const PRODUCT_QUERY = `#graphql
   query Product(
