@@ -1,3 +1,5 @@
+'use client';
+
 import { Listbox } from "@headlessui/react";
 import { useRef } from "react";
 
@@ -6,16 +8,13 @@ import { IconCaret, IconCheck } from ".";
 import ProductOptionLink from "./ProductOptionLink";
 import useProductOption from "@/hooks/useProductOption";
 
+
 interface IOption {
-  optionName: string;
-  optionValue: string;
+  name: string;
+  values: string[];
 }
 
-interface IProductListBox {
-  options: IOption[];
-}
-
-function ProductListBox({ options }: IProductListBox) {
+function ProductListBox(option: IOption) {
   const closeRef = useRef<HTMLButtonElement>(null);
   const { isChecked, searchDefaultOption, searchParamExists } =
     useProductOption();
@@ -35,8 +34,8 @@ function ProductListBox({ options }: IProductListBox) {
               )}
             >
               <span>
-                {searchParamExists(options[0].optionName) ||
-                  options[0].optionValue}
+                {searchParamExists(option.name) ||
+                  option.values[0]}
               </span>
               <IconCaret direction={open ? "up" : "down"} />
             </Listbox.Button>
@@ -46,15 +45,15 @@ function ProductListBox({ options }: IProductListBox) {
                 { "max-h-48": open }
               )}
             >
-              {options.map((res, index) => {
-                const checked = isChecked(res.optionName, res.optionValue);
-                const id = `option-${index}-${res.optionValue}`;
+              {option.values.map((value, index) => {
+                const checked = isChecked(option.name, value);
+                const id = `option-${index}-${value}`;
                 return (
-                  <Listbox.Option key={id} value={res.optionValue}>
+                  <Listbox.Option key={id} value={value}>
                     {({ active }) => (
                       <ProductOptionLink
-                        optionName={res.optionName}
-                        optionValue={res.optionValue}
+                        optionName={option.name}
+                        optionValue={value}
                         className={clsx(
                           "text-primary w-full p-2 transition rounded flex justify-start items-center text-left cursor-pointer",
                           { "bg-primary/10": active }
@@ -64,12 +63,12 @@ function ProductListBox({ options }: IProductListBox) {
                           closeRef.current.click();
                         }}
                       >
-                        {res.optionValue}
+                        {value}
                         {(checked ||
                           searchDefaultOption(
-                            res.optionName,
-                            res.optionValue,
-                            options[0].optionValue
+                            option.name,
+                            value,
+                            option.values[0],
                           )) && (
                           <span className="ml-2">
                             <IconCheck />

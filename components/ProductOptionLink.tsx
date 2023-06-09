@@ -1,7 +1,8 @@
-// import Link from "next/link";
+'use client';
 import { ReactNode, useMemo } from "react";
 import { useLocation } from "react-use";
 import { Link } from "./Link";
+import { usePathname } from "next/navigation";
 
 function ProductOptionLink({
   optionName,
@@ -14,7 +15,9 @@ function ProductOptionLink({
   children?: ReactNode;
   [key: string]: any;
 }) {
-  const { pathname = "", search } = useLocation();
+  const { search } = useLocation();
+  const pathname = usePathname();
+  
   const isLocalePathname = /\/[a-zA-Z]{2}-[a-zA-Z]{2}\//g.test(pathname);
   // fixes internalized pathname
   const path = isLocalePathname

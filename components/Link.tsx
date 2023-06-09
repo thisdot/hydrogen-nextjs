@@ -16,7 +16,7 @@ export function Link(props: LinkProps) {
 
   if (typeof className === "function") {
     className = className({
-      isActive: pathname === href,
+      isActive: pathname.includes(href.toString()),
     });
   }
 

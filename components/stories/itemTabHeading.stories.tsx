@@ -8,23 +8,15 @@ export default {
 } as Meta;
 
 const SizeTemplate: StoryFn = () => (
-  <ItemTabHeading
-    options={[
-      { optionName: "Size", optionValue: "154cm" },
-      { optionName: "Size", optionValue: "158cm" },
-      { optionName: "Size", optionValue: "160cm" },
-    ]}
-  />
+  <ItemTabHeading name="Size" values={["154cm", "158cm", "160cm"]} />
 );
 
 export const Size = SizeTemplate.bind({});
 
 const BindingTemplate: StoryFn = () => (
   <ItemTabHeading
-    options={[
-      { optionName: "Binding mount", optionValue: "Nested" },
-      { optionName: "Binding mount", optionValue: "Optimistic" },
-    ]}
+    name="Binding mount"
+    values={['Nested', 'Optimistic']}
   />
 );
 
