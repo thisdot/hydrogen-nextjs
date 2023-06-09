@@ -1,13 +1,12 @@
+import { useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
-import { useLocation } from 'react-use';
 
 const useProductOption = () => {
-	const { search } = useLocation();
+	const search = useSearchParams();
 
 	const searchParamExists = useCallback(
 		(name: string) => {
-			const clonedParams = new URLSearchParams(search);
-			const hasSearch = clonedParams.get(name);
+			const hasSearch = search.get(name);
 			return hasSearch;
 		},
 		[search]
