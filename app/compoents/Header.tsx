@@ -1,14 +1,13 @@
-"use client";
-import { Link } from "@/components/Link";
-import DesktopHeader from "./DesktopHeader";
-import MobileHeader from "./MobileHeader";
-import { Drawer, useDrawer } from "@/components/Drawer";
-import { ShopifyHeaderMenu } from "@/lib/shopify/types";
-import { Cart } from "@/components/Cart";
+'use client';
+import { Link } from '@/components/Link';
+import DesktopHeader from './DesktopHeader';
+import MobileHeader from './MobileHeader';
+import { Drawer, useDrawer } from '@/components/Drawer';
+import { ShopifyHeaderMenu } from '@/lib/shopify/types';
+import { Cart } from '@/components/Cart';
 
 function Header({ menu, title }: { menu: ShopifyHeaderMenu; title: string }) {
-
-	const isHome = true
+	const isHome = true;
 
 	const {
 		isOpen: isCartOpen,

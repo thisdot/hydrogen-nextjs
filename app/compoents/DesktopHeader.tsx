@@ -1,8 +1,8 @@
-"use client";
-import { IconSearch } from "@/components/Icon";
-import { Input } from "@/components/Input";
-import { Link } from "@/components/Link";
-import { ShopifyHeaderMenu } from "@/lib/shopify/types";
+'use client';
+import { IconSearch } from '@/components/Icon';
+import { Input } from '@/components/Input';
+import { Link } from '@/components/Link';
+import { ShopifyHeaderMenu } from '@/lib/shopify/types';
 
 import { useSearchParam, useWindowScroll } from 'react-use';
 import AccountLink from './AccountLink';

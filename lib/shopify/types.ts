@@ -819,2044 +819,2043 @@ export type ShopifyProductRecommendationsOperation = {
 };
 
 export type CartCost = {
-  __typename?: 'CartCost';
-  /** The estimated amount, before taxes and discounts, for the customer to pay at checkout. The checkout charge amount doesn't include any deferred payments that'll be paid at a later date. If the cart has no deferred payments, then the checkout charge amount is equivalent to `subtotalAmount`. */
-  checkoutChargeAmount: Money;
-  /** The amount, before taxes and cart-level discounts, for the customer to pay. */
-  subtotalAmount: Money;
-  /** Whether the subtotal amount is estimated. */
-  subtotalAmountEstimated: boolean;
-  /** The total amount for the customer to pay. */
-  totalAmount: Money;
-  /** Whether the total amount is estimated. */
-  totalAmountEstimated: boolean;
-  /** The duty amount for the customer to pay at checkout. */
-  totalDutyAmount?: Maybe<Money>;
-  /** Whether the total duty amount is estimated. */
-  totalDutyAmountEstimated: boolean;
-  /** The tax amount for the customer to pay at checkout. */
-  totalTaxAmount?: Maybe<Money>;
-  /** Whether the total tax amount is estimated. */
-  totalTaxAmountEstimated: boolean;
+	__typename?: 'CartCost';
+	/** The estimated amount, before taxes and discounts, for the customer to pay at checkout. The checkout charge amount doesn't include any deferred payments that'll be paid at a later date. If the cart has no deferred payments, then the checkout charge amount is equivalent to `subtotalAmount`. */
+	checkoutChargeAmount: Money;
+	/** The amount, before taxes and cart-level discounts, for the customer to pay. */
+	subtotalAmount: Money;
+	/** Whether the subtotal amount is estimated. */
+	subtotalAmountEstimated: boolean;
+	/** The total amount for the customer to pay. */
+	totalAmount: Money;
+	/** Whether the total amount is estimated. */
+	totalAmountEstimated: boolean;
+	/** The duty amount for the customer to pay at checkout. */
+	totalDutyAmount?: Maybe<Money>;
+	/** Whether the total duty amount is estimated. */
+	totalDutyAmountEstimated: boolean;
+	/** The tax amount for the customer to pay at checkout. */
+	totalTaxAmount?: Maybe<Money>;
+	/** Whether the total tax amount is estimated. */
+	totalTaxAmountEstimated: boolean;
 };
 
 export type CartType = HasMetafields &
-  Node & {
-    __typename?: 'Cart';
-    /** An attribute associated with the cart. */
-    attribute?: Maybe<Attribute>;
-    /** The attributes associated with the cart. Attributes are represented as key-value pairs. */
-    attributes: Array<Attribute>;
-    /** Information about the buyer that is interacting with the cart. */
-    buyerIdentity: CartBuyerIdentity;
-    /** The URL of the checkout for the cart. */
-    checkoutUrl: string;
-    /** The estimated costs that the buyer will pay at checkout. The costs are subject to change and changes will be reflected at checkout. The `cost` field uses the `buyerIdentity` field to determine [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing). */
-    cost: CartCost;
-    /** The date and time when the cart was created. */
-    createdAt: string;
-    /**
-     * The delivery groups available for the cart, based on the buyer identity default
-     * delivery address preference or the default address of the logged-in customer.
-     *
-     */
-    deliveryGroups: CartDeliveryGroupConnection;
-    /** The discounts that have been applied to the entire cart. */
-    discountAllocations: Array<
-      | CartAutomaticDiscountAllocation
-      | CartCodeDiscountAllocation
-      | CartCustomDiscountAllocation
-    >;
-    /**
-     * The case-insensitive discount codes that the customer added at checkout.
-     *
-     */
-    discountCodes: Array<CartDiscountCode>;
-    /**
-     * The estimated costs that the buyer will pay at checkout.
-     * The estimated costs are subject to change and changes will be reflected at checkout.
-     * The `estimatedCost` field uses the `buyerIdentity` field to determine
-     * [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing).
-     *
-     * @deprecated Use `cost` instead.
-     */
-    estimatedCost: CartEstimatedCost;
-    /** A globally-unique identifier. */
-    id: string;
-    /** A list of lines containing information about the items the customer intends to purchase. */
-    lines: BaseCartLineConnection;
-    /** Returns a metafield found by namespace and key. */
-    metafield?: Maybe<Metafield>;
-    /**
-     * The metafields associated with the resource matching the supplied list of namespaces and keys.
-     *
-     */
-    metafields: Array<Maybe<Metafield>>;
-    /** A note that is associated with the cart. For example, the note can be a personalized message to the buyer. */
-    note?: Maybe<string>;
-    /** The total number of items in the cart. */
-    totalQuantity: number;
-    /** The date and time when the cart was updated. */
-    updatedAt: string;
-  };
+	Node & {
+		__typename?: 'Cart';
+		/** An attribute associated with the cart. */
+		attribute?: Maybe<Attribute>;
+		/** The attributes associated with the cart. Attributes are represented as key-value pairs. */
+		attributes: Array<Attribute>;
+		/** Information about the buyer that is interacting with the cart. */
+		buyerIdentity: CartBuyerIdentity;
+		/** The URL of the checkout for the cart. */
+		checkoutUrl: string;
+		/** The estimated costs that the buyer will pay at checkout. The costs are subject to change and changes will be reflected at checkout. The `cost` field uses the `buyerIdentity` field to determine [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing). */
+		cost: CartCost;
+		/** The date and time when the cart was created. */
+		createdAt: string;
+		/**
+		 * The delivery groups available for the cart, based on the buyer identity default
+		 * delivery address preference or the default address of the logged-in customer.
+		 *
+		 */
+		deliveryGroups: CartDeliveryGroupConnection;
+		/** The discounts that have been applied to the entire cart. */
+		discountAllocations: Array<
+			| CartAutomaticDiscountAllocation
+			| CartCodeDiscountAllocation
+			| CartCustomDiscountAllocation
+		>;
+		/**
+		 * The case-insensitive discount codes that the customer added at checkout.
+		 *
+		 */
+		discountCodes: Array<CartDiscountCode>;
+		/**
+		 * The estimated costs that the buyer will pay at checkout.
+		 * The estimated costs are subject to change and changes will be reflected at checkout.
+		 * The `estimatedCost` field uses the `buyerIdentity` field to determine
+		 * [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing).
+		 *
+		 * @deprecated Use `cost` instead.
+		 */
+		estimatedCost: CartEstimatedCost;
+		/** A globally-unique identifier. */
+		id: string;
+		/** A list of lines containing information about the items the customer intends to purchase. */
+		lines: BaseCartLineConnection;
+		/** Returns a metafield found by namespace and key. */
+		metafield?: Maybe<Metafield>;
+		/**
+		 * The metafields associated with the resource matching the supplied list of namespaces and keys.
+		 *
+		 */
+		metafields: Array<Maybe<Metafield>>;
+		/** A note that is associated with the cart. For example, the note can be a personalized message to the buyer. */
+		note?: Maybe<string>;
+		/** The total number of items in the cart. */
+		totalQuantity: number;
+		/** The date and time when the cart was updated. */
+		updatedAt: string;
+	};
 
 export type CartDiscountCode = {
-  __typename?: 'CartDiscountCode';
-  /** Whether the discount code is applicable to the cart's current contents. */
-  applicable: boolean;
-  /** The code for the discount. */
-  code: string;
+	__typename?: 'CartDiscountCode';
+	/** Whether the discount code is applicable to the cart's current contents. */
+	applicable: boolean;
+	/** The code for the discount. */
+	code: string;
 };
 
 export type CartEstimatedCost = {
-  __typename?: 'CartEstimatedCost';
-  /** The estimated amount, before taxes and discounts, for the customer to pay at checkout. The checkout charge amount doesn't include any deferred payments that'll be paid at a later date. If the cart has no deferred payments, then the checkout charge amount is equivalent to`subtotal_amount`. */
-  checkoutChargeAmount: Money;
-  /** The estimated amount, before taxes and discounts, for the customer to pay. */
-  subtotalAmount: Money;
-  /** The estimated total amount for the customer to pay. */
-  totalAmount: Money;
-  /** The estimated duty amount for the customer to pay at checkout. */
-  totalDutyAmount?: Maybe<Money>;
-  /** The estimated tax amount for the customer to pay at checkout. */
-  totalTaxAmount?: Maybe<Money>;
+	__typename?: 'CartEstimatedCost';
+	/** The estimated amount, before taxes and discounts, for the customer to pay at checkout. The checkout charge amount doesn't include any deferred payments that'll be paid at a later date. If the cart has no deferred payments, then the checkout charge amount is equivalent to`subtotal_amount`. */
+	checkoutChargeAmount: Money;
+	/** The estimated amount, before taxes and discounts, for the customer to pay. */
+	subtotalAmount: Money;
+	/** The estimated total amount for the customer to pay. */
+	totalAmount: Money;
+	/** The estimated duty amount for the customer to pay at checkout. */
+	totalDutyAmount?: Maybe<Money>;
+	/** The estimated tax amount for the customer to pay at checkout. */
+	totalTaxAmount?: Maybe<Money>;
 };
 
 export type CartDeliveryGroupConnection = {
-  __typename?: 'CartDeliveryGroupConnection';
-  /** A list of edges. */
-  edges: Array<CartDeliveryGroupEdge>;
-  /** A list of the nodes contained in CartDeliveryGroupEdge. */
-  nodes: Array<CartDeliveryGroup>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
+	__typename?: 'CartDeliveryGroupConnection';
+	/** A list of edges. */
+	edges: Array<CartDeliveryGroupEdge>;
+	/** A list of the nodes contained in CartDeliveryGroupEdge. */
+	nodes: Array<CartDeliveryGroup>;
+	/** Information to aid in pagination. */
+	pageInfo: PageInfo;
 };
-  
-  /**
-   * An auto-generated type which holds one CartDeliveryGroup and a cursor during pagination.
-   *
-   */
-  export type CartDeliveryGroupEdge = {
-    __typename?: 'CartDeliveryGroupEdge';
-    /** A cursor for use in pagination. */
-    cursor: string;
-    /** The item at the end of CartDeliveryGroupEdge. */
-    node: CartDeliveryGroup;
-  };
 
-  export type CartDeliveryGroup = {
-    __typename?: 'CartDeliveryGroup';
-    /** A list of cart lines for the delivery group. */
-    cartLines: BaseCartLineConnection;
-    /** The destination address for the delivery group. */
-    deliveryAddress: MailingAddress;
-    /** The delivery options available for the delivery group. */
-    deliveryOptions: Array<CartDeliveryOption>;
-    /** The ID for the delivery group. */
-    id: string;
-    /** The selected delivery option for the delivery group. */
-    selectedDeliveryOption?: Maybe<CartDeliveryOption>;
-  };
+/**
+ * An auto-generated type which holds one CartDeliveryGroup and a cursor during pagination.
+ *
+ */
+export type CartDeliveryGroupEdge = {
+	__typename?: 'CartDeliveryGroupEdge';
+	/** A cursor for use in pagination. */
+	cursor: string;
+	/** The item at the end of CartDeliveryGroupEdge. */
+	node: CartDeliveryGroup;
+};
 
-  export type BaseCartLineConnection = {
-    __typename?: 'BaseCartLineConnection';
-    /** A list of edges. */
-    edges: Array<BaseCartLineEdge>;
-    /** A list of the nodes contained in BaseCartLineEdge. */
-    nodes: Array<CartLine>;
-    /** Information to aid in pagination. */
-    pageInfo: PageInfo;
-  };
-  
-  /**
-   * An auto-generated type which holds one BaseCartLine and a cursor during pagination.
-   *
-   */
-  export type BaseCartLineEdge = {
-    __typename?: 'BaseCartLineEdge';
-    /** A cursor for use in pagination. */
-    cursor: string;
-    /** The item at the end of BaseCartLineEdge. */
-    node: CartLine;
-  };
+export type CartDeliveryGroup = {
+	__typename?: 'CartDeliveryGroup';
+	/** A list of cart lines for the delivery group. */
+	cartLines: BaseCartLineConnection;
+	/** The destination address for the delivery group. */
+	deliveryAddress: MailingAddress;
+	/** The delivery options available for the delivery group. */
+	deliveryOptions: Array<CartDeliveryOption>;
+	/** The ID for the delivery group. */
+	id: string;
+	/** The selected delivery option for the delivery group. */
+	selectedDeliveryOption?: Maybe<CartDeliveryOption>;
+};
+
+export type BaseCartLineConnection = {
+	__typename?: 'BaseCartLineConnection';
+	/** A list of edges. */
+	edges: Array<BaseCartLineEdge>;
+	/** A list of the nodes contained in BaseCartLineEdge. */
+	nodes: Array<CartLine>;
+	/** Information to aid in pagination. */
+	pageInfo: PageInfo;
+};
+
+/**
+ * An auto-generated type which holds one BaseCartLine and a cursor during pagination.
+ *
+ */
+export type BaseCartLineEdge = {
+	__typename?: 'BaseCartLineEdge';
+	/** A cursor for use in pagination. */
+	cursor: string;
+	/** The item at the end of BaseCartLineEdge. */
+	node: CartLine;
+};
 
 export type CartLine = BaseCartLine &
-  Node & {
-    __typename?: 'CartLine';
-    /** An attribute associated with the cart line. */
-    attribute?: Maybe<Attribute>;
-    /** The attributes associated with the cart line. Attributes are represented as key-value pairs. */
-    attributes: Array<Attribute>;
-    /** The cost of the merchandise that the buyer will pay for at checkout. The costs are subject to change and changes will be reflected at checkout. */
-    cost: CartLineCost;
-    /** The discounts that have been applied to the cart line. */
-    discountAllocations: Array<
-      | CartAutomaticDiscountAllocation
-      | CartCodeDiscountAllocation
-      | CartCustomDiscountAllocation
-    >;
-    /**
-     * The estimated cost of the merchandise that the buyer will pay for at checkout. The estimated costs are subject to change and changes will be reflected at checkout.
-     * @deprecated Use `cost` instead.
-     */
-    estimatedCost: CartLineEstimatedCost;
-    /** A globally-unique identifier. */
-    id: string;
-    /** The merchandise that the buyer intends to purchase. */
-    merchandise: Merchandise;
-    /** The quantity of the merchandise that the customer intends to purchase. */
-    quantity: number;
-    /** The selling plan associated with the cart line and the effect that each selling plan has on variants when they're purchased. */
-    sellingPlanAllocation?: Maybe<SellingPlanAllocation>;
-  };
+	Node & {
+		__typename?: 'CartLine';
+		/** An attribute associated with the cart line. */
+		attribute?: Maybe<Attribute>;
+		/** The attributes associated with the cart line. Attributes are represented as key-value pairs. */
+		attributes: Array<Attribute>;
+		/** The cost of the merchandise that the buyer will pay for at checkout. The costs are subject to change and changes will be reflected at checkout. */
+		cost: CartLineCost;
+		/** The discounts that have been applied to the cart line. */
+		discountAllocations: Array<
+			| CartAutomaticDiscountAllocation
+			| CartCodeDiscountAllocation
+			| CartCustomDiscountAllocation
+		>;
+		/**
+		 * The estimated cost of the merchandise that the buyer will pay for at checkout. The estimated costs are subject to change and changes will be reflected at checkout.
+		 * @deprecated Use `cost` instead.
+		 */
+		estimatedCost: CartLineEstimatedCost;
+		/** A globally-unique identifier. */
+		id: string;
+		/** The merchandise that the buyer intends to purchase. */
+		merchandise: Merchandise;
+		/** The quantity of the merchandise that the customer intends to purchase. */
+		quantity: number;
+		/** The selling plan associated with the cart line and the effect that each selling plan has on variants when they're purchased. */
+		sellingPlanAllocation?: Maybe<SellingPlanAllocation>;
+	};
 
-  export type BaseCartLine = {
-    /** An attribute associated with the cart line. */
-    attribute?: Maybe<Attribute>;
-    /** The attributes associated with the cart line. Attributes are represented as key-value pairs. */
-    attributes: Array<Attribute>;
-    /** The cost of the merchandise that the buyer will pay for at checkout. The costs are subject to change and changes will be reflected at checkout. */
-    cost: CartLineCost;
-    /** The discounts that have been applied to the cart line. */
-    discountAllocations: Array<
-      | CartAutomaticDiscountAllocation
-      | CartCodeDiscountAllocation
-      | CartCustomDiscountAllocation
-    >;
-    /**
-     * The estimated cost of the merchandise that the buyer will pay for at checkout. The estimated costs are subject to change and changes will be reflected at checkout.
-     * @deprecated Use `cost` instead.
-     */
-    estimatedCost: CartLineEstimatedCost;
-    /** A globally-unique identifier. */
-    id: string;
-    /** The merchandise that the buyer intends to purchase. */
-    merchandise: Merchandise;
-    /** The quantity of the merchandise that the customer intends to purchase. */
-    quantity: number;
-    /** The selling plan associated with the cart line and the effect that each selling plan has on variants when they're purchased. */
-    sellingPlanAllocation?: Maybe<SellingPlanAllocation>;
-  };
+export type BaseCartLine = {
+	/** An attribute associated with the cart line. */
+	attribute?: Maybe<Attribute>;
+	/** The attributes associated with the cart line. Attributes are represented as key-value pairs. */
+	attributes: Array<Attribute>;
+	/** The cost of the merchandise that the buyer will pay for at checkout. The costs are subject to change and changes will be reflected at checkout. */
+	cost: CartLineCost;
+	/** The discounts that have been applied to the cart line. */
+	discountAllocations: Array<
+		| CartAutomaticDiscountAllocation
+		| CartCodeDiscountAllocation
+		| CartCustomDiscountAllocation
+	>;
+	/**
+	 * The estimated cost of the merchandise that the buyer will pay for at checkout. The estimated costs are subject to change and changes will be reflected at checkout.
+	 * @deprecated Use `cost` instead.
+	 */
+	estimatedCost: CartLineEstimatedCost;
+	/** A globally-unique identifier. */
+	id: string;
+	/** The merchandise that the buyer intends to purchase. */
+	merchandise: Merchandise;
+	/** The quantity of the merchandise that the customer intends to purchase. */
+	quantity: number;
+	/** The selling plan associated with the cart line and the effect that each selling plan has on variants when they're purchased. */
+	sellingPlanAllocation?: Maybe<SellingPlanAllocation>;
+};
 
 export type SellingPlanAllocation = {
-  __typename?: 'SellingPlanAllocation';
-  /** The checkout charge amount due for the purchase. */
-  checkoutChargeAmount: Money;
-  /** A list of price adjustments, with a maximum of two. When there are two, the first price adjustment goes into effect at the time of purchase, while the second one starts after a certain number of orders. A price adjustment represents how a selling plan affects pricing when a variant is purchased with a selling plan. Prices display in the customer's currency if the shop is configured for it. */
-  priceAdjustments: Array<SellingPlanAllocationPriceAdjustment>;
-  /** The remaining balance charge amount due for the purchase. */
-  remainingBalanceChargeAmount: Money;
-  /** A representation of how products and variants can be sold and purchased. For example, an individual selling plan could be '6 weeks of prepaid granola, delivered weekly'. */
-  sellingPlan: SellingPlan;
+	__typename?: 'SellingPlanAllocation';
+	/** The checkout charge amount due for the purchase. */
+	checkoutChargeAmount: Money;
+	/** A list of price adjustments, with a maximum of two. When there are two, the first price adjustment goes into effect at the time of purchase, while the second one starts after a certain number of orders. A price adjustment represents how a selling plan affects pricing when a variant is purchased with a selling plan. Prices display in the customer's currency if the shop is configured for it. */
+	priceAdjustments: Array<SellingPlanAllocationPriceAdjustment>;
+	/** The remaining balance charge amount due for the purchase. */
+	remainingBalanceChargeAmount: Money;
+	/** A representation of how products and variants can be sold and purchased. For example, an individual selling plan could be '6 weeks of prepaid granola, delivered weekly'. */
+	sellingPlan: SellingPlan;
 };
 
 /** The resulting prices for variants when they're purchased with a specific selling plan. */
 export type SellingPlanAllocationPriceAdjustment = {
-  __typename?: 'SellingPlanAllocationPriceAdjustment';
-  /** The price of the variant when it's purchased without a selling plan for the same number of deliveries. For example, if a customer purchases 6 deliveries of $10.00 granola separately, then the price is 6 x $10.00 = $60.00. */
-  compareAtPrice: Money;
-  /** The effective price for a single delivery. For example, for a prepaid subscription plan that includes 6 deliveries at the price of $48.00, the per delivery price is $8.00. */
-  perDeliveryPrice: Money;
-  /** The price of the variant when it's purchased with a selling plan For example, for a prepaid subscription plan that includes 6 deliveries of $10.00 granola, where the customer gets 20% off, the price is 6 x $10.00 x 0.80 = $48.00. */
-  price: Money;
-  /** The resulting price per unit for the variant associated with the selling plan. If the variant isn't sold by quantity or measurement, then this field returns `null`. */
-  unitPrice?: Maybe<Money>;
+	__typename?: 'SellingPlanAllocationPriceAdjustment';
+	/** The price of the variant when it's purchased without a selling plan for the same number of deliveries. For example, if a customer purchases 6 deliveries of $10.00 granola separately, then the price is 6 x $10.00 = $60.00. */
+	compareAtPrice: Money;
+	/** The effective price for a single delivery. For example, for a prepaid subscription plan that includes 6 deliveries at the price of $48.00, the per delivery price is $8.00. */
+	perDeliveryPrice: Money;
+	/** The price of the variant when it's purchased with a selling plan For example, for a prepaid subscription plan that includes 6 deliveries of $10.00 granola, where the customer gets 20% off, the price is 6 x $10.00 x 0.80 = $48.00. */
+	price: Money;
+	/** The resulting price per unit for the variant associated with the selling plan. If the variant isn't sold by quantity or measurement, then this field returns `null`. */
+	unitPrice?: Maybe<Money>;
 };
 
 export type SellingPlan = {
-  __typename?: 'SellingPlan';
-  /** The initial payment due for the purchase. */
-  checkoutCharge: SellingPlanCheckoutCharge;
-  /** The description of the selling plan. */
-  description?: Maybe<string>;
-  /** A globally-unique identifier. */
-  id: string;
-  /** The name of the selling plan. For example, '6 weeks of prepaid granola, delivered weekly'. */
-  name: string;
-  /** The selling plan options available in the drop-down list in the storefront. For example, 'Delivery every week' or 'Delivery every 2 weeks' specifies the delivery frequency options for the product. Individual selling plans contribute their options to the associated selling plan group. For example, a selling plan group might have an option called `option1: Delivery every`. One selling plan in that group could contribute `option1: 2 weeks` with the pricing for that option, and another selling plan could contribute `option1: 4 weeks`, with different pricing. */
-  options: Array<SellingPlanOption>;
-  /** The price adjustments that a selling plan makes when a variant is purchased with a selling plan. */
-  priceAdjustments: Array<SellingPlanPriceAdjustment>;
-  /** Whether purchasing the selling plan will result in multiple deliveries. */
-  recurringDeliveries: boolean;
+	__typename?: 'SellingPlan';
+	/** The initial payment due for the purchase. */
+	checkoutCharge: SellingPlanCheckoutCharge;
+	/** The description of the selling plan. */
+	description?: Maybe<string>;
+	/** A globally-unique identifier. */
+	id: string;
+	/** The name of the selling plan. For example, '6 weeks of prepaid granola, delivered weekly'. */
+	name: string;
+	/** The selling plan options available in the drop-down list in the storefront. For example, 'Delivery every week' or 'Delivery every 2 weeks' specifies the delivery frequency options for the product. Individual selling plans contribute their options to the associated selling plan group. For example, a selling plan group might have an option called `option1: Delivery every`. One selling plan in that group could contribute `option1: 2 weeks` with the pricing for that option, and another selling plan could contribute `option1: 4 weeks`, with different pricing. */
+	options: Array<SellingPlanOption>;
+	/** The price adjustments that a selling plan makes when a variant is purchased with a selling plan. */
+	priceAdjustments: Array<SellingPlanPriceAdjustment>;
+	/** Whether purchasing the selling plan will result in multiple deliveries. */
+	recurringDeliveries: boolean;
 };
 
 export type SellingPlanCheckoutCharge = {
-  __typename?: 'SellingPlanCheckoutCharge';
-  /** The charge type for the checkout charge. */
-  type: SellingPlanCheckoutChargeType;
-  /** The charge value for the checkout charge. */
-  value: SellingPlanCheckoutChargeValue;
+	__typename?: 'SellingPlanCheckoutCharge';
+	/** The charge type for the checkout charge. */
+	type: SellingPlanCheckoutChargeType;
+	/** The charge value for the checkout charge. */
+	value: SellingPlanCheckoutChargeValue;
 };
 
 export type SellingPlanCheckoutChargePercentageValue = {
-  __typename?: 'SellingPlanCheckoutChargePercentageValue';
-  /** The percentage value of the price used for checkout charge. */
-  percentage: number;
+	__typename?: 'SellingPlanCheckoutChargePercentageValue';
+	/** The percentage value of the price used for checkout charge. */
+	percentage: number;
 };
 
 export type SellingPlanOption = {
-  __typename?: 'SellingPlanOption';
-  /** The name of the option (ie "Delivery every"). */
-  name?: Maybe<string>;
-  /** The value of the option (ie "Month"). */
-  value?: Maybe<string>;
+	__typename?: 'SellingPlanOption';
+	/** The name of the option (ie "Delivery every"). */
+	name?: Maybe<string>;
+	/** The value of the option (ie "Month"). */
+	value?: Maybe<string>;
 };
 
 /** The checkout charge when the full amount isn't charged at checkout. */
 export type SellingPlanCheckoutChargeType =
-  /** The checkout charge is a percentage of the product or variant price. */
-  | 'PERCENTAGE'
-  /** The checkout charge is a fixed price amount. */
-  | 'PRICE';
+	/** The checkout charge is a percentage of the product or variant price. */
+	| 'PERCENTAGE'
+	/** The checkout charge is a fixed price amount. */
+	| 'PRICE';
 
 /** The portion of the price to be charged at checkout. */
 export type SellingPlanCheckoutChargeValue =
-  | Money
-  | SellingPlanCheckoutChargePercentageValue;
+	| Money
+	| SellingPlanCheckoutChargePercentageValue;
 
 export type Merchandise = ProductVariant;
 
 export type SellingPlanPercentagePriceAdjustment = {
-  __typename?: 'SellingPlanPercentagePriceAdjustment';
-  /** The percentage value of the price adjustment. */
-  adjustmentPercentage: number;
+	__typename?: 'SellingPlanPercentagePriceAdjustment';
+	/** The percentage value of the price adjustment. */
+	adjustmentPercentage: number;
 };
 
 /** Represents by how much the price of a variant associated with a selling plan is adjusted. Each variant can have up to two price adjustments. If a variant has multiple price adjustments, then the first price adjustment applies when the variant is initially purchased. The second price adjustment applies after a certain number of orders (specified by the `orderCount` field) are made. If a selling plan doesn't have any price adjustments, then the unadjusted price of the variant is the effective price. */
 export type SellingPlanPriceAdjustment = {
-  __typename?: 'SellingPlanPriceAdjustment';
-  /** The type of price adjustment. An adjustment value can have one of three types: percentage, amount off, or a new price. */
-  adjustmentValue: SellingPlanPriceAdjustmentValue;
-  /** The number of orders that the price adjustment applies to. If the price adjustment always applies, then this field is `null`. */
-  orderCount?: Maybe<number>;
+	__typename?: 'SellingPlanPriceAdjustment';
+	/** The type of price adjustment. An adjustment value can have one of three types: percentage, amount off, or a new price. */
+	adjustmentValue: SellingPlanPriceAdjustmentValue;
+	/** The number of orders that the price adjustment applies to. If the price adjustment always applies, then this field is `null`. */
+	orderCount?: Maybe<number>;
 };
 
 export type SellingPlanPriceAdjustmentValue =
-  | SellingPlanFixedAmountPriceAdjustment
-  | SellingPlanFixedPriceAdjustment
-  | SellingPlanPercentagePriceAdjustment;
+	| SellingPlanFixedAmountPriceAdjustment
+	| SellingPlanFixedPriceAdjustment
+	| SellingPlanPercentagePriceAdjustment;
 
 export type SellingPlanFixedAmountPriceAdjustment = {
-  __typename?: 'SellingPlanFixedAmountPriceAdjustment';
-  /** The money value of the price adjustment. */
-  adjustmentAmount: Money;
+	__typename?: 'SellingPlanFixedAmountPriceAdjustment';
+	/** The money value of the price adjustment. */
+	adjustmentAmount: Money;
 };
 
 /** A fixed price adjustment for a variant that's purchased with a selling plan. */
 export type SellingPlanFixedPriceAdjustment = {
-  __typename?: 'SellingPlanFixedPriceAdjustment';
-  /** A new price of the variant when it's purchased with the selling plan. */
-  price: Money;
+	__typename?: 'SellingPlanFixedPriceAdjustment';
+	/** A new price of the variant when it's purchased with the selling plan. */
+	price: Money;
 };
 
 export type CartLineEstimatedCost = {
-  __typename?: 'CartLineEstimatedCost';
-  /** The amount of the merchandise line. */
-  amount: Money;
-  /** The compare at amount of the merchandise line. */
-  compareAtAmount?: Maybe<Money>;
-  /** The estimated cost of the merchandise line before discounts. */
-  subtotalAmount: Money;
-  /** The estimated total cost of the merchandise line. */
-  totalAmount: Money;
+	__typename?: 'CartLineEstimatedCost';
+	/** The amount of the merchandise line. */
+	amount: Money;
+	/** The compare at amount of the merchandise line. */
+	compareAtAmount?: Maybe<Money>;
+	/** The estimated cost of the merchandise line before discounts. */
+	subtotalAmount: Money;
+	/** The estimated total cost of the merchandise line. */
+	totalAmount: Money;
 };
 
-  /** The discounts automatically applied to the cart line based on prerequisites that have been met. */
+/** The discounts automatically applied to the cart line based on prerequisites that have been met. */
 export type CartCustomDiscountAllocation = CartDiscountAllocation & {
-  __typename?: 'CartCustomDiscountAllocation';
-  /** The discounted amount that has been applied to the cart line. */
-  discountedAmount: Money;
-  /** The title of the allocated discount. */
-  title: string;
+	__typename?: 'CartCustomDiscountAllocation';
+	/** The discounted amount that has been applied to the cart line. */
+	discountedAmount: Money;
+	/** The title of the allocated discount. */
+	title: string;
 };
 
-  export type CartCodeDiscountAllocation = CartDiscountAllocation & {
-    __typename?: 'CartCodeDiscountAllocation';
-    /** The code used to apply the discount. */
-    code: string;
-    /** The discounted amount that has been applied to the cart line. */
-    discountedAmount: Money;
-  };
+export type CartCodeDiscountAllocation = CartDiscountAllocation & {
+	__typename?: 'CartCodeDiscountAllocation';
+	/** The code used to apply the discount. */
+	code: string;
+	/** The discounted amount that has been applied to the cart line. */
+	discountedAmount: Money;
+};
 
-  export type CartAutomaticDiscountAllocation = CartDiscountAllocation & {
-    __typename?: 'CartAutomaticDiscountAllocation';
-    /** The discounted amount that has been applied to the cart line. */
-    discountedAmount: Money;
-    /** The title of the allocated discount. */
-    title: string;
-  };
+export type CartAutomaticDiscountAllocation = CartDiscountAllocation & {
+	__typename?: 'CartAutomaticDiscountAllocation';
+	/** The discounted amount that has been applied to the cart line. */
+	discountedAmount: Money;
+	/** The title of the allocated discount. */
+	title: string;
+};
 
-  export type CartDiscountAllocation = {
-    /** The discounted amount that has been applied to the cart line. */
-    discountedAmount: Money;
-  };
+export type CartDiscountAllocation = {
+	/** The discounted amount that has been applied to the cart line. */
+	discountedAmount: Money;
+};
 
-  export type CartLineCost = {
-    __typename?: 'CartLineCost';
-    /** The amount of the merchandise line. */
-    amountPerQuantity: Money;
-    /** The compare at amount of the merchandise line. */
-    compareAtAmountPerQuantity?: Maybe<Money>;
-    /** The cost of the merchandise line before line-level discounts. */
-    subtotalAmount: Money;
-    /** The total cost of the merchandise line. */
-    totalAmount: Money;
-  };
+export type CartLineCost = {
+	__typename?: 'CartLineCost';
+	/** The amount of the merchandise line. */
+	amountPerQuantity: Money;
+	/** The compare at amount of the merchandise line. */
+	compareAtAmountPerQuantity?: Maybe<Money>;
+	/** The cost of the merchandise line before line-level discounts. */
+	subtotalAmount: Money;
+	/** The total cost of the merchandise line. */
+	totalAmount: Money;
+};
 
-  export type CartDeliveryOption = {
-    __typename?: 'CartDeliveryOption';
-    /** The code of the delivery option. */
-    code?: Maybe<string>;
-    /** The method for the delivery option. */
-    deliveryMethodType: DeliveryMethodType;
-    /** The description of the delivery option. */
-    description?: Maybe<string>;
-    /** The estimated cost for the delivery option. */
-    estimatedCost: Money;
-    /** The unique identifier of the delivery option. */
-    handle: string;
-    /** The title of the delivery option. */
-    title?: Maybe<string>;
-  };
+export type CartDeliveryOption = {
+	__typename?: 'CartDeliveryOption';
+	/** The code of the delivery option. */
+	code?: Maybe<string>;
+	/** The method for the delivery option. */
+	deliveryMethodType: DeliveryMethodType;
+	/** The description of the delivery option. */
+	description?: Maybe<string>;
+	/** The estimated cost for the delivery option. */
+	estimatedCost: Money;
+	/** The unique identifier of the delivery option. */
+	handle: string;
+	/** The title of the delivery option. */
+	title?: Maybe<string>;
+};
 
-  export type DeliveryMethodType =
-  /** Local Delivery. */
-  | 'LOCAL'
-  /** None. */
-  | 'NONE'
-  /** Shipping to a Pickup Point. */
-  | 'PICKUP_POINT'
-  /** Local Pickup. */
-  | 'PICK_UP'
-  /** Retail. */
-  | 'RETAIL'
-  /** Shipping. */
-  | 'SHIPPING';
+export type DeliveryMethodType =
+	/** Local Delivery. */
+	| 'LOCAL'
+	/** None. */
+	| 'NONE'
+	/** Shipping to a Pickup Point. */
+	| 'PICKUP_POINT'
+	/** Local Pickup. */
+	| 'PICK_UP'
+	/** Retail. */
+	| 'RETAIL'
+	/** Shipping. */
+	| 'SHIPPING';
 
-  export type Attribute = {
-  __typename?: 'Attribute';
-  /** Key or name of the attribute. */
-  key: string;
-  /** Value of the attribute. */
-  value?: string;
+export type Attribute = {
+	__typename?: 'Attribute';
+	/** Key or name of the attribute. */
+	key: string;
+	/** Value of the attribute. */
+	value?: string;
 };
 
 export type CartBuyerIdentity = {
-  __typename?: 'CartBuyerIdentity';
-  /** The country where the buyer is located. */
-  countryCode?: Maybe<CountryCode>;
-  /** The customer account associated with the cart. */
-  customer?: Maybe<Customer>;
-  /**
-   * An ordered set of delivery addresses tied to the buyer that is interacting with the cart.
-   * The rank of the preferences is determined by the order of the addresses in the array. Preferences
-   * can be used to populate relevant fields in the checkout flow.
-   *
-   */
-  deliveryAddressPreferences: Array<DeliveryAddress>;
-  /** The email address of the buyer that is interacting with the cart. */
-  email?: Maybe<string>;
-  /** The phone number of the buyer that is interacting with the cart. */
-  phone?: Maybe<string>;
-  /**
-   * A set of wallet preferences tied to the buyer that is interacting with the cart.
-   * Preferences can be used to populate relevant payment fields in the checkout flow.
-   *
-   */
-  walletPreferences: Array<string>;
+	__typename?: 'CartBuyerIdentity';
+	/** The country where the buyer is located. */
+	countryCode?: Maybe<CountryCode>;
+	/** The customer account associated with the cart. */
+	customer?: Maybe<Customer>;
+	/**
+	 * An ordered set of delivery addresses tied to the buyer that is interacting with the cart.
+	 * The rank of the preferences is determined by the order of the addresses in the array. Preferences
+	 * can be used to populate relevant fields in the checkout flow.
+	 *
+	 */
+	deliveryAddressPreferences: Array<DeliveryAddress>;
+	/** The email address of the buyer that is interacting with the cart. */
+	email?: Maybe<string>;
+	/** The phone number of the buyer that is interacting with the cart. */
+	phone?: Maybe<string>;
+	/**
+	 * A set of wallet preferences tied to the buyer that is interacting with the cart.
+	 * Preferences can be used to populate relevant payment fields in the checkout flow.
+	 *
+	 */
+	walletPreferences: Array<string>;
 };
 
 export type DeliveryAddress = MailingAddress;
 
 export type CountryCode =
-  /** Ascension Island. */
-  | 'AC'
-  /** Andorra. */
-  | 'AD'
-  /** United Arab Emirates. */
-  | 'AE'
-  /** Afghanistan. */
-  | 'AF'
-  /** Antigua & Barbuda. */
-  | 'AG'
-  /** Anguilla. */
-  | 'AI'
-  /** Albania. */
-  | 'AL'
-  /** Armenia. */
-  | 'AM'
-  /** Netherlands Antilles. */
-  | 'AN'
-  /** Angola. */
-  | 'AO'
-  /** Argentina. */
-  | 'AR'
-  /** Austria. */
-  | 'AT'
-  /** Australia. */
-  | 'AU'
-  /** Aruba. */
-  | 'AW'
-  /** Åland Islands. */
-  | 'AX'
-  /** Azerbaijan. */
-  | 'AZ'
-  /** Bosnia & Herzegovina. */
-  | 'BA'
-  /** Barbados. */
-  | 'BB'
-  /** Bangladesh. */
-  | 'BD'
-  /** Belgium. */
-  | 'BE'
-  /** Burkina Faso. */
-  | 'BF'
-  /** Bulgaria. */
-  | 'BG'
-  /** Bahrain. */
-  | 'BH'
-  /** Burundi. */
-  | 'BI'
-  /** Benin. */
-  | 'BJ'
-  /** St. Barthélemy. */
-  | 'BL'
-  /** Bermuda. */
-  | 'BM'
-  /** Brunei. */
-  | 'BN'
-  /** Bolivia. */
-  | 'BO'
-  /** Caribbean Netherlands. */
-  | 'BQ'
-  /** Brazil. */
-  | 'BR'
-  /** Bahamas. */
-  | 'BS'
-  /** Bhutan. */
-  | 'BT'
-  /** Bouvet Island. */
-  | 'BV'
-  /** Botswana. */
-  | 'BW'
-  /** Belarus. */
-  | 'BY'
-  /** Belize. */
-  | 'BZ'
-  /** Canada. */
-  | 'CA'
-  /** Cocos (Keeling) Islands. */
-  | 'CC'
-  /** Congo - Kinshasa. */
-  | 'CD'
-  /** Central African Republic. */
-  | 'CF'
-  /** Congo - Brazzaville. */
-  | 'CG'
-  /** Switzerland. */
-  | 'CH'
-  /** Côte d’Ivoire. */
-  | 'CI'
-  /** Cook Islands. */
-  | 'CK'
-  /** Chile. */
-  | 'CL'
-  /** Cameroon. */
-  | 'CM'
-  /** China. */
-  | 'CN'
-  /** Colombia. */
-  | 'CO'
-  /** Costa Rica. */
-  | 'CR'
-  /** Cuba. */
-  | 'CU'
-  /** Cape Verde. */
-  | 'CV'
-  /** Curaçao. */
-  | 'CW'
-  /** Christmas Island. */
-  | 'CX'
-  /** Cyprus. */
-  | 'CY'
-  /** Czechia. */
-  | 'CZ'
-  /** Germany. */
-  | 'DE'
-  /** Djibouti. */
-  | 'DJ'
-  /** Denmark. */
-  | 'DK'
-  /** Dominica. */
-  | 'DM'
-  /** Dominican Republic. */
-  | 'DO'
-  /** Algeria. */
-  | 'DZ'
-  /** Ecuador. */
-  | 'EC'
-  /** Estonia. */
-  | 'EE'
-  /** Egypt. */
-  | 'EG'
-  /** Western Sahara. */
-  | 'EH'
-  /** Eritrea. */
-  | 'ER'
-  /** Spain. */
-  | 'ES'
-  /** Ethiopia. */
-  | 'ET'
-  /** Finland. */
-  | 'FI'
-  /** Fiji. */
-  | 'FJ'
-  /** Falkland Islands. */
-  | 'FK'
-  /** Faroe Islands. */
-  | 'FO'
-  /** France. */
-  | 'FR'
-  /** Gabon. */
-  | 'GA'
-  /** United Kingdom. */
-  | 'GB'
-  /** Grenada. */
-  | 'GD'
-  /** Georgia. */
-  | 'GE'
-  /** French Guiana. */
-  | 'GF'
-  /** Guernsey. */
-  | 'GG'
-  /** Ghana. */
-  | 'GH'
-  /** Gibraltar. */
-  | 'GI'
-  /** Greenland. */
-  | 'GL'
-  /** Gambia. */
-  | 'GM'
-  /** Guinea. */
-  | 'GN'
-  /** Guadeloupe. */
-  | 'GP'
-  /** Equatorial Guinea. */
-  | 'GQ'
-  /** Greece. */
-  | 'GR'
-  /** South Georgia & South Sandwich Islands. */
-  | 'GS'
-  /** Guatemala. */
-  | 'GT'
-  /** Guinea-Bissau. */
-  | 'GW'
-  /** Guyana. */
-  | 'GY'
-  /** Hong Kong SAR. */
-  | 'HK'
-  /** Heard & McDonald Islands. */
-  | 'HM'
-  /** Honduras. */
-  | 'HN'
-  /** Croatia. */
-  | 'HR'
-  /** Haiti. */
-  | 'HT'
-  /** Hungary. */
-  | 'HU'
-  /** Indonesia. */
-  | 'ID'
-  /** Ireland. */
-  | 'IE'
-  /** Israel. */
-  | 'IL'
-  /** Isle of Man. */
-  | 'IM'
-  /** India. */
-  | 'IN'
-  /** British Indian Ocean Territory. */
-  | 'IO'
-  /** Iraq. */
-  | 'IQ'
-  /** Iran. */
-  | 'IR'
-  /** Iceland. */
-  | 'IS'
-  /** Italy. */
-  | 'IT'
-  /** Jersey. */
-  | 'JE'
-  /** Jamaica. */
-  | 'JM'
-  /** Jordan. */
-  | 'JO'
-  /** Japan. */
-  | 'JP'
-  /** Kenya. */
-  | 'KE'
-  /** Kyrgyzstan. */
-  | 'KG'
-  /** Cambodia. */
-  | 'KH'
-  /** Kiribati. */
-  | 'KI'
-  /** Comoros. */
-  | 'KM'
-  /** St. Kitts & Nevis. */
-  | 'KN'
-  /** North Korea. */
-  | 'KP'
-  /** South Korea. */
-  | 'KR'
-  /** Kuwait. */
-  | 'KW'
-  /** Cayman Islands. */
-  | 'KY'
-  /** Kazakhstan. */
-  | 'KZ'
-  /** Laos. */
-  | 'LA'
-  /** Lebanon. */
-  | 'LB'
-  /** St. Lucia. */
-  | 'LC'
-  /** Liechtenstein. */
-  | 'LI'
-  /** Sri Lanka. */
-  | 'LK'
-  /** Liberia. */
-  | 'LR'
-  /** Lesotho. */
-  | 'LS'
-  /** Lithuania. */
-  | 'LT'
-  /** Luxembourg. */
-  | 'LU'
-  /** Latvia. */
-  | 'LV'
-  /** Libya. */
-  | 'LY'
-  /** Morocco. */
-  | 'MA'
-  /** Monaco. */
-  | 'MC'
-  /** Moldova. */
-  | 'MD'
-  /** Montenegro. */
-  | 'ME'
-  /** St. Martin. */
-  | 'MF'
-  /** Madagascar. */
-  | 'MG'
-  /** North Macedonia. */
-  | 'MK'
-  /** Mali. */
-  | 'ML'
-  /** Myanmar (Burma). */
-  | 'MM'
-  /** Mongolia. */
-  | 'MN'
-  /** Macao SAR. */
-  | 'MO'
-  /** Martinique. */
-  | 'MQ'
-  /** Mauritania. */
-  | 'MR'
-  /** Montserrat. */
-  | 'MS'
-  /** Malta. */
-  | 'MT'
-  /** Mauritius. */
-  | 'MU'
-  /** Maldives. */
-  | 'MV'
-  /** Malawi. */
-  | 'MW'
-  /** Mexico. */
-  | 'MX'
-  /** Malaysia. */
-  | 'MY'
-  /** Mozambique. */
-  | 'MZ'
-  /** Namibia. */
-  | 'NA'
-  /** New Caledonia. */
-  | 'NC'
-  /** Niger. */
-  | 'NE'
-  /** Norfolk Island. */
-  | 'NF'
-  /** Nigeria. */
-  | 'NG'
-  /** Nicaragua. */
-  | 'NI'
-  /** Netherlands. */
-  | 'NL'
-  /** Norway. */
-  | 'NO'
-  /** Nepal. */
-  | 'NP'
-  /** Nauru. */
-  | 'NR'
-  /** Niue. */
-  | 'NU'
-  /** New Zealand. */
-  | 'NZ'
-  /** Oman. */
-  | 'OM'
-  /** Panama. */
-  | 'PA'
-  /** Peru. */
-  | 'PE'
-  /** French Polynesia. */
-  | 'PF'
-  /** Papua New Guinea. */
-  | 'PG'
-  /** Philippines. */
-  | 'PH'
-  /** Pakistan. */
-  | 'PK'
-  /** Poland. */
-  | 'PL'
-  /** St. Pierre & Miquelon. */
-  | 'PM'
-  /** Pitcairn Islands. */
-  | 'PN'
-  /** Palestinian Territories. */
-  | 'PS'
-  /** Portugal. */
-  | 'PT'
-  /** Paraguay. */
-  | 'PY'
-  /** Qatar. */
-  | 'QA'
-  /** Réunion. */
-  | 'RE'
-  /** Romania. */
-  | 'RO'
-  /** Serbia. */
-  | 'RS'
-  /** Russia. */
-  | 'RU'
-  /** Rwanda. */
-  | 'RW'
-  /** Saudi Arabia. */
-  | 'SA'
-  /** Solomon Islands. */
-  | 'SB'
-  /** Seychelles. */
-  | 'SC'
-  /** Sudan. */
-  | 'SD'
-  /** Sweden. */
-  | 'SE'
-  /** Singapore. */
-  | 'SG'
-  /** St. Helena. */
-  | 'SH'
-  /** Slovenia. */
-  | 'SI'
-  /** Svalbard & Jan Mayen. */
-  | 'SJ'
-  /** Slovakia. */
-  | 'SK'
-  /** Sierra Leone. */
-  | 'SL'
-  /** San Marino. */
-  | 'SM'
-  /** Senegal. */
-  | 'SN'
-  /** Somalia. */
-  | 'SO'
-  /** Suriname. */
-  | 'SR'
-  /** South Sudan. */
-  | 'SS'
-  /** São Tomé & Príncipe. */
-  | 'ST'
-  /** El Salvador. */
-  | 'SV'
-  /** Sint Maarten. */
-  | 'SX'
-  /** Syria. */
-  | 'SY'
-  /** Eswatini. */
-  | 'SZ'
-  /** Tristan da Cunha. */
-  | 'TA'
-  /** Turks & Caicos Islands. */
-  | 'TC'
-  /** Chad. */
-  | 'TD'
-  /** French Southern Territories. */
-  | 'TF'
-  /** Togo. */
-  | 'TG'
-  /** Thailand. */
-  | 'TH'
-  /** Tajikistan. */
-  | 'TJ'
-  /** Tokelau. */
-  | 'TK'
-  /** Timor-Leste. */
-  | 'TL'
-  /** Turkmenistan. */
-  | 'TM'
-  /** Tunisia. */
-  | 'TN'
-  /** Tonga. */
-  | 'TO'
-  /** Turkey. */
-  | 'TR'
-  /** Trinidad & Tobago. */
-  | 'TT'
-  /** Tuvalu. */
-  | 'TV'
-  /** Taiwan. */
-  | 'TW'
-  /** Tanzania. */
-  | 'TZ'
-  /** Ukraine. */
-  | 'UA'
-  /** Uganda. */
-  | 'UG'
-  /** U.S. Outlying Islands. */
-  | 'UM'
-  /** United States. */
-  | 'US'
-  /** Uruguay. */
-  | 'UY'
-  /** Uzbekistan. */
-  | 'UZ'
-  /** Vatican City. */
-  | 'VA'
-  /** St. Vincent & Grenadines. */
-  | 'VC'
-  /** Venezuela. */
-  | 'VE'
-  /** British Virgin Islands. */
-  | 'VG'
-  /** Vietnam. */
-  | 'VN'
-  /** Vanuatu. */
-  | 'VU'
-  /** Wallis & Futuna. */
-  | 'WF'
-  /** Samoa. */
-  | 'WS'
-  /** Kosovo. */
-  | 'XK'
-  /** Yemen. */
-  | 'YE'
-  /** Mayotte. */
-  | 'YT'
-  /** South Africa. */
-  | 'ZA'
-  /** Zambia. */
-  | 'ZM'
-  /** Zimbabwe. */
-  | 'ZW'
-  /** Unknown Region. */
-  | 'ZZ';
+	/** Ascension Island. */
+	| 'AC'
+	/** Andorra. */
+	| 'AD'
+	/** United Arab Emirates. */
+	| 'AE'
+	/** Afghanistan. */
+	| 'AF'
+	/** Antigua & Barbuda. */
+	| 'AG'
+	/** Anguilla. */
+	| 'AI'
+	/** Albania. */
+	| 'AL'
+	/** Armenia. */
+	| 'AM'
+	/** Netherlands Antilles. */
+	| 'AN'
+	/** Angola. */
+	| 'AO'
+	/** Argentina. */
+	| 'AR'
+	/** Austria. */
+	| 'AT'
+	/** Australia. */
+	| 'AU'
+	/** Aruba. */
+	| 'AW'
+	/** Åland Islands. */
+	| 'AX'
+	/** Azerbaijan. */
+	| 'AZ'
+	/** Bosnia & Herzegovina. */
+	| 'BA'
+	/** Barbados. */
+	| 'BB'
+	/** Bangladesh. */
+	| 'BD'
+	/** Belgium. */
+	| 'BE'
+	/** Burkina Faso. */
+	| 'BF'
+	/** Bulgaria. */
+	| 'BG'
+	/** Bahrain. */
+	| 'BH'
+	/** Burundi. */
+	| 'BI'
+	/** Benin. */
+	| 'BJ'
+	/** St. Barthélemy. */
+	| 'BL'
+	/** Bermuda. */
+	| 'BM'
+	/** Brunei. */
+	| 'BN'
+	/** Bolivia. */
+	| 'BO'
+	/** Caribbean Netherlands. */
+	| 'BQ'
+	/** Brazil. */
+	| 'BR'
+	/** Bahamas. */
+	| 'BS'
+	/** Bhutan. */
+	| 'BT'
+	/** Bouvet Island. */
+	| 'BV'
+	/** Botswana. */
+	| 'BW'
+	/** Belarus. */
+	| 'BY'
+	/** Belize. */
+	| 'BZ'
+	/** Canada. */
+	| 'CA'
+	/** Cocos (Keeling) Islands. */
+	| 'CC'
+	/** Congo - Kinshasa. */
+	| 'CD'
+	/** Central African Republic. */
+	| 'CF'
+	/** Congo - Brazzaville. */
+	| 'CG'
+	/** Switzerland. */
+	| 'CH'
+	/** Côte d’Ivoire. */
+	| 'CI'
+	/** Cook Islands. */
+	| 'CK'
+	/** Chile. */
+	| 'CL'
+	/** Cameroon. */
+	| 'CM'
+	/** China. */
+	| 'CN'
+	/** Colombia. */
+	| 'CO'
+	/** Costa Rica. */
+	| 'CR'
+	/** Cuba. */
+	| 'CU'
+	/** Cape Verde. */
+	| 'CV'
+	/** Curaçao. */
+	| 'CW'
+	/** Christmas Island. */
+	| 'CX'
+	/** Cyprus. */
+	| 'CY'
+	/** Czechia. */
+	| 'CZ'
+	/** Germany. */
+	| 'DE'
+	/** Djibouti. */
+	| 'DJ'
+	/** Denmark. */
+	| 'DK'
+	/** Dominica. */
+	| 'DM'
+	/** Dominican Republic. */
+	| 'DO'
+	/** Algeria. */
+	| 'DZ'
+	/** Ecuador. */
+	| 'EC'
+	/** Estonia. */
+	| 'EE'
+	/** Egypt. */
+	| 'EG'
+	/** Western Sahara. */
+	| 'EH'
+	/** Eritrea. */
+	| 'ER'
+	/** Spain. */
+	| 'ES'
+	/** Ethiopia. */
+	| 'ET'
+	/** Finland. */
+	| 'FI'
+	/** Fiji. */
+	| 'FJ'
+	/** Falkland Islands. */
+	| 'FK'
+	/** Faroe Islands. */
+	| 'FO'
+	/** France. */
+	| 'FR'
+	/** Gabon. */
+	| 'GA'
+	/** United Kingdom. */
+	| 'GB'
+	/** Grenada. */
+	| 'GD'
+	/** Georgia. */
+	| 'GE'
+	/** French Guiana. */
+	| 'GF'
+	/** Guernsey. */
+	| 'GG'
+	/** Ghana. */
+	| 'GH'
+	/** Gibraltar. */
+	| 'GI'
+	/** Greenland. */
+	| 'GL'
+	/** Gambia. */
+	| 'GM'
+	/** Guinea. */
+	| 'GN'
+	/** Guadeloupe. */
+	| 'GP'
+	/** Equatorial Guinea. */
+	| 'GQ'
+	/** Greece. */
+	| 'GR'
+	/** South Georgia & South Sandwich Islands. */
+	| 'GS'
+	/** Guatemala. */
+	| 'GT'
+	/** Guinea-Bissau. */
+	| 'GW'
+	/** Guyana. */
+	| 'GY'
+	/** Hong Kong SAR. */
+	| 'HK'
+	/** Heard & McDonald Islands. */
+	| 'HM'
+	/** Honduras. */
+	| 'HN'
+	/** Croatia. */
+	| 'HR'
+	/** Haiti. */
+	| 'HT'
+	/** Hungary. */
+	| 'HU'
+	/** Indonesia. */
+	| 'ID'
+	/** Ireland. */
+	| 'IE'
+	/** Israel. */
+	| 'IL'
+	/** Isle of Man. */
+	| 'IM'
+	/** India. */
+	| 'IN'
+	/** British Indian Ocean Territory. */
+	| 'IO'
+	/** Iraq. */
+	| 'IQ'
+	/** Iran. */
+	| 'IR'
+	/** Iceland. */
+	| 'IS'
+	/** Italy. */
+	| 'IT'
+	/** Jersey. */
+	| 'JE'
+	/** Jamaica. */
+	| 'JM'
+	/** Jordan. */
+	| 'JO'
+	/** Japan. */
+	| 'JP'
+	/** Kenya. */
+	| 'KE'
+	/** Kyrgyzstan. */
+	| 'KG'
+	/** Cambodia. */
+	| 'KH'
+	/** Kiribati. */
+	| 'KI'
+	/** Comoros. */
+	| 'KM'
+	/** St. Kitts & Nevis. */
+	| 'KN'
+	/** North Korea. */
+	| 'KP'
+	/** South Korea. */
+	| 'KR'
+	/** Kuwait. */
+	| 'KW'
+	/** Cayman Islands. */
+	| 'KY'
+	/** Kazakhstan. */
+	| 'KZ'
+	/** Laos. */
+	| 'LA'
+	/** Lebanon. */
+	| 'LB'
+	/** St. Lucia. */
+	| 'LC'
+	/** Liechtenstein. */
+	| 'LI'
+	/** Sri Lanka. */
+	| 'LK'
+	/** Liberia. */
+	| 'LR'
+	/** Lesotho. */
+	| 'LS'
+	/** Lithuania. */
+	| 'LT'
+	/** Luxembourg. */
+	| 'LU'
+	/** Latvia. */
+	| 'LV'
+	/** Libya. */
+	| 'LY'
+	/** Morocco. */
+	| 'MA'
+	/** Monaco. */
+	| 'MC'
+	/** Moldova. */
+	| 'MD'
+	/** Montenegro. */
+	| 'ME'
+	/** St. Martin. */
+	| 'MF'
+	/** Madagascar. */
+	| 'MG'
+	/** North Macedonia. */
+	| 'MK'
+	/** Mali. */
+	| 'ML'
+	/** Myanmar (Burma). */
+	| 'MM'
+	/** Mongolia. */
+	| 'MN'
+	/** Macao SAR. */
+	| 'MO'
+	/** Martinique. */
+	| 'MQ'
+	/** Mauritania. */
+	| 'MR'
+	/** Montserrat. */
+	| 'MS'
+	/** Malta. */
+	| 'MT'
+	/** Mauritius. */
+	| 'MU'
+	/** Maldives. */
+	| 'MV'
+	/** Malawi. */
+	| 'MW'
+	/** Mexico. */
+	| 'MX'
+	/** Malaysia. */
+	| 'MY'
+	/** Mozambique. */
+	| 'MZ'
+	/** Namibia. */
+	| 'NA'
+	/** New Caledonia. */
+	| 'NC'
+	/** Niger. */
+	| 'NE'
+	/** Norfolk Island. */
+	| 'NF'
+	/** Nigeria. */
+	| 'NG'
+	/** Nicaragua. */
+	| 'NI'
+	/** Netherlands. */
+	| 'NL'
+	/** Norway. */
+	| 'NO'
+	/** Nepal. */
+	| 'NP'
+	/** Nauru. */
+	| 'NR'
+	/** Niue. */
+	| 'NU'
+	/** New Zealand. */
+	| 'NZ'
+	/** Oman. */
+	| 'OM'
+	/** Panama. */
+	| 'PA'
+	/** Peru. */
+	| 'PE'
+	/** French Polynesia. */
+	| 'PF'
+	/** Papua New Guinea. */
+	| 'PG'
+	/** Philippines. */
+	| 'PH'
+	/** Pakistan. */
+	| 'PK'
+	/** Poland. */
+	| 'PL'
+	/** St. Pierre & Miquelon. */
+	| 'PM'
+	/** Pitcairn Islands. */
+	| 'PN'
+	/** Palestinian Territories. */
+	| 'PS'
+	/** Portugal. */
+	| 'PT'
+	/** Paraguay. */
+	| 'PY'
+	/** Qatar. */
+	| 'QA'
+	/** Réunion. */
+	| 'RE'
+	/** Romania. */
+	| 'RO'
+	/** Serbia. */
+	| 'RS'
+	/** Russia. */
+	| 'RU'
+	/** Rwanda. */
+	| 'RW'
+	/** Saudi Arabia. */
+	| 'SA'
+	/** Solomon Islands. */
+	| 'SB'
+	/** Seychelles. */
+	| 'SC'
+	/** Sudan. */
+	| 'SD'
+	/** Sweden. */
+	| 'SE'
+	/** Singapore. */
+	| 'SG'
+	/** St. Helena. */
+	| 'SH'
+	/** Slovenia. */
+	| 'SI'
+	/** Svalbard & Jan Mayen. */
+	| 'SJ'
+	/** Slovakia. */
+	| 'SK'
+	/** Sierra Leone. */
+	| 'SL'
+	/** San Marino. */
+	| 'SM'
+	/** Senegal. */
+	| 'SN'
+	/** Somalia. */
+	| 'SO'
+	/** Suriname. */
+	| 'SR'
+	/** South Sudan. */
+	| 'SS'
+	/** São Tomé & Príncipe. */
+	| 'ST'
+	/** El Salvador. */
+	| 'SV'
+	/** Sint Maarten. */
+	| 'SX'
+	/** Syria. */
+	| 'SY'
+	/** Eswatini. */
+	| 'SZ'
+	/** Tristan da Cunha. */
+	| 'TA'
+	/** Turks & Caicos Islands. */
+	| 'TC'
+	/** Chad. */
+	| 'TD'
+	/** French Southern Territories. */
+	| 'TF'
+	/** Togo. */
+	| 'TG'
+	/** Thailand. */
+	| 'TH'
+	/** Tajikistan. */
+	| 'TJ'
+	/** Tokelau. */
+	| 'TK'
+	/** Timor-Leste. */
+	| 'TL'
+	/** Turkmenistan. */
+	| 'TM'
+	/** Tunisia. */
+	| 'TN'
+	/** Tonga. */
+	| 'TO'
+	/** Turkey. */
+	| 'TR'
+	/** Trinidad & Tobago. */
+	| 'TT'
+	/** Tuvalu. */
+	| 'TV'
+	/** Taiwan. */
+	| 'TW'
+	/** Tanzania. */
+	| 'TZ'
+	/** Ukraine. */
+	| 'UA'
+	/** Uganda. */
+	| 'UG'
+	/** U.S. Outlying Islands. */
+	| 'UM'
+	/** United States. */
+	| 'US'
+	/** Uruguay. */
+	| 'UY'
+	/** Uzbekistan. */
+	| 'UZ'
+	/** Vatican City. */
+	| 'VA'
+	/** St. Vincent & Grenadines. */
+	| 'VC'
+	/** Venezuela. */
+	| 'VE'
+	/** British Virgin Islands. */
+	| 'VG'
+	/** Vietnam. */
+	| 'VN'
+	/** Vanuatu. */
+	| 'VU'
+	/** Wallis & Futuna. */
+	| 'WF'
+	/** Samoa. */
+	| 'WS'
+	/** Kosovo. */
+	| 'XK'
+	/** Yemen. */
+	| 'YE'
+	/** Mayotte. */
+	| 'YT'
+	/** South Africa. */
+	| 'ZA'
+	/** Zambia. */
+	| 'ZM'
+	/** Zimbabwe. */
+	| 'ZW'
+	/** Unknown Region. */
+	| 'ZZ';
 
-  export type Customer = HasMetafields & {
-    __typename?: 'Customer';
-    /** Indicates whether the customer has consented to be sent marketing material via email. */
-    acceptsMarketing: boolean;
-    /** A list of addresses for the customer. */
-    addresses: MailingAddressConnection;
-    /** The date and time when the customer was created. */
-    createdAt: string;
-    /** The customer’s default address. */
-    defaultAddress?: Maybe<MailingAddress>;
-    /** The customer’s name, email or phone number. */
-    displayName: string;
-    /** The customer’s email address. */
-    email?: Maybe<string>;
-    /** The customer’s first name. */
-    firstName?: Maybe<string>;
-    /** A unique identifier for the customer. */
-    id: string;
-    /** The customer's most recently updated, incomplete checkout. */
-    lastIncompleteCheckout?: Maybe<Checkout>;
-    /** The customer’s last name. */
-    lastName?: Maybe<string>;
-    /** Returns a metafield found by namespace and key. */
-    metafield?: Maybe<Metafield>;
-    /**
-     * The metafields associated with the resource matching the supplied list of namespaces and keys.
-     *
-     */
-    metafields: Array<Maybe<Metafield>>;
-    /** The number of orders that the customer has made at the store in their lifetime. */
-    numberOfOrders: string;
-    /** The orders associated with the customer. */
-    orders: OrderConnection;
-    /** The customer’s phone number. */
-    phone?: Maybe<string>;
-    /**
-     * A comma separated list of tags that have been added to the customer.
-     * Additional access scope required: unauthenticated_read_customer_tags.
-     *
-     */
-    tags: Array<string>;
-    /** The date and time when the customer information was updated. */
-    updatedAt: string;
-  };
+export type Customer = HasMetafields & {
+	__typename?: 'Customer';
+	/** Indicates whether the customer has consented to be sent marketing material via email. */
+	acceptsMarketing: boolean;
+	/** A list of addresses for the customer. */
+	addresses: MailingAddressConnection;
+	/** The date and time when the customer was created. */
+	createdAt: string;
+	/** The customer’s default address. */
+	defaultAddress?: Maybe<MailingAddress>;
+	/** The customer’s name, email or phone number. */
+	displayName: string;
+	/** The customer’s email address. */
+	email?: Maybe<string>;
+	/** The customer’s first name. */
+	firstName?: Maybe<string>;
+	/** A unique identifier for the customer. */
+	id: string;
+	/** The customer's most recently updated, incomplete checkout. */
+	lastIncompleteCheckout?: Maybe<Checkout>;
+	/** The customer’s last name. */
+	lastName?: Maybe<string>;
+	/** Returns a metafield found by namespace and key. */
+	metafield?: Maybe<Metafield>;
+	/**
+	 * The metafields associated with the resource matching the supplied list of namespaces and keys.
+	 *
+	 */
+	metafields: Array<Maybe<Metafield>>;
+	/** The number of orders that the customer has made at the store in their lifetime. */
+	numberOfOrders: string;
+	/** The orders associated with the customer. */
+	orders: OrderConnection;
+	/** The customer’s phone number. */
+	phone?: Maybe<string>;
+	/**
+	 * A comma separated list of tags that have been added to the customer.
+	 * Additional access scope required: unauthenticated_read_customer_tags.
+	 *
+	 */
+	tags: Array<string>;
+	/** The date and time when the customer information was updated. */
+	updatedAt: string;
+};
 
-  export type OrderConnection = {
-    __typename?: 'OrderConnection';
-    /** A list of edges. */
-    edges: Array<OrderEdge>;
-    /** A list of the nodes contained in OrderEdge. */
-    nodes: Array<Order>;
-    /** Information to aid in pagination. */
-    pageInfo: PageInfo;
-    /** The total count of Orders. */
-    totalCount: string;
-  };
+export type OrderConnection = {
+	__typename?: 'OrderConnection';
+	/** A list of edges. */
+	edges: Array<OrderEdge>;
+	/** A list of the nodes contained in OrderEdge. */
+	nodes: Array<Order>;
+	/** Information to aid in pagination. */
+	pageInfo: PageInfo;
+	/** The total count of Orders. */
+	totalCount: string;
+};
 
-  export type OrderEdge = {
-    __typename?: 'OrderEdge';
-    /** A cursor for use in pagination. */
-    cursor: string;
-    /** The item at the end of OrderEdge. */
-    node: Order;
-  };
+export type OrderEdge = {
+	__typename?: 'OrderEdge';
+	/** A cursor for use in pagination. */
+	cursor: string;
+	/** The item at the end of OrderEdge. */
+	node: Order;
+};
 
-  export type MailingAddressConnection = {
-    __typename?: 'MailingAddressConnection';
-    /** A list of edges. */
-    edges: Array<MailingAddressEdge>;
-    /** A list of the nodes contained in MailingAddressEdge. */
-    nodes: Array<MailingAddress>;
-    /** Information to aid in pagination. */
-    pageInfo: PageInfo;
-  };
-  
-  /**
-   * An auto-generated type which holds one MailingAddress and a cursor during pagination.
-   *
-   */
-  export type MailingAddressEdge = {
-    __typename?: 'MailingAddressEdge';
-    /** A cursor for use in pagination. */
-    cursor: string;
-    /** The item at the end of MailingAddressEdge. */
-    node: MailingAddress;
-  };
+export type MailingAddressConnection = {
+	__typename?: 'MailingAddressConnection';
+	/** A list of edges. */
+	edges: Array<MailingAddressEdge>;
+	/** A list of the nodes contained in MailingAddressEdge. */
+	nodes: Array<MailingAddress>;
+	/** Information to aid in pagination. */
+	pageInfo: PageInfo;
+};
 
-  export type MailingAddress = Node & {
-    __typename?: 'MailingAddress';
-    /** The first line of the address. Typically the street address or PO Box number. */
-    address1?: Maybe<string>;
-    /**
-     * The second line of the address. Typically the number of the apartment, suite, or unit.
-     *
-     */
-    address2?: Maybe<string>;
-    /**
-     * The name of the city, district, village, or town.
-     *
-     */
-    city?: Maybe<string>;
-    /**
-     * The name of the customer's company or organization.
-     *
-     */
-    company?: Maybe<string>;
-    /**
-     * The name of the country.
-     *
-     */
-    country?: Maybe<string>;
-    /**
-     * The two-letter code for the country of the address.
-     *
-     * For example, US.
-     *
-     * @deprecated Use `countryCodeV2` instead.
-     */
-    countryCode?: Maybe<string>;
-    /**
-     * The two-letter code for the country of the address.
-     *
-     * For example, US.
-     *
-     */
-    countryCodeV2?: Maybe<CountryCode>;
-    /** The first name of the customer. */
-    firstName?: Maybe<string>;
-    /** A formatted version of the address, customized by the provided arguments. */
-    formatted: Array<string>;
-    /** A comma-separated list of the values for city, province, and country. */
-    formattedArea?: Maybe<string>;
-    /** A globally-unique identifier. */
-    id: string;
-    /** The last name of the customer. */
-    lastName?: Maybe<string>;
-    /** The latitude coordinate of the customer address. */
-    latitude?: Maybe<number>;
-    /** The longitude coordinate of the customer address. */
-    longitude?: Maybe<number>;
-    /**
-     * The full name of the customer, based on firstName and lastName.
-     *
-     */
-    name?: Maybe<string>;
-    /**
-     * A unique phone number for the customer.
-     *
-     * Formatted using E.164 standard. For example, _+16135551111_.
-     *
-     */
-    phone?: Maybe<string>;
-    /** The region of the address, such as the province, state, or district. */
-    province?: Maybe<string>;
-    /**
-     * The two-letter code for the region.
-     *
-     * For example, ON.
-     *
-     */
-    provinceCode?: Maybe<string>;
-    /** The zip or postal code of the address. */
-    zip?: Maybe<string>;
-  };
-  
-  export type Checkout = Node & {
-    __typename?: 'Checkout';
-    /** The gift cards used on the checkout. */
-    appliedGiftCards: Array<AppliedGiftCard>;
-    /**
-     * The available shipping rates for this Checkout.
-     * Should only be used when checkout `requiresShipping` is `true` and
-     * the shipping address is valid.
-     *
-     */
-    availableShippingRates?: Maybe<AvailableShippingRates>;
-    /** The identity of the customer associated with the checkout. */
-    buyerIdentity: CheckoutBuyerIdentity;
-    /** The date and time when the checkout was completed. */
-    completedAt?: Maybe<string>;
-    /** The date and time when the checkout was created. */
-    createdAt: string;
-    /** The currency code for the checkout. */
-    currencyCode: CurrencyCode;
-    /** A list of extra information that is added to the checkout. */
-    customAttributes: Array<Attribute>;
-    /** Discounts that have been applied on the checkout. */
-    discountApplications: DiscountApplicationConnection;
-    /** The email attached to this checkout. */
-    email?: Maybe<string>;
-    /** A globally-unique identifier. */
-    id: string;
-    /** A list of line item objects, each one containing information about an item in the checkout. */
-    lineItems: CheckoutLineItemConnection;
-    /** The sum of all the prices of all the items in the checkout. Duties, taxes, shipping and discounts excluded. */
-    lineItemsSubtotalPrice: Money;
-    /** The note associated with the checkout. */
-    note?: Maybe<string>;
-    /** The resulting order from a paid checkout. */
-    order?: Maybe<Order>;
-    /** The Order Status Page for this Checkout, null when checkout is not completed. */
-    orderStatusUrl?: Maybe<string>;
-    /** The amount left to be paid. This is equal to the cost of the line items, taxes, and shipping, minus discounts and gift cards. */
-    paymentDue: Money;
-    /**
-     * The amount left to be paid. This is equal to the cost of the line items, duties, taxes, and shipping, minus discounts and gift cards.
-     * @deprecated Use `paymentDue` instead.
-     */
-    paymentDueV2: Money;
-    /**
-     * Whether or not the Checkout is ready and can be completed. Checkouts may
-     * have asynchronous operations that can take time to finish. If you want
-     * to complete a checkout or ensure all the fields are populated and up to
-     * date, polling is required until the value is true.
-     *
-     */
-    ready: boolean;
-    /** States whether or not the fulfillment requires shipping. */
-    requiresShipping: boolean;
-    /** The shipping address to where the line items will be shipped. */
-    shippingAddress?: Maybe<MailingAddress>;
-    /**
-     * The discounts that have been allocated onto the shipping line by discount applications.
-     *
-     */
-    shippingDiscountAllocations: Array<DiscountAllocation>;
-    /** Once a shipping rate is selected by the customer it is transitioned to a `shipping_line` object. */
-    shippingLine?: Maybe<ShippingRate>;
-    /** The price at checkout before shipping and taxes. */
-    subtotalPrice: Money;
-    /**
-     * The price at checkout before duties, shipping, and taxes.
-     * @deprecated Use `subtotalPrice` instead.
-     */
-    subtotalPriceV2: Money;
-    /** Whether the checkout is tax exempt. */
-    taxExempt: boolean;
-    /** Whether taxes are included in the line item and shipping line prices. */
-    taxesIncluded: boolean;
-    /** The sum of all the duties applied to the line items in the checkout. */
-    totalDuties?: Maybe<Money>;
-    /** The sum of all the prices of all the items in the checkout, including taxes and duties. */
-    totalPrice: Money;
-    /**
-     * The sum of all the prices of all the items in the checkout, including taxes and duties.
-     * @deprecated Use `totalPrice` instead.
-     */
-    totalPriceV2: Money;
-    /** The sum of all the taxes applied to the line items and shipping lines in the checkout. */
-    totalTax: Money;
-    /**
-     * The sum of all the taxes applied to the line items and shipping lines in the checkout.
-     * @deprecated Use `totalTax` instead.
-     */
-    totalTaxV2: Money;
-    /** The date and time when the checkout was last updated. */
-    updatedAt: string;
-    /** The url pointing to the checkout accessible from the web. */
-    webUrl: string;
-  };
+/**
+ * An auto-generated type which holds one MailingAddress and a cursor during pagination.
+ *
+ */
+export type MailingAddressEdge = {
+	__typename?: 'MailingAddressEdge';
+	/** A cursor for use in pagination. */
+	cursor: string;
+	/** The item at the end of MailingAddressEdge. */
+	node: MailingAddress;
+};
 
-  export type AppliedGiftCard = Node & {
-    __typename?: 'AppliedGiftCard';
-    /** The amount that was taken from the gift card by applying it. */
-    amountUsed: Money;
-    /**
-     * The amount that was taken from the gift card by applying it.
-     * @deprecated Use `amountUsed` instead.
-     */
-    amountUsedV2: Money;
-    /** The amount left on the gift card. */
-    balance: Money;
-    /**
-     * The amount left on the gift card.
-     * @deprecated Use `balance` instead.
-     */
-    balanceV2: Money;
-    /** A globally-unique identifier. */
-    id: string;
-    /** The last characters of the gift card. */
-    lastCharacters: string;
-    /** The amount that was applied to the checkout in its currency. */
-    presentmentAmountUsed: Money;
-  };
+export type MailingAddress = Node & {
+	__typename?: 'MailingAddress';
+	/** The first line of the address. Typically the street address or PO Box number. */
+	address1?: Maybe<string>;
+	/**
+	 * The second line of the address. Typically the number of the apartment, suite, or unit.
+	 *
+	 */
+	address2?: Maybe<string>;
+	/**
+	 * The name of the city, district, village, or town.
+	 *
+	 */
+	city?: Maybe<string>;
+	/**
+	 * The name of the customer's company or organization.
+	 *
+	 */
+	company?: Maybe<string>;
+	/**
+	 * The name of the country.
+	 *
+	 */
+	country?: Maybe<string>;
+	/**
+	 * The two-letter code for the country of the address.
+	 *
+	 * For example, US.
+	 *
+	 * @deprecated Use `countryCodeV2` instead.
+	 */
+	countryCode?: Maybe<string>;
+	/**
+	 * The two-letter code for the country of the address.
+	 *
+	 * For example, US.
+	 *
+	 */
+	countryCodeV2?: Maybe<CountryCode>;
+	/** The first name of the customer. */
+	firstName?: Maybe<string>;
+	/** A formatted version of the address, customized by the provided arguments. */
+	formatted: Array<string>;
+	/** A comma-separated list of the values for city, province, and country. */
+	formattedArea?: Maybe<string>;
+	/** A globally-unique identifier. */
+	id: string;
+	/** The last name of the customer. */
+	lastName?: Maybe<string>;
+	/** The latitude coordinate of the customer address. */
+	latitude?: Maybe<number>;
+	/** The longitude coordinate of the customer address. */
+	longitude?: Maybe<number>;
+	/**
+	 * The full name of the customer, based on firstName and lastName.
+	 *
+	 */
+	name?: Maybe<string>;
+	/**
+	 * A unique phone number for the customer.
+	 *
+	 * Formatted using E.164 standard. For example, _+16135551111_.
+	 *
+	 */
+	phone?: Maybe<string>;
+	/** The region of the address, such as the province, state, or district. */
+	province?: Maybe<string>;
+	/**
+	 * The two-letter code for the region.
+	 *
+	 * For example, ON.
+	 *
+	 */
+	provinceCode?: Maybe<string>;
+	/** The zip or postal code of the address. */
+	zip?: Maybe<string>;
+};
 
-  export type AvailableShippingRates = {
-    __typename?: 'AvailableShippingRates';
-    /**
-     * Whether or not the shipping rates are ready.
-     * The `shippingRates` field is `null` when this value is `false`.
-     * This field should be polled until its value becomes `true`.
-     *
-     */
-    ready: boolean;
-    /** The fetched shipping rates. `null` until the `ready` field is `true`. */
-    shippingRates?: Maybe<Array<ShippingRate>>;
-  };
+export type Checkout = Node & {
+	__typename?: 'Checkout';
+	/** The gift cards used on the checkout. */
+	appliedGiftCards: Array<AppliedGiftCard>;
+	/**
+	 * The available shipping rates for this Checkout.
+	 * Should only be used when checkout `requiresShipping` is `true` and
+	 * the shipping address is valid.
+	 *
+	 */
+	availableShippingRates?: Maybe<AvailableShippingRates>;
+	/** The identity of the customer associated with the checkout. */
+	buyerIdentity: CheckoutBuyerIdentity;
+	/** The date and time when the checkout was completed. */
+	completedAt?: Maybe<string>;
+	/** The date and time when the checkout was created. */
+	createdAt: string;
+	/** The currency code for the checkout. */
+	currencyCode: CurrencyCode;
+	/** A list of extra information that is added to the checkout. */
+	customAttributes: Array<Attribute>;
+	/** Discounts that have been applied on the checkout. */
+	discountApplications: DiscountApplicationConnection;
+	/** The email attached to this checkout. */
+	email?: Maybe<string>;
+	/** A globally-unique identifier. */
+	id: string;
+	/** A list of line item objects, each one containing information about an item in the checkout. */
+	lineItems: CheckoutLineItemConnection;
+	/** The sum of all the prices of all the items in the checkout. Duties, taxes, shipping and discounts excluded. */
+	lineItemsSubtotalPrice: Money;
+	/** The note associated with the checkout. */
+	note?: Maybe<string>;
+	/** The resulting order from a paid checkout. */
+	order?: Maybe<Order>;
+	/** The Order Status Page for this Checkout, null when checkout is not completed. */
+	orderStatusUrl?: Maybe<string>;
+	/** The amount left to be paid. This is equal to the cost of the line items, taxes, and shipping, minus discounts and gift cards. */
+	paymentDue: Money;
+	/**
+	 * The amount left to be paid. This is equal to the cost of the line items, duties, taxes, and shipping, minus discounts and gift cards.
+	 * @deprecated Use `paymentDue` instead.
+	 */
+	paymentDueV2: Money;
+	/**
+	 * Whether or not the Checkout is ready and can be completed. Checkouts may
+	 * have asynchronous operations that can take time to finish. If you want
+	 * to complete a checkout or ensure all the fields are populated and up to
+	 * date, polling is required until the value is true.
+	 *
+	 */
+	ready: boolean;
+	/** States whether or not the fulfillment requires shipping. */
+	requiresShipping: boolean;
+	/** The shipping address to where the line items will be shipped. */
+	shippingAddress?: Maybe<MailingAddress>;
+	/**
+	 * The discounts that have been allocated onto the shipping line by discount applications.
+	 *
+	 */
+	shippingDiscountAllocations: Array<DiscountAllocation>;
+	/** Once a shipping rate is selected by the customer it is transitioned to a `shipping_line` object. */
+	shippingLine?: Maybe<ShippingRate>;
+	/** The price at checkout before shipping and taxes. */
+	subtotalPrice: Money;
+	/**
+	 * The price at checkout before duties, shipping, and taxes.
+	 * @deprecated Use `subtotalPrice` instead.
+	 */
+	subtotalPriceV2: Money;
+	/** Whether the checkout is tax exempt. */
+	taxExempt: boolean;
+	/** Whether taxes are included in the line item and shipping line prices. */
+	taxesIncluded: boolean;
+	/** The sum of all the duties applied to the line items in the checkout. */
+	totalDuties?: Maybe<Money>;
+	/** The sum of all the prices of all the items in the checkout, including taxes and duties. */
+	totalPrice: Money;
+	/**
+	 * The sum of all the prices of all the items in the checkout, including taxes and duties.
+	 * @deprecated Use `totalPrice` instead.
+	 */
+	totalPriceV2: Money;
+	/** The sum of all the taxes applied to the line items and shipping lines in the checkout. */
+	totalTax: Money;
+	/**
+	 * The sum of all the taxes applied to the line items and shipping lines in the checkout.
+	 * @deprecated Use `totalTax` instead.
+	 */
+	totalTaxV2: Money;
+	/** The date and time when the checkout was last updated. */
+	updatedAt: string;
+	/** The url pointing to the checkout accessible from the web. */
+	webUrl: string;
+};
 
-  export type ShippingRate = {
-    __typename?: 'ShippingRate';
-    /** Human-readable unique identifier for this shipping rate. */
-    handle: string;
-    /** Price of this shipping rate. */
-    price: Money;
-    /**
-     * Price of this shipping rate.
-     * @deprecated Use `price` instead.
-     */
-    priceV2: Money;
-    /** Title of this shipping rate. */
-    title: string;
-  };
+export type AppliedGiftCard = Node & {
+	__typename?: 'AppliedGiftCard';
+	/** The amount that was taken from the gift card by applying it. */
+	amountUsed: Money;
+	/**
+	 * The amount that was taken from the gift card by applying it.
+	 * @deprecated Use `amountUsed` instead.
+	 */
+	amountUsedV2: Money;
+	/** The amount left on the gift card. */
+	balance: Money;
+	/**
+	 * The amount left on the gift card.
+	 * @deprecated Use `balance` instead.
+	 */
+	balanceV2: Money;
+	/** A globally-unique identifier. */
+	id: string;
+	/** The last characters of the gift card. */
+	lastCharacters: string;
+	/** The amount that was applied to the checkout in its currency. */
+	presentmentAmountUsed: Money;
+};
 
-  export type CheckoutBuyerIdentity = {
-    __typename?: 'CheckoutBuyerIdentity';
-    /** The country code for the checkout. For example, `CA`. */
-    countryCode?: Maybe<CountryCode>;
-  };
+export type AvailableShippingRates = {
+	__typename?: 'AvailableShippingRates';
+	/**
+	 * Whether or not the shipping rates are ready.
+	 * The `shippingRates` field is `null` when this value is `false`.
+	 * This field should be polled until its value becomes `true`.
+	 *
+	 */
+	ready: boolean;
+	/** The fetched shipping rates. `null` until the `ready` field is `true`. */
+	shippingRates?: Maybe<Array<ShippingRate>>;
+};
 
-  export type CurrencyCode =
-  /** United Arab Emirates Dirham (AED). */
-  | 'AED'
-  /** Afghan Afghani (AFN). */
-  | 'AFN'
-  /** Albanian Lek (ALL). */
-  | 'ALL'
-  /** Armenian Dram (AMD). */
-  | 'AMD'
-  /** Netherlands Antillean Guilder. */
-  | 'ANG'
-  /** Angolan Kwanza (AOA). */
-  | 'AOA'
-  /** Argentine Pesos (ARS). */
-  | 'ARS'
-  /** Australian Dollars (AUD). */
-  | 'AUD'
-  /** Aruban Florin (AWG). */
-  | 'AWG'
-  /** Azerbaijani Manat (AZN). */
-  | 'AZN'
-  /** Bosnia and Herzegovina Convertible Mark (BAM). */
-  | 'BAM'
-  /** Barbadian Dollar (BBD). */
-  | 'BBD'
-  /** Bangladesh Taka (BDT). */
-  | 'BDT'
-  /** Bulgarian Lev (BGN). */
-  | 'BGN'
-  /** Bahraini Dinar (BHD). */
-  | 'BHD'
-  /** Burundian Franc (BIF). */
-  | 'BIF'
-  /** Bermudian Dollar (BMD). */
-  | 'BMD'
-  /** Brunei Dollar (BND). */
-  | 'BND'
-  /** Bolivian Boliviano (BOB). */
-  | 'BOB'
-  /** Brazilian Real (BRL). */
-  | 'BRL'
-  /** Bahamian Dollar (BSD). */
-  | 'BSD'
-  /** Bhutanese Ngultrum (BTN). */
-  | 'BTN'
-  /** Botswana Pula (BWP). */
-  | 'BWP'
-  /** Belarusian Ruble (BYN). */
-  | 'BYN'
-  /** Belarusian Ruble (BYR). */
-  | 'BYR'
-  /** Belize Dollar (BZD). */
-  | 'BZD'
-  /** Canadian Dollars (CAD). */
-  | 'CAD'
-  /** Congolese franc (CDF). */
-  | 'CDF'
-  /** Swiss Francs (CHF). */
-  | 'CHF'
-  /** Chilean Peso (CLP). */
-  | 'CLP'
-  /** Chinese Yuan Renminbi (CNY). */
-  | 'CNY'
-  /** Colombian Peso (COP). */
-  | 'COP'
-  /** Costa Rican Colones (CRC). */
-  | 'CRC'
-  /** Cape Verdean escudo (CVE). */
-  | 'CVE'
-  /** Czech Koruny (CZK). */
-  | 'CZK'
-  /** Djiboutian Franc (DJF). */
-  | 'DJF'
-  /** Danish Kroner (DKK). */
-  | 'DKK'
-  /** Dominican Peso (DOP). */
-  | 'DOP'
-  /** Algerian Dinar (DZD). */
-  | 'DZD'
-  /** Egyptian Pound (EGP). */
-  | 'EGP'
-  /** Eritrean Nakfa (ERN). */
-  | 'ERN'
-  /** Ethiopian Birr (ETB). */
-  | 'ETB'
-  /** Euro (EUR). */
-  | 'EUR'
-  /** Fijian Dollars (FJD). */
-  | 'FJD'
-  /** Falkland Islands Pounds (FKP). */
-  | 'FKP'
-  /** United Kingdom Pounds (GBP). */
-  | 'GBP'
-  /** Georgian Lari (GEL). */
-  | 'GEL'
-  /** Ghanaian Cedi (GHS). */
-  | 'GHS'
-  /** Gibraltar Pounds (GIP). */
-  | 'GIP'
-  /** Gambian Dalasi (GMD). */
-  | 'GMD'
-  /** Guinean Franc (GNF). */
-  | 'GNF'
-  /** Guatemalan Quetzal (GTQ). */
-  | 'GTQ'
-  /** Guyanese Dollar (GYD). */
-  | 'GYD'
-  /** Hong Kong Dollars (HKD). */
-  | 'HKD'
-  /** Honduran Lempira (HNL). */
-  | 'HNL'
-  /** Croatian Kuna (HRK). */
-  | 'HRK'
-  /** Haitian Gourde (HTG). */
-  | 'HTG'
-  /** Hungarian Forint (HUF). */
-  | 'HUF'
-  /** Indonesian Rupiah (IDR). */
-  | 'IDR'
-  /** Israeli New Shekel (NIS). */
-  | 'ILS'
-  /** Indian Rupees (INR). */
-  | 'INR'
-  /** Iraqi Dinar (IQD). */
-  | 'IQD'
-  /** Iranian Rial (IRR). */
-  | 'IRR'
-  /** Icelandic Kronur (ISK). */
-  | 'ISK'
-  /** Jersey Pound. */
-  | 'JEP'
-  /** Jamaican Dollars (JMD). */
-  | 'JMD'
-  /** Jordanian Dinar (JOD). */
-  | 'JOD'
-  /** Japanese Yen (JPY). */
-  | 'JPY'
-  /** Kenyan Shilling (KES). */
-  | 'KES'
-  /** Kyrgyzstani Som (KGS). */
-  | 'KGS'
-  /** Cambodian Riel. */
-  | 'KHR'
-  /** Kiribati Dollar (KID). */
-  | 'KID'
-  /** Comorian Franc (KMF). */
-  | 'KMF'
-  /** South Korean Won (KRW). */
-  | 'KRW'
-  /** Kuwaiti Dinar (KWD). */
-  | 'KWD'
-  /** Cayman Dollars (KYD). */
-  | 'KYD'
-  /** Kazakhstani Tenge (KZT). */
-  | 'KZT'
-  /** Laotian Kip (LAK). */
-  | 'LAK'
-  /** Lebanese Pounds (LBP). */
-  | 'LBP'
-  /** Sri Lankan Rupees (LKR). */
-  | 'LKR'
-  /** Liberian Dollar (LRD). */
-  | 'LRD'
-  /** Lesotho Loti (LSL). */
-  | 'LSL'
-  /** Lithuanian Litai (LTL). */
-  | 'LTL'
-  /** Latvian Lati (LVL). */
-  | 'LVL'
-  /** Libyan Dinar (LYD). */
-  | 'LYD'
-  /** Moroccan Dirham. */
-  | 'MAD'
-  /** Moldovan Leu (MDL). */
-  | 'MDL'
-  /** Malagasy Ariary (MGA). */
-  | 'MGA'
-  /** Macedonia Denar (MKD). */
-  | 'MKD'
-  /** Burmese Kyat (MMK). */
-  | 'MMK'
-  /** Mongolian Tugrik. */
-  | 'MNT'
-  /** Macanese Pataca (MOP). */
-  | 'MOP'
-  /** Mauritanian Ouguiya (MRU). */
-  | 'MRU'
-  /** Mauritian Rupee (MUR). */
-  | 'MUR'
-  /** Maldivian Rufiyaa (MVR). */
-  | 'MVR'
-  /** Malawian Kwacha (MWK). */
-  | 'MWK'
-  /** Mexican Pesos (MXN). */
-  | 'MXN'
-  /** Malaysian Ringgits (MYR). */
-  | 'MYR'
-  /** Mozambican Metical. */
-  | 'MZN'
-  /** Namibian Dollar. */
-  | 'NAD'
-  /** Nigerian Naira (NGN). */
-  | 'NGN'
-  /** Nicaraguan Córdoba (NIO). */
-  | 'NIO'
-  /** Norwegian Kroner (NOK). */
-  | 'NOK'
-  /** Nepalese Rupee (NPR). */
-  | 'NPR'
-  /** New Zealand Dollars (NZD). */
-  | 'NZD'
-  /** Omani Rial (OMR). */
-  | 'OMR'
-  /** Panamian Balboa (PAB). */
-  | 'PAB'
-  /** Peruvian Nuevo Sol (PEN). */
-  | 'PEN'
-  /** Papua New Guinean Kina (PGK). */
-  | 'PGK'
-  /** Philippine Peso (PHP). */
-  | 'PHP'
-  /** Pakistani Rupee (PKR). */
-  | 'PKR'
-  /** Polish Zlotych (PLN). */
-  | 'PLN'
-  /** Paraguayan Guarani (PYG). */
-  | 'PYG'
-  /** Qatari Rial (QAR). */
-  | 'QAR'
-  /** Romanian Lei (RON). */
-  | 'RON'
-  /** Serbian dinar (RSD). */
-  | 'RSD'
-  /** Russian Rubles (RUB). */
-  | 'RUB'
-  /** Rwandan Franc (RWF). */
-  | 'RWF'
-  /** Saudi Riyal (SAR). */
-  | 'SAR'
-  /** Solomon Islands Dollar (SBD). */
-  | 'SBD'
-  /** Seychellois Rupee (SCR). */
-  | 'SCR'
-  /** Sudanese Pound (SDG). */
-  | 'SDG'
-  /** Swedish Kronor (SEK). */
-  | 'SEK'
-  /** Singapore Dollars (SGD). */
-  | 'SGD'
-  /** Saint Helena Pounds (SHP). */
-  | 'SHP'
-  /** Sierra Leonean Leone (SLL). */
-  | 'SLL'
-  /** Somali Shilling (SOS). */
-  | 'SOS'
-  /** Surinamese Dollar (SRD). */
-  | 'SRD'
-  /** South Sudanese Pound (SSP). */
-  | 'SSP'
-  /** Sao Tome And Principe Dobra (STD). */
-  | 'STD'
-  /** Sao Tome And Principe Dobra (STN). */
-  | 'STN'
-  /** Syrian Pound (SYP). */
-  | 'SYP'
-  /** Swazi Lilangeni (SZL). */
-  | 'SZL'
-  /** Thai baht (THB). */
-  | 'THB'
-  /** Tajikistani Somoni (TJS). */
-  | 'TJS'
-  /** Turkmenistani Manat (TMT). */
-  | 'TMT'
-  /** Tunisian Dinar (TND). */
-  | 'TND'
-  /** Tongan Pa'anga (TOP). */
-  | 'TOP'
-  /** Turkish Lira (TRY). */
-  | 'TRY'
-  /** Trinidad and Tobago Dollars (TTD). */
-  | 'TTD'
-  /** Taiwan Dollars (TWD). */
-  | 'TWD'
-  /** Tanzanian Shilling (TZS). */
-  | 'TZS'
-  /** Ukrainian Hryvnia (UAH). */
-  | 'UAH'
-  /** Ugandan Shilling (UGX). */
-  | 'UGX'
-  /** United States Dollars (USD). */
-  | 'USD'
-  /** Uruguayan Pesos (UYU). */
-  | 'UYU'
-  /** Uzbekistan som (UZS). */
-  | 'UZS'
-  /** Venezuelan Bolivares (VED). */
-  | 'VED'
-  /** Venezuelan Bolivares (VEF). */
-  | 'VEF'
-  /** Venezuelan Bolivares (VES). */
-  | 'VES'
-  /** Vietnamese đồng (VND). */
-  | 'VND'
-  /** Vanuatu Vatu (VUV). */
-  | 'VUV'
-  /** Samoan Tala (WST). */
-  | 'WST'
-  /** Central African CFA Franc (XAF). */
-  | 'XAF'
-  /** East Caribbean Dollar (XCD). */
-  | 'XCD'
-  /** West African CFA franc (XOF). */
-  | 'XOF'
-  /** CFP Franc (XPF). */
-  | 'XPF'
-  /** Unrecognized currency. */
-  | 'XXX'
-  /** Yemeni Rial (YER). */
-  | 'YER'
-  /** South African Rand (ZAR). */
-  | 'ZAR'
-  /** Zambian Kwacha (ZMW). */
-  | 'ZMW';
+export type ShippingRate = {
+	__typename?: 'ShippingRate';
+	/** Human-readable unique identifier for this shipping rate. */
+	handle: string;
+	/** Price of this shipping rate. */
+	price: Money;
+	/**
+	 * Price of this shipping rate.
+	 * @deprecated Use `price` instead.
+	 */
+	priceV2: Money;
+	/** Title of this shipping rate. */
+	title: string;
+};
 
-  export type DiscountApplicationConnection = {
-    __typename?: 'DiscountApplicationConnection';
-    /** A list of edges. */
-    edges: Array<DiscountApplicationEdge>;
-    /** A list of the nodes contained in DiscountApplicationEdge. */
-    nodes: Array<
-      | AutomaticDiscountApplication
-      | DiscountCodeApplication
-      | ManualDiscountApplication
-      | ScriptDiscountApplication
-    >;
-    /** Information to aid in pagination. */
-    pageInfo: PageInfo;
-  };
+export type CheckoutBuyerIdentity = {
+	__typename?: 'CheckoutBuyerIdentity';
+	/** The country code for the checkout. For example, `CA`. */
+	countryCode?: Maybe<CountryCode>;
+};
 
-  export type DiscountApplicationEdge = {
-    __typename?: 'DiscountApplicationEdge';
-    /** A cursor for use in pagination. */
-    cursor: string;
-    /** The item at the end of DiscountApplicationEdge. */
-    node:
-      | AutomaticDiscountApplication
-      | DiscountCodeApplication
-      | ManualDiscountApplication
-      | ScriptDiscountApplication;
-  };
+export type CurrencyCode =
+	/** United Arab Emirates Dirham (AED). */
+	| 'AED'
+	/** Afghan Afghani (AFN). */
+	| 'AFN'
+	/** Albanian Lek (ALL). */
+	| 'ALL'
+	/** Armenian Dram (AMD). */
+	| 'AMD'
+	/** Netherlands Antillean Guilder. */
+	| 'ANG'
+	/** Angolan Kwanza (AOA). */
+	| 'AOA'
+	/** Argentine Pesos (ARS). */
+	| 'ARS'
+	/** Australian Dollars (AUD). */
+	| 'AUD'
+	/** Aruban Florin (AWG). */
+	| 'AWG'
+	/** Azerbaijani Manat (AZN). */
+	| 'AZN'
+	/** Bosnia and Herzegovina Convertible Mark (BAM). */
+	| 'BAM'
+	/** Barbadian Dollar (BBD). */
+	| 'BBD'
+	/** Bangladesh Taka (BDT). */
+	| 'BDT'
+	/** Bulgarian Lev (BGN). */
+	| 'BGN'
+	/** Bahraini Dinar (BHD). */
+	| 'BHD'
+	/** Burundian Franc (BIF). */
+	| 'BIF'
+	/** Bermudian Dollar (BMD). */
+	| 'BMD'
+	/** Brunei Dollar (BND). */
+	| 'BND'
+	/** Bolivian Boliviano (BOB). */
+	| 'BOB'
+	/** Brazilian Real (BRL). */
+	| 'BRL'
+	/** Bahamian Dollar (BSD). */
+	| 'BSD'
+	/** Bhutanese Ngultrum (BTN). */
+	| 'BTN'
+	/** Botswana Pula (BWP). */
+	| 'BWP'
+	/** Belarusian Ruble (BYN). */
+	| 'BYN'
+	/** Belarusian Ruble (BYR). */
+	| 'BYR'
+	/** Belize Dollar (BZD). */
+	| 'BZD'
+	/** Canadian Dollars (CAD). */
+	| 'CAD'
+	/** Congolese franc (CDF). */
+	| 'CDF'
+	/** Swiss Francs (CHF). */
+	| 'CHF'
+	/** Chilean Peso (CLP). */
+	| 'CLP'
+	/** Chinese Yuan Renminbi (CNY). */
+	| 'CNY'
+	/** Colombian Peso (COP). */
+	| 'COP'
+	/** Costa Rican Colones (CRC). */
+	| 'CRC'
+	/** Cape Verdean escudo (CVE). */
+	| 'CVE'
+	/** Czech Koruny (CZK). */
+	| 'CZK'
+	/** Djiboutian Franc (DJF). */
+	| 'DJF'
+	/** Danish Kroner (DKK). */
+	| 'DKK'
+	/** Dominican Peso (DOP). */
+	| 'DOP'
+	/** Algerian Dinar (DZD). */
+	| 'DZD'
+	/** Egyptian Pound (EGP). */
+	| 'EGP'
+	/** Eritrean Nakfa (ERN). */
+	| 'ERN'
+	/** Ethiopian Birr (ETB). */
+	| 'ETB'
+	/** Euro (EUR). */
+	| 'EUR'
+	/** Fijian Dollars (FJD). */
+	| 'FJD'
+	/** Falkland Islands Pounds (FKP). */
+	| 'FKP'
+	/** United Kingdom Pounds (GBP). */
+	| 'GBP'
+	/** Georgian Lari (GEL). */
+	| 'GEL'
+	/** Ghanaian Cedi (GHS). */
+	| 'GHS'
+	/** Gibraltar Pounds (GIP). */
+	| 'GIP'
+	/** Gambian Dalasi (GMD). */
+	| 'GMD'
+	/** Guinean Franc (GNF). */
+	| 'GNF'
+	/** Guatemalan Quetzal (GTQ). */
+	| 'GTQ'
+	/** Guyanese Dollar (GYD). */
+	| 'GYD'
+	/** Hong Kong Dollars (HKD). */
+	| 'HKD'
+	/** Honduran Lempira (HNL). */
+	| 'HNL'
+	/** Croatian Kuna (HRK). */
+	| 'HRK'
+	/** Haitian Gourde (HTG). */
+	| 'HTG'
+	/** Hungarian Forint (HUF). */
+	| 'HUF'
+	/** Indonesian Rupiah (IDR). */
+	| 'IDR'
+	/** Israeli New Shekel (NIS). */
+	| 'ILS'
+	/** Indian Rupees (INR). */
+	| 'INR'
+	/** Iraqi Dinar (IQD). */
+	| 'IQD'
+	/** Iranian Rial (IRR). */
+	| 'IRR'
+	/** Icelandic Kronur (ISK). */
+	| 'ISK'
+	/** Jersey Pound. */
+	| 'JEP'
+	/** Jamaican Dollars (JMD). */
+	| 'JMD'
+	/** Jordanian Dinar (JOD). */
+	| 'JOD'
+	/** Japanese Yen (JPY). */
+	| 'JPY'
+	/** Kenyan Shilling (KES). */
+	| 'KES'
+	/** Kyrgyzstani Som (KGS). */
+	| 'KGS'
+	/** Cambodian Riel. */
+	| 'KHR'
+	/** Kiribati Dollar (KID). */
+	| 'KID'
+	/** Comorian Franc (KMF). */
+	| 'KMF'
+	/** South Korean Won (KRW). */
+	| 'KRW'
+	/** Kuwaiti Dinar (KWD). */
+	| 'KWD'
+	/** Cayman Dollars (KYD). */
+	| 'KYD'
+	/** Kazakhstani Tenge (KZT). */
+	| 'KZT'
+	/** Laotian Kip (LAK). */
+	| 'LAK'
+	/** Lebanese Pounds (LBP). */
+	| 'LBP'
+	/** Sri Lankan Rupees (LKR). */
+	| 'LKR'
+	/** Liberian Dollar (LRD). */
+	| 'LRD'
+	/** Lesotho Loti (LSL). */
+	| 'LSL'
+	/** Lithuanian Litai (LTL). */
+	| 'LTL'
+	/** Latvian Lati (LVL). */
+	| 'LVL'
+	/** Libyan Dinar (LYD). */
+	| 'LYD'
+	/** Moroccan Dirham. */
+	| 'MAD'
+	/** Moldovan Leu (MDL). */
+	| 'MDL'
+	/** Malagasy Ariary (MGA). */
+	| 'MGA'
+	/** Macedonia Denar (MKD). */
+	| 'MKD'
+	/** Burmese Kyat (MMK). */
+	| 'MMK'
+	/** Mongolian Tugrik. */
+	| 'MNT'
+	/** Macanese Pataca (MOP). */
+	| 'MOP'
+	/** Mauritanian Ouguiya (MRU). */
+	| 'MRU'
+	/** Mauritian Rupee (MUR). */
+	| 'MUR'
+	/** Maldivian Rufiyaa (MVR). */
+	| 'MVR'
+	/** Malawian Kwacha (MWK). */
+	| 'MWK'
+	/** Mexican Pesos (MXN). */
+	| 'MXN'
+	/** Malaysian Ringgits (MYR). */
+	| 'MYR'
+	/** Mozambican Metical. */
+	| 'MZN'
+	/** Namibian Dollar. */
+	| 'NAD'
+	/** Nigerian Naira (NGN). */
+	| 'NGN'
+	/** Nicaraguan Córdoba (NIO). */
+	| 'NIO'
+	/** Norwegian Kroner (NOK). */
+	| 'NOK'
+	/** Nepalese Rupee (NPR). */
+	| 'NPR'
+	/** New Zealand Dollars (NZD). */
+	| 'NZD'
+	/** Omani Rial (OMR). */
+	| 'OMR'
+	/** Panamian Balboa (PAB). */
+	| 'PAB'
+	/** Peruvian Nuevo Sol (PEN). */
+	| 'PEN'
+	/** Papua New Guinean Kina (PGK). */
+	| 'PGK'
+	/** Philippine Peso (PHP). */
+	| 'PHP'
+	/** Pakistani Rupee (PKR). */
+	| 'PKR'
+	/** Polish Zlotych (PLN). */
+	| 'PLN'
+	/** Paraguayan Guarani (PYG). */
+	| 'PYG'
+	/** Qatari Rial (QAR). */
+	| 'QAR'
+	/** Romanian Lei (RON). */
+	| 'RON'
+	/** Serbian dinar (RSD). */
+	| 'RSD'
+	/** Russian Rubles (RUB). */
+	| 'RUB'
+	/** Rwandan Franc (RWF). */
+	| 'RWF'
+	/** Saudi Riyal (SAR). */
+	| 'SAR'
+	/** Solomon Islands Dollar (SBD). */
+	| 'SBD'
+	/** Seychellois Rupee (SCR). */
+	| 'SCR'
+	/** Sudanese Pound (SDG). */
+	| 'SDG'
+	/** Swedish Kronor (SEK). */
+	| 'SEK'
+	/** Singapore Dollars (SGD). */
+	| 'SGD'
+	/** Saint Helena Pounds (SHP). */
+	| 'SHP'
+	/** Sierra Leonean Leone (SLL). */
+	| 'SLL'
+	/** Somali Shilling (SOS). */
+	| 'SOS'
+	/** Surinamese Dollar (SRD). */
+	| 'SRD'
+	/** South Sudanese Pound (SSP). */
+	| 'SSP'
+	/** Sao Tome And Principe Dobra (STD). */
+	| 'STD'
+	/** Sao Tome And Principe Dobra (STN). */
+	| 'STN'
+	/** Syrian Pound (SYP). */
+	| 'SYP'
+	/** Swazi Lilangeni (SZL). */
+	| 'SZL'
+	/** Thai baht (THB). */
+	| 'THB'
+	/** Tajikistani Somoni (TJS). */
+	| 'TJS'
+	/** Turkmenistani Manat (TMT). */
+	| 'TMT'
+	/** Tunisian Dinar (TND). */
+	| 'TND'
+	/** Tongan Pa'anga (TOP). */
+	| 'TOP'
+	/** Turkish Lira (TRY). */
+	| 'TRY'
+	/** Trinidad and Tobago Dollars (TTD). */
+	| 'TTD'
+	/** Taiwan Dollars (TWD). */
+	| 'TWD'
+	/** Tanzanian Shilling (TZS). */
+	| 'TZS'
+	/** Ukrainian Hryvnia (UAH). */
+	| 'UAH'
+	/** Ugandan Shilling (UGX). */
+	| 'UGX'
+	/** United States Dollars (USD). */
+	| 'USD'
+	/** Uruguayan Pesos (UYU). */
+	| 'UYU'
+	/** Uzbekistan som (UZS). */
+	| 'UZS'
+	/** Venezuelan Bolivares (VED). */
+	| 'VED'
+	/** Venezuelan Bolivares (VEF). */
+	| 'VEF'
+	/** Venezuelan Bolivares (VES). */
+	| 'VES'
+	/** Vietnamese đồng (VND). */
+	| 'VND'
+	/** Vanuatu Vatu (VUV). */
+	| 'VUV'
+	/** Samoan Tala (WST). */
+	| 'WST'
+	/** Central African CFA Franc (XAF). */
+	| 'XAF'
+	/** East Caribbean Dollar (XCD). */
+	| 'XCD'
+	/** West African CFA franc (XOF). */
+	| 'XOF'
+	/** CFP Franc (XPF). */
+	| 'XPF'
+	/** Unrecognized currency. */
+	| 'XXX'
+	/** Yemeni Rial (YER). */
+	| 'YER'
+	/** South African Rand (ZAR). */
+	| 'ZAR'
+	/** Zambian Kwacha (ZMW). */
+	| 'ZMW';
 
-  export type AutomaticDiscountApplication = DiscountApplication & {
-    __typename?: 'AutomaticDiscountApplication';
-    /** The method by which the discount's value is allocated to its entitled items. */
-    allocationMethod: DiscountApplicationAllocationMethod;
-    /** Which lines of targetType that the discount is allocated over. */
-    targetSelection: DiscountApplicationTargetSelection;
-    /** The type of line that the discount is applicable towards. */
-    targetType: DiscountApplicationTargetType;
-    /** The title of the application. */
-    title: string;
-    /** The value of the discount application. */
-    value: PricingValue;
-  };
+export type DiscountApplicationConnection = {
+	__typename?: 'DiscountApplicationConnection';
+	/** A list of edges. */
+	edges: Array<DiscountApplicationEdge>;
+	/** A list of the nodes contained in DiscountApplicationEdge. */
+	nodes: Array<
+		| AutomaticDiscountApplication
+		| DiscountCodeApplication
+		| ManualDiscountApplication
+		| ScriptDiscountApplication
+	>;
+	/** Information to aid in pagination. */
+	pageInfo: PageInfo;
+};
 
-  export type DiscountApplicationAllocationMethod =
-  /** The value is spread across all entitled lines. */
-  | 'ACROSS'
-  /** The value is applied onto every entitled line. */
-  | 'EACH'
-  /** The value is specifically applied onto a particular line. */
-  | 'ONE';
+export type DiscountApplicationEdge = {
+	__typename?: 'DiscountApplicationEdge';
+	/** A cursor for use in pagination. */
+	cursor: string;
+	/** The item at the end of DiscountApplicationEdge. */
+	node:
+		| AutomaticDiscountApplication
+		| DiscountCodeApplication
+		| ManualDiscountApplication
+		| ScriptDiscountApplication;
+};
 
-  export type DiscountCodeApplication = DiscountApplication & {
-    __typename?: 'DiscountCodeApplication';
-    /** The method by which the discount's value is allocated to its entitled items. */
-    allocationMethod: DiscountApplicationAllocationMethod;
-    /** Specifies whether the discount code was applied successfully. */
-    applicable: boolean;
-    /** The string identifying the discount code that was used at the time of application. */
-    code: string;
-    /** Which lines of targetType that the discount is allocated over. */
-    targetSelection: DiscountApplicationTargetSelection;
-    /** The type of line that the discount is applicable towards. */
-    targetType: DiscountApplicationTargetType;
-    /** The value of the discount application. */
-    value: PricingValue;
-  };
+export type AutomaticDiscountApplication = DiscountApplication & {
+	__typename?: 'AutomaticDiscountApplication';
+	/** The method by which the discount's value is allocated to its entitled items. */
+	allocationMethod: DiscountApplicationAllocationMethod;
+	/** Which lines of targetType that the discount is allocated over. */
+	targetSelection: DiscountApplicationTargetSelection;
+	/** The type of line that the discount is applicable towards. */
+	targetType: DiscountApplicationTargetType;
+	/** The title of the application. */
+	title: string;
+	/** The value of the discount application. */
+	value: PricingValue;
+};
 
-  export type DiscountApplication = {
-    /** The method by which the discount's value is allocated to its entitled items. */
-    allocationMethod: DiscountApplicationAllocationMethod;
-    /** Which lines of targetType that the discount is allocated over. */
-    targetSelection: DiscountApplicationTargetSelection;
-    /** The type of line that the discount is applicable towards. */
-    targetType: DiscountApplicationTargetType;
-    /** The value of the discount application. */
-    value: PricingValue;
-  };
+export type DiscountApplicationAllocationMethod =
+	/** The value is spread across all entitled lines. */
+	| 'ACROSS'
+	/** The value is applied onto every entitled line. */
+	| 'EACH'
+	/** The value is specifically applied onto a particular line. */
+	| 'ONE';
 
-  export type DiscountApplicationTargetSelection =
-  /** The discount is allocated onto all the lines. */
-  | 'ALL'
-  /** The discount is allocated onto only the lines that it's entitled for. */
-  | 'ENTITLED'
-  /** The discount is allocated onto explicitly chosen lines. */
-  | 'EXPLICIT';
+export type DiscountCodeApplication = DiscountApplication & {
+	__typename?: 'DiscountCodeApplication';
+	/** The method by which the discount's value is allocated to its entitled items. */
+	allocationMethod: DiscountApplicationAllocationMethod;
+	/** Specifies whether the discount code was applied successfully. */
+	applicable: boolean;
+	/** The string identifying the discount code that was used at the time of application. */
+	code: string;
+	/** Which lines of targetType that the discount is allocated over. */
+	targetSelection: DiscountApplicationTargetSelection;
+	/** The type of line that the discount is applicable towards. */
+	targetType: DiscountApplicationTargetType;
+	/** The value of the discount application. */
+	value: PricingValue;
+};
+
+export type DiscountApplication = {
+	/** The method by which the discount's value is allocated to its entitled items. */
+	allocationMethod: DiscountApplicationAllocationMethod;
+	/** Which lines of targetType that the discount is allocated over. */
+	targetSelection: DiscountApplicationTargetSelection;
+	/** The type of line that the discount is applicable towards. */
+	targetType: DiscountApplicationTargetType;
+	/** The value of the discount application. */
+	value: PricingValue;
+};
+
+export type DiscountApplicationTargetSelection =
+	/** The discount is allocated onto all the lines. */
+	| 'ALL'
+	/** The discount is allocated onto only the lines that it's entitled for. */
+	| 'ENTITLED'
+	/** The discount is allocated onto explicitly chosen lines. */
+	| 'EXPLICIT';
 
 /**
  * The type of line (i.e. line item or shipping line) on an order that the discount is applicable towards.
  *
  */
 export type DiscountApplicationTargetType =
-  /** The discount applies onto line items. */
-  | 'LINE_ITEM'
-  /** The discount applies onto shipping lines. */
-  | 'SHIPPING_LINE';
+	/** The discount applies onto line items. */
+	| 'LINE_ITEM'
+	/** The discount applies onto shipping lines. */
+	| 'SHIPPING_LINE';
 
-  export type ManualDiscountApplication = DiscountApplication & {
-    __typename?: 'ManualDiscountApplication';
-    /** The method by which the discount's value is allocated to its entitled items. */
-    allocationMethod: DiscountApplicationAllocationMethod;
-    /** The description of the application. */
-    description?: Maybe<string>;
-    /** Which lines of targetType that the discount is allocated over. */
-    targetSelection: DiscountApplicationTargetSelection;
-    /** The type of line that the discount is applicable towards. */
-    targetType: DiscountApplicationTargetType;
-    /** The title of the application. */
-    title: string;
-    /** The value of the discount application. */
-    value: PricingValue;
-  };
+export type ManualDiscountApplication = DiscountApplication & {
+	__typename?: 'ManualDiscountApplication';
+	/** The method by which the discount's value is allocated to its entitled items. */
+	allocationMethod: DiscountApplicationAllocationMethod;
+	/** The description of the application. */
+	description?: Maybe<string>;
+	/** Which lines of targetType that the discount is allocated over. */
+	targetSelection: DiscountApplicationTargetSelection;
+	/** The type of line that the discount is applicable towards. */
+	targetType: DiscountApplicationTargetType;
+	/** The title of the application. */
+	title: string;
+	/** The value of the discount application. */
+	value: PricingValue;
+};
 
-  export type ScriptDiscountApplication = DiscountApplication & {
-    __typename?: 'ScriptDiscountApplication';
-    /** The method by which the discount's value is allocated to its entitled items. */
-    allocationMethod: DiscountApplicationAllocationMethod;
-    /** Which lines of targetType that the discount is allocated over. */
-    targetSelection: DiscountApplicationTargetSelection;
-    /** The type of line that the discount is applicable towards. */
-    targetType: DiscountApplicationTargetType;
-    /** The title of the application as defined by the Script. */
-    title: string;
-    /** The value of the discount application. */
-    value: PricingValue;
-  };
+export type ScriptDiscountApplication = DiscountApplication & {
+	__typename?: 'ScriptDiscountApplication';
+	/** The method by which the discount's value is allocated to its entitled items. */
+	allocationMethod: DiscountApplicationAllocationMethod;
+	/** Which lines of targetType that the discount is allocated over. */
+	targetSelection: DiscountApplicationTargetSelection;
+	/** The type of line that the discount is applicable towards. */
+	targetType: DiscountApplicationTargetType;
+	/** The title of the application as defined by the Script. */
+	title: string;
+	/** The value of the discount application. */
+	value: PricingValue;
+};
 
-  export type PricingPercentageValue = {
-    __typename?: 'PricingPercentageValue';
-    /** The percentage value of the object. */
-    percentage: number;
-  };
-  
-  /** The price value (fixed or percentage) for a discount application. */
-  export type PricingValue = Money | PricingPercentageValue;
-  
-  export type CheckoutLineItem = Node & {
-    __typename?: 'CheckoutLineItem';
-    /** Extra information in the form of an array of Key-Value pairs about the line item. */
-    customAttributes: Array<Attribute>;
-    /** The discounts that have been allocated onto the checkout line item by discount applications. */
-    discountAllocations: Array<DiscountAllocation>;
-    /** A globally-unique identifier. */
-    id: string;
-    /** The quantity of the line item. */
-    quantity: number;
-    /** Title of the line item. Defaults to the product's title. */
-    title: string;
-    /** Unit price of the line item. */
-    unitPrice?: Maybe<Money>;
-    /** Product variant of the line item. */
-    variant?: Maybe<ProductVariant>;
-  };
-  
-  /**
-   * An auto-generated type for paginating through multiple CheckoutLineItems.
-   *
-   */
-  export type CheckoutLineItemConnection = {
-    __typename?: 'CheckoutLineItemConnection';
-    /** A list of edges. */
-    edges: Array<CheckoutLineItemEdge>;
-    /** A list of the nodes contained in CheckoutLineItemEdge. */
-    nodes: Array<CheckoutLineItem>;
-    /** Information to aid in pagination. */
-    pageInfo: PageInfo;
-  };
-  
-  /**
-   * An auto-generated type which holds one CheckoutLineItem and a cursor during pagination.
-   *
-   */
-  export type CheckoutLineItemEdge = {
-    __typename?: 'CheckoutLineItemEdge';
-    /** A cursor for use in pagination. */
-    cursor: string;
-    /** The item at the end of CheckoutLineItemEdge. */
-    node: CheckoutLineItem;
-  };
+export type PricingPercentageValue = {
+	__typename?: 'PricingPercentageValue';
+	/** The percentage value of the object. */
+	percentage: number;
+};
 
-  export type DiscountAllocation = {
-    __typename?: 'DiscountAllocation';
-    /** Amount of discount allocated. */
-    allocatedAmount: Money;
-    /** The discount this allocated amount originated from. */
-    discountApplication:
-      | AutomaticDiscountApplication
-      | DiscountCodeApplication
-      | ManualDiscountApplication
-      | ScriptDiscountApplication;
-  };
+/** The price value (fixed or percentage) for a discount application. */
+export type PricingValue = Money | PricingPercentageValue;
 
-  export type Order = HasMetafields &
-  Node & {
-    __typename?: 'Order';
-    /** The address associated with the payment method. */
-    billingAddress?: Maybe<MailingAddress>;
-    /** The reason for the order's cancellation. Returns `null` if the order wasn't canceled. */
-    cancelReason?: Maybe<OrderCancelReason>;
-    /** The date and time when the order was canceled. Returns null if the order wasn't canceled. */
-    canceledAt?: Maybe<string>;
-    /** The code of the currency used for the payment. */
-    currencyCode: CurrencyCode;
-    /** The subtotal of line items and their discounts, excluding line items that have been removed. Does not contain order-level discounts, duties, shipping costs, or shipping discounts. Taxes are not included unless the order is a taxes-included order. */
-    currentSubtotalPrice: Money;
-    /** The total cost of duties for the order, including refunds. */
-    currentTotalDuties?: Maybe<Money>;
-    /** The total amount of the order, including duties, taxes and discounts, minus amounts for line items that have been removed. */
-    currentTotalPrice: Money;
-    /** The total of all taxes applied to the order, excluding taxes for returned line items. */
-    currentTotalTax: Money;
-    /** A list of the custom attributes added to the order. */
-    customAttributes: Array<Attribute>;
-    /** The locale code in which this specific order happened. */
-    customerLocale?: Maybe<string>;
-    /** The unique URL that the customer can use to access the order. */
-    customerUrl?: Maybe<string>;
-    /** Discounts that have been applied on the order. */
-    discountApplications: DiscountApplicationConnection;
-    /** Whether the order has had any edits applied or not. */
-    edited: boolean;
-    /** The customer's email address. */
-    email?: Maybe<string>;
-    /** The financial status of the order. */
-    financialStatus?: Maybe<OrderFinancialStatus>;
-    /** The fulfillment status for the order. */
-    fulfillmentStatus: OrderFulfillmentStatus;
-    /** A globally-unique identifier. */
-    id: string;
-    /** List of the order’s line items. */
-    lineItems: OrderLineItemConnection;
-    /** Returns a metafield found by namespace and key. */
-    metafield?: Maybe<Metafield>;
-    /**
-     * The metafields associated with the resource matching the supplied list of namespaces and keys.
-     *
-     */
-    metafields: Array<Maybe<Metafield>>;
-    /**
-     * Unique identifier for the order that appears on the order.
-     * For example, _#1000_ or _Store1001.
-     *
-     */
-    name: string;
-    /** A unique numeric identifier for the order for use by shop owner and customer. */
-    orderNumber: number;
-    /** The total cost of duties charged at checkout. */
-    originalTotalDuties?: Maybe<Money>;
-    /** The total price of the order before any applied edits. */
-    originalTotalPrice: Money;
-    /** The customer's phone number for receiving SMS notifications. */
-    phone?: Maybe<string>;
-    /**
-     * The date and time when the order was imported.
-     * This value can be set to dates in the past when importing from other systems.
-     * If no value is provided, it will be auto-generated based on current date and time.
-     *
-     */
-    processedAt: string;
-    /** The address to where the order will be shipped. */
-    shippingAddress?: Maybe<MailingAddress>;
-    /**
-     * The discounts that have been allocated onto the shipping line by discount applications.
-     *
-     */
-    shippingDiscountAllocations: Array<DiscountAllocation>;
-    /** The unique URL for the order's status page. */
-    statusUrl: string;
-    /** Price of the order before shipping and taxes. */
-    subtotalPrice?: Maybe<Money>;
-    /**
-     * Price of the order before duties, shipping and taxes.
-     * @deprecated Use `subtotalPrice` instead.
-     */
-    subtotalPriceV2?: Maybe<Money>;
-    /** List of the order’s successful fulfillments. */
-    successfulFulfillments?: Maybe<Array<Fulfillment>>;
-    /** The sum of all the prices of all the items in the order, duties, taxes and discounts included (must be positive). */
-    totalPrice: Money;
-    /**
-     * The sum of all the prices of all the items in the order, duties, taxes and discounts included (must be positive).
-     * @deprecated Use `totalPrice` instead.
-     */
-    totalPriceV2: Money;
-    /** The total amount that has been refunded. */
-    totalRefunded: Money;
-    /**
-     * The total amount that has been refunded.
-     * @deprecated Use `totalRefunded` instead.
-     */
-    totalRefundedV2: Money;
-    /** The total cost of shipping. */
-    totalShippingPrice: Money;
-    /**
-     * The total cost of shipping.
-     * @deprecated Use `totalShippingPrice` instead.
-     */
-    totalShippingPriceV2: Money;
-    /** The total cost of taxes. */
-    totalTax?: Maybe<Money>;
-    /**
-     * The total cost of taxes.
-     * @deprecated Use `totalTax` instead.
-     */
-    totalTaxV2?: Maybe<Money>;
-  };
+export type CheckoutLineItem = Node & {
+	__typename?: 'CheckoutLineItem';
+	/** Extra information in the form of an array of Key-Value pairs about the line item. */
+	customAttributes: Array<Attribute>;
+	/** The discounts that have been allocated onto the checkout line item by discount applications. */
+	discountAllocations: Array<DiscountAllocation>;
+	/** A globally-unique identifier. */
+	id: string;
+	/** The quantity of the line item. */
+	quantity: number;
+	/** Title of the line item. Defaults to the product's title. */
+	title: string;
+	/** Unit price of the line item. */
+	unitPrice?: Maybe<Money>;
+	/** Product variant of the line item. */
+	variant?: Maybe<ProductVariant>;
+};
 
-  /** Represents the reason for the order's cancellation. */
+/**
+ * An auto-generated type for paginating through multiple CheckoutLineItems.
+ *
+ */
+export type CheckoutLineItemConnection = {
+	__typename?: 'CheckoutLineItemConnection';
+	/** A list of edges. */
+	edges: Array<CheckoutLineItemEdge>;
+	/** A list of the nodes contained in CheckoutLineItemEdge. */
+	nodes: Array<CheckoutLineItem>;
+	/** Information to aid in pagination. */
+	pageInfo: PageInfo;
+};
+
+/**
+ * An auto-generated type which holds one CheckoutLineItem and a cursor during pagination.
+ *
+ */
+export type CheckoutLineItemEdge = {
+	__typename?: 'CheckoutLineItemEdge';
+	/** A cursor for use in pagination. */
+	cursor: string;
+	/** The item at the end of CheckoutLineItemEdge. */
+	node: CheckoutLineItem;
+};
+
+export type DiscountAllocation = {
+	__typename?: 'DiscountAllocation';
+	/** Amount of discount allocated. */
+	allocatedAmount: Money;
+	/** The discount this allocated amount originated from. */
+	discountApplication:
+		| AutomaticDiscountApplication
+		| DiscountCodeApplication
+		| ManualDiscountApplication
+		| ScriptDiscountApplication;
+};
+
+export type Order = HasMetafields &
+	Node & {
+		__typename?: 'Order';
+		/** The address associated with the payment method. */
+		billingAddress?: Maybe<MailingAddress>;
+		/** The reason for the order's cancellation. Returns `null` if the order wasn't canceled. */
+		cancelReason?: Maybe<OrderCancelReason>;
+		/** The date and time when the order was canceled. Returns null if the order wasn't canceled. */
+		canceledAt?: Maybe<string>;
+		/** The code of the currency used for the payment. */
+		currencyCode: CurrencyCode;
+		/** The subtotal of line items and their discounts, excluding line items that have been removed. Does not contain order-level discounts, duties, shipping costs, or shipping discounts. Taxes are not included unless the order is a taxes-included order. */
+		currentSubtotalPrice: Money;
+		/** The total cost of duties for the order, including refunds. */
+		currentTotalDuties?: Maybe<Money>;
+		/** The total amount of the order, including duties, taxes and discounts, minus amounts for line items that have been removed. */
+		currentTotalPrice: Money;
+		/** The total of all taxes applied to the order, excluding taxes for returned line items. */
+		currentTotalTax: Money;
+		/** A list of the custom attributes added to the order. */
+		customAttributes: Array<Attribute>;
+		/** The locale code in which this specific order happened. */
+		customerLocale?: Maybe<string>;
+		/** The unique URL that the customer can use to access the order. */
+		customerUrl?: Maybe<string>;
+		/** Discounts that have been applied on the order. */
+		discountApplications: DiscountApplicationConnection;
+		/** Whether the order has had any edits applied or not. */
+		edited: boolean;
+		/** The customer's email address. */
+		email?: Maybe<string>;
+		/** The financial status of the order. */
+		financialStatus?: Maybe<OrderFinancialStatus>;
+		/** The fulfillment status for the order. */
+		fulfillmentStatus: OrderFulfillmentStatus;
+		/** A globally-unique identifier. */
+		id: string;
+		/** List of the order’s line items. */
+		lineItems: OrderLineItemConnection;
+		/** Returns a metafield found by namespace and key. */
+		metafield?: Maybe<Metafield>;
+		/**
+		 * The metafields associated with the resource matching the supplied list of namespaces and keys.
+		 *
+		 */
+		metafields: Array<Maybe<Metafield>>;
+		/**
+		 * Unique identifier for the order that appears on the order.
+		 * For example, _#1000_ or _Store1001.
+		 *
+		 */
+		name: string;
+		/** A unique numeric identifier for the order for use by shop owner and customer. */
+		orderNumber: number;
+		/** The total cost of duties charged at checkout. */
+		originalTotalDuties?: Maybe<Money>;
+		/** The total price of the order before any applied edits. */
+		originalTotalPrice: Money;
+		/** The customer's phone number for receiving SMS notifications. */
+		phone?: Maybe<string>;
+		/**
+		 * The date and time when the order was imported.
+		 * This value can be set to dates in the past when importing from other systems.
+		 * If no value is provided, it will be auto-generated based on current date and time.
+		 *
+		 */
+		processedAt: string;
+		/** The address to where the order will be shipped. */
+		shippingAddress?: Maybe<MailingAddress>;
+		/**
+		 * The discounts that have been allocated onto the shipping line by discount applications.
+		 *
+		 */
+		shippingDiscountAllocations: Array<DiscountAllocation>;
+		/** The unique URL for the order's status page. */
+		statusUrl: string;
+		/** Price of the order before shipping and taxes. */
+		subtotalPrice?: Maybe<Money>;
+		/**
+		 * Price of the order before duties, shipping and taxes.
+		 * @deprecated Use `subtotalPrice` instead.
+		 */
+		subtotalPriceV2?: Maybe<Money>;
+		/** List of the order’s successful fulfillments. */
+		successfulFulfillments?: Maybe<Array<Fulfillment>>;
+		/** The sum of all the prices of all the items in the order, duties, taxes and discounts included (must be positive). */
+		totalPrice: Money;
+		/**
+		 * The sum of all the prices of all the items in the order, duties, taxes and discounts included (must be positive).
+		 * @deprecated Use `totalPrice` instead.
+		 */
+		totalPriceV2: Money;
+		/** The total amount that has been refunded. */
+		totalRefunded: Money;
+		/**
+		 * The total amount that has been refunded.
+		 * @deprecated Use `totalRefunded` instead.
+		 */
+		totalRefundedV2: Money;
+		/** The total cost of shipping. */
+		totalShippingPrice: Money;
+		/**
+		 * The total cost of shipping.
+		 * @deprecated Use `totalShippingPrice` instead.
+		 */
+		totalShippingPriceV2: Money;
+		/** The total cost of taxes. */
+		totalTax?: Maybe<Money>;
+		/**
+		 * The total cost of taxes.
+		 * @deprecated Use `totalTax` instead.
+		 */
+		totalTaxV2?: Maybe<Money>;
+	};
+
+/** Represents the reason for the order's cancellation. */
 export type OrderCancelReason =
-/** The customer wanted to cancel the order. */
-| 'CUSTOMER'
-/** Payment was declined. */
-| 'DECLINED'
-/** The order was fraudulent. */
-| 'FRAUD'
-/** There was insufficient inventory. */
-| 'INVENTORY'
-/** The order was canceled for an unlisted reason. */
-| 'OTHER';
+	/** The customer wanted to cancel the order. */
+	| 'CUSTOMER'
+	/** Payment was declined. */
+	| 'DECLINED'
+	/** The order was fraudulent. */
+	| 'FRAUD'
+	/** There was insufficient inventory. */
+	| 'INVENTORY'
+	/** The order was canceled for an unlisted reason. */
+	| 'OTHER';
 
 export type OrderFinancialStatus =
-  /** Displayed as **Authorized**. */
-  | 'AUTHORIZED'
-  /** Displayed as **Paid**. */
-  | 'PAID'
-  /** Displayed as **Partially paid**. */
-  | 'PARTIALLY_PAID'
-  /** Displayed as **Partially refunded**. */
-  | 'PARTIALLY_REFUNDED'
-  /** Displayed as **Pending**. */
-  | 'PENDING'
-  /** Displayed as **Refunded**. */
-  | 'REFUNDED'
-  /** Displayed as **Voided**. */
-  | 'VOIDED';
+	/** Displayed as **Authorized**. */
+	| 'AUTHORIZED'
+	/** Displayed as **Paid**. */
+	| 'PAID'
+	/** Displayed as **Partially paid**. */
+	| 'PARTIALLY_PAID'
+	/** Displayed as **Partially refunded**. */
+	| 'PARTIALLY_REFUNDED'
+	/** Displayed as **Pending**. */
+	| 'PENDING'
+	/** Displayed as **Refunded**. */
+	| 'REFUNDED'
+	/** Displayed as **Voided**. */
+	| 'VOIDED';
 
 /** Represents the order's aggregated fulfillment status for display purposes. */
 export type OrderFulfillmentStatus =
-  /** Displayed as **Fulfilled**. All of the items in the order have been fulfilled. */
-  | 'FULFILLED'
-  /** Displayed as **In progress**. Some of the items in the order have been fulfilled, or a request for fulfillment has been sent to the fulfillment service. */
-  | 'IN_PROGRESS'
-  /** Displayed as **On hold**. All of the unfulfilled items in this order are on hold. */
-  | 'ON_HOLD'
-  /** Displayed as **Open**. None of the items in the order have been fulfilled. Replaced by "UNFULFILLED" status. */
-  | 'OPEN'
-  /** Displayed as **Partially fulfilled**. Some of the items in the order have been fulfilled. */
-  | 'PARTIALLY_FULFILLED'
-  /** Displayed as **Pending fulfillment**. A request for fulfillment of some items awaits a response from the fulfillment service. Replaced by "IN_PROGRESS" status. */
-  | 'PENDING_FULFILLMENT'
-  /** Displayed as **Restocked**. All of the items in the order have been restocked. Replaced by "UNFULFILLED" status. */
-  | 'RESTOCKED'
-  /** Displayed as **Scheduled**. All of the unfulfilled items in this order are scheduled for fulfillment at later time. */
-  | 'SCHEDULED'
-  /** Displayed as **Unfulfilled**. None of the items in the order have been fulfilled. */
-  | 'UNFULFILLED';
+	/** Displayed as **Fulfilled**. All of the items in the order have been fulfilled. */
+	| 'FULFILLED'
+	/** Displayed as **In progress**. Some of the items in the order have been fulfilled, or a request for fulfillment has been sent to the fulfillment service. */
+	| 'IN_PROGRESS'
+	/** Displayed as **On hold**. All of the unfulfilled items in this order are on hold. */
+	| 'ON_HOLD'
+	/** Displayed as **Open**. None of the items in the order have been fulfilled. Replaced by "UNFULFILLED" status. */
+	| 'OPEN'
+	/** Displayed as **Partially fulfilled**. Some of the items in the order have been fulfilled. */
+	| 'PARTIALLY_FULFILLED'
+	/** Displayed as **Pending fulfillment**. A request for fulfillment of some items awaits a response from the fulfillment service. Replaced by "IN_PROGRESS" status. */
+	| 'PENDING_FULFILLMENT'
+	/** Displayed as **Restocked**. All of the items in the order have been restocked. Replaced by "UNFULFILLED" status. */
+	| 'RESTOCKED'
+	/** Displayed as **Scheduled**. All of the unfulfilled items in this order are scheduled for fulfillment at later time. */
+	| 'SCHEDULED'
+	/** Displayed as **Unfulfilled**. None of the items in the order have been fulfilled. */
+	| 'UNFULFILLED';
 
-  export type OrderLineItem = {
-    __typename?: 'OrderLineItem';
-    /** The number of entries associated to the line item minus the items that have been removed. */
-    currentQuantity: number;
-    /** List of custom attributes associated to the line item. */
-    customAttributes: Array<Attribute>;
-    /** The discounts that have been allocated onto the order line item by discount applications. */
-    discountAllocations: Array<DiscountAllocation>;
-    /** The total price of the line item, including discounts, and displayed in the presentment currency. */
-    discountedTotalPrice: Money;
-    /** The total price of the line item, not including any discounts. The total price is calculated using the original unit price multiplied by the quantity, and it is displayed in the presentment currency. */
-    originalTotalPrice: Money;
-    /** The number of products variants associated to the line item. */
-    quantity: number;
-    /** The title of the product combined with title of the variant. */
-    title: string;
-    /** The product variant object associated to the line item. */
-    variant?: Maybe<ProductVariant>;
-  };
-  
-  /**
-   * An auto-generated type for paginating through multiple OrderLineItems.
-   *
-   */
-  export type OrderLineItemConnection = {
-    __typename?: 'OrderLineItemConnection';
-    /** A list of edges. */
-    edges: Array<OrderLineItemEdge>;
-    /** A list of the nodes contained in OrderLineItemEdge. */
-    nodes: Array<OrderLineItem>;
-    /** Information to aid in pagination. */
-    pageInfo: PageInfo;
-  };
-  
-  /**
-   * An auto-generated type which holds one OrderLineItem and a cursor during pagination.
-   *
-   */
-  export type OrderLineItemEdge = {
-    __typename?: 'OrderLineItemEdge';
-    /** A cursor for use in pagination. */
-    cursor: string;
-    /** The item at the end of OrderLineItemEdge. */
-    node: OrderLineItem;
-  };
+export type OrderLineItem = {
+	__typename?: 'OrderLineItem';
+	/** The number of entries associated to the line item minus the items that have been removed. */
+	currentQuantity: number;
+	/** List of custom attributes associated to the line item. */
+	customAttributes: Array<Attribute>;
+	/** The discounts that have been allocated onto the order line item by discount applications. */
+	discountAllocations: Array<DiscountAllocation>;
+	/** The total price of the line item, including discounts, and displayed in the presentment currency. */
+	discountedTotalPrice: Money;
+	/** The total price of the line item, not including any discounts. The total price is calculated using the original unit price multiplied by the quantity, and it is displayed in the presentment currency. */
+	originalTotalPrice: Money;
+	/** The number of products variants associated to the line item. */
+	quantity: number;
+	/** The title of the product combined with title of the variant. */
+	title: string;
+	/** The product variant object associated to the line item. */
+	variant?: Maybe<ProductVariant>;
+};
 
-  export type Fulfillment = {
-    __typename?: 'Fulfillment';
-    /** List of the fulfillment's line items. */
-    fulfillmentLineItems: FulfillmentLineItemConnection;
-    /** The name of the tracking company. */
-    trackingCompany?: Maybe<string>;
-    /**
-     * Tracking information associated with the fulfillment,
-     * such as the tracking number and tracking URL.
-     *
-     */
-    trackingInfo: Array<FulfillmentTrackingInfo>;
-  };
+/**
+ * An auto-generated type for paginating through multiple OrderLineItems.
+ *
+ */
+export type OrderLineItemConnection = {
+	__typename?: 'OrderLineItemConnection';
+	/** A list of edges. */
+	edges: Array<OrderLineItemEdge>;
+	/** A list of the nodes contained in OrderLineItemEdge. */
+	nodes: Array<OrderLineItem>;
+	/** Information to aid in pagination. */
+	pageInfo: PageInfo;
+};
 
-  export type FulfillmentLineItem = {
-    __typename?: 'FulfillmentLineItem';
-    /** The associated order's line item. */
-    lineItem: OrderLineItem;
-    /** The amount fulfilled in this fulfillment. */
-    quantity: number;
-  };
-  
-  /**
-   * An auto-generated type for paginating through multiple FulfillmentLineItems.
-   *
-   */
-  export type FulfillmentLineItemConnection = {
-    __typename?: 'FulfillmentLineItemConnection';
-    /** A list of edges. */
-    edges: Array<FulfillmentLineItemEdge>;
-    /** A list of the nodes contained in FulfillmentLineItemEdge. */
-    nodes: Array<FulfillmentLineItem>;
-    /** Information to aid in pagination. */
-    pageInfo: PageInfo;
-  };
-  
-  /**
-   * An auto-generated type which holds one FulfillmentLineItem and a cursor during pagination.
-   *
-   */
-  export type FulfillmentLineItemEdge = {
-    __typename?: 'FulfillmentLineItemEdge';
-    /** A cursor for use in pagination. */
-    cursor: string;
-    /** The item at the end of FulfillmentLineItemEdge. */
-    node: FulfillmentLineItem;
-  };
+/**
+ * An auto-generated type which holds one OrderLineItem and a cursor during pagination.
+ *
+ */
+export type OrderLineItemEdge = {
+	__typename?: 'OrderLineItemEdge';
+	/** A cursor for use in pagination. */
+	cursor: string;
+	/** The item at the end of OrderLineItemEdge. */
+	node: OrderLineItem;
+};
 
-  export type FulfillmentTrackingInfo = {
-    __typename?: 'FulfillmentTrackingInfo';
-    /** The tracking number of the fulfillment. */
-    number?: Maybe<string>;
-    /** The URL to track the fulfillment. */
-    url?: Maybe<string>;
-  };
-  
+export type Fulfillment = {
+	__typename?: 'Fulfillment';
+	/** List of the fulfillment's line items. */
+	fulfillmentLineItems: FulfillmentLineItemConnection;
+	/** The name of the tracking company. */
+	trackingCompany?: Maybe<string>;
+	/**
+	 * Tracking information associated with the fulfillment,
+	 * such as the tracking number and tracking URL.
+	 *
+	 */
+	trackingInfo: Array<FulfillmentTrackingInfo>;
+};
+
+export type FulfillmentLineItem = {
+	__typename?: 'FulfillmentLineItem';
+	/** The associated order's line item. */
+	lineItem: OrderLineItem;
+	/** The amount fulfilled in this fulfillment. */
+	quantity: number;
+};
+
+/**
+ * An auto-generated type for paginating through multiple FulfillmentLineItems.
+ *
+ */
+export type FulfillmentLineItemConnection = {
+	__typename?: 'FulfillmentLineItemConnection';
+	/** A list of edges. */
+	edges: Array<FulfillmentLineItemEdge>;
+	/** A list of the nodes contained in FulfillmentLineItemEdge. */
+	nodes: Array<FulfillmentLineItem>;
+	/** Information to aid in pagination. */
+	pageInfo: PageInfo;
+};
+
+/**
+ * An auto-generated type which holds one FulfillmentLineItem and a cursor during pagination.
+ *
+ */
+export type FulfillmentLineItemEdge = {
+	__typename?: 'FulfillmentLineItemEdge';
+	/** A cursor for use in pagination. */
+	cursor: string;
+	/** The item at the end of FulfillmentLineItemEdge. */
+	node: FulfillmentLineItem;
+};
+
+export type FulfillmentTrackingInfo = {
+	__typename?: 'FulfillmentTrackingInfo';
+	/** The tracking number of the fulfillment. */
+	number?: Maybe<string>;
+	/** The URL to track the fulfillment. */
+	url?: Maybe<string>;
+};

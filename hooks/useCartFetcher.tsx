@@ -1,7 +1,7 @@
-import { CartItem } from "@/lib/shopify/types";
-import useCartStore from "@/store/cart-store";
-import { cookies } from "next/headers";
-import { useCookie } from "react-use";
+import { CartItem } from '@/lib/shopify/types';
+import useCartStore from '@/store/cart-store';
+import { cookies } from 'next/headers';
+import { useCookie } from 'react-use';
 
 const useCartFetcher = () => {
 	// const cartId = cookies().get("cartId")?.value;

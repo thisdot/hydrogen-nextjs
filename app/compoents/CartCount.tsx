@@ -10,7 +10,7 @@ function CartCount({
 	openCart: () => void;
 }) {
 	const cart: any = {}; // fetch real data here
-	console.log(window.location.href)
+	console.log(window.location.href);
 	return (
 		<Badge dark={isHome} openCart={openCart} count={cart?.totalQuantity || 0} />
 	);
