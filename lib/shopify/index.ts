@@ -5,7 +5,11 @@ import {
 import { isShopifyError } from '@/lib/type-guards';
 import { LAYOUT_QUERY } from './queries/layout';
 import { ALL_PRODUCTS_QUERY } from './queries/product';
-import { COLLECTIONS_QUERY, COLLECTION_QUERY, SORTED_AND_FILTERED_PRODUCTS_QUERY } from './queries/collection';
+import {
+	COLLECTIONS_QUERY,
+	COLLECTION_QUERY,
+	SORTED_AND_FILTERED_PRODUCTS_QUERY,
+} from './queries/collection';
 import {
 	Cart,
 	Blog,
@@ -494,21 +498,24 @@ export async function getProductRecommendations(
 }
 
 export async function getFilteredAndSortedProducts({
-	variables
+	variables,
 }: {
 	variables: {
-		query: string,
-		reverse: boolean,
-		sortKey: ProductSortKeys, 
-		count: number
-	}
+		query: string;
+		reverse: boolean;
+		sortKey: ProductSortKeys;
+		count: number;
+	};
 }) {
-	const data = await shopifyFetch<{data: { products: ProductConnection }, variables: {
-		query: string,
-		reverse: boolean,
-		sortKey: ProductSortKeys,
-		count: number
-	}}>({
+	const data = await shopifyFetch<{
+		data: { products: ProductConnection };
+		variables: {
+			query: string;
+			reverse: boolean;
+			sortKey: ProductSortKeys;
+			count: number;
+		};
+	}>({
 		query: SORTED_AND_FILTERED_PRODUCTS_QUERY,
 		variables,
 	});

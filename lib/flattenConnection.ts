@@ -11,7 +11,6 @@ type ConnectionNodes = {
 export function flattenConnection<T>(
 	connection: ConnectionEdges | ConnectionNodes
 ) {
-
 	if (!connection) {
 		return [] as any;
 	}

@@ -14,7 +14,7 @@ function CartCount({
 }) {
 	const [cookie, setCookie] = useCookie('cartId');
 	const { getStoreCart } = useCartFetcher();
-	const cart = useCartStore((state) => state.cart);
+	const cart = useCartStore(state => state.cart);
 
 	useEffect(() => {
 		// If cart not created
@@ -41,10 +41,9 @@ function CartCount({
 
 	useEffect(() => {
 		if (cookie) {
-			getStoreCart()
+			getStoreCart();
 		}
 	}, [cookie]);
-
 
 	return (
 		<Badge dark={isHome} openCart={openCart} count={cart?.totalQuantity || 0} />

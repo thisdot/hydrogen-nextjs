@@ -259,7 +259,7 @@ export function ProductForm({
 					</div>
 				)}
 			</div>
-		</div >
+		</div>
 	);
 }
 

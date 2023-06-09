@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { CartLineInput } from '@/lib/shopify/types';
 import { Button } from './Button';
 import useCartFetcher from '@/hooks/useCartFetcher';
@@ -21,8 +21,7 @@ export function AddToCartButton({
 	analytics?: unknown;
 	[key: string]: any;
 }) {
-
-	const { addCatItem } = useCartFetcher()
+	const { addCatItem } = useCartFetcher();
 
 	return (
 		<Button

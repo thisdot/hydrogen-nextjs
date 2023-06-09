@@ -1,4 +1,4 @@
-import { cartFragment } from "./fragments";
+import { cartFragment } from './fragments';
 
 export const getCartQuery = `#graphql
   ${cartFragment}

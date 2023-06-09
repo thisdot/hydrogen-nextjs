@@ -5,12 +5,12 @@ export async function GET() {
 	const data = await getFilteredAndSortedProducts({
 		variables: {
 			query: '',
-      reverse: false,
-      sortKey: 'BEST_SELLING',
-      count: 4,
+			reverse: false,
+			sortKey: 'BEST_SELLING',
+			count: 4,
 		},
 	});
-  console.log(data.body.data.products.nodes)
+	console.log(data.body.data.products.nodes);
 	return NextResponse.json({
 		products: data.body.data.products.nodes,
 	});

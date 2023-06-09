@@ -1,7 +1,6 @@
 import { CartLine } from '@/lib/shopify/types';
 import useCartStore from '@/store/cart-store';
 
-
 const useCartFetcher = () => {
 	const getStoreCart = async () => {
 		const response = await fetch(`/api/cart`, {

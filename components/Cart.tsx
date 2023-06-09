@@ -8,7 +8,12 @@ import { Text } from './Text';
 import { flattenConnection } from '@/lib/flattenConnection';
 import { Money } from './MoneyComponent';
 import { Button } from './Button';
-import { BaseCartLineConnection, CartCost, CartLine, CartType } from '@/lib/shopify/types';
+import {
+	BaseCartLineConnection,
+	CartCost,
+	CartLine,
+	CartType,
+} from '@/lib/shopify/types';
 import useCartStore from '@/store/cart-store';
 import useCartFetcher from '@/hooks/useCartFetcher';
 import { FeaturedProducts } from './FeaturedProducts';
@@ -30,12 +35,8 @@ export function Cart({
 	);
 }
 
-export function CartDetails({
-	layout,
-}: {
-	layout: Layouts;
-}) {
-	const cart = useCartStore((state) => state.cart);
+export function CartDetails({ layout }: { layout: Layouts }) {
+	const cart = useCartStore(state => state.cart);
 	// @todo: get optimistic cart cost
 	const cartHasItems = !!cart && cart.totalQuantity > 0;
 	const container = {
@@ -124,13 +125,9 @@ function CartDiscounts({
 //   );
 // }
 
-function CartLines({
-	layout = 'drawer',
-}: {
-	layout: Layouts;
-}) {
-	const { editCartItem, deleteCartItem } = useCartFetcher()
-	const cart = useCartStore((state) => state.cart);
+function CartLines({ layout = 'drawer' }: { layout: Layouts }) {
+	const { editCartItem, deleteCartItem } = useCartFetcher();
+	const cart = useCartStore(state => state.cart);
 	const currentLines: any = cart?.lines || [];
 	const scrollRef = useRef(null);
 	const { y } = useScroll(scrollRef);
@@ -153,7 +150,9 @@ function CartLines({
 					<CartLineItem
 						key={line.id}
 						line={line as CartLine}
-						adjustItemQuantity={(action) => editCartItem({ action: action, item: line })}
+						adjustItemQuantity={action =>
+							editCartItem({ action: action, item: line })
+						}
 						deleteItem={() => deleteCartItem({ item: line })}
 					/>
 				))}
@@ -220,11 +219,11 @@ export function CartEmpty({
 	layout?: Layouts;
 	onClose?: () => void;
 }) {
-	const cart = useCartStore((state) => state.cart);
+	const cart = useCartStore(state => state.cart);
 	const scrollRef = useRef(null);
 	const { y } = useScroll(scrollRef);
 
-	const hidden = Boolean(cart?.lines?.length || 0)
+	const hidden = Boolean(cart?.lines?.length || 0);
 
 	const container = {
 		drawer: clsx([
@@ -249,7 +248,6 @@ export function CartEmpty({
 				</div>
 			</section>
 			<section className="grid gap-8 pt-16">
-
 				<FeaturedProducts
 					count={4}
 					heading="Shop Best Sellers"
