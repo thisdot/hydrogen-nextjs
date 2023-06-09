@@ -24,3 +24,5 @@ export const AnalyticsPageType = {
 	policy: 'policy',
 	search: 'search',
 };
+
+export const HIDDEN_PRODUCT_TAG = 'nextjs-frontend-hidden';
