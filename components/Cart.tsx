@@ -17,6 +17,7 @@ import {
 import useCartStore from '@/store/cart-store';
 import useCartFetcher from '@/hooks/useCartFetcher';
 import { FeaturedProducts } from './FeaturedProducts';
+import { getInputStyleClasses } from '@/lib/utils';
 
 type Layouts = 'page' | 'drawer';
 
@@ -76,54 +77,54 @@ function CartDiscounts({
 				<div className="flex items-center justify-between font-medium">
 					<Text as="dt">Discount(s)</Text>
 					<div className="flex items-center justify-between">
-						{/* <UpdateDiscountForm>
-              <button>
-                <IconRemove
-                  aria-hidden="true"
-                  style={{ height: 18, marginRight: 4 }}
-                />
-              </button>
-            </UpdateDiscountForm> */}
+						<UpdateDiscountForm>
+							<button>
+								<IconRemove
+									aria-hidden="true"
+									style={{ height: 18, marginRight: 4 }}
+								/>
+							</button>
+						</UpdateDiscountForm>
 						<Text as="dd">{codes}</Text>
 					</div>
 				</div>
 			</dl>
 
 			{/* No discounts, show an input to apply a discount */}
-			{/* <UpdateDiscountForm>
-        <div
-          className={clsx(
-            codes ? 'hidden' : 'flex',
-            'items-center gap-4 justify-between text-copy',
-          )}
-        >
-          <input
-            className={getInputStyleClasses()}
-            type="text"
-            name="discountCode"
-            placeholder="Discount code"
-          />
-          <button className="flex justify-end font-medium whitespace-nowrap">
-            Apply Discount
-          </button>
-        </div>
-      </UpdateDiscountForm> */}
+			<UpdateDiscountForm>
+				<div
+					className={clsx(
+						codes ? 'hidden' : 'flex',
+						'items-center gap-4 justify-between text-copy',
+					)}
+				>
+					<input
+						className={getInputStyleClasses()}
+						type="text"
+						name="discountCode"
+						placeholder="Discount code"
+					/>
+					<button className="flex justify-end font-medium whitespace-nowrap">
+						Apply Discount
+					</button>
+				</div>
+			</UpdateDiscountForm>
 		</>
 	);
 }
 
-// function UpdateDiscountForm({ children }: { children: React.ReactNode }) {
-//   return (
-//     <fetcher.Form action="/cart" method="post">
-//       <input
-//         type="hidden"
-//         name="cartAction"
-//         value={CartAction.UPDATE_DISCOUNT}
-//       />
-//       {children}
-//     </fetcher.Form>
-//   );
-// }
+function UpdateDiscountForm({ children }: { children: React.ReactNode }) {
+	return (
+		<form action="/cart" method="post">
+			<input
+				type="hidden"
+				name="cartAction"
+			// value={CartAction.UPDATE_DISCOUNT}
+			/>
+			{children}
+		</form>
+	);
+}
 
 function CartLines({ layout = 'drawer' }: { layout: Layouts }) {
 	const { editCartItem, deleteCartItem } = useCartFetcher();
