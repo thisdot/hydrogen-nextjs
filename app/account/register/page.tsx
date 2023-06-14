@@ -67,7 +67,10 @@ export default function RegisterPage() {
 				}
 			});
 		}
-		reset();
+
+		setTimeout(() => {
+			reset();
+		}, 2000);
 	}
 
 	return (

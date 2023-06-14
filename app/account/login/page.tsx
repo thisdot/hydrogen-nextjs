@@ -54,7 +54,10 @@ export default function LoginPage() {
 				}
 			});
 		}
-		reset();
+
+		setTimeout(() => {
+			reset();
+		}, 2000);
 	}
 
 	return (
