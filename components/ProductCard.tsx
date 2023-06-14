@@ -1,3 +1,4 @@
+'use client';
 import clsx from 'clsx';
 import { getProductPlaceholder } from '@/lib/placeholders';
 import type {
@@ -13,18 +14,17 @@ import { isDiscounted, isNewArrival } from '@/lib/utils';
 import { AddToCartButton } from './AddToCartButton';
 import { useMoney } from '@/lib/useMoney';
 import { flattenConnection } from '@/lib/flattenConnection';
+import useAppStore from '@/store/app-store';
 
 export const ProductCard = ({
 	product,
 	label,
 	className,
-	onClick,
 	quickAdd,
 }: {
 	product: Product;
 	label?: string;
 	className?: string;
-	onClick?: () => void;
 	quickAdd?: boolean;
 }) => {
 	let cardLabel;
@@ -59,7 +59,11 @@ export const ProductCard = ({
 
 	return (
 		<div className="flex flex-col gap-2">
-			<Link onClick={onClick} href={`/products/${product.handle}`} prefetch>
+			<Link
+				onClick={() => useAppStore.setState({ openCartDrawer: false })}
+				href={`/products/${product.handle}`}
+				prefetch
+			>
 				<div className={clsx('grid gap-4', className)}>
 					<div className="card-image aspect-[4/5] bg-primary/5">
 						{image && (
@@ -101,6 +105,7 @@ export const ProductCard = ({
 					</div>
 				</div>
 			</Link>
+
 			{quickAdd && (
 				<AddToCartButton
 					lines={[

@@ -1,63 +1,38 @@
 'use client';
-
 import { Link } from '@/components/Link';
 import DesktopHeader from './DesktopHeader';
 import MobileHeader from './MobileHeader';
-import { Drawer, useDrawer } from '@/components/Drawer';
+import { Drawer } from '@/components/Drawer';
 import { ShopifyHeaderMenu } from '@/lib/shopify/types';
+import { Cart } from '@/components/Cart';
+import useAppStore from '@/store/app-store';
 
 function Header({ menu, title }: { menu: ShopifyHeaderMenu; title: string }) {
-	//Fake data, remove when real data is available
 	const isHome = true;
-
-	const {
-		isOpen: isCartOpen,
-		openDrawer: openCart,
-		closeDrawer: closeCart,
-	} = useDrawer();
-
-	const {
-		isOpen: isMenuOpen,
-		openDrawer: openMenu,
-		closeDrawer: closeMenu,
-	} = useDrawer();
 
 	return (
 		<>
-			<CartDrawer isOpen={isCartOpen} onClose={closeCart} />
+			<CartDrawer />
 
-			<MenuDrawer isOpen={isMenuOpen} onClose={closeMenu} menu={menu} />
+			<MenuDrawer menu={menu} />
 
-			<DesktopHeader
-				isHome={isHome}
-				title={title}
-				openCart={openCart}
-				menu={menu}
-			/>
-			<MobileHeader
-				menu={menu}
-				isHome={isHome}
-				title={title}
-				openCart={openCart}
-				openMenu={openMenu}
-			/>
+			<DesktopHeader isHome={isHome} title={title} menu={menu} />
+			<MobileHeader menu={menu} isHome={isHome} title={title} />
 		</>
 	);
 }
 
 export default Header;
 
-export function MenuDrawer({
-	isOpen,
-	onClose,
-	menu,
-}: {
-	isOpen: boolean;
-	onClose: () => void;
-	menu: ShopifyHeaderMenu;
-}) {
+export function MenuDrawer({ menu }: { menu: ShopifyHeaderMenu }) {
+	const openMenuDrawer = useAppStore(state => state.openMenuDrawer);
 	return (
-		<Drawer open={isOpen} onClose={onClose} openFrom="left" heading="Menu">
+		<Drawer
+			open={openMenuDrawer}
+			onClose={() => useAppStore.setState({ openMenuDrawer: false })}
+			openFrom="left"
+			heading="Menu"
+		>
 			<div className="grid">
 				<nav className="grid gap-4 p-6 sm:gap-6 sm:px-12 sm:py-8">
 					{/* Top level menu items */}
@@ -82,16 +57,18 @@ export function MenuDrawer({
 	);
 }
 
-function CartDrawer({
-	isOpen,
-	onClose,
-}: {
-	isOpen: boolean;
-	onClose: () => void;
-}) {
+function CartDrawer() {
+	const openCartDrawer = useAppStore(state => state.openCartDrawer);
 	return (
-		<Drawer open={isOpen} onClose={onClose} heading="Cart" openFrom="right">
-			<div className="grid">Cart</div>
+		<Drawer
+			open={openCartDrawer}
+			onClose={() => useAppStore.setState({ openCartDrawer: false })}
+			heading="Cart"
+			openFrom="right"
+		>
+			<div className="grid">
+				<Cart layout="drawer" />
+			</div>
 		</Drawer>
 	);
 }

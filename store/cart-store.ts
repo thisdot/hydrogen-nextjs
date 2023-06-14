@@ -1,9 +1,9 @@
-import { Cart } from '@/lib/shopify/types';
+import { CartLine, CartType } from '@/lib/shopify/types';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
 export interface ICartProps {
-	cart: Cart | null;
+	cart: (Omit<CartType, 'lines'> & { lines: CartLine[] }) | null;
 }
 
 const initialState: ICartProps = {

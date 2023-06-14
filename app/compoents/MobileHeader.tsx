@@ -7,18 +7,15 @@ import CartCount from './CartCount';
 import { ShopifyHeaderMenu } from '@/lib/shopify/types';
 import clsx from 'clsx';
 import { useSearchParam } from 'react-use';
+import useAppStore from '@/store/app-store';
 
 function MobileHeader({
 	title,
 	isHome,
-	openCart,
-	openMenu,
 	menu,
 }: {
 	isHome: boolean;
 	title: string;
-	openCart: () => void;
-	openMenu: () => void;
 	menu: ShopifyHeaderMenu;
 }) {
 	const searchTerm = useSearchParam('q');
@@ -37,7 +34,7 @@ function MobileHeader({
 		>
 			<div className="flex items-center justify-start w-full gap-4">
 				<button
-					onClick={openMenu}
+					onClick={() => useAppStore.setState({ openMenuDrawer: true })}
 					className="relative flex items-center justify-center w-8 h-8"
 				>
 					<IconMenu />
@@ -82,7 +79,7 @@ function MobileHeader({
 
 			<div className="flex items-center justify-end w-full gap-4">
 				<AccountLink className="relative flex items-center justify-center w-8 h-8" />
-				<CartCount isHome={isHome} openCart={openCart} />
+				<CartCount isHome={isHome} />
 			</div>
 		</header>
 	);

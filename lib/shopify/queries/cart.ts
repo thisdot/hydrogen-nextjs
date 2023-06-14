@@ -1,10 +1,11 @@
 import { cartFragment } from './fragments';
 
 export const getCartQuery = `#graphql
-  query getCart($cartId: ID!) {
+  ${cartFragment}
+  query CartQuery($cartId: ID!, $country: CountryCode, $language: LanguageCode)
+    @inContext(country: $country, language: $language) {
     cart(id: $cartId) {
-      ...cart
+      ...CartFragment
     }
   }
-  ${cartFragment}
 `;

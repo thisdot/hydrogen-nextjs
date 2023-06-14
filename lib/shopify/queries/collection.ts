@@ -102,3 +102,21 @@ export const COLLECTION_QUERY = `#graphql
     }
   }
 `;
+
+export const SORTED_AND_FILTERED_PRODUCTS_QUERY = `#graphql
+  ${PRODUCT_CARD_FRAGMENT}
+  query (
+    $query: String
+    $count: Int
+    $reverse: Boolean
+    $country: CountryCode
+    $language: LanguageCode
+    $sortKey: ProductSortKeys
+  ) @inContext(country: $country, language: $language) {
+    products(first: $count, sortKey: $sortKey, reverse: $reverse, query: $query) {
+      nodes {
+        ...ProductCard
+      }
+    }
+  }
+`;

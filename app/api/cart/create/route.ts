@@ -1,6 +1,5 @@
 import { createCart } from '@/lib/shopify';
 import { isShopifyError } from '@/lib/type-guards';
-import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
 function formatErrorMessage(err: Error): string {

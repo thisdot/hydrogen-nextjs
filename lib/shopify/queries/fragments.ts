@@ -150,30 +150,41 @@ export const productFragment = `#graphql
 `;
 
 export const cartFragment = `#graphql
-  fragment cart on Cart {
+  fragment CartFragment on Cart {
     id
     checkoutUrl
-    cost {
-      subtotalAmount {
-        amount
-        currencyCode
+    totalQuantity
+    buyerIdentity {
+      countryCode
+      customer {
+        id
+        email
+        firstName
+        lastName
+        displayName
       }
-      totalAmount {
-        amount
-        currencyCode
-      }
-      totalTaxAmount {
-        amount
-        currencyCode
-      }
+      email
+      phone
     }
     lines(first: 100) {
       edges {
         node {
           id
           quantity
+          attributes {
+            key
+            value
+          }
           cost {
             totalAmount {
+              amount
+              currencyCode
+            }
+            amountPerQuantity {
+              amount
+              currencyCode
+            }
+            compareAtAmountPerQuantity {
               amount
               currencyCode
             }
@@ -181,22 +192,68 @@ export const cartFragment = `#graphql
           merchandise {
             ... on ProductVariant {
               id
+              availableForSale
+              compareAtPrice {
+                ...MoneyFragment
+              }
+              price {
+                ...MoneyFragment
+              }
+              requiresShipping
               title
+              image {
+                ...ImageFragment
+              }
+              product {
+                handle
+                title
+                id
+              }
               selectedOptions {
                 name
                 value
-              }
-              product {
-                ...product
               }
             }
           }
         }
       }
     }
-    totalQuantity
+    cost {
+      subtotalAmount {
+        ...MoneyFragment
+      }
+      totalAmount {
+        ...MoneyFragment
+      }
+      totalDutyAmount {
+        ...MoneyFragment
+      }
+      totalTaxAmount {
+        ...MoneyFragment
+      }
+    }
+    note
+    attributes {
+      key
+      value
+    }
+    discountCodes {
+      code
+    }
   }
-  ${productFragment}
+
+  fragment MoneyFragment on MoneyV2 {
+    currencyCode
+    amount
+  }
+
+  fragment ImageFragment on Image {
+    id
+    url
+    altText
+    width
+    height
+  }
 `;
 
 export const PRODUCT_VARIANT_FRAGMENT = `#graphql
