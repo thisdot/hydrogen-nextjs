@@ -2,6 +2,7 @@
 import { CartLineInput } from '@/lib/shopify/types';
 import { Button } from './Button';
 import useCartFetcher from '@/hooks/useCartFetcher';
+import useAppStore from '@/store/app-store';
 export function AddToCartButton({
 	children,
 	lines,
@@ -25,7 +26,10 @@ export function AddToCartButton({
 
 	return (
 		<Button
-			onClick={() => addCatItem({ variantId: lines[0].merchandiseId })}
+			onClick={() => {
+				addCatItem({ variantId: lines[0].merchandiseId });
+				useAppStore.setState({ openCartDrawer: true });
+			}}
 			as="button"
 			width={width}
 			variant={variant}

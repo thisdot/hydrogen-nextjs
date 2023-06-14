@@ -45,6 +45,7 @@ import {
 	addToCartMutation,
 	removeFromCartMutation,
 	editCartItemsMutation,
+	applyDiscountCode,
 } from './mutations/cart';
 import { getCartQuery } from './queries/cart';
 import { ARTICLE_QUERY, BLOGS_QUERY } from './queries/blog';
@@ -348,6 +349,39 @@ export async function getCart(cartId: string): Promise<Cart | null> {
 
 	return reshapeCart(res.body.data.cart);
 }
+
+export async function applyDiscountToCart({
+	cartId,
+	discountCodes,
+}: {
+	cartId: string;
+	discountCodes?: string[];
+}): Promise<Cart | null> {
+	const res = await shopifyFetch<
+		Omit<ShopifyCartOperation, 'variables'> & {
+			data: {
+				cartDiscountCodesUpdate: {
+					cart: ShopifyCart;
+				};
+			};
+			variables: {
+				cartId: string;
+				discountCodes?: string[];
+			};
+		}
+	>({
+		query: applyDiscountCode,
+		variables: { cartId, discountCodes },
+		cache: 'no-store',
+	});
+
+	if (!res.body.data.cartDiscountCodesUpdate.cart) {
+		return null;
+	}
+
+	return reshapeCart(res.body.data.cartDiscountCodesUpdate.cart);
+}
+
 export async function getAllPosts({
 	variables,
 }: {

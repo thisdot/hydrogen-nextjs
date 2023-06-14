@@ -1,36 +1,24 @@
 import clsx from 'clsx';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useScroll } from 'react-use';
-// import { getInputStyleClasses } from '~/lib/utils';
 import CartLineItem from './CartLineItem';
 import { IconRemove } from './Icon';
 import { Text } from './Text';
-import { flattenConnection } from '@/lib/flattenConnection';
 import { Money } from './MoneyComponent';
 import { Button } from './Button';
-import {
-	BaseCartLineConnection,
-	CartCost,
-	CartLine,
-	CartType,
-} from '@/lib/shopify/types';
+import { CartCost, CartLine, CartType } from '@/lib/shopify/types';
 import useCartStore from '@/store/cart-store';
 import useCartFetcher from '@/hooks/useCartFetcher';
 import { FeaturedProducts } from './FeaturedProducts';
 import { getInputStyleClasses } from '@/lib/utils';
+import useAppStore from '@/store/app-store';
 
 type Layouts = 'page' | 'drawer';
 
-export function Cart({
-	layout,
-	onClose,
-}: {
-	layout: Layouts;
-	onClose?: () => void;
-}) {
+export function Cart({ layout }: { layout: Layouts }) {
 	return (
 		<>
-			<CartEmpty onClose={onClose} layout={layout} />
+			<CartEmpty layout={layout} />
 			<CartDetails layout={layout} />
 		</>
 	);
@@ -45,10 +33,14 @@ export function CartDetails({ layout }: { layout: Layouts }) {
 		page: 'w-full pb-12 grid md:grid-cols-2 md:items-start gap-8 md:gap-8 lg:gap-12',
 	};
 
+	const isSubTotal = Boolean(
+		parseInt(cart?.cost?.subtotalAmount?.amount || '0')
+	);
+
 	return (
 		<div className={container[layout]}>
 			<CartLines layout={layout} />
-			{cartHasItems && (
+			{cartHasItems && isSubTotal && (
 				<CartSummary cost={cart.cost} layout={layout}>
 					<CartDiscounts discountCodes={cart.discountCodes} />
 					<CartCheckoutActions checkoutUrl={cart.checkoutUrl} />
@@ -69,6 +61,22 @@ function CartDiscounts({
 	discountCodes: CartType['discountCodes'];
 }) {
 	const codes = discountCodes?.map(({ code }) => code).join(', ') || null;
+	const [discountCode, setDiscountCode] = useState('');
+
+	const handleDiscount = async () => {
+		const response = await fetch(`/api/cart/discount`, {
+			method: 'PUT',
+			body: JSON.stringify({
+				discountCodes: [discountCode],
+			}),
+		});
+		const data = await response.json();
+
+		if (data.status === 204 && data.cart) {
+			setDiscountCode('');
+			useCartStore.setState({ cart: data.cart });
+		}
+	};
 
 	return (
 		<>
@@ -77,52 +85,40 @@ function CartDiscounts({
 				<div className="flex items-center justify-between font-medium">
 					<Text as="dt">Discount(s)</Text>
 					<div className="flex items-center justify-between">
-						<UpdateDiscountForm>
-							<button>
-								<IconRemove
-									aria-hidden="true"
-									style={{ height: 18, marginRight: 4 }}
-								/>
-							</button>
-						</UpdateDiscountForm>
+						<button onClick={handleDiscount}>
+							<IconRemove
+								aria-hidden="true"
+								style={{ height: 18, marginRight: 4 }}
+							/>
+						</button>
 						<Text as="dd">{codes}</Text>
 					</div>
 				</div>
 			</dl>
 
 			{/* No discounts, show an input to apply a discount */}
-			<UpdateDiscountForm>
-				<div
-					className={clsx(
-						codes ? 'hidden' : 'flex',
-						'items-center gap-4 justify-between text-copy',
-					)}
+			<div
+				className={clsx(
+					codes ? 'hidden' : 'flex',
+					'items-center gap-4 justify-between text-copy'
+				)}
+			>
+				<input
+					className={getInputStyleClasses()}
+					type="text"
+					name="discountCode"
+					placeholder="Discount code"
+					value={discountCode}
+					onInput={e => setDiscountCode(e.currentTarget.value)}
+				/>
+				<button
+					className="flex justify-end font-medium whitespace-nowrap"
+					onClick={handleDiscount}
 				>
-					<input
-						className={getInputStyleClasses()}
-						type="text"
-						name="discountCode"
-						placeholder="Discount code"
-					/>
-					<button className="flex justify-end font-medium whitespace-nowrap">
-						Apply Discount
-					</button>
-				</div>
-			</UpdateDiscountForm>
+					Apply Discount
+				</button>
+			</div>
 		</>
-	);
-}
-
-function UpdateDiscountForm({ children }: { children: React.ReactNode }) {
-	return (
-		<form action="/cart" method="post">
-			<input
-				type="hidden"
-				name="cartAction"
-			// value={CartAction.UPDATE_DISCOUNT}
-			/>
-			{children}
-		</form>
 	);
 }
 
@@ -213,13 +209,7 @@ function CartSummary({
 	);
 }
 
-export function CartEmpty({
-	layout = 'drawer',
-	onClose,
-}: {
-	layout?: Layouts;
-	onClose?: () => void;
-}) {
+export function CartEmpty({ layout = 'drawer' }: { layout?: Layouts }) {
 	const cart = useCartStore(state => state.cart);
 	const scrollRef = useRef(null);
 	const { y } = useScroll(scrollRef);
@@ -245,7 +235,11 @@ export function CartEmpty({
 					started!
 				</Text>
 				<div>
-					<Button onClick={onClose}>Continue shopping</Button>
+					<Button
+						onClick={() => useAppStore.setState({ openCartDrawer: false })}
+					>
+						Continue shopping
+					</Button>
 				</div>
 			</section>
 			<section className="grid gap-8 pt-16">
@@ -253,7 +247,6 @@ export function CartEmpty({
 					count={4}
 					heading="Shop Best Sellers"
 					layout={layout}
-					onClose={onClose}
 					sortKey="BEST_SELLING"
 				/>
 			</section>

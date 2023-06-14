@@ -12,12 +12,10 @@ import clsx from 'clsx';
 function DesktopHeader({
 	title,
 	isHome,
-	openCart,
 	menu,
 }: {
 	isHome: boolean;
 	title: string;
-	openCart: () => void;
 	menu: ShopifyHeaderMenu;
 }) {
 	const searchTerm = useSearchParam('q');
@@ -82,7 +80,7 @@ function DesktopHeader({
 					</button>
 				</form>
 				<AccountLink className="relative flex items-center justify-center w-8 h-8 focus:ring-primary/5" />
-				<CartCount isHome={isHome} openCart={openCart} />
+				<CartCount isHome={isHome} />
 			</div>
 		</header>
 	);

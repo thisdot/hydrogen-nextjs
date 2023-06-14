@@ -1,21 +1,22 @@
-import { removeFromCart } from '@/lib/shopify';
 import { isShopifyError } from '@/lib/type-guards';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import { formatErrorMessage } from '../route';
+import { applyDiscountToCart } from '@/lib/shopify';
 
-export async function POST(req: NextRequest): Promise<any> {
+export async function PUT(req: NextRequest): Promise<Response> {
 	const cartId = cookies().get('cartId')?.value;
-	const { lineIds } = await req.json();
+	const { discountCodes } = await req.json();
 
-	if (!cartId || !lineIds) {
+	if (!cartId) {
 		return NextResponse.json(
-			{ error: 'Missing cartId or lineId' },
+			{ error: 'Missing cartId, or discountCodes' },
 			{ status: 400 }
 		);
 	}
+
 	try {
-		const cart = await removeFromCart(cartId, lineIds);
+		const cart = await applyDiscountToCart({ cartId, discountCodes });
 		return NextResponse.json({ status: 204, cart });
 	} catch (e) {
 		if (isShopifyError(e)) {

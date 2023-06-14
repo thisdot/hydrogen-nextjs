@@ -1,17 +1,12 @@
 import { IconBag } from '@/components/Icon';
 import useCartFetcher from '@/hooks/useCartFetcher';
+import useAppStore from '@/store/app-store';
 import useCartStore from '@/store/cart-store';
 import clsx from 'clsx';
 import { useEffect, useMemo } from 'react';
 import { useCookie } from 'react-use';
 
-function CartCount({
-	isHome,
-	openCart,
-}: {
-	isHome: boolean;
-	openCart: () => void;
-}) {
+function CartCount({ isHome }: { isHome: boolean }) {
 	const [cookie, setCookie] = useCookie('cartId');
 	const { getStoreCart } = useCartFetcher();
 	const cart = useCartStore(state => state.cart);
@@ -20,7 +15,7 @@ function CartCount({
 		// If cart not created
 		if (!cookie) {
 			const createCart = async () => {
-				const response = await fetch(`/api/create-cart`, {
+				const response = await fetch(`/api/cart/create`, {
 					method: 'POST',
 				});
 				if (response.status === 200) {
@@ -30,6 +25,7 @@ function CartCount({
 						sameSite: 'strict',
 						secure: process.env.NODE_ENV === 'production',
 					});
+					useCartStore.setState({ cart: data.cart });
 				} else {
 					console.error(response.statusText);
 				}
@@ -45,20 +41,10 @@ function CartCount({
 		}
 	}, [cookie]);
 
-	return (
-		<Badge dark={isHome} openCart={openCart} count={cart?.totalQuantity || 0} />
-	);
+	return <Badge dark={isHome} count={cart?.totalQuantity || 0} />;
 }
 
-function Badge({
-	openCart,
-	dark,
-	count,
-}: {
-	count: number;
-	dark: boolean;
-	openCart: () => void;
-}) {
+function Badge({ dark, count }: { count: number; dark: boolean }) {
 	const BadgeCounter = useMemo(
 		() => (
 			<>
@@ -82,7 +68,7 @@ function Badge({
 
 	return (
 		<button
-			onClick={openCart}
+			onClick={() => useAppStore.setState({ openCartDrawer: true })}
 			className="relative flex items-center justify-center w-8 h-8 focus:ring-primary/5"
 		>
 			{BadgeCounter}

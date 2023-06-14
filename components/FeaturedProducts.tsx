@@ -9,7 +9,6 @@ interface FeaturedProductsProps {
 	count: number;
 	heading: string;
 	layout?: 'drawer' | 'page';
-	onClose?: () => void;
 	query?: string;
 	reverse?: boolean;
 	sortKey: ProductSortKeys;
@@ -29,7 +28,6 @@ export function FeaturedProducts({
 	count = 4,
 	heading = 'Shop Best Sellers',
 	layout = 'drawer',
-	onClose,
 }: FeaturedProductsProps) {
 	const [data, setData] = useState<{ products: Product[] } | undefined>(
 		undefined
@@ -54,11 +52,7 @@ export function FeaturedProducts({
 					layout === 'page' ? 'md:grid-cols-4 sm:grid-col-4' : '',
 				])}
 			>
-				<FeatureProductsContent
-					count={count}
-					onClick={onClose}
-					products={data?.products}
-				/>
+				<FeatureProductsContent count={count} products={data?.products} />
 			</div>
 		</>
 	);
@@ -69,12 +63,10 @@ export function FeaturedProducts({
  */
 function FeatureProductsContent({
 	count = 4,
-	onClick,
 	products,
 }: {
 	count: FeaturedProductsProps['count'];
 	products: Product[] | undefined;
-	onClick?: () => void;
 }) {
 	const id = useId();
 
@@ -98,12 +90,7 @@ function FeatureProductsContent({
 	return (
 		<>
 			{products.map(product => (
-				<ProductCard
-					product={product}
-					key={product.id}
-					onClick={onClick}
-					quickAdd
-				/>
+				<ProductCard product={product} key={product.id} quickAdd />
 			))}
 		</>
 	);

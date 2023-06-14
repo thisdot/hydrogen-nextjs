@@ -21,7 +21,8 @@ const useCartFetcher = () => {
 		});
 
 		if (response.status === 200) {
-			getStoreCart();
+			const data = await response.json();
+			useCartStore.setState({ cart: data.cart });
 		}
 	};
 
@@ -42,7 +43,8 @@ const useCartFetcher = () => {
 		});
 
 		if (response.status === 200) {
-			getStoreCart();
+			const data = await response.json();
+			useCartStore.setState({ cart: data.cart });
 		}
 	};
 
@@ -55,7 +57,8 @@ const useCartFetcher = () => {
 		});
 
 		if (response.status === 200) {
-			getStoreCart();
+			const data = await response.json();
+			useCartStore.setState({ cart: data.cart });
 		}
 	};
 

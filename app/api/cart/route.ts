@@ -39,8 +39,8 @@ export async function POST(req: NextRequest): Promise<Response> {
 		);
 	}
 	try {
-		await addToCart(cartId, [{ merchandiseId, quantity: 1 }]);
-		return NextResponse.json({ status: 204 });
+		const cart = await addToCart(cartId, [{ merchandiseId, quantity: 1 }]);
+		return NextResponse.json({ status: 204, cart });
 	} catch (e) {
 		if (isShopifyError(e)) {
 			return NextResponse.json(
@@ -64,14 +64,14 @@ export async function PUT(req: NextRequest): Promise<Response> {
 		);
 	}
 	try {
-		await updateCart(cartId, [
+		const cart = await updateCart(cartId, [
 			{
 				id: lineId,
 				merchandiseId: variantId,
 				quantity,
 			},
 		]);
-		return NextResponse.json({ status: 204 });
+		return NextResponse.json({ status: 204, cart });
 	} catch (e) {
 		if (isShopifyError(e)) {
 			return NextResponse.json(
