@@ -24,10 +24,12 @@ import {
 	ShopifyLayoutOperation,
 	ShopifyRemoveFromCartOperation,
 	ShopifyUpdateCartOperation,
+	CustomerCreatePayload,
 	Product,
+	ShopifyProduct,
 	ShopifyProductOperation,
 	ShopifyProductRecommendationsOperation,
-	ShopifyProduct,
+	CustomerAccessTokenCreatePayload,
 } from './types';
 import {
 	HOMEPAGE_FEATURED_PRODUCTS_QUERY,
@@ -44,6 +46,7 @@ import {
 import { getCartQuery } from './queries/cart';
 import { ARTICLE_QUERY, BLOGS_QUERY } from './queries/blog';
 import { FiltersQueryParams } from '@/app/collections/[collectionHandle]/page';
+import { CUSTOMER_CREATE_MUTATION, LOGIN_MUTATION } from './mutations/auth';
 import { PRODUCT_QUERY, RECOMMENDED_PRODUCTS_QUERY } from './queries/fragments';
 
 const domain = `https://${process.env.PUBLIC_STORE_DOMAIN!}`;
@@ -440,6 +443,60 @@ export async function getCollectionProducts({
 }) {
 	const data = await shopifyFetch<ShopifyCollectionProducts>({
 		query: COLLECTION_QUERY,
+		variables,
+	});
+	return data;
+}
+
+export async function createCustomer({
+	variables,
+}: {
+	variables: {
+		input: {
+			email: string;
+			password: string;
+		};
+	};
+}) {
+	const data = await shopifyFetch<{
+		data: {
+			customerCreate: CustomerCreatePayload;
+		};
+		variables: {
+			input: {
+				email: string;
+				password: string;
+			};
+		};
+	}>({
+		query: CUSTOMER_CREATE_MUTATION,
+		variables,
+	});
+	return data;
+}
+
+export async function loginCustomer({
+	variables,
+}: {
+	variables: {
+		input: {
+			email: string;
+			password: string;
+		};
+	};
+}) {
+	const data = await shopifyFetch<{
+		data: {
+			customerAccessTokenCreate: CustomerAccessTokenCreatePayload;
+		};
+		variables: {
+			input: {
+				email: string;
+				password: string;
+			};
+		};
+	}>({
+		query: LOGIN_MUTATION,
 		variables,
 	});
 	return data;

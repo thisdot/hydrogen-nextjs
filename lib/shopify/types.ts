@@ -799,6 +799,1799 @@ export type CartLineInput = {
 	sellingPlanId?: InputMaybe<string>;
 };
 
+export type MoneyV2 = {
+	__typename?: 'MoneyV2';
+	/** Decimal money amount. */
+	amount: Scalars['Decimal'];
+	/** Currency of the money. */
+	currencyCode: CurrencyCode;
+};
+
+/**
+ * The three-letter currency codes that represent the world currencies used in stores. These include standard ISO 4217 codes, legacy codes,
+ * and non-standard codes.
+ *
+ */
+export type CurrencyCode =
+	/** United Arab Emirates Dirham (AED). */
+	| 'AED'
+	/** Afghan Afghani (AFN). */
+	| 'AFN'
+	/** Albanian Lek (ALL). */
+	| 'ALL'
+	/** Armenian Dram (AMD). */
+	| 'AMD'
+	/** Netherlands Antillean Guilder. */
+	| 'ANG'
+	/** Angolan Kwanza (AOA). */
+	| 'AOA'
+	/** Argentine Pesos (ARS). */
+	| 'ARS'
+	/** Australian Dollars (AUD). */
+	| 'AUD'
+	/** Aruban Florin (AWG). */
+	| 'AWG'
+	/** Azerbaijani Manat (AZN). */
+	| 'AZN'
+	/** Bosnia and Herzegovina Convertible Mark (BAM). */
+	| 'BAM'
+	/** Barbadian Dollar (BBD). */
+	| 'BBD'
+	/** Bangladesh Taka (BDT). */
+	| 'BDT'
+	/** Bulgarian Lev (BGN). */
+	| 'BGN'
+	/** Bahraini Dinar (BHD). */
+	| 'BHD'
+	/** Burundian Franc (BIF). */
+	| 'BIF'
+	/** Bermudian Dollar (BMD). */
+	| 'BMD'
+	/** Brunei Dollar (BND). */
+	| 'BND'
+	/** Bolivian Boliviano (BOB). */
+	| 'BOB'
+	/** Brazilian Real (BRL). */
+	| 'BRL'
+	/** Bahamian Dollar (BSD). */
+	| 'BSD'
+	/** Bhutanese Ngultrum (BTN). */
+	| 'BTN'
+	/** Botswana Pula (BWP). */
+	| 'BWP'
+	/** Belarusian Ruble (BYN). */
+	| 'BYN'
+	/** Belarusian Ruble (BYR). */
+	| 'BYR'
+	/** Belize Dollar (BZD). */
+	| 'BZD'
+	/** Canadian Dollars (CAD). */
+	| 'CAD'
+	/** Congolese franc (CDF). */
+	| 'CDF'
+	/** Swiss Francs (CHF). */
+	| 'CHF'
+	/** Chilean Peso (CLP). */
+	| 'CLP'
+	/** Chinese Yuan Renminbi (CNY). */
+	| 'CNY'
+	/** Colombian Peso (COP). */
+	| 'COP'
+	/** Costa Rican Colones (CRC). */
+	| 'CRC'
+	/** Cape Verdean escudo (CVE). */
+	| 'CVE'
+	/** Czech Koruny (CZK). */
+	| 'CZK'
+	/** Djiboutian Franc (DJF). */
+	| 'DJF'
+	/** Danish Kroner (DKK). */
+	| 'DKK'
+	/** Dominican Peso (DOP). */
+	| 'DOP'
+	/** Algerian Dinar (DZD). */
+	| 'DZD'
+	/** Egyptian Pound (EGP). */
+	| 'EGP'
+	/** Eritrean Nakfa (ERN). */
+	| 'ERN'
+	/** Ethiopian Birr (ETB). */
+	| 'ETB'
+	/** Euro (EUR). */
+	| 'EUR'
+	/** Fijian Dollars (FJD). */
+	| 'FJD'
+	/** Falkland Islands Pounds (FKP). */
+	| 'FKP'
+	/** United Kingdom Pounds (GBP). */
+	| 'GBP'
+	/** Georgian Lari (GEL). */
+	| 'GEL'
+	/** Ghanaian Cedi (GHS). */
+	| 'GHS'
+	/** Gibraltar Pounds (GIP). */
+	| 'GIP'
+	/** Gambian Dalasi (GMD). */
+	| 'GMD'
+	/** Guinean Franc (GNF). */
+	| 'GNF'
+	/** Guatemalan Quetzal (GTQ). */
+	| 'GTQ'
+	/** Guyanese Dollar (GYD). */
+	| 'GYD'
+	/** Hong Kong Dollars (HKD). */
+	| 'HKD'
+	/** Honduran Lempira (HNL). */
+	| 'HNL'
+	/** Croatian Kuna (HRK). */
+	| 'HRK'
+	/** Haitian Gourde (HTG). */
+	| 'HTG'
+	/** Hungarian Forint (HUF). */
+	| 'HUF'
+	/** Indonesian Rupiah (IDR). */
+	| 'IDR'
+	/** Israeli New Shekel (NIS). */
+	| 'ILS'
+	/** Indian Rupees (INR). */
+	| 'INR'
+	/** Iraqi Dinar (IQD). */
+	| 'IQD'
+	/** Iranian Rial (IRR). */
+	| 'IRR'
+	/** Icelandic Kronur (ISK). */
+	| 'ISK'
+	/** Jersey Pound. */
+	| 'JEP'
+	/** Jamaican Dollars (JMD). */
+	| 'JMD'
+	/** Jordanian Dinar (JOD). */
+	| 'JOD'
+	/** Japanese Yen (JPY). */
+	| 'JPY'
+	/** Kenyan Shilling (KES). */
+	| 'KES'
+	/** Kyrgyzstani Som (KGS). */
+	| 'KGS'
+	/** Cambodian Riel. */
+	| 'KHR'
+	/** Kiribati Dollar (KID). */
+	| 'KID'
+	/** Comorian Franc (KMF). */
+	| 'KMF'
+	/** South Korean Won (KRW). */
+	| 'KRW'
+	/** Kuwaiti Dinar (KWD). */
+	| 'KWD'
+	/** Cayman Dollars (KYD). */
+	| 'KYD'
+	/** Kazakhstani Tenge (KZT). */
+	| 'KZT'
+	/** Laotian Kip (LAK). */
+	| 'LAK'
+	/** Lebanese Pounds (LBP). */
+	| 'LBP'
+	/** Sri Lankan Rupees (LKR). */
+	| 'LKR'
+	/** Liberian Dollar (LRD). */
+	| 'LRD'
+	/** Lesotho Loti (LSL). */
+	| 'LSL'
+	/** Lithuanian Litai (LTL). */
+	| 'LTL'
+	/** Latvian Lati (LVL). */
+	| 'LVL'
+	/** Libyan Dinar (LYD). */
+	| 'LYD'
+	/** Moroccan Dirham. */
+	| 'MAD'
+	/** Moldovan Leu (MDL). */
+	| 'MDL'
+	/** Malagasy Ariary (MGA). */
+	| 'MGA'
+	/** Macedonia Denar (MKD). */
+	| 'MKD'
+	/** Burmese Kyat (MMK). */
+	| 'MMK'
+	/** Mongolian Tugrik. */
+	| 'MNT'
+	/** Macanese Pataca (MOP). */
+	| 'MOP'
+	/** Mauritanian Ouguiya (MRU). */
+	| 'MRU'
+	/** Mauritian Rupee (MUR). */
+	| 'MUR'
+	/** Maldivian Rufiyaa (MVR). */
+	| 'MVR'
+	/** Malawian Kwacha (MWK). */
+	| 'MWK'
+	/** Mexican Pesos (MXN). */
+	| 'MXN'
+	/** Malaysian Ringgits (MYR). */
+	| 'MYR'
+	/** Mozambican Metical. */
+	| 'MZN'
+	/** Namibian Dollar. */
+	| 'NAD'
+	/** Nigerian Naira (NGN). */
+	| 'NGN'
+	/** Nicaraguan Córdoba (NIO). */
+	| 'NIO'
+	/** Norwegian Kroner (NOK). */
+	| 'NOK'
+	/** Nepalese Rupee (NPR). */
+	| 'NPR'
+	/** New Zealand Dollars (NZD). */
+	| 'NZD'
+	/** Omani Rial (OMR). */
+	| 'OMR'
+	/** Panamian Balboa (PAB). */
+	| 'PAB'
+	/** Peruvian Nuevo Sol (PEN). */
+	| 'PEN'
+	/** Papua New Guinean Kina (PGK). */
+	| 'PGK'
+	/** Philippine Peso (PHP). */
+	| 'PHP'
+	/** Pakistani Rupee (PKR). */
+	| 'PKR'
+	/** Polish Zlotych (PLN). */
+	| 'PLN'
+	/** Paraguayan Guarani (PYG). */
+	| 'PYG'
+	/** Qatari Rial (QAR). */
+	| 'QAR'
+	/** Romanian Lei (RON). */
+	| 'RON'
+	/** Serbian dinar (RSD). */
+	| 'RSD'
+	/** Russian Rubles (RUB). */
+	| 'RUB'
+	/** Rwandan Franc (RWF). */
+	| 'RWF'
+	/** Saudi Riyal (SAR). */
+	| 'SAR'
+	/** Solomon Islands Dollar (SBD). */
+	| 'SBD'
+	/** Seychellois Rupee (SCR). */
+	| 'SCR'
+	/** Sudanese Pound (SDG). */
+	| 'SDG'
+	/** Swedish Kronor (SEK). */
+	| 'SEK'
+	/** Singapore Dollars (SGD). */
+	| 'SGD'
+	/** Saint Helena Pounds (SHP). */
+	| 'SHP'
+	/** Sierra Leonean Leone (SLL). */
+	| 'SLL'
+	/** Somali Shilling (SOS). */
+	| 'SOS'
+	/** Surinamese Dollar (SRD). */
+	| 'SRD'
+	/** South Sudanese Pound (SSP). */
+	| 'SSP'
+	/** Sao Tome And Principe Dobra (STD). */
+	| 'STD'
+	/** Sao Tome And Principe Dobra (STN). */
+	| 'STN'
+	/** Syrian Pound (SYP). */
+	| 'SYP'
+	/** Swazi Lilangeni (SZL). */
+	| 'SZL'
+	/** Thai baht (THB). */
+	| 'THB'
+	/** Tajikistani Somoni (TJS). */
+	| 'TJS'
+	/** Turkmenistani Manat (TMT). */
+	| 'TMT'
+	/** Tunisian Dinar (TND). */
+	| 'TND'
+	/** Tongan Pa'anga (TOP). */
+	| 'TOP'
+	/** Turkish Lira (TRY). */
+	| 'TRY'
+	/** Trinidad and Tobago Dollars (TTD). */
+	| 'TTD'
+	/** Taiwan Dollars (TWD). */
+	| 'TWD'
+	/** Tanzanian Shilling (TZS). */
+	| 'TZS'
+	/** Ukrainian Hryvnia (UAH). */
+	| 'UAH'
+	/** Ugandan Shilling (UGX). */
+	| 'UGX'
+	/** United States Dollars (USD). */
+	| 'USD'
+	/** Uruguayan Pesos (UYU). */
+	| 'UYU'
+	/** Uzbekistan som (UZS). */
+	| 'UZS'
+	/** Venezuelan Bolivares (VED). */
+	| 'VED'
+	/** Venezuelan Bolivares (VEF). */
+	| 'VEF'
+	/** Venezuelan Bolivares (VES). */
+	| 'VES'
+	/** Vietnamese đồng (VND). */
+	| 'VND'
+	/** Vanuatu Vatu (VUV). */
+	| 'VUV'
+	/** Samoan Tala (WST). */
+	| 'WST'
+	/** Central African CFA Franc (XAF). */
+	| 'XAF'
+	/** East Caribbean Dollar (XCD). */
+	| 'XCD'
+	/** West African CFA franc (XOF). */
+	| 'XOF'
+	/** CFP Franc (XPF). */
+	| 'XPF'
+	/** Unrecognized currency. */
+	| 'XXX'
+	/** Yemeni Rial (YER). */
+	| 'YER'
+	/** South African Rand (ZAR). */
+	| 'ZAR'
+	/** Zambian Kwacha (ZMW). */
+	| 'ZMW';
+
+/** Return type for `customerCreate` mutation. */
+export type CustomerCreatePayload = {
+	__typename?: 'CustomerCreatePayload';
+	/** The created customer object. */
+	customer?: Maybe<Customer>;
+	/** The list of errors that occurred from executing the mutation. */
+	customerUserErrors: Array<CustomerUserError>;
+	/**
+	 * The list of errors that occurred from executing the mutation.
+	 * @deprecated Use `customerUserErrors` instead.
+	 */
+	userErrors: Array<UserError>;
+};
+
+/** A customer represents a customer account with the shop. Customer accounts store contact information for the customer, saving logged-in customers the trouble of having to provide it at every checkout. */
+export type Customer = HasMetafields & {
+	__typename?: 'Customer';
+	/** Indicates whether the customer has consented to be sent marketing material via email. */
+	acceptsMarketing: Scalars['Boolean'];
+	/** A list of addresses for the customer. */
+	addresses: MailingAddressConnection;
+	/** The date and time when the customer was created. */
+	createdAt: Scalars['DateTime'];
+	/** The customer’s default address. */
+	defaultAddress?: Maybe<MailingAddress>;
+	/** The customer’s name, email or phone number. */
+	displayName: Scalars['String'];
+	/** The customer’s email address. */
+	email?: Maybe<Scalars['String']>;
+	/** The customer’s first name. */
+	firstName?: Maybe<Scalars['String']>;
+	/** A unique identifier for the customer. */
+	id: Scalars['ID'];
+	/** The customer's most recently updated, incomplete checkout. */
+	lastIncompleteCheckout?: Maybe<Checkout>;
+	/** The customer’s last name. */
+	lastName?: Maybe<Scalars['String']>;
+	/** Returns a metafield found by namespace and key. */
+	metafield?: Maybe<Metafield>;
+	/**
+	 * The metafields associated with the resource matching the supplied list of namespaces and keys.
+	 *
+	 */
+	metafields: Array<Maybe<Metafield>>;
+	/** The number of orders that the customer has made at the store in their lifetime. */
+	numberOfOrders: Scalars['UnsignedInt64'];
+	/** The orders associated with the customer. */
+	orders: OrderConnection;
+	/** The customer’s phone number. */
+	phone?: Maybe<Scalars['String']>;
+	/**
+	 * A comma separated list of tags that have been added to the customer.
+	 * Additional access scope required: unauthenticated_read_customer_tags.
+	 *
+	 */
+	tags: Array<Scalars['String']>;
+	/** The date and time when the customer information was updated. */
+	updatedAt: Scalars['DateTime'];
+};
+
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+	ID: string;
+	String: string;
+	Boolean: boolean;
+	Int: number;
+	Float: number;
+	Color: string;
+	DateTime: string;
+	Decimal: string;
+	HTML: string;
+	JSON: unknown;
+	URL: string;
+	UnsignedInt64: string;
+};
+
+/** Represents an error that happens during execution of a customer mutation. */
+export type CustomerUserError = DisplayableError & {
+	__typename?: 'CustomerUserError';
+	/** The error code. */
+	code?: Maybe<CustomerErrorCode>;
+	/** The path to the input field that caused the error. */
+	field?: Maybe<Array<Scalars['String']>>;
+	/** The error message. */
+	message: Scalars['String'];
+};
+
+/** Represents an error in the input of a mutation. */
+export type UserError = DisplayableError & {
+	__typename?: 'UserError';
+	/** The path to the input field that caused the error. */
+	field?: Maybe<Array<Scalars['String']>>;
+	/** The error message. */
+	message: Scalars['String'];
+};
+
+/** A filter used to view a subset of products in a collection matching a specific variant option. */
+export type VariantOptionFilter = {
+	/** The name of the variant option to filter on. */
+	name: Scalars['String'];
+	/** The value of the variant option to filter on. */
+	value: Scalars['String'];
+};
+
+/**
+ * An auto-generated type for paginating through multiple MailingAddresses.
+ *
+ */
+export type MailingAddressConnection = {
+	__typename?: 'MailingAddressConnection';
+	/** A list of edges. */
+	edges: Array<MailingAddressEdge>;
+	/** A list of the nodes contained in MailingAddressEdge. */
+	nodes: Array<MailingAddress>;
+	/** Information to aid in pagination. */
+	pageInfo: PageInfo;
+};
+
+/** Represents a mailing address for customers and shipping. */
+export type MailingAddress = Node & {
+	__typename?: 'MailingAddress';
+	/** The first line of the address. Typically the street address or PO Box number. */
+	address1?: Maybe<Scalars['String']>;
+	/**
+	 * The second line of the address. Typically the number of the apartment, suite, or unit.
+	 *
+	 */
+	address2?: Maybe<Scalars['String']>;
+	/**
+	 * The name of the city, district, village, or town.
+	 *
+	 */
+	city?: Maybe<Scalars['String']>;
+	/**
+	 * The name of the customer's company or organization.
+	 *
+	 */
+	company?: Maybe<Scalars['String']>;
+	/**
+	 * The name of the country.
+	 *
+	 */
+	country?: Maybe<Scalars['String']>;
+	/**
+	 * The two-letter code for the country of the address.
+	 *
+	 * For example, US.
+	 *
+	 * @deprecated Use `countryCodeV2` instead.
+	 */
+	countryCode?: Maybe<Scalars['String']>;
+	/**
+	 * The two-letter code for the country of the address.
+	 *
+	 * For example, US.
+	 *
+	 */
+	countryCodeV2?: Maybe<CountryCode>;
+	/** The first name of the customer. */
+	firstName?: Maybe<Scalars['String']>;
+	/** A formatted version of the address, customized by the provided arguments. */
+	formatted: Array<Scalars['String']>;
+	/** A comma-separated list of the values for city, province, and country. */
+	formattedArea?: Maybe<Scalars['String']>;
+	/** A globally-unique identifier. */
+	id: Scalars['ID'];
+	/** The last name of the customer. */
+	lastName?: Maybe<Scalars['String']>;
+	/** The latitude coordinate of the customer address. */
+	latitude?: Maybe<Scalars['Float']>;
+	/** The longitude coordinate of the customer address. */
+	longitude?: Maybe<Scalars['Float']>;
+	/**
+	 * The full name of the customer, based on firstName and lastName.
+	 *
+	 */
+	name?: Maybe<Scalars['String']>;
+	/**
+	 * A unique phone number for the customer.
+	 *
+	 * Formatted using E.164 standard. For example, _+16135551111_.
+	 *
+	 */
+	phone?: Maybe<Scalars['String']>;
+	/** The region of the address, such as the province, state, or district. */
+	province?: Maybe<Scalars['String']>;
+	/**
+	 * The two-letter code for the region.
+	 *
+	 * For example, ON.
+	 *
+	 */
+	provinceCode?: Maybe<Scalars['String']>;
+	/** The zip or postal code of the address. */
+	zip?: Maybe<Scalars['String']>;
+};
+
+/** A collection of available shipping rates for a checkout. */
+export type AvailableShippingRates = {
+	__typename?: 'AvailableShippingRates';
+	/**
+	 * Whether or not the shipping rates are ready.
+	 * The `shippingRates` field is `null` when this value is `false`.
+	 * This field should be polled until its value becomes `true`.
+	 *
+	 */
+	ready: Scalars['Boolean'];
+	/** The fetched shipping rates. `null` until the `ready` field is `true`. */
+	shippingRates?: Maybe<Array<ShippingRate>>;
+};
+
+/** A shipping rate to be applied to a checkout. */
+export type ShippingRate = {
+	__typename?: 'ShippingRate';
+	/** Human-readable unique identifier for this shipping rate. */
+	handle: Scalars['String'];
+	/** Price of this shipping rate. */
+	price: MoneyV2;
+	/**
+	 * Price of this shipping rate.
+	 * @deprecated Use `price` instead.
+	 */
+	priceV2: MoneyV2;
+	/** Title of this shipping rate. */
+	title: Scalars['String'];
+};
+
+/** Represents a generic custom attribute. */
+export type Attribute = {
+	__typename?: 'Attribute';
+	/** Key or name of the attribute. */
+	key: Scalars['String'];
+	/** Value of the attribute. */
+	value?: Maybe<Scalars['String']>;
+};
+
+/** A single line item in the checkout, grouped by variant and attributes. */
+export type CheckoutLineItem = Node & {
+	__typename?: 'CheckoutLineItem';
+	/** Extra information in the form of an array of Key-Value pairs about the line item. */
+	customAttributes: Array<Attribute>;
+	/** The discounts that have been allocated onto the checkout line item by discount applications. */
+	discountAllocations: Array<DiscountAllocation>;
+	/** A globally-unique identifier. */
+	id: Scalars['ID'];
+	/** The quantity of the line item. */
+	quantity: Scalars['Int'];
+	/** Title of the line item. Defaults to the product's title. */
+	title: Scalars['String'];
+	/** Unit price of the line item. */
+	unitPrice?: Maybe<MoneyV2>;
+	/** Product variant of the line item. */
+	variant?: Maybe<ProductVariant>;
+};
+
+/**
+ * An auto-generated type for paginating through multiple CheckoutLineItems.
+ *
+ */
+export type CheckoutLineItemConnection = {
+	__typename?: 'CheckoutLineItemConnection';
+	/** A list of edges. */
+	edges: Array<CheckoutLineItemEdge>;
+	/** A list of the nodes contained in CheckoutLineItemEdge. */
+	nodes: Array<CheckoutLineItem>;
+	/** Information to aid in pagination. */
+	pageInfo: PageInfo;
+};
+
+/**
+ * An auto-generated type which holds one CheckoutLineItem and a cursor during pagination.
+ *
+ */
+export type CheckoutLineItemEdge = {
+	__typename?: 'CheckoutLineItemEdge';
+	/** A cursor for use in pagination. */
+	cursor: Scalars['String'];
+	/** The item at the end of CheckoutLineItemEdge. */
+	node: CheckoutLineItem;
+};
+
+/** The value of the percentage pricing object. */
+export type PricingPercentageValue = {
+	__typename?: 'PricingPercentageValue';
+	/** The percentage value of the object. */
+	percentage: Scalars['Float'];
+};
+
+/** The price value (fixed or percentage) for a discount application. */
+export type PricingValue = MoneyV2 | PricingPercentageValue;
+
+/**
+ * Automatic discount applications capture the intentions of a discount that was automatically applied.
+ *
+ */
+export type AutomaticDiscountApplication = DiscountApplication & {
+	__typename?: 'AutomaticDiscountApplication';
+	/** The method by which the discount's value is allocated to its entitled items. */
+	allocationMethod: DiscountApplicationAllocationMethod;
+	/** Which lines of targetType that the discount is allocated over. */
+	targetSelection: DiscountApplicationTargetSelection;
+	/** The type of line that the discount is applicable towards. */
+	targetType: DiscountApplicationTargetType;
+	/** The title of the application. */
+	title: Scalars['String'];
+	/** The value of the discount application. */
+	value: PricingValue;
+};
+
+/**
+ * Manual discount applications capture the intentions of a discount that was manually created.
+ *
+ */
+export type ManualDiscountApplication = DiscountApplication & {
+	__typename?: 'ManualDiscountApplication';
+	/** The method by which the discount's value is allocated to its entitled items. */
+	allocationMethod: DiscountApplicationAllocationMethod;
+	/** The description of the application. */
+	description?: Maybe<Scalars['String']>;
+	/** Which lines of targetType that the discount is allocated over. */
+	targetSelection: DiscountApplicationTargetSelection;
+	/** The type of line that the discount is applicable towards. */
+	targetType: DiscountApplicationTargetType;
+	/** The title of the application. */
+	title: Scalars['String'];
+	/** The value of the discount application. */
+	value: PricingValue;
+};
+
+/**
+ * Script discount applications capture the intentions of a discount that
+ * was created by a Shopify Script.
+ *
+ */
+export type ScriptDiscountApplication = DiscountApplication & {
+	__typename?: 'ScriptDiscountApplication';
+	/** The method by which the discount's value is allocated to its entitled items. */
+	allocationMethod: DiscountApplicationAllocationMethod;
+	/** Which lines of targetType that the discount is allocated over. */
+	targetSelection: DiscountApplicationTargetSelection;
+	/** The type of line that the discount is applicable towards. */
+	targetType: DiscountApplicationTargetType;
+	/** The title of the application as defined by the Script. */
+	title: Scalars['String'];
+	/** The value of the discount application. */
+	value: PricingValue;
+};
+
+/**
+ * An amount discounting the line that has been allocated by a discount.
+ *
+ */
+export type DiscountAllocation = {
+	__typename?: 'DiscountAllocation';
+	/** Amount of discount allocated. */
+	allocatedAmount: MoneyV2;
+	/** The discount this allocated amount originated from. */
+	discountApplication:
+		| AutomaticDiscountApplication
+		| DiscountCodeApplication
+		| ManualDiscountApplication
+		| ScriptDiscountApplication;
+};
+
+/**
+ * Discount applications capture the intentions of a discount source at
+ * the time of application.
+ *
+ */
+export type DiscountApplication = {
+	/** The method by which the discount's value is allocated to its entitled items. */
+	allocationMethod: DiscountApplicationAllocationMethod;
+	/** Which lines of targetType that the discount is allocated over. */
+	targetSelection: DiscountApplicationTargetSelection;
+	/** The type of line that the discount is applicable towards. */
+	targetType: DiscountApplicationTargetType;
+	/** The value of the discount application. */
+	value: PricingValue;
+};
+
+/** The method by which the discount's value is allocated onto its entitled lines. */
+export type DiscountApplicationAllocationMethod =
+	/** The value is spread across all entitled lines. */
+	| 'ACROSS'
+	/** The value is applied onto every entitled line. */
+	| 'EACH'
+	/** The value is specifically applied onto a particular line. */
+	| 'ONE';
+
+/**
+ * An auto-generated type for paginating through multiple DiscountApplications.
+ *
+ */
+export type DiscountApplicationConnection = {
+	__typename?: 'DiscountApplicationConnection';
+	/** A list of edges. */
+	edges: Array<DiscountApplicationEdge>;
+	/** A list of the nodes contained in DiscountApplicationEdge. */
+	nodes: Array<
+		| AutomaticDiscountApplication
+		| DiscountCodeApplication
+		| ManualDiscountApplication
+		| ScriptDiscountApplication
+	>;
+	/** Information to aid in pagination. */
+	pageInfo: PageInfo;
+};
+
+/**
+ * An auto-generated type which holds one DiscountApplication and a cursor during pagination.
+ *
+ */
+export type DiscountApplicationEdge = {
+	__typename?: 'DiscountApplicationEdge';
+	/** A cursor for use in pagination. */
+	cursor: Scalars['String'];
+	/** The item at the end of DiscountApplicationEdge. */
+	node:
+		| AutomaticDiscountApplication
+		| DiscountCodeApplication
+		| ManualDiscountApplication
+		| ScriptDiscountApplication;
+};
+
+/**
+ * The lines on the order to which the discount is applied, of the type defined by
+ * the discount application's `targetType`. For example, the value `ENTITLED`, combined with a `targetType` of
+ * `LINE_ITEM`, applies the discount on all line items that are entitled to the discount.
+ * The value `ALL`, combined with a `targetType` of `SHIPPING_LINE`, applies the discount on all shipping lines.
+ *
+ */
+export type DiscountApplicationTargetSelection =
+	/** The discount is allocated onto all the lines. */
+	| 'ALL'
+	/** The discount is allocated onto only the lines that it's entitled for. */
+	| 'ENTITLED'
+	/** The discount is allocated onto explicitly chosen lines. */
+	| 'EXPLICIT';
+
+/**
+ * The type of line (i.e. line item or shipping line) on an order that the discount is applicable towards.
+ *
+ */
+export type DiscountApplicationTargetType =
+	/** The discount applies onto line items. */
+	| 'LINE_ITEM'
+	/** The discount applies onto shipping lines. */
+	| 'SHIPPING_LINE';
+
+/**
+ * Discount code applications capture the intentions of a discount code at
+ * the time that it is applied.
+ *
+ */
+export type DiscountCodeApplication = DiscountApplication & {
+	__typename?: 'DiscountCodeApplication';
+	/** The method by which the discount's value is allocated to its entitled items. */
+	allocationMethod: DiscountApplicationAllocationMethod;
+	/** Specifies whether the discount code was applied successfully. */
+	applicable: Scalars['Boolean'];
+	/** The string identifying the discount code that was used at the time of application. */
+	code: Scalars['String'];
+	/** Which lines of targetType that the discount is allocated over. */
+	targetSelection: DiscountApplicationTargetSelection;
+	/** The type of line that the discount is applicable towards. */
+	targetType: DiscountApplicationTargetType;
+	/** The value of the discount application. */
+	value: PricingValue;
+};
+
+/** The identity of the customer associated with the checkout. */
+export type CheckoutBuyerIdentity = {
+	__typename?: 'CheckoutBuyerIdentity';
+	/** The country code for the checkout. For example, `CA`. */
+	countryCode?: Maybe<CountryCode>;
+};
+
+/** Represents the reason for the order's cancellation. */
+export type OrderCancelReason =
+	/** The customer wanted to cancel the order. */
+	| 'CUSTOMER'
+	/** Payment was declined. */
+	| 'DECLINED'
+	/** The order was fraudulent. */
+	| 'FRAUD'
+	/** There was insufficient inventory. */
+	| 'INVENTORY'
+	/** The order was canceled for an unlisted reason. */
+	| 'OTHER';
+
+/** Represents the order's current financial status. */
+export type OrderFinancialStatus =
+	/** Displayed as **Authorized**. */
+	| 'AUTHORIZED'
+	/** Displayed as **Paid**. */
+	| 'PAID'
+	/** Displayed as **Partially paid**. */
+	| 'PARTIALLY_PAID'
+	/** Displayed as **Partially refunded**. */
+	| 'PARTIALLY_REFUNDED'
+	/** Displayed as **Pending**. */
+	| 'PENDING'
+	/** Displayed as **Refunded**. */
+	| 'REFUNDED'
+	/** Displayed as **Voided**. */
+	| 'VOIDED';
+
+/** Represents the order's aggregated fulfillment status for display purposes. */
+export type OrderFulfillmentStatus =
+	/** Displayed as **Fulfilled**. All of the items in the order have been fulfilled. */
+	| 'FULFILLED'
+	/** Displayed as **In progress**. Some of the items in the order have been fulfilled, or a request for fulfillment has been sent to the fulfillment service. */
+	| 'IN_PROGRESS'
+	/** Displayed as **On hold**. All of the unfulfilled items in this order are on hold. */
+	| 'ON_HOLD'
+	/** Displayed as **Open**. None of the items in the order have been fulfilled. Replaced by "UNFULFILLED" status. */
+	| 'OPEN'
+	/** Displayed as **Partially fulfilled**. Some of the items in the order have been fulfilled. */
+	| 'PARTIALLY_FULFILLED'
+	/** Displayed as **Pending fulfillment**. A request for fulfillment of some items awaits a response from the fulfillment service. Replaced by "IN_PROGRESS" status. */
+	| 'PENDING_FULFILLMENT'
+	/** Displayed as **Restocked**. All of the items in the order have been restocked. Replaced by "UNFULFILLED" status. */
+	| 'RESTOCKED'
+	/** Displayed as **Scheduled**. All of the unfulfilled items in this order are scheduled for fulfillment at later time. */
+	| 'SCHEDULED'
+	/** Displayed as **Unfulfilled**. None of the items in the order have been fulfilled. */
+	| 'UNFULFILLED';
+
+/** Represents a single line in an order. There is one line item for each distinct product variant. */
+export type OrderLineItem = {
+	__typename?: 'OrderLineItem';
+	/** The number of entries associated to the line item minus the items that have been removed. */
+	currentQuantity: Scalars['Int'];
+	/** List of custom attributes associated to the line item. */
+	customAttributes: Array<Attribute>;
+	/** The discounts that have been allocated onto the order line item by discount applications. */
+	discountAllocations: Array<DiscountAllocation>;
+	/** The total price of the line item, including discounts, and displayed in the presentment currency. */
+	discountedTotalPrice: MoneyV2;
+	/** The total price of the line item, not including any discounts. The total price is calculated using the original unit price multiplied by the quantity, and it is displayed in the presentment currency. */
+	originalTotalPrice: MoneyV2;
+	/** The number of products variants associated to the line item. */
+	quantity: Scalars['Int'];
+	/** The title of the product combined with title of the variant. */
+	title: Scalars['String'];
+	/** The product variant object associated to the line item. */
+	variant?: Maybe<ProductVariant>;
+};
+
+/**
+ * An auto-generated type for paginating through multiple OrderLineItems.
+ *
+ */
+export type OrderLineItemConnection = {
+	__typename?: 'OrderLineItemConnection';
+	/** A list of edges. */
+	edges: Array<OrderLineItemEdge>;
+	/** A list of the nodes contained in OrderLineItemEdge. */
+	nodes: Array<OrderLineItem>;
+	/** Information to aid in pagination. */
+	pageInfo: PageInfo;
+};
+
+/**
+ * An auto-generated type which holds one OrderLineItem and a cursor during pagination.
+ *
+ */
+export type OrderLineItemEdge = {
+	__typename?: 'OrderLineItemEdge';
+	/** A cursor for use in pagination. */
+	cursor: Scalars['String'];
+	/** The item at the end of OrderLineItemEdge. */
+	node: OrderLineItem;
+};
+
+/** Represents a single line item in a fulfillment. There is at most one fulfillment line item for each order line item. */
+export type FulfillmentLineItem = {
+	__typename?: 'FulfillmentLineItem';
+	/** The associated order's line item. */
+	lineItem: OrderLineItem;
+	/** The amount fulfilled in this fulfillment. */
+	quantity: Scalars['Int'];
+};
+
+/**
+ * An auto-generated type for paginating through multiple FulfillmentLineItems.
+ *
+ */
+export type FulfillmentLineItemConnection = {
+	__typename?: 'FulfillmentLineItemConnection';
+	/** A list of edges. */
+	edges: Array<FulfillmentLineItemEdge>;
+	/** A list of the nodes contained in FulfillmentLineItemEdge. */
+	nodes: Array<FulfillmentLineItem>;
+	/** Information to aid in pagination. */
+	pageInfo: PageInfo;
+};
+
+/**
+ * An auto-generated type which holds one FulfillmentLineItem and a cursor during pagination.
+ *
+ */
+export type FulfillmentLineItemEdge = {
+	__typename?: 'FulfillmentLineItemEdge';
+	/** A cursor for use in pagination. */
+	cursor: Scalars['String'];
+	/** The item at the end of FulfillmentLineItemEdge. */
+	node: FulfillmentLineItem;
+};
+
+/** Tracking information associated with the fulfillment. */
+export type FulfillmentTrackingInfo = {
+	__typename?: 'FulfillmentTrackingInfo';
+	/** The tracking number of the fulfillment. */
+	number?: Maybe<Scalars['String']>;
+	/** The URL to track the fulfillment. */
+	url?: Maybe<Scalars['URL']>;
+};
+
+/** Represents a single fulfillment in an order. */
+export type Fulfillment = {
+	__typename?: 'Fulfillment';
+	/** List of the fulfillment's line items. */
+	fulfillmentLineItems: FulfillmentLineItemConnection;
+	/** The name of the tracking company. */
+	trackingCompany?: Maybe<Scalars['String']>;
+	/**
+	 * Tracking information associated with the fulfillment,
+	 * such as the tracking number and tracking URL.
+	 *
+	 */
+	trackingInfo: Array<FulfillmentTrackingInfo>;
+};
+
+/** An order is a customer’s completed request to purchase one or more products from a shop. An order is created when a customer completes the checkout process, during which time they provides an email address, billing address and payment information. */
+export type Order = HasMetafields &
+	Node & {
+		__typename?: 'Order';
+		/** The address associated with the payment method. */
+		billingAddress?: Maybe<MailingAddress>;
+		/** The reason for the order's cancellation. Returns `null` if the order wasn't canceled. */
+		cancelReason?: Maybe<OrderCancelReason>;
+		/** The date and time when the order was canceled. Returns null if the order wasn't canceled. */
+		canceledAt?: Maybe<Scalars['DateTime']>;
+		/** The code of the currency used for the payment. */
+		currencyCode: CurrencyCode;
+		/** The subtotal of line items and their discounts, excluding line items that have been removed. Does not contain order-level discounts, duties, shipping costs, or shipping discounts. Taxes are not included unless the order is a taxes-included order. */
+		currentSubtotalPrice: MoneyV2;
+		/** The total cost of duties for the order, including refunds. */
+		currentTotalDuties?: Maybe<MoneyV2>;
+		/** The total amount of the order, including duties, taxes and discounts, minus amounts for line items that have been removed. */
+		currentTotalPrice: MoneyV2;
+		/** The total of all taxes applied to the order, excluding taxes for returned line items. */
+		currentTotalTax: MoneyV2;
+		/** A list of the custom attributes added to the order. */
+		customAttributes: Array<Attribute>;
+		/** The locale code in which this specific order happened. */
+		customerLocale?: Maybe<Scalars['String']>;
+		/** The unique URL that the customer can use to access the order. */
+		customerUrl?: Maybe<Scalars['URL']>;
+		/** Discounts that have been applied on the order. */
+		discountApplications: DiscountApplicationConnection;
+		/** Whether the order has had any edits applied or not. */
+		edited: Scalars['Boolean'];
+		/** The customer's email address. */
+		email?: Maybe<Scalars['String']>;
+		/** The financial status of the order. */
+		financialStatus?: Maybe<OrderFinancialStatus>;
+		/** The fulfillment status for the order. */
+		fulfillmentStatus: OrderFulfillmentStatus;
+		/** A globally-unique identifier. */
+		id: Scalars['ID'];
+		/** List of the order’s line items. */
+		lineItems: OrderLineItemConnection;
+		/** Returns a metafield found by namespace and key. */
+		metafield?: Maybe<Metafield>;
+		/**
+		 * The metafields associated with the resource matching the supplied list of namespaces and keys.
+		 *
+		 */
+		metafields: Array<Maybe<Metafield>>;
+		/**
+		 * Unique identifier for the order that appears on the order.
+		 * For example, _#1000_ or _Store1001.
+		 *
+		 */
+		name: Scalars['String'];
+		/** A unique numeric identifier for the order for use by shop owner and customer. */
+		orderNumber: Scalars['Int'];
+		/** The total cost of duties charged at checkout. */
+		originalTotalDuties?: Maybe<MoneyV2>;
+		/** The total price of the order before any applied edits. */
+		originalTotalPrice: MoneyV2;
+		/** The customer's phone number for receiving SMS notifications. */
+		phone?: Maybe<Scalars['String']>;
+		/**
+		 * The date and time when the order was imported.
+		 * This value can be set to dates in the past when importing from other systems.
+		 * If no value is provided, it will be auto-generated based on current date and time.
+		 *
+		 */
+		processedAt: Scalars['DateTime'];
+		/** The address to where the order will be shipped. */
+		shippingAddress?: Maybe<MailingAddress>;
+		/**
+		 * The discounts that have been allocated onto the shipping line by discount applications.
+		 *
+		 */
+		shippingDiscountAllocations: Array<DiscountAllocation>;
+		/** The unique URL for the order's status page. */
+		statusUrl: Scalars['URL'];
+		/** Price of the order before shipping and taxes. */
+		subtotalPrice?: Maybe<MoneyV2>;
+		/**
+		 * Price of the order before duties, shipping and taxes.
+		 * @deprecated Use `subtotalPrice` instead.
+		 */
+		subtotalPriceV2?: Maybe<MoneyV2>;
+		/** List of the order’s successful fulfillments. */
+		successfulFulfillments?: Maybe<Array<Fulfillment>>;
+		/** The sum of all the prices of all the items in the order, duties, taxes and discounts included (must be positive). */
+		totalPrice: MoneyV2;
+		/**
+		 * The sum of all the prices of all the items in the order, duties, taxes and discounts included (must be positive).
+		 * @deprecated Use `totalPrice` instead.
+		 */
+		totalPriceV2: MoneyV2;
+		/** The total amount that has been refunded. */
+		totalRefunded: MoneyV2;
+		/**
+		 * The total amount that has been refunded.
+		 * @deprecated Use `totalRefunded` instead.
+		 */
+		totalRefundedV2: MoneyV2;
+		/** The total cost of shipping. */
+		totalShippingPrice: MoneyV2;
+		/**
+		 * The total cost of shipping.
+		 * @deprecated Use `totalShippingPrice` instead.
+		 */
+		totalShippingPriceV2: MoneyV2;
+		/** The total cost of taxes. */
+		totalTax?: Maybe<MoneyV2>;
+		/**
+		 * The total cost of taxes.
+		 * @deprecated Use `totalTax` instead.
+		 */
+		totalTaxV2?: Maybe<MoneyV2>;
+	};
+
+/**
+ * An auto-generated type which holds one Order and a cursor during pagination.
+ *
+ */
+export type OrderEdge = {
+	__typename?: 'OrderEdge';
+	/** A cursor for use in pagination. */
+	cursor: Scalars['String'];
+	/** The item at the end of OrderEdge. */
+	node: Order;
+};
+
+/** A container for all the information required to checkout items and pay. */
+export type Checkout = Node & {
+	__typename?: 'Checkout';
+	/** The gift cards used on the checkout. */
+	appliedGiftCards: Array<AppliedGiftCard>;
+	/**
+	 * The available shipping rates for this Checkout.
+	 * Should only be used when checkout `requiresShipping` is `true` and
+	 * the shipping address is valid.
+	 *
+	 */
+	availableShippingRates?: Maybe<AvailableShippingRates>;
+	/** The identity of the customer associated with the checkout. */
+	buyerIdentity: CheckoutBuyerIdentity;
+	/** The date and time when the checkout was completed. */
+	completedAt?: Maybe<Scalars['DateTime']>;
+	/** The date and time when the checkout was created. */
+	createdAt: Scalars['DateTime'];
+	/** The currency code for the checkout. */
+	currencyCode: CurrencyCode;
+	/** A list of extra information that is added to the checkout. */
+	customAttributes: Array<Attribute>;
+	/** Discounts that have been applied on the checkout. */
+	discountApplications: DiscountApplicationConnection;
+	/** The email attached to this checkout. */
+	email?: Maybe<Scalars['String']>;
+	/** A globally-unique identifier. */
+	id: Scalars['ID'];
+	/** A list of line item objects, each one containing information about an item in the checkout. */
+	lineItems: CheckoutLineItemConnection;
+	/** The sum of all the prices of all the items in the checkout. Duties, taxes, shipping and discounts excluded. */
+	lineItemsSubtotalPrice: MoneyV2;
+	/** The note associated with the checkout. */
+	note?: Maybe<Scalars['String']>;
+	/** The resulting order from a paid checkout. */
+	order?: Maybe<Order>;
+	/** The Order Status Page for this Checkout, null when checkout is not completed. */
+	orderStatusUrl?: Maybe<Scalars['URL']>;
+	/** The amount left to be paid. This is equal to the cost of the line items, taxes, and shipping, minus discounts and gift cards. */
+	paymentDue: MoneyV2;
+	/**
+	 * The amount left to be paid. This is equal to the cost of the line items, duties, taxes, and shipping, minus discounts and gift cards.
+	 * @deprecated Use `paymentDue` instead.
+	 */
+	paymentDueV2: MoneyV2;
+	/**
+	 * Whether or not the Checkout is ready and can be completed. Checkouts may
+	 * have asynchronous operations that can take time to finish. If you want
+	 * to complete a checkout or ensure all the fields are populated and up to
+	 * date, polling is required until the value is true.
+	 *
+	 */
+	ready: Scalars['Boolean'];
+	/** States whether or not the fulfillment requires shipping. */
+	requiresShipping: Scalars['Boolean'];
+	/** The shipping address to where the line items will be shipped. */
+	shippingAddress?: Maybe<MailingAddress>;
+	/**
+	 * The discounts that have been allocated onto the shipping line by discount applications.
+	 *
+	 */
+	shippingDiscountAllocations: Array<DiscountAllocation>;
+	/** Once a shipping rate is selected by the customer it is transitioned to a `shipping_line` object. */
+	shippingLine?: Maybe<ShippingRate>;
+	/** The price at checkout before shipping and taxes. */
+	subtotalPrice: MoneyV2;
+	/**
+	 * The price at checkout before duties, shipping, and taxes.
+	 * @deprecated Use `subtotalPrice` instead.
+	 */
+	subtotalPriceV2: MoneyV2;
+	/** Whether the checkout is tax exempt. */
+	taxExempt: Scalars['Boolean'];
+	/** Whether taxes are included in the line item and shipping line prices. */
+	taxesIncluded: Scalars['Boolean'];
+	/** The sum of all the duties applied to the line items in the checkout. */
+	totalDuties?: Maybe<MoneyV2>;
+	/** The sum of all the prices of all the items in the checkout, including taxes and duties. */
+	totalPrice: MoneyV2;
+	/**
+	 * The sum of all the prices of all the items in the checkout, including taxes and duties.
+	 * @deprecated Use `totalPrice` instead.
+	 */
+	totalPriceV2: MoneyV2;
+	/** The sum of all the taxes applied to the line items and shipping lines in the checkout. */
+	totalTax: MoneyV2;
+	/**
+	 * The sum of all the taxes applied to the line items and shipping lines in the checkout.
+	 * @deprecated Use `totalTax` instead.
+	 */
+	totalTaxV2: MoneyV2;
+	/** The date and time when the checkout was last updated. */
+	updatedAt: Scalars['DateTime'];
+	/** The url pointing to the checkout accessible from the web. */
+	webUrl: Scalars['URL'];
+};
+
+/**
+ * An auto-generated type for paginating through multiple Orders.
+ *
+ */
+export type OrderConnection = {
+	__typename?: 'OrderConnection';
+	/** A list of edges. */
+	edges: Array<OrderEdge>;
+	/** A list of the nodes contained in OrderEdge. */
+	nodes: Array<Order>;
+	/** Information to aid in pagination. */
+	pageInfo: PageInfo;
+	/** The total count of Orders. */
+	totalCount: Scalars['UnsignedInt64'];
+};
+
+/** Represents an error in the input of a mutation. */
+export type DisplayableError = {
+	/** The path to the input field that caused the error. */
+	field?: Maybe<Array<Scalars['String']>>;
+	/** The error message. */
+	message: Scalars['String'];
+};
+
+/** Represents a web address. */
+export type Domain = {
+	__typename?: 'Domain';
+	/** The host name of the domain (eg: `example.com`). */
+	host: Scalars['String'];
+	/** Whether SSL is enabled or not. */
+	sslEnabled: Scalars['Boolean'];
+	/** The URL of the domain (eg: `https://example.com`). */
+	url: Scalars['URL'];
+};
+
+/** Possible error codes that can be returned by `CustomerUserError`. */
+export type CustomerErrorCode =
+	/** Customer already enabled. */
+	| 'ALREADY_ENABLED'
+	/** Input email contains an invalid domain name. */
+	| 'BAD_DOMAIN'
+	/** The input value is blank. */
+	| 'BLANK'
+	/** Input contains HTML tags. */
+	| 'CONTAINS_HTML_TAGS'
+	/** Input contains URL. */
+	| 'CONTAINS_URL'
+	/** Customer is disabled. */
+	| 'CUSTOMER_DISABLED'
+	/** The input value is invalid. */
+	| 'INVALID'
+	/** Multipass token is not valid. */
+	| 'INVALID_MULTIPASS_REQUEST'
+	/** Address does not exist. */
+	| 'NOT_FOUND'
+	/** Input password starts or ends with whitespace. */
+	| 'PASSWORD_STARTS_OR_ENDS_WITH_WHITESPACE'
+	/** The input value is already taken. */
+	| 'TAKEN'
+	/** Invalid activation token. */
+	| 'TOKEN_INVALID'
+	/** The input value is too long. */
+	| 'TOO_LONG'
+	/** The input value is too short. */
+	| 'TOO_SHORT'
+	/** Unidentified customer. */
+	| 'UNIDENTIFIED_CUSTOMER';
+
+/**
+ * An auto-generated type which holds one MailingAddress and a cursor during pagination.
+ *
+ */
+export type MailingAddressEdge = {
+	__typename?: 'MailingAddressEdge';
+	/** A cursor for use in pagination. */
+	cursor: Scalars['String'];
+	/** The item at the end of MailingAddressEdge. */
+	node: MailingAddress;
+};
+
+export type CountryCode =
+	/** Ascension Island. */
+	| 'AC'
+	/** Andorra. */
+	| 'AD'
+	/** United Arab Emirates. */
+	| 'AE'
+	/** Afghanistan. */
+	| 'AF'
+	/** Antigua & Barbuda. */
+	| 'AG'
+	/** Anguilla. */
+	| 'AI'
+	/** Albania. */
+	| 'AL'
+	/** Armenia. */
+	| 'AM'
+	/** Netherlands Antilles. */
+	| 'AN'
+	/** Angola. */
+	| 'AO'
+	/** Argentina. */
+	| 'AR'
+	/** Austria. */
+	| 'AT'
+	/** Australia. */
+	| 'AU'
+	/** Aruba. */
+	| 'AW'
+	/** Åland Islands. */
+	| 'AX'
+	/** Azerbaijan. */
+	| 'AZ'
+	/** Bosnia & Herzegovina. */
+	| 'BA'
+	/** Barbados. */
+	| 'BB'
+	/** Bangladesh. */
+	| 'BD'
+	/** Belgium. */
+	| 'BE'
+	/** Burkina Faso. */
+	| 'BF'
+	/** Bulgaria. */
+	| 'BG'
+	/** Bahrain. */
+	| 'BH'
+	/** Burundi. */
+	| 'BI'
+	/** Benin. */
+	| 'BJ'
+	/** St. Barthélemy. */
+	| 'BL'
+	/** Bermuda. */
+	| 'BM'
+	/** Brunei. */
+	| 'BN'
+	/** Bolivia. */
+	| 'BO'
+	/** Caribbean Netherlands. */
+	| 'BQ'
+	/** Brazil. */
+	| 'BR'
+	/** Bahamas. */
+	| 'BS'
+	/** Bhutan. */
+	| 'BT'
+	/** Bouvet Island. */
+	| 'BV'
+	/** Botswana. */
+	| 'BW'
+	/** Belarus. */
+	| 'BY'
+	/** Belize. */
+	| 'BZ'
+	/** Canada. */
+	| 'CA'
+	/** Cocos (Keeling) Islands. */
+	| 'CC'
+	/** Congo - Kinshasa. */
+	| 'CD'
+	/** Central African Republic. */
+	| 'CF'
+	/** Congo - Brazzaville. */
+	| 'CG'
+	/** Switzerland. */
+	| 'CH'
+	/** Côte d’Ivoire. */
+	| 'CI'
+	/** Cook Islands. */
+	| 'CK'
+	/** Chile. */
+	| 'CL'
+	/** Cameroon. */
+	| 'CM'
+	/** China. */
+	| 'CN'
+	/** Colombia. */
+	| 'CO'
+	/** Costa Rica. */
+	| 'CR'
+	/** Cuba. */
+	| 'CU'
+	/** Cape Verde. */
+	| 'CV'
+	/** Curaçao. */
+	| 'CW'
+	/** Christmas Island. */
+	| 'CX'
+	/** Cyprus. */
+	| 'CY'
+	/** Czechia. */
+	| 'CZ'
+	/** Germany. */
+	| 'DE'
+	/** Djibouti. */
+	| 'DJ'
+	/** Denmark. */
+	| 'DK'
+	/** Dominica. */
+	| 'DM'
+	/** Dominican Republic. */
+	| 'DO'
+	/** Algeria. */
+	| 'DZ'
+	/** Ecuador. */
+	| 'EC'
+	/** Estonia. */
+	| 'EE'
+	/** Egypt. */
+	| 'EG'
+	/** Western Sahara. */
+	| 'EH'
+	/** Eritrea. */
+	| 'ER'
+	/** Spain. */
+	| 'ES'
+	/** Ethiopia. */
+	| 'ET'
+	/** Finland. */
+	| 'FI'
+	/** Fiji. */
+	| 'FJ'
+	/** Falkland Islands. */
+	| 'FK'
+	/** Faroe Islands. */
+	| 'FO'
+	/** France. */
+	| 'FR'
+	/** Gabon. */
+	| 'GA'
+	/** United Kingdom. */
+	| 'GB'
+	/** Grenada. */
+	| 'GD'
+	/** Georgia. */
+	| 'GE'
+	/** French Guiana. */
+	| 'GF'
+	/** Guernsey. */
+	| 'GG'
+	/** Ghana. */
+	| 'GH'
+	/** Gibraltar. */
+	| 'GI'
+	/** Greenland. */
+	| 'GL'
+	/** Gambia. */
+	| 'GM'
+	/** Guinea. */
+	| 'GN'
+	/** Guadeloupe. */
+	| 'GP'
+	/** Equatorial Guinea. */
+	| 'GQ'
+	/** Greece. */
+	| 'GR'
+	/** South Georgia & South Sandwich Islands. */
+	| 'GS'
+	/** Guatemala. */
+	| 'GT'
+	/** Guinea-Bissau. */
+	| 'GW'
+	/** Guyana. */
+	| 'GY'
+	/** Hong Kong SAR. */
+	| 'HK'
+	/** Heard & McDonald Islands. */
+	| 'HM'
+	/** Honduras. */
+	| 'HN'
+	/** Croatia. */
+	| 'HR'
+	/** Haiti. */
+	| 'HT'
+	/** Hungary. */
+	| 'HU'
+	/** Indonesia. */
+	| 'ID'
+	/** Ireland. */
+	| 'IE'
+	/** Israel. */
+	| 'IL'
+	/** Isle of Man. */
+	| 'IM'
+	/** India. */
+	| 'IN'
+	/** British Indian Ocean Territory. */
+	| 'IO'
+	/** Iraq. */
+	| 'IQ'
+	/** Iran. */
+	| 'IR'
+	/** Iceland. */
+	| 'IS'
+	/** Italy. */
+	| 'IT'
+	/** Jersey. */
+	| 'JE'
+	/** Jamaica. */
+	| 'JM'
+	/** Jordan. */
+	| 'JO'
+	/** Japan. */
+	| 'JP'
+	/** Kenya. */
+	| 'KE'
+	/** Kyrgyzstan. */
+	| 'KG'
+	/** Cambodia. */
+	| 'KH'
+	/** Kiribati. */
+	| 'KI'
+	/** Comoros. */
+	| 'KM'
+	/** St. Kitts & Nevis. */
+	| 'KN'
+	/** North Korea. */
+	| 'KP'
+	/** South Korea. */
+	| 'KR'
+	/** Kuwait. */
+	| 'KW'
+	/** Cayman Islands. */
+	| 'KY'
+	/** Kazakhstan. */
+	| 'KZ'
+	/** Laos. */
+	| 'LA'
+	/** Lebanon. */
+	| 'LB'
+	/** St. Lucia. */
+	| 'LC'
+	/** Liechtenstein. */
+	| 'LI'
+	/** Sri Lanka. */
+	| 'LK'
+	/** Liberia. */
+	| 'LR'
+	/** Lesotho. */
+	| 'LS'
+	/** Lithuania. */
+	| 'LT'
+	/** Luxembourg. */
+	| 'LU'
+	/** Latvia. */
+	| 'LV'
+	/** Libya. */
+	| 'LY'
+	/** Morocco. */
+	| 'MA'
+	/** Monaco. */
+	| 'MC'
+	/** Moldova. */
+	| 'MD'
+	/** Montenegro. */
+	| 'ME'
+	/** St. Martin. */
+	| 'MF'
+	/** Madagascar. */
+	| 'MG'
+	/** North Macedonia. */
+	| 'MK'
+	/** Mali. */
+	| 'ML'
+	/** Myanmar (Burma). */
+	| 'MM'
+	/** Mongolia. */
+	| 'MN'
+	/** Macao SAR. */
+	| 'MO'
+	/** Martinique. */
+	| 'MQ'
+	/** Mauritania. */
+	| 'MR'
+	/** Montserrat. */
+	| 'MS'
+	/** Malta. */
+	| 'MT'
+	/** Mauritius. */
+	| 'MU'
+	/** Maldives. */
+	| 'MV'
+	/** Malawi. */
+	| 'MW'
+	/** Mexico. */
+	| 'MX'
+	/** Malaysia. */
+	| 'MY'
+	/** Mozambique. */
+	| 'MZ'
+	/** Namibia. */
+	| 'NA'
+	/** New Caledonia. */
+	| 'NC'
+	/** Niger. */
+	| 'NE'
+	/** Norfolk Island. */
+	| 'NF'
+	/** Nigeria. */
+	| 'NG'
+	/** Nicaragua. */
+	| 'NI'
+	/** Netherlands. */
+	| 'NL'
+	/** Norway. */
+	| 'NO'
+	/** Nepal. */
+	| 'NP'
+	/** Nauru. */
+	| 'NR'
+	/** Niue. */
+	| 'NU'
+	/** New Zealand. */
+	| 'NZ'
+	/** Oman. */
+	| 'OM'
+	/** Panama. */
+	| 'PA'
+	/** Peru. */
+	| 'PE'
+	/** French Polynesia. */
+	| 'PF'
+	/** Papua New Guinea. */
+	| 'PG'
+	/** Philippines. */
+	| 'PH'
+	/** Pakistan. */
+	| 'PK'
+	/** Poland. */
+	| 'PL'
+	/** St. Pierre & Miquelon. */
+	| 'PM'
+	/** Pitcairn Islands. */
+	| 'PN'
+	/** Palestinian Territories. */
+	| 'PS'
+	/** Portugal. */
+	| 'PT'
+	/** Paraguay. */
+	| 'PY'
+	/** Qatar. */
+	| 'QA'
+	/** Réunion. */
+	| 'RE'
+	/** Romania. */
+	| 'RO'
+	/** Serbia. */
+	| 'RS'
+	/** Russia. */
+	| 'RU'
+	/** Rwanda. */
+	| 'RW'
+	/** Saudi Arabia. */
+	| 'SA'
+	/** Solomon Islands. */
+	| 'SB'
+	/** Seychelles. */
+	| 'SC'
+	/** Sudan. */
+	| 'SD'
+	/** Sweden. */
+	| 'SE'
+	/** Singapore. */
+	| 'SG'
+	/** St. Helena. */
+	| 'SH'
+	/** Slovenia. */
+	| 'SI'
+	/** Svalbard & Jan Mayen. */
+	| 'SJ'
+	/** Slovakia. */
+	| 'SK'
+	/** Sierra Leone. */
+	| 'SL'
+	/** San Marino. */
+	| 'SM'
+	/** Senegal. */
+	| 'SN'
+	/** Somalia. */
+	| 'SO'
+	/** Suriname. */
+	| 'SR'
+	/** South Sudan. */
+	| 'SS'
+	/** São Tomé & Príncipe. */
+	| 'ST'
+	/** El Salvador. */
+	| 'SV'
+	/** Sint Maarten. */
+	| 'SX'
+	/** Syria. */
+	| 'SY'
+	/** Eswatini. */
+	| 'SZ'
+	/** Tristan da Cunha. */
+	| 'TA'
+	/** Turks & Caicos Islands. */
+	| 'TC'
+	/** Chad. */
+	| 'TD'
+	/** French Southern Territories. */
+	| 'TF'
+	/** Togo. */
+	| 'TG'
+	/** Thailand. */
+	| 'TH'
+	/** Tajikistan. */
+	| 'TJ'
+	/** Tokelau. */
+	| 'TK'
+	/** Timor-Leste. */
+	| 'TL'
+	/** Turkmenistan. */
+	| 'TM'
+	/** Tunisia. */
+	| 'TN'
+	/** Tonga. */
+	| 'TO'
+	/** Turkey. */
+	| 'TR'
+	/** Trinidad & Tobago. */
+	| 'TT'
+	/** Tuvalu. */
+	| 'TV'
+	/** Taiwan. */
+	| 'TW'
+	/** Tanzania. */
+	| 'TZ'
+	/** Ukraine. */
+	| 'UA'
+	/** Uganda. */
+	| 'UG'
+	/** U.S. Outlying Islands. */
+	| 'UM'
+	/** United States. */
+	| 'US'
+	/** Uruguay. */
+	| 'UY'
+	/** Uzbekistan. */
+	| 'UZ'
+	/** Vatican City. */
+	| 'VA'
+	/** St. Vincent & Grenadines. */
+	| 'VC'
+	/** Venezuela. */
+	| 'VE'
+	/** British Virgin Islands. */
+	| 'VG'
+	/** Vietnam. */
+	| 'VN'
+	/** Vanuatu. */
+	| 'VU'
+	/** Wallis & Futuna. */
+	| 'WF'
+	/** Samoa. */
+	| 'WS'
+	/** Kosovo. */
+	| 'XK'
+	/** Yemen. */
+	| 'YE'
+	/** Mayotte. */
+	| 'YT'
+	/** South Africa. */
+	| 'ZA'
+	/** Zambia. */
+	| 'ZM'
+	/** Zimbabwe. */
+	| 'ZW'
+	/** Unknown Region. */
+	| 'ZZ';
+
+/** Details about the gift card used on the checkout. */
+export type AppliedGiftCard = Node & {
+	__typename?: 'AppliedGiftCard';
+	/** The amount that was taken from the gift card by applying it. */
+	amountUsed: MoneyV2;
+	/**
+	 * The amount that was taken from the gift card by applying it.
+	 * @deprecated Use `amountUsed` instead.
+	 */
+	amountUsedV2: MoneyV2;
+	/** The amount left on the gift card. */
+	balance: MoneyV2;
+	/**
+	 * The amount left on the gift card.
+	 * @deprecated Use `balance` instead.
+	 */
+	balanceV2: MoneyV2;
+	/** A globally-unique identifier. */
+	id: Scalars['ID'];
+	/** The last characters of the gift card. */
+	lastCharacters: Scalars['String'];
+	/** The amount that was applied to the checkout in its currency. */
+	presentmentAmountUsed: MoneyV2;
+};
+
 export type ShopifyProductOperation = {
 	data: { product: ShopifyProduct; shop: Shop };
 	variables: {
@@ -816,4 +2609,27 @@ export type ShopifyProductRecommendationsOperation = {
 		productId: string;
 		count?: number;
 	};
+};
+
+/** A CustomerAccessToken represents the unique token required to make modifications to the customer object. */
+export type CustomerAccessToken = {
+	__typename?: 'CustomerAccessToken';
+	/** The customer’s access token. */
+	accessToken: Scalars['String'];
+	/** The date and time when the customer access token expires. */
+	expiresAt: Scalars['DateTime'];
+};
+
+/** Return type for `customerAccessTokenCreate` mutation. */
+export type CustomerAccessTokenCreatePayload = {
+	__typename?: 'CustomerAccessTokenCreatePayload';
+	/** The newly created customer access token object. */
+	customerAccessToken?: Maybe<CustomerAccessToken>;
+	/** The list of errors that occurred from executing the mutation. */
+	customerUserErrors: Array<CustomerUserError>;
+	/**
+	 * The list of errors that occurred from executing the mutation.
+	 * @deprecated Use `customerUserErrors` instead.
+	 */
+	userErrors: Array<UserError>;
 };
