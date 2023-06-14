@@ -799,92 +799,381 @@ export type CartLineInput = {
 	sellingPlanId?: InputMaybe<string>;
 };
 
-export type ShopifyProductOperation = {
-	data: { product: ShopifyProduct; shop: Shop };
-	variables: {
-		handle: string;
-		selectedOptions: any[];
-	};
+export type MoneyV2 = {
+	__typename?: 'MoneyV2';
+	/** Decimal money amount. */
+	amount: Scalars['Decimal'];
+	/** Currency of the money. */
+	currencyCode: CurrencyCode;
 };
 
-export type ShopifyProductRecommendationsOperation = {
-	data: {
-		recommended: Product[];
-		additional: ProductConnection;
-	};
-	variables: {
-		productId: string;
-		count?: number;
-	};
+/** Return type for `customerCreate` mutation. */
+export type CustomerCreatePayload = {
+	__typename?: 'CustomerCreatePayload';
+	/** The created customer object. */
+	customer?: Maybe<Customer>;
+	/** The list of errors that occurred from executing the mutation. */
+	customerUserErrors: Array<CustomerUserError>;
+	/**
+	 * The list of errors that occurred from executing the mutation.
+	 * @deprecated Use `customerUserErrors` instead.
+	 */
+	userErrors: Array<UserError>;
 };
 
-export type CartCost = {
-	__typename?: 'CartCost';
-	/** The estimated amount, before taxes and discounts, for the customer to pay at checkout. The checkout charge amount doesn't include any deferred payments that'll be paid at a later date. If the cart has no deferred payments, then the checkout charge amount is equivalent to `subtotalAmount`. */
-	checkoutChargeAmount: Money;
-	/** The amount, before taxes and cart-level discounts, for the customer to pay. */
-	subtotalAmount: Money;
-	/** Whether the subtotal amount is estimated. */
-	subtotalAmountEstimated: boolean;
-	/** The total amount for the customer to pay. */
-	totalAmount: Money;
-	/** Whether the total amount is estimated. */
-	totalAmountEstimated: boolean;
-	/** The duty amount for the customer to pay at checkout. */
-	totalDutyAmount?: Maybe<Money>;
-	/** Whether the total duty amount is estimated. */
-	totalDutyAmountEstimated: boolean;
-	/** The tax amount for the customer to pay at checkout. */
-	totalTaxAmount?: Maybe<Money>;
-	/** Whether the total tax amount is estimated. */
-	totalTaxAmountEstimated: boolean;
+
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+	ID: string;
+	String: string;
+	Boolean: boolean;
+	Int: number;
+	Float: number;
+	Color: string;
+	DateTime: string;
+	Decimal: string;
+	HTML: string;
+	JSON: unknown;
+	URL: string;
+	UnsignedInt64: string;
 };
 
-export type CartType = HasMetafields &
+/** Represents an error that happens during execution of a customer mutation. */
+export type CustomerUserError = DisplayableError & {
+	__typename?: 'CustomerUserError';
+	/** The error code. */
+	code?: Maybe<CustomerErrorCode>;
+	/** The path to the input field that caused the error. */
+	field?: Maybe<Array<Scalars['String']>>;
+	/** The error message. */
+	message: Scalars['String'];
+};
+
+/** Represents an error in the input of a mutation. */
+export type UserError = DisplayableError & {
+	__typename?: 'UserError';
+	/** The path to the input field that caused the error. */
+	field?: Maybe<Array<Scalars['String']>>;
+	/** The error message. */
+	message: Scalars['String'];
+};
+
+/** A filter used to view a subset of products in a collection matching a specific variant option. */
+export type VariantOptionFilter = {
+	/** The name of the variant option to filter on. */
+	name: Scalars['String'];
+	/** The value of the variant option to filter on. */
+	value: Scalars['String'];
+};
+
+
+/** A single line item in the checkout, grouped by variant and attributes. */
+export type CheckoutLineItem = Node & {
+	__typename?: 'CheckoutLineItem';
+	/** Extra information in the form of an array of Key-Value pairs about the line item. */
+	customAttributes: Array<Attribute>;
+	/** The discounts that have been allocated onto the checkout line item by discount applications. */
+	discountAllocations: Array<DiscountAllocation>;
+	/** A globally-unique identifier. */
+	id: Scalars['ID'];
+	/** The quantity of the line item. */
+	quantity: Scalars['Int'];
+	/** Title of the line item. Defaults to the product's title. */
+	title: Scalars['String'];
+	/** Unit price of the line item. */
+	unitPrice?: Maybe<MoneyV2>;
+	/** Product variant of the line item. */
+	variant?: Maybe<ProductVariant>;
+};
+
+/**
+ * An auto-generated type for paginating through multiple CheckoutLineItems.
+ *
+ */
+export type CheckoutLineItemConnection = {
+	__typename?: 'CheckoutLineItemConnection';
+	/** A list of edges. */
+	edges: Array<CheckoutLineItemEdge>;
+	/** A list of the nodes contained in CheckoutLineItemEdge. */
+	nodes: Array<CheckoutLineItem>;
+	/** Information to aid in pagination. */
+	pageInfo: PageInfo;
+};
+
+/**
+ * An auto-generated type which holds one CheckoutLineItem and a cursor during pagination.
+ *
+ */
+export type CheckoutLineItemEdge = {
+	__typename?: 'CheckoutLineItemEdge';
+	/** A cursor for use in pagination. */
+	cursor: Scalars['String'];
+	/** The item at the end of CheckoutLineItemEdge. */
+	node: CheckoutLineItem;
+};
+
+/** The value of the percentage pricing object. */
+export type PricingPercentageValue = {
+	__typename?: 'PricingPercentageValue';
+	/** The percentage value of the object. */
+	percentage: Scalars['Float'];
+};
+
+/** The price value (fixed or percentage) for a discount application. */
+export type PricingValue = MoneyV2 | PricingPercentageValue;
+
+/**
+ * Automatic discount applications capture the intentions of a discount that was automatically applied.
+ *
+ */
+export type AutomaticDiscountApplication = DiscountApplication & {
+	__typename?: 'AutomaticDiscountApplication';
+	/** The method by which the discount's value is allocated to its entitled items. */
+	allocationMethod: DiscountApplicationAllocationMethod;
+	/** Which lines of targetType that the discount is allocated over. */
+	targetSelection: DiscountApplicationTargetSelection;
+	/** The type of line that the discount is applicable towards. */
+	targetType: DiscountApplicationTargetType;
+	/** The title of the application. */
+	title: Scalars['String'];
+	/** The value of the discount application. */
+	value: PricingValue;
+};
+
+/**
+ * Manual discount applications capture the intentions of a discount that was manually created.
+ *
+ */
+export type ManualDiscountApplication = DiscountApplication & {
+	__typename?: 'ManualDiscountApplication';
+	/** The method by which the discount's value is allocated to its entitled items. */
+	allocationMethod: DiscountApplicationAllocationMethod;
+	/** The description of the application. */
+	description?: Maybe<Scalars['String']>;
+	/** Which lines of targetType that the discount is allocated over. */
+	targetSelection: DiscountApplicationTargetSelection;
+	/** The type of line that the discount is applicable towards. */
+	targetType: DiscountApplicationTargetType;
+	/** The title of the application. */
+	title: Scalars['String'];
+	/** The value of the discount application. */
+	value: PricingValue;
+};
+
+/**
+ * Script discount applications capture the intentions of a discount that
+ * was created by a Shopify Script.
+ *
+ */
+export type ScriptDiscountApplication = DiscountApplication & {
+	__typename?: 'ScriptDiscountApplication';
+	/** The method by which the discount's value is allocated to its entitled items. */
+	allocationMethod: DiscountApplicationAllocationMethod;
+	/** Which lines of targetType that the discount is allocated over. */
+	targetSelection: DiscountApplicationTargetSelection;
+	/** The type of line that the discount is applicable towards. */
+	targetType: DiscountApplicationTargetType;
+	/** The title of the application as defined by the Script. */
+	title: Scalars['String'];
+	/** The value of the discount application. */
+	value: PricingValue;
+};
+
+/**
+ * An amount discounting the line that has been allocated by a discount.
+ *
+ */
+export type DiscountAllocation = {
+	__typename?: 'DiscountAllocation';
+	/** Amount of discount allocated. */
+	allocatedAmount: MoneyV2;
+	/** The discount this allocated amount originated from. */
+	discountApplication:
+		| AutomaticDiscountApplication
+		| DiscountCodeApplication
+		| ManualDiscountApplication
+		| ScriptDiscountApplication;
+};
+
+/**
+ * Discount applications capture the intentions of a discount source at
+ * the time of application.
+ *
+ */
+export type DiscountApplication = {
+	/** The method by which the discount's value is allocated to its entitled items. */
+	allocationMethod: DiscountApplicationAllocationMethod;
+	/** Which lines of targetType that the discount is allocated over. */
+	targetSelection: DiscountApplicationTargetSelection;
+	/** The type of line that the discount is applicable towards. */
+	targetType: DiscountApplicationTargetType;
+	/** The value of the discount application. */
+	value: PricingValue;
+};
+
+/** The method by which the discount's value is allocated onto its entitled lines. */
+export type DiscountApplicationAllocationMethod =
+	/** The value is spread across all entitled lines. */
+	| 'ACROSS'
+	/** The value is applied onto every entitled line. */
+	| 'EACH'
+	/** The value is specifically applied onto a particular line. */
+	| 'ONE';
+
+
+/**
+ * An auto-generated type which holds one DiscountApplication and a cursor during pagination.
+ *
+ */
+export type DiscountApplicationEdge = {
+	__typename?: 'DiscountApplicationEdge';
+	/** A cursor for use in pagination. */
+	cursor: Scalars['String'];
+	/** The item at the end of DiscountApplicationEdge. */
+	node:
+		| AutomaticDiscountApplication
+		| DiscountCodeApplication
+		| ManualDiscountApplication
+		| ScriptDiscountApplication;
+};
+
+/**
+ * The lines on the order to which the discount is applied, of the type defined by
+ * the discount application's `targetType`. For example, the value `ENTITLED`, combined with a `targetType` of
+ * `LINE_ITEM`, applies the discount on all line items that are entitled to the discount.
+ * The value `ALL`, combined with a `targetType` of `SHIPPING_LINE`, applies the discount on all shipping lines.
+ *
+ */
+export type DiscountApplicationTargetSelection =
+	/** The discount is allocated onto all the lines. */
+	| 'ALL'
+	/** The discount is allocated onto only the lines that it's entitled for. */
+	| 'ENTITLED'
+	/** The discount is allocated onto explicitly chosen lines. */
+	| 'EXPLICIT';
+
+/**
+ * The type of line (i.e. line item or shipping line) on an order that the discount is applicable towards.
+ *
+ */
+export type DiscountApplicationTargetType =
+	/** The discount applies onto line items. */
+	| 'LINE_ITEM'
+	/** The discount applies onto shipping lines. */
+	| 'SHIPPING_LINE';
+
+/**
+ * Discount code applications capture the intentions of a discount code at
+ * the time that it is applied.
+ *
+ */
+export type DiscountCodeApplication = DiscountApplication & {
+	__typename?: 'DiscountCodeApplication';
+	/** The method by which the discount's value is allocated to its entitled items. */
+	allocationMethod: DiscountApplicationAllocationMethod;
+	/** Specifies whether the discount code was applied successfully. */
+	applicable: Scalars['Boolean'];
+	/** The string identifying the discount code that was used at the time of application. */
+	code: Scalars['String'];
+	/** Which lines of targetType that the discount is allocated over. */
+	targetSelection: DiscountApplicationTargetSelection;
+	/** The type of line that the discount is applicable towards. */
+	targetType: DiscountApplicationTargetType;
+	/** The value of the discount application. */
+	value: PricingValue;
+};
+
+/** Represents the reason for the order's cancellation. */
+export type OrderCancelReason =
+	/** The customer wanted to cancel the order. */
+	| 'CUSTOMER'
+	/** Payment was declined. */
+	| 'DECLINED'
+	/** The order was fraudulent. */
+	| 'FRAUD'
+	/** There was insufficient inventory. */
+	| 'INVENTORY'
+	/** The order was canceled for an unlisted reason. */
+	| 'OTHER';
+
+/** Represents the order's current financial status. */
+export type OrderFinancialStatus =
+	/** Displayed as **Authorized**. */
+	| 'AUTHORIZED'
+	/** Displayed as **Paid**. */
+	| 'PAID'
+	/** Displayed as **Partially paid**. */
+	| 'PARTIALLY_PAID'
+	/** Displayed as **Partially refunded**. */
+	| 'PARTIALLY_REFUNDED'
+	/** Displayed as **Pending**. */
+	| 'PENDING'
+	/** Displayed as **Refunded**. */
+	| 'REFUNDED'
+	/** Displayed as **Voided**. */
+	| 'VOIDED';
+
+/** Represents the order's aggregated fulfillment status for display purposes. */
+export type OrderFulfillmentStatus =
+	/** Displayed as **Fulfilled**. All of the items in the order have been fulfilled. */
+	| 'FULFILLED'
+	/** Displayed as **In progress**. Some of the items in the order have been fulfilled, or a request for fulfillment has been sent to the fulfillment service. */
+	| 'IN_PROGRESS'
+	/** Displayed as **On hold**. All of the unfulfilled items in this order are on hold. */
+	| 'ON_HOLD'
+	/** Displayed as **Open**. None of the items in the order have been fulfilled. Replaced by "UNFULFILLED" status. */
+	| 'OPEN'
+	/** Displayed as **Partially fulfilled**. Some of the items in the order have been fulfilled. */
+	| 'PARTIALLY_FULFILLED'
+	/** Displayed as **Pending fulfillment**. A request for fulfillment of some items awaits a response from the fulfillment service. Replaced by "IN_PROGRESS" status. */
+	| 'PENDING_FULFILLMENT'
+	/** Displayed as **Restocked**. All of the items in the order have been restocked. Replaced by "UNFULFILLED" status. */
+	| 'RESTOCKED'
+	/** Displayed as **Scheduled**. All of the unfulfilled items in this order are scheduled for fulfillment at later time. */
+	| 'SCHEDULED'
+	/** Displayed as **Unfulfilled**. None of the items in the order have been fulfilled. */
+	| 'UNFULFILLED';
+
+/** An order is a customer’s completed request to purchase one or more products from a shop. An order is created when a customer completes the checkout process, during which time they provides an email address, billing address and payment information. */
+export type Order = HasMetafields &
 	Node & {
-		__typename?: 'Cart';
-		/** An attribute associated with the cart. */
-		attribute?: Maybe<Attribute>;
-		/** The attributes associated with the cart. Attributes are represented as key-value pairs. */
-		attributes: Array<Attribute>;
-		/** Information about the buyer that is interacting with the cart. */
-		buyerIdentity: CartBuyerIdentity;
-		/** The URL of the checkout for the cart. */
-		checkoutUrl: string;
-		/** The estimated costs that the buyer will pay at checkout. The costs are subject to change and changes will be reflected at checkout. The `cost` field uses the `buyerIdentity` field to determine [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing). */
-		cost: CartCost;
-		/** The date and time when the cart was created. */
-		createdAt: string;
-		/**
-		 * The delivery groups available for the cart, based on the buyer identity default
-		 * delivery address preference or the default address of the logged-in customer.
-		 *
-		 */
-		deliveryGroups: CartDeliveryGroupConnection;
-		/** The discounts that have been applied to the entire cart. */
-		discountAllocations: Array<
-			| CartAutomaticDiscountAllocation
-			| CartCodeDiscountAllocation
-			| CartCustomDiscountAllocation
-		>;
-		/**
-		 * The case-insensitive discount codes that the customer added at checkout.
-		 *
-		 */
-		discountCodes: Array<CartDiscountCode>;
-		/**
-		 * The estimated costs that the buyer will pay at checkout.
-		 * The estimated costs are subject to change and changes will be reflected at checkout.
-		 * The `estimatedCost` field uses the `buyerIdentity` field to determine
-		 * [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing).
-		 *
-		 * @deprecated Use `cost` instead.
-		 */
-		estimatedCost: CartEstimatedCost;
+		__typename?: 'Order';
+		/** The address associated with the payment method. */
+		billingAddress?: Maybe<MailingAddress>;
+		/** The reason for the order's cancellation. Returns `null` if the order wasn't canceled. */
+		cancelReason?: Maybe<OrderCancelReason>;
+		/** The date and time when the order was canceled. Returns null if the order wasn't canceled. */
+		canceledAt?: Maybe<Scalars['DateTime']>;
+		/** The code of the currency used for the payment. */
+		currencyCode: CurrencyCode;
+		/** The subtotal of line items and their discounts, excluding line items that have been removed. Does not contain order-level discounts, duties, shipping costs, or shipping discounts. Taxes are not included unless the order is a taxes-included order. */
+		currentSubtotalPrice: MoneyV2;
+		/** The total cost of duties for the order, including refunds. */
+		currentTotalDuties?: Maybe<MoneyV2>;
+		/** The total amount of the order, including duties, taxes and discounts, minus amounts for line items that have been removed. */
+		currentTotalPrice: MoneyV2;
+		/** The total of all taxes applied to the order, excluding taxes for returned line items. */
+		currentTotalTax: MoneyV2;
+		/** A list of the custom attributes added to the order. */
+		customAttributes: Array<Attribute>;
+		/** The locale code in which this specific order happened. */
+		customerLocale?: Maybe<Scalars['String']>;
+		/** The unique URL that the customer can use to access the order. */
+		customerUrl?: Maybe<Scalars['URL']>;
+		/** Discounts that have been applied on the order. */
+		discountApplications: DiscountApplicationConnection;
+		/** Whether the order has had any edits applied or not. */
+		edited: Scalars['Boolean'];
+		/** The customer's email address. */
+		email?: Maybe<Scalars['String']>;
+		/** The financial status of the order. */
+		financialStatus?: Maybe<OrderFinancialStatus>;
+		/** The fulfillment status for the order. */
+		fulfillmentStatus: OrderFulfillmentStatus;
 		/** A globally-unique identifier. */
-		id: string;
-		/** A list of lines containing information about the items the customer intends to purchase. */
-		lines: BaseCartLineConnection;
+		id: Scalars['ID'];
+		/** List of the order’s line items. */
+		lineItems: OrderLineItemConnection;
 		/** Returns a metafield found by namespace and key. */
 		metafield?: Maybe<Metafield>;
 		/**
@@ -892,382 +1181,127 @@ export type CartType = HasMetafields &
 		 *
 		 */
 		metafields: Array<Maybe<Metafield>>;
-		/** A note that is associated with the cart. For example, the note can be a personalized message to the buyer. */
-		note?: Maybe<string>;
-		/** The total number of items in the cart. */
-		totalQuantity: number;
-		/** The date and time when the cart was updated. */
-		updatedAt: string;
-	};
-
-export type CartDiscountCode = {
-	__typename?: 'CartDiscountCode';
-	/** Whether the discount code is applicable to the cart's current contents. */
-	applicable: boolean;
-	/** The code for the discount. */
-	code: string;
-};
-
-export type CartEstimatedCost = {
-	__typename?: 'CartEstimatedCost';
-	/** The estimated amount, before taxes and discounts, for the customer to pay at checkout. The checkout charge amount doesn't include any deferred payments that'll be paid at a later date. If the cart has no deferred payments, then the checkout charge amount is equivalent to`subtotal_amount`. */
-	checkoutChargeAmount: Money;
-	/** The estimated amount, before taxes and discounts, for the customer to pay. */
-	subtotalAmount: Money;
-	/** The estimated total amount for the customer to pay. */
-	totalAmount: Money;
-	/** The estimated duty amount for the customer to pay at checkout. */
-	totalDutyAmount?: Maybe<Money>;
-	/** The estimated tax amount for the customer to pay at checkout. */
-	totalTaxAmount?: Maybe<Money>;
-};
-
-export type CartDeliveryGroupConnection = {
-	__typename?: 'CartDeliveryGroupConnection';
-	/** A list of edges. */
-	edges: Array<CartDeliveryGroupEdge>;
-	/** A list of the nodes contained in CartDeliveryGroupEdge. */
-	nodes: Array<CartDeliveryGroup>;
-	/** Information to aid in pagination. */
-	pageInfo: PageInfo;
-};
-
-/**
- * An auto-generated type which holds one CartDeliveryGroup and a cursor during pagination.
- *
- */
-export type CartDeliveryGroupEdge = {
-	__typename?: 'CartDeliveryGroupEdge';
-	/** A cursor for use in pagination. */
-	cursor: string;
-	/** The item at the end of CartDeliveryGroupEdge. */
-	node: CartDeliveryGroup;
-};
-
-export type CartDeliveryGroup = {
-	__typename?: 'CartDeliveryGroup';
-	/** A list of cart lines for the delivery group. */
-	cartLines: BaseCartLineConnection;
-	/** The destination address for the delivery group. */
-	deliveryAddress: MailingAddress;
-	/** The delivery options available for the delivery group. */
-	deliveryOptions: Array<CartDeliveryOption>;
-	/** The ID for the delivery group. */
-	id: string;
-	/** The selected delivery option for the delivery group. */
-	selectedDeliveryOption?: Maybe<CartDeliveryOption>;
-};
-
-export type BaseCartLineConnection = {
-	__typename?: 'BaseCartLineConnection';
-	/** A list of edges. */
-	edges: Array<BaseCartLineEdge>;
-	/** A list of the nodes contained in BaseCartLineEdge. */
-	nodes: Array<CartLine>;
-	/** Information to aid in pagination. */
-	pageInfo: PageInfo;
-};
-
-/**
- * An auto-generated type which holds one BaseCartLine and a cursor during pagination.
- *
- */
-export type BaseCartLineEdge = {
-	__typename?: 'BaseCartLineEdge';
-	/** A cursor for use in pagination. */
-	cursor: string;
-	/** The item at the end of BaseCartLineEdge. */
-	node: CartLine;
-};
-
-export type CartLine = BaseCartLine &
-	Node & {
-		__typename?: 'CartLine';
-		/** An attribute associated with the cart line. */
-		attribute?: Maybe<Attribute>;
-		/** The attributes associated with the cart line. Attributes are represented as key-value pairs. */
-		attributes: Array<Attribute>;
-		/** The cost of the merchandise that the buyer will pay for at checkout. The costs are subject to change and changes will be reflected at checkout. */
-		cost: CartLineCost;
-		/** The discounts that have been applied to the cart line. */
-		discountAllocations: Array<
-			| CartAutomaticDiscountAllocation
-			| CartCodeDiscountAllocation
-			| CartCustomDiscountAllocation
-		>;
 		/**
-		 * The estimated cost of the merchandise that the buyer will pay for at checkout. The estimated costs are subject to change and changes will be reflected at checkout.
-		 * @deprecated Use `cost` instead.
+		 * Unique identifier for the order that appears on the order.
+		 * For example, _#1000_ or _Store1001.
+		 *
 		 */
-		estimatedCost: CartLineEstimatedCost;
-		/** A globally-unique identifier. */
-		id: string;
-		/** The merchandise that the buyer intends to purchase. */
-		merchandise: Merchandise;
-		/** The quantity of the merchandise that the customer intends to purchase. */
-		quantity: number;
-		/** The selling plan associated with the cart line and the effect that each selling plan has on variants when they're purchased. */
-		sellingPlanAllocation?: Maybe<SellingPlanAllocation>;
+		name: Scalars['String'];
+		/** A unique numeric identifier for the order for use by shop owner and customer. */
+		orderNumber: Scalars['Int'];
+		/** The total cost of duties charged at checkout. */
+		originalTotalDuties?: Maybe<MoneyV2>;
+		/** The total price of the order before any applied edits. */
+		originalTotalPrice: MoneyV2;
+		/** The customer's phone number for receiving SMS notifications. */
+		phone?: Maybe<Scalars['String']>;
+		/**
+		 * The date and time when the order was imported.
+		 * This value can be set to dates in the past when importing from other systems.
+		 * If no value is provided, it will be auto-generated based on current date and time.
+		 *
+		 */
+		processedAt: Scalars['DateTime'];
+		/** The address to where the order will be shipped. */
+		shippingAddress?: Maybe<MailingAddress>;
+		/**
+		 * The discounts that have been allocated onto the shipping line by discount applications.
+		 *
+		 */
+		shippingDiscountAllocations: Array<DiscountAllocation>;
+		/** The unique URL for the order's status page. */
+		statusUrl: Scalars['URL'];
+		/** Price of the order before shipping and taxes. */
+		subtotalPrice?: Maybe<MoneyV2>;
+		/**
+		 * Price of the order before duties, shipping and taxes.
+		 * @deprecated Use `subtotalPrice` instead.
+		 */
+		subtotalPriceV2?: Maybe<MoneyV2>;
+		/** List of the order’s successful fulfillments. */
+		successfulFulfillments?: Maybe<Array<Fulfillment>>;
+		/** The sum of all the prices of all the items in the order, duties, taxes and discounts included (must be positive). */
+		totalPrice: MoneyV2;
+		/**
+		 * The sum of all the prices of all the items in the order, duties, taxes and discounts included (must be positive).
+		 * @deprecated Use `totalPrice` instead.
+		 */
+		totalPriceV2: MoneyV2;
+		/** The total amount that has been refunded. */
+		totalRefunded: MoneyV2;
+		/**
+		 * The total amount that has been refunded.
+		 * @deprecated Use `totalRefunded` instead.
+		 */
+		totalRefundedV2: MoneyV2;
+		/** The total cost of shipping. */
+		totalShippingPrice: MoneyV2;
+		/**
+		 * The total cost of shipping.
+		 * @deprecated Use `totalShippingPrice` instead.
+		 */
+		totalShippingPriceV2: MoneyV2;
+		/** The total cost of taxes. */
+		totalTax?: Maybe<MoneyV2>;
+		/**
+		 * The total cost of taxes.
+		 * @deprecated Use `totalTax` instead.
+		 */
+		totalTaxV2?: Maybe<MoneyV2>;
 	};
 
-export type BaseCartLine = {
-	/** An attribute associated with the cart line. */
-	attribute?: Maybe<Attribute>;
-	/** The attributes associated with the cart line. Attributes are represented as key-value pairs. */
-	attributes: Array<Attribute>;
-	/** The cost of the merchandise that the buyer will pay for at checkout. The costs are subject to change and changes will be reflected at checkout. */
-	cost: CartLineCost;
-	/** The discounts that have been applied to the cart line. */
-	discountAllocations: Array<
-		| CartAutomaticDiscountAllocation
-		| CartCodeDiscountAllocation
-		| CartCustomDiscountAllocation
-	>;
-	/**
-	 * The estimated cost of the merchandise that the buyer will pay for at checkout. The estimated costs are subject to change and changes will be reflected at checkout.
-	 * @deprecated Use `cost` instead.
-	 */
-	estimatedCost: CartLineEstimatedCost;
-	/** A globally-unique identifier. */
-	id: string;
-	/** The merchandise that the buyer intends to purchase. */
-	merchandise: Merchandise;
-	/** The quantity of the merchandise that the customer intends to purchase. */
-	quantity: number;
-	/** The selling plan associated with the cart line and the effect that each selling plan has on variants when they're purchased. */
-	sellingPlanAllocation?: Maybe<SellingPlanAllocation>;
+/** Represents an error in the input of a mutation. */
+export type DisplayableError = {
+	/** The path to the input field that caused the error. */
+	field?: Maybe<Array<Scalars['String']>>;
+	/** The error message. */
+	message: Scalars['String'];
 };
 
-export type SellingPlanAllocation = {
-	__typename?: 'SellingPlanAllocation';
-	/** The checkout charge amount due for the purchase. */
-	checkoutChargeAmount: Money;
-	/** A list of price adjustments, with a maximum of two. When there are two, the first price adjustment goes into effect at the time of purchase, while the second one starts after a certain number of orders. A price adjustment represents how a selling plan affects pricing when a variant is purchased with a selling plan. Prices display in the customer's currency if the shop is configured for it. */
-	priceAdjustments: Array<SellingPlanAllocationPriceAdjustment>;
-	/** The remaining balance charge amount due for the purchase. */
-	remainingBalanceChargeAmount: Money;
-	/** A representation of how products and variants can be sold and purchased. For example, an individual selling plan could be '6 weeks of prepaid granola, delivered weekly'. */
-	sellingPlan: SellingPlan;
+/** Represents a web address. */
+export type Domain = {
+	__typename?: 'Domain';
+	/** The host name of the domain (eg: `example.com`). */
+	host: Scalars['String'];
+	/** Whether SSL is enabled or not. */
+	sslEnabled: Scalars['Boolean'];
+	/** The URL of the domain (eg: `https://example.com`). */
+	url: Scalars['URL'];
 };
 
-/** The resulting prices for variants when they're purchased with a specific selling plan. */
-export type SellingPlanAllocationPriceAdjustment = {
-	__typename?: 'SellingPlanAllocationPriceAdjustment';
-	/** The price of the variant when it's purchased without a selling plan for the same number of deliveries. For example, if a customer purchases 6 deliveries of $10.00 granola separately, then the price is 6 x $10.00 = $60.00. */
-	compareAtPrice: Money;
-	/** The effective price for a single delivery. For example, for a prepaid subscription plan that includes 6 deliveries at the price of $48.00, the per delivery price is $8.00. */
-	perDeliveryPrice: Money;
-	/** The price of the variant when it's purchased with a selling plan For example, for a prepaid subscription plan that includes 6 deliveries of $10.00 granola, where the customer gets 20% off, the price is 6 x $10.00 x 0.80 = $48.00. */
-	price: Money;
-	/** The resulting price per unit for the variant associated with the selling plan. If the variant isn't sold by quantity or measurement, then this field returns `null`. */
-	unitPrice?: Maybe<Money>;
-};
+/** Possible error codes that can be returned by `CustomerUserError`. */
+export type CustomerErrorCode =
+	/** Customer already enabled. */
+	| 'ALREADY_ENABLED'
+	/** Input email contains an invalid domain name. */
+	| 'BAD_DOMAIN'
+	/** The input value is blank. */
+	| 'BLANK'
+	/** Input contains HTML tags. */
+	| 'CONTAINS_HTML_TAGS'
+	/** Input contains URL. */
+	| 'CONTAINS_URL'
+	/** Customer is disabled. */
+	| 'CUSTOMER_DISABLED'
+	/** The input value is invalid. */
+	| 'INVALID'
+	/** Multipass token is not valid. */
+	| 'INVALID_MULTIPASS_REQUEST'
+	/** Address does not exist. */
+	| 'NOT_FOUND'
+	/** Input password starts or ends with whitespace. */
+	| 'PASSWORD_STARTS_OR_ENDS_WITH_WHITESPACE'
+	/** The input value is already taken. */
+	| 'TAKEN'
+	/** Invalid activation token. */
+	| 'TOKEN_INVALID'
+	/** The input value is too long. */
+	| 'TOO_LONG'
+	/** The input value is too short. */
+	| 'TOO_SHORT'
+	/** Unidentified customer. */
+	| 'UNIDENTIFIED_CUSTOMER';
 
-export type SellingPlan = {
-	__typename?: 'SellingPlan';
-	/** The initial payment due for the purchase. */
-	checkoutCharge: SellingPlanCheckoutCharge;
-	/** The description of the selling plan. */
-	description?: Maybe<string>;
-	/** A globally-unique identifier. */
-	id: string;
-	/** The name of the selling plan. For example, '6 weeks of prepaid granola, delivered weekly'. */
-	name: string;
-	/** The selling plan options available in the drop-down list in the storefront. For example, 'Delivery every week' or 'Delivery every 2 weeks' specifies the delivery frequency options for the product. Individual selling plans contribute their options to the associated selling plan group. For example, a selling plan group might have an option called `option1: Delivery every`. One selling plan in that group could contribute `option1: 2 weeks` with the pricing for that option, and another selling plan could contribute `option1: 4 weeks`, with different pricing. */
-	options: Array<SellingPlanOption>;
-	/** The price adjustments that a selling plan makes when a variant is purchased with a selling plan. */
-	priceAdjustments: Array<SellingPlanPriceAdjustment>;
-	/** Whether purchasing the selling plan will result in multiple deliveries. */
-	recurringDeliveries: boolean;
-};
-
-export type SellingPlanCheckoutCharge = {
-	__typename?: 'SellingPlanCheckoutCharge';
-	/** The charge type for the checkout charge. */
-	type: SellingPlanCheckoutChargeType;
-	/** The charge value for the checkout charge. */
-	value: SellingPlanCheckoutChargeValue;
-};
-
-export type SellingPlanCheckoutChargePercentageValue = {
-	__typename?: 'SellingPlanCheckoutChargePercentageValue';
-	/** The percentage value of the price used for checkout charge. */
-	percentage: number;
-};
-
-export type SellingPlanOption = {
-	__typename?: 'SellingPlanOption';
-	/** The name of the option (ie "Delivery every"). */
-	name?: Maybe<string>;
-	/** The value of the option (ie "Month"). */
-	value?: Maybe<string>;
-};
-
-/** The checkout charge when the full amount isn't charged at checkout. */
-export type SellingPlanCheckoutChargeType =
-	/** The checkout charge is a percentage of the product or variant price. */
-	| 'PERCENTAGE'
-	/** The checkout charge is a fixed price amount. */
-	| 'PRICE';
-
-/** The portion of the price to be charged at checkout. */
-export type SellingPlanCheckoutChargeValue =
-	| Money
-	| SellingPlanCheckoutChargePercentageValue;
-
-export type Merchandise = ProductVariant;
-
-export type SellingPlanPercentagePriceAdjustment = {
-	__typename?: 'SellingPlanPercentagePriceAdjustment';
-	/** The percentage value of the price adjustment. */
-	adjustmentPercentage: number;
-};
-
-/** Represents by how much the price of a variant associated with a selling plan is adjusted. Each variant can have up to two price adjustments. If a variant has multiple price adjustments, then the first price adjustment applies when the variant is initially purchased. The second price adjustment applies after a certain number of orders (specified by the `orderCount` field) are made. If a selling plan doesn't have any price adjustments, then the unadjusted price of the variant is the effective price. */
-export type SellingPlanPriceAdjustment = {
-	__typename?: 'SellingPlanPriceAdjustment';
-	/** The type of price adjustment. An adjustment value can have one of three types: percentage, amount off, or a new price. */
-	adjustmentValue: SellingPlanPriceAdjustmentValue;
-	/** The number of orders that the price adjustment applies to. If the price adjustment always applies, then this field is `null`. */
-	orderCount?: Maybe<number>;
-};
-
-export type SellingPlanPriceAdjustmentValue =
-	| SellingPlanFixedAmountPriceAdjustment
-	| SellingPlanFixedPriceAdjustment
-	| SellingPlanPercentagePriceAdjustment;
-
-export type SellingPlanFixedAmountPriceAdjustment = {
-	__typename?: 'SellingPlanFixedAmountPriceAdjustment';
-	/** The money value of the price adjustment. */
-	adjustmentAmount: Money;
-};
-
-/** A fixed price adjustment for a variant that's purchased with a selling plan. */
-export type SellingPlanFixedPriceAdjustment = {
-	__typename?: 'SellingPlanFixedPriceAdjustment';
-	/** A new price of the variant when it's purchased with the selling plan. */
-	price: Money;
-};
-
-export type CartLineEstimatedCost = {
-	__typename?: 'CartLineEstimatedCost';
-	/** The amount of the merchandise line. */
-	amount: Money;
-	/** The compare at amount of the merchandise line. */
-	compareAtAmount?: Maybe<Money>;
-	/** The estimated cost of the merchandise line before discounts. */
-	subtotalAmount: Money;
-	/** The estimated total cost of the merchandise line. */
-	totalAmount: Money;
-};
-
-/** The discounts automatically applied to the cart line based on prerequisites that have been met. */
-export type CartCustomDiscountAllocation = CartDiscountAllocation & {
-	__typename?: 'CartCustomDiscountAllocation';
-	/** The discounted amount that has been applied to the cart line. */
-	discountedAmount: Money;
-	/** The title of the allocated discount. */
-	title: string;
-};
-
-export type CartCodeDiscountAllocation = CartDiscountAllocation & {
-	__typename?: 'CartCodeDiscountAllocation';
-	/** The code used to apply the discount. */
-	code: string;
-	/** The discounted amount that has been applied to the cart line. */
-	discountedAmount: Money;
-};
-
-export type CartAutomaticDiscountAllocation = CartDiscountAllocation & {
-	__typename?: 'CartAutomaticDiscountAllocation';
-	/** The discounted amount that has been applied to the cart line. */
-	discountedAmount: Money;
-	/** The title of the allocated discount. */
-	title: string;
-};
-
-export type CartDiscountAllocation = {
-	/** The discounted amount that has been applied to the cart line. */
-	discountedAmount: Money;
-};
-
-export type CartLineCost = {
-	__typename?: 'CartLineCost';
-	/** The amount of the merchandise line. */
-	amountPerQuantity: Money;
-	/** The compare at amount of the merchandise line. */
-	compareAtAmountPerQuantity?: Maybe<Money>;
-	/** The cost of the merchandise line before line-level discounts. */
-	subtotalAmount: Money;
-	/** The total cost of the merchandise line. */
-	totalAmount: Money;
-};
-
-export type CartDeliveryOption = {
-	__typename?: 'CartDeliveryOption';
-	/** The code of the delivery option. */
-	code?: Maybe<string>;
-	/** The method for the delivery option. */
-	deliveryMethodType: DeliveryMethodType;
-	/** The description of the delivery option. */
-	description?: Maybe<string>;
-	/** The estimated cost for the delivery option. */
-	estimatedCost: Money;
-	/** The unique identifier of the delivery option. */
-	handle: string;
-	/** The title of the delivery option. */
-	title?: Maybe<string>;
-};
-
-export type DeliveryMethodType =
-	/** Local Delivery. */
-	| 'LOCAL'
-	/** None. */
-	| 'NONE'
-	/** Shipping to a Pickup Point. */
-	| 'PICKUP_POINT'
-	/** Local Pickup. */
-	| 'PICK_UP'
-	/** Retail. */
-	| 'RETAIL'
-	/** Shipping. */
-	| 'SHIPPING';
-
-export type Attribute = {
-	__typename?: 'Attribute';
-	/** Key or name of the attribute. */
-	key: string;
-	/** Value of the attribute. */
-	value?: string;
-};
-
-export type CartBuyerIdentity = {
-	__typename?: 'CartBuyerIdentity';
-	/** The country where the buyer is located. */
-	countryCode?: Maybe<CountryCode>;
-	/** The customer account associated with the cart. */
-	customer?: Maybe<Customer>;
-	/**
-	 * An ordered set of delivery addresses tied to the buyer that is interacting with the cart.
-	 * The rank of the preferences is determined by the order of the addresses in the array. Preferences
-	 * can be used to populate relevant fields in the checkout flow.
-	 *
-	 */
-	deliveryAddressPreferences: Array<DeliveryAddress>;
-	/** The email address of the buyer that is interacting with the cart. */
-	email?: Maybe<string>;
-	/** The phone number of the buyer that is interacting with the cart. */
-	phone?: Maybe<string>;
-	/**
-	 * A set of wallet preferences tied to the buyer that is interacting with the cart.
-	 * Preferences can be used to populate relevant payment fields in the checkout flow.
-	 *
-	 */
-	walletPreferences: Array<string>;
-};
-
-export type DeliveryAddress = MailingAddress;
 
 export type CountryCode =
 	/** Ascension Island. */
@@ -1760,6 +1794,477 @@ export type CountryCode =
 	| 'ZW'
 	/** Unknown Region. */
 	| 'ZZ';
+
+
+export type ShopifyProductOperation = {
+	data: { product: ShopifyProduct; shop: Shop };
+	variables: {
+		handle: string;
+		selectedOptions: any[];
+	};
+};
+
+export type ShopifyProductRecommendationsOperation = {
+	data: {
+		recommended: Product[];
+		additional: ProductConnection;
+	};
+	variables: {
+		productId: string;
+		count?: number;
+	};
+};
+
+export type CartCost = {
+	__typename?: 'CartCost';
+	/** The estimated amount, before taxes and discounts, for the customer to pay at checkout. The checkout charge amount doesn't include any deferred payments that'll be paid at a later date. If the cart has no deferred payments, then the checkout charge amount is equivalent to `subtotalAmount`. */
+	checkoutChargeAmount: Money;
+	/** The amount, before taxes and cart-level discounts, for the customer to pay. */
+	subtotalAmount: Money;
+	/** Whether the subtotal amount is estimated. */
+	subtotalAmountEstimated: boolean;
+	/** The total amount for the customer to pay. */
+	totalAmount: Money;
+	/** Whether the total amount is estimated. */
+	totalAmountEstimated: boolean;
+	/** The duty amount for the customer to pay at checkout. */
+	totalDutyAmount?: Maybe<Money>;
+	/** Whether the total duty amount is estimated. */
+	totalDutyAmountEstimated: boolean;
+	/** The tax amount for the customer to pay at checkout. */
+	totalTaxAmount?: Maybe<Money>;
+	/** Whether the total tax amount is estimated. */
+	totalTaxAmountEstimated: boolean;
+};
+
+export type CartType = HasMetafields &
+	Node & {
+		__typename?: 'Cart';
+		/** An attribute associated with the cart. */
+		attribute?: Maybe<Attribute>;
+		/** The attributes associated with the cart. Attributes are represented as key-value pairs. */
+		attributes: Array<Attribute>;
+		/** Information about the buyer that is interacting with the cart. */
+		buyerIdentity: CartBuyerIdentity;
+		/** The URL of the checkout for the cart. */
+		checkoutUrl: string;
+		/** The estimated costs that the buyer will pay at checkout. The costs are subject to change and changes will be reflected at checkout. The `cost` field uses the `buyerIdentity` field to determine [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing). */
+		cost: CartCost;
+		/** The date and time when the cart was created. */
+		createdAt: string;
+		/**
+		 * The delivery groups available for the cart, based on the buyer identity default
+		 * delivery address preference or the default address of the logged-in customer.
+		 *
+		 */
+		deliveryGroups: CartDeliveryGroupConnection;
+		/** The discounts that have been applied to the entire cart. */
+		discountAllocations: Array<
+			| CartAutomaticDiscountAllocation
+			| CartCodeDiscountAllocation
+			| CartCustomDiscountAllocation
+		>;
+		/**
+		 * The case-insensitive discount codes that the customer added at checkout.
+		 *
+		 */
+		discountCodes: Array<CartDiscountCode>;
+		/**
+		 * The estimated costs that the buyer will pay at checkout.
+		 * The estimated costs are subject to change and changes will be reflected at checkout.
+		 * The `estimatedCost` field uses the `buyerIdentity` field to determine
+		 * [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing).
+		 *
+		 * @deprecated Use `cost` instead.
+		 */
+		estimatedCost: CartEstimatedCost;
+		/** A globally-unique identifier. */
+		id: string;
+		/** A list of lines containing information about the items the customer intends to purchase. */
+		lines: BaseCartLineConnection;
+		/** Returns a metafield found by namespace and key. */
+		metafield?: Maybe<Metafield>;
+		/**
+		 * The metafields associated with the resource matching the supplied list of namespaces and keys.
+		 *
+		 */
+		metafields: Array<Maybe<Metafield>>;
+		/** A note that is associated with the cart. For example, the note can be a personalized message to the buyer. */
+		note?: Maybe<string>;
+		/** The total number of items in the cart. */
+		totalQuantity: number;
+		/** The date and time when the cart was updated. */
+		updatedAt: string;
+	};
+
+export type CartDiscountCode = {
+	__typename?: 'CartDiscountCode';
+	/** Whether the discount code is applicable to the cart's current contents. */
+	applicable: boolean;
+	/** The code for the discount. */
+	code: string;
+};
+
+export type CartEstimatedCost = {
+	__typename?: 'CartEstimatedCost';
+	/** The estimated amount, before taxes and discounts, for the customer to pay at checkout. The checkout charge amount doesn't include any deferred payments that'll be paid at a later date. If the cart has no deferred payments, then the checkout charge amount is equivalent to`subtotal_amount`. */
+	checkoutChargeAmount: Money;
+	/** The estimated amount, before taxes and discounts, for the customer to pay. */
+	subtotalAmount: Money;
+	/** The estimated total amount for the customer to pay. */
+	totalAmount: Money;
+	/** The estimated duty amount for the customer to pay at checkout. */
+	totalDutyAmount?: Maybe<Money>;
+	/** The estimated tax amount for the customer to pay at checkout. */
+	totalTaxAmount?: Maybe<Money>;
+};
+
+export type CartDeliveryGroupConnection = {
+	__typename?: 'CartDeliveryGroupConnection';
+	/** A list of edges. */
+	edges: Array<CartDeliveryGroupEdge>;
+	/** A list of the nodes contained in CartDeliveryGroupEdge. */
+	nodes: Array<CartDeliveryGroup>;
+	/** Information to aid in pagination. */
+	pageInfo: PageInfo;
+};
+
+/**
+ * An auto-generated type which holds one CartDeliveryGroup and a cursor during pagination.
+ *
+ */
+export type CartDeliveryGroupEdge = {
+	__typename?: 'CartDeliveryGroupEdge';
+	/** A cursor for use in pagination. */
+	cursor: string;
+	/** The item at the end of CartDeliveryGroupEdge. */
+	node: CartDeliveryGroup;
+};
+
+export type CartDeliveryGroup = {
+	__typename?: 'CartDeliveryGroup';
+	/** A list of cart lines for the delivery group. */
+	cartLines: BaseCartLineConnection;
+	/** The destination address for the delivery group. */
+	deliveryAddress: MailingAddress;
+	/** The delivery options available for the delivery group. */
+	deliveryOptions: Array<CartDeliveryOption>;
+	/** The ID for the delivery group. */
+	id: string;
+	/** The selected delivery option for the delivery group. */
+	selectedDeliveryOption?: Maybe<CartDeliveryOption>;
+};
+
+export type BaseCartLineConnection = {
+	__typename?: 'BaseCartLineConnection';
+	/** A list of edges. */
+	edges: Array<BaseCartLineEdge>;
+	/** A list of the nodes contained in BaseCartLineEdge. */
+	nodes: Array<CartLine>;
+	/** Information to aid in pagination. */
+	pageInfo: PageInfo;
+};
+
+/**
+ * An auto-generated type which holds one BaseCartLine and a cursor during pagination.
+ *
+ */
+export type BaseCartLineEdge = {
+	__typename?: 'BaseCartLineEdge';
+	/** A cursor for use in pagination. */
+	cursor: string;
+	/** The item at the end of BaseCartLineEdge. */
+	node: CartLine;
+};
+
+export type CartLine = BaseCartLine &
+	Node & {
+		__typename?: 'CartLine';
+		/** An attribute associated with the cart line. */
+		attribute?: Maybe<Attribute>;
+		/** The attributes associated with the cart line. Attributes are represented as key-value pairs. */
+		attributes: Array<Attribute>;
+		/** The cost of the merchandise that the buyer will pay for at checkout. The costs are subject to change and changes will be reflected at checkout. */
+		cost: CartLineCost;
+		/** The discounts that have been applied to the cart line. */
+		discountAllocations: Array<
+			| CartAutomaticDiscountAllocation
+			| CartCodeDiscountAllocation
+			| CartCustomDiscountAllocation
+		>;
+		/**
+		 * The estimated cost of the merchandise that the buyer will pay for at checkout. The estimated costs are subject to change and changes will be reflected at checkout.
+		 * @deprecated Use `cost` instead.
+		 */
+		estimatedCost: CartLineEstimatedCost;
+		/** A globally-unique identifier. */
+		id: string;
+		/** The merchandise that the buyer intends to purchase. */
+		merchandise: Merchandise;
+		/** The quantity of the merchandise that the customer intends to purchase. */
+		quantity: number;
+		/** The selling plan associated with the cart line and the effect that each selling plan has on variants when they're purchased. */
+		sellingPlanAllocation?: Maybe<SellingPlanAllocation>;
+	};
+
+export type BaseCartLine = {
+	/** An attribute associated with the cart line. */
+	attribute?: Maybe<Attribute>;
+	/** The attributes associated with the cart line. Attributes are represented as key-value pairs. */
+	attributes: Array<Attribute>;
+	/** The cost of the merchandise that the buyer will pay for at checkout. The costs are subject to change and changes will be reflected at checkout. */
+	cost: CartLineCost;
+	/** The discounts that have been applied to the cart line. */
+	discountAllocations: Array<
+		| CartAutomaticDiscountAllocation
+		| CartCodeDiscountAllocation
+		| CartCustomDiscountAllocation
+	>;
+	/**
+	 * The estimated cost of the merchandise that the buyer will pay for at checkout. The estimated costs are subject to change and changes will be reflected at checkout.
+	 * @deprecated Use `cost` instead.
+	 */
+	estimatedCost: CartLineEstimatedCost;
+	/** A globally-unique identifier. */
+	id: string;
+	/** The merchandise that the buyer intends to purchase. */
+	merchandise: Merchandise;
+	/** The quantity of the merchandise that the customer intends to purchase. */
+	quantity: number;
+	/** The selling plan associated with the cart line and the effect that each selling plan has on variants when they're purchased. */
+	sellingPlanAllocation?: Maybe<SellingPlanAllocation>;
+};
+
+export type SellingPlanAllocation = {
+	__typename?: 'SellingPlanAllocation';
+	/** The checkout charge amount due for the purchase. */
+	checkoutChargeAmount: Money;
+	/** A list of price adjustments, with a maximum of two. When there are two, the first price adjustment goes into effect at the time of purchase, while the second one starts after a certain number of orders. A price adjustment represents how a selling plan affects pricing when a variant is purchased with a selling plan. Prices display in the customer's currency if the shop is configured for it. */
+	priceAdjustments: Array<SellingPlanAllocationPriceAdjustment>;
+	/** The remaining balance charge amount due for the purchase. */
+	remainingBalanceChargeAmount: Money;
+	/** A representation of how products and variants can be sold and purchased. For example, an individual selling plan could be '6 weeks of prepaid granola, delivered weekly'. */
+	sellingPlan: SellingPlan;
+};
+
+/** The resulting prices for variants when they're purchased with a specific selling plan. */
+export type SellingPlanAllocationPriceAdjustment = {
+	__typename?: 'SellingPlanAllocationPriceAdjustment';
+	/** The price of the variant when it's purchased without a selling plan for the same number of deliveries. For example, if a customer purchases 6 deliveries of $10.00 granola separately, then the price is 6 x $10.00 = $60.00. */
+	compareAtPrice: Money;
+	/** The effective price for a single delivery. For example, for a prepaid subscription plan that includes 6 deliveries at the price of $48.00, the per delivery price is $8.00. */
+	perDeliveryPrice: Money;
+	/** The price of the variant when it's purchased with a selling plan For example, for a prepaid subscription plan that includes 6 deliveries of $10.00 granola, where the customer gets 20% off, the price is 6 x $10.00 x 0.80 = $48.00. */
+	price: Money;
+	/** The resulting price per unit for the variant associated with the selling plan. If the variant isn't sold by quantity or measurement, then this field returns `null`. */
+	unitPrice?: Maybe<Money>;
+};
+
+export type SellingPlan = {
+	__typename?: 'SellingPlan';
+	/** The initial payment due for the purchase. */
+	checkoutCharge: SellingPlanCheckoutCharge;
+	/** The description of the selling plan. */
+	description?: Maybe<string>;
+	/** A globally-unique identifier. */
+	id: string;
+	/** The name of the selling plan. For example, '6 weeks of prepaid granola, delivered weekly'. */
+	name: string;
+	/** The selling plan options available in the drop-down list in the storefront. For example, 'Delivery every week' or 'Delivery every 2 weeks' specifies the delivery frequency options for the product. Individual selling plans contribute their options to the associated selling plan group. For example, a selling plan group might have an option called `option1: Delivery every`. One selling plan in that group could contribute `option1: 2 weeks` with the pricing for that option, and another selling plan could contribute `option1: 4 weeks`, with different pricing. */
+	options: Array<SellingPlanOption>;
+	/** The price adjustments that a selling plan makes when a variant is purchased with a selling plan. */
+	priceAdjustments: Array<SellingPlanPriceAdjustment>;
+	/** Whether purchasing the selling plan will result in multiple deliveries. */
+	recurringDeliveries: boolean;
+};
+
+export type SellingPlanCheckoutCharge = {
+	__typename?: 'SellingPlanCheckoutCharge';
+	/** The charge type for the checkout charge. */
+	type: SellingPlanCheckoutChargeType;
+	/** The charge value for the checkout charge. */
+	value: SellingPlanCheckoutChargeValue;
+};
+
+export type SellingPlanCheckoutChargePercentageValue = {
+	__typename?: 'SellingPlanCheckoutChargePercentageValue';
+	/** The percentage value of the price used for checkout charge. */
+	percentage: number;
+};
+
+export type SellingPlanOption = {
+	__typename?: 'SellingPlanOption';
+	/** The name of the option (ie "Delivery every"). */
+	name?: Maybe<string>;
+	/** The value of the option (ie "Month"). */
+	value?: Maybe<string>;
+};
+
+/** The checkout charge when the full amount isn't charged at checkout. */
+export type SellingPlanCheckoutChargeType =
+	/** The checkout charge is a percentage of the product or variant price. */
+	| 'PERCENTAGE'
+	/** The checkout charge is a fixed price amount. */
+	| 'PRICE';
+
+/** The portion of the price to be charged at checkout. */
+export type SellingPlanCheckoutChargeValue =
+	| Money
+	| SellingPlanCheckoutChargePercentageValue;
+
+export type Merchandise = ProductVariant;
+
+export type SellingPlanPercentagePriceAdjustment = {
+	__typename?: 'SellingPlanPercentagePriceAdjustment';
+	/** The percentage value of the price adjustment. */
+	adjustmentPercentage: number;
+};
+
+/** Represents by how much the price of a variant associated with a selling plan is adjusted. Each variant can have up to two price adjustments. If a variant has multiple price adjustments, then the first price adjustment applies when the variant is initially purchased. The second price adjustment applies after a certain number of orders (specified by the `orderCount` field) are made. If a selling plan doesn't have any price adjustments, then the unadjusted price of the variant is the effective price. */
+export type SellingPlanPriceAdjustment = {
+	__typename?: 'SellingPlanPriceAdjustment';
+	/** The type of price adjustment. An adjustment value can have one of three types: percentage, amount off, or a new price. */
+	adjustmentValue: SellingPlanPriceAdjustmentValue;
+	/** The number of orders that the price adjustment applies to. If the price adjustment always applies, then this field is `null`. */
+	orderCount?: Maybe<number>;
+};
+
+export type SellingPlanPriceAdjustmentValue =
+	| SellingPlanFixedAmountPriceAdjustment
+	| SellingPlanFixedPriceAdjustment
+	| SellingPlanPercentagePriceAdjustment;
+
+export type SellingPlanFixedAmountPriceAdjustment = {
+	__typename?: 'SellingPlanFixedAmountPriceAdjustment';
+	/** The money value of the price adjustment. */
+	adjustmentAmount: Money;
+};
+
+/** A fixed price adjustment for a variant that's purchased with a selling plan. */
+export type SellingPlanFixedPriceAdjustment = {
+	__typename?: 'SellingPlanFixedPriceAdjustment';
+	/** A new price of the variant when it's purchased with the selling plan. */
+	price: Money;
+};
+
+export type CartLineEstimatedCost = {
+	__typename?: 'CartLineEstimatedCost';
+	/** The amount of the merchandise line. */
+	amount: Money;
+	/** The compare at amount of the merchandise line. */
+	compareAtAmount?: Maybe<Money>;
+	/** The estimated cost of the merchandise line before discounts. */
+	subtotalAmount: Money;
+	/** The estimated total cost of the merchandise line. */
+	totalAmount: Money;
+};
+
+/** The discounts automatically applied to the cart line based on prerequisites that have been met. */
+export type CartCustomDiscountAllocation = CartDiscountAllocation & {
+	__typename?: 'CartCustomDiscountAllocation';
+	/** The discounted amount that has been applied to the cart line. */
+	discountedAmount: Money;
+	/** The title of the allocated discount. */
+	title: string;
+};
+
+export type CartCodeDiscountAllocation = CartDiscountAllocation & {
+	__typename?: 'CartCodeDiscountAllocation';
+	/** The code used to apply the discount. */
+	code: string;
+	/** The discounted amount that has been applied to the cart line. */
+	discountedAmount: Money;
+};
+
+export type CartAutomaticDiscountAllocation = CartDiscountAllocation & {
+	__typename?: 'CartAutomaticDiscountAllocation';
+	/** The discounted amount that has been applied to the cart line. */
+	discountedAmount: Money;
+	/** The title of the allocated discount. */
+	title: string;
+};
+
+export type CartDiscountAllocation = {
+	/** The discounted amount that has been applied to the cart line. */
+	discountedAmount: Money;
+};
+
+export type CartLineCost = {
+	__typename?: 'CartLineCost';
+	/** The amount of the merchandise line. */
+	amountPerQuantity: Money;
+	/** The compare at amount of the merchandise line. */
+	compareAtAmountPerQuantity?: Maybe<Money>;
+	/** The cost of the merchandise line before line-level discounts. */
+	subtotalAmount: Money;
+	/** The total cost of the merchandise line. */
+	totalAmount: Money;
+};
+
+export type CartDeliveryOption = {
+	__typename?: 'CartDeliveryOption';
+	/** The code of the delivery option. */
+	code?: Maybe<string>;
+	/** The method for the delivery option. */
+	deliveryMethodType: DeliveryMethodType;
+	/** The description of the delivery option. */
+	description?: Maybe<string>;
+	/** The estimated cost for the delivery option. */
+	estimatedCost: Money;
+	/** The unique identifier of the delivery option. */
+	handle: string;
+	/** The title of the delivery option. */
+	title?: Maybe<string>;
+};
+
+export type DeliveryMethodType =
+	/** Local Delivery. */
+	| 'LOCAL'
+	/** None. */
+	| 'NONE'
+	/** Shipping to a Pickup Point. */
+	| 'PICKUP_POINT'
+	/** Local Pickup. */
+	| 'PICK_UP'
+	/** Retail. */
+	| 'RETAIL'
+	/** Shipping. */
+	| 'SHIPPING';
+
+export type Attribute = {
+	__typename?: 'Attribute';
+	/** Key or name of the attribute. */
+	key: string;
+	/** Value of the attribute. */
+	value?: string;
+};
+
+export type CartBuyerIdentity = {
+	__typename?: 'CartBuyerIdentity';
+	/** The country where the buyer is located. */
+	countryCode?: Maybe<CountryCode>;
+	/** The customer account associated with the cart. */
+	customer?: Maybe<Customer>;
+	/**
+	 * An ordered set of delivery addresses tied to the buyer that is interacting with the cart.
+	 * The rank of the preferences is determined by the order of the addresses in the array. Preferences
+	 * can be used to populate relevant fields in the checkout flow.
+	 *
+	 */
+	deliveryAddressPreferences: Array<DeliveryAddress>;
+	/** The email address of the buyer that is interacting with the cart. */
+	email?: Maybe<string>;
+	/** The phone number of the buyer that is interacting with the cart. */
+	phone?: Maybe<string>;
+	/**
+	 * A set of wallet preferences tied to the buyer that is interacting with the cart.
+	 * Preferences can be used to populate relevant payment fields in the checkout flow.
+	 *
+	 */
+	walletPreferences: Array<string>;
+};
+
+export type DeliveryAddress = MailingAddress;
 
 export type Customer = HasMetafields & {
 	__typename?: 'Customer';
@@ -2419,345 +2924,6 @@ export type DiscountApplicationConnection = {
 	pageInfo: PageInfo;
 };
 
-export type DiscountApplicationEdge = {
-	__typename?: 'DiscountApplicationEdge';
-	/** A cursor for use in pagination. */
-	cursor: string;
-	/** The item at the end of DiscountApplicationEdge. */
-	node:
-		| AutomaticDiscountApplication
-		| DiscountCodeApplication
-		| ManualDiscountApplication
-		| ScriptDiscountApplication;
-};
-
-export type AutomaticDiscountApplication = DiscountApplication & {
-	__typename?: 'AutomaticDiscountApplication';
-	/** The method by which the discount's value is allocated to its entitled items. */
-	allocationMethod: DiscountApplicationAllocationMethod;
-	/** Which lines of targetType that the discount is allocated over. */
-	targetSelection: DiscountApplicationTargetSelection;
-	/** The type of line that the discount is applicable towards. */
-	targetType: DiscountApplicationTargetType;
-	/** The title of the application. */
-	title: string;
-	/** The value of the discount application. */
-	value: PricingValue;
-};
-
-export type DiscountApplicationAllocationMethod =
-	/** The value is spread across all entitled lines. */
-	| 'ACROSS'
-	/** The value is applied onto every entitled line. */
-	| 'EACH'
-	/** The value is specifically applied onto a particular line. */
-	| 'ONE';
-
-export type DiscountCodeApplication = DiscountApplication & {
-	__typename?: 'DiscountCodeApplication';
-	/** The method by which the discount's value is allocated to its entitled items. */
-	allocationMethod: DiscountApplicationAllocationMethod;
-	/** Specifies whether the discount code was applied successfully. */
-	applicable: boolean;
-	/** The string identifying the discount code that was used at the time of application. */
-	code: string;
-	/** Which lines of targetType that the discount is allocated over. */
-	targetSelection: DiscountApplicationTargetSelection;
-	/** The type of line that the discount is applicable towards. */
-	targetType: DiscountApplicationTargetType;
-	/** The value of the discount application. */
-	value: PricingValue;
-};
-
-export type DiscountApplication = {
-	/** The method by which the discount's value is allocated to its entitled items. */
-	allocationMethod: DiscountApplicationAllocationMethod;
-	/** Which lines of targetType that the discount is allocated over. */
-	targetSelection: DiscountApplicationTargetSelection;
-	/** The type of line that the discount is applicable towards. */
-	targetType: DiscountApplicationTargetType;
-	/** The value of the discount application. */
-	value: PricingValue;
-};
-
-export type DiscountApplicationTargetSelection =
-	/** The discount is allocated onto all the lines. */
-	| 'ALL'
-	/** The discount is allocated onto only the lines that it's entitled for. */
-	| 'ENTITLED'
-	/** The discount is allocated onto explicitly chosen lines. */
-	| 'EXPLICIT';
-
-/**
- * The type of line (i.e. line item or shipping line) on an order that the discount is applicable towards.
- *
- */
-export type DiscountApplicationTargetType =
-	/** The discount applies onto line items. */
-	| 'LINE_ITEM'
-	/** The discount applies onto shipping lines. */
-	| 'SHIPPING_LINE';
-
-export type ManualDiscountApplication = DiscountApplication & {
-	__typename?: 'ManualDiscountApplication';
-	/** The method by which the discount's value is allocated to its entitled items. */
-	allocationMethod: DiscountApplicationAllocationMethod;
-	/** The description of the application. */
-	description?: Maybe<string>;
-	/** Which lines of targetType that the discount is allocated over. */
-	targetSelection: DiscountApplicationTargetSelection;
-	/** The type of line that the discount is applicable towards. */
-	targetType: DiscountApplicationTargetType;
-	/** The title of the application. */
-	title: string;
-	/** The value of the discount application. */
-	value: PricingValue;
-};
-
-export type ScriptDiscountApplication = DiscountApplication & {
-	__typename?: 'ScriptDiscountApplication';
-	/** The method by which the discount's value is allocated to its entitled items. */
-	allocationMethod: DiscountApplicationAllocationMethod;
-	/** Which lines of targetType that the discount is allocated over. */
-	targetSelection: DiscountApplicationTargetSelection;
-	/** The type of line that the discount is applicable towards. */
-	targetType: DiscountApplicationTargetType;
-	/** The title of the application as defined by the Script. */
-	title: string;
-	/** The value of the discount application. */
-	value: PricingValue;
-};
-
-export type PricingPercentageValue = {
-	__typename?: 'PricingPercentageValue';
-	/** The percentage value of the object. */
-	percentage: number;
-};
-
-/** The price value (fixed or percentage) for a discount application. */
-export type PricingValue = Money | PricingPercentageValue;
-
-export type CheckoutLineItem = Node & {
-	__typename?: 'CheckoutLineItem';
-	/** Extra information in the form of an array of Key-Value pairs about the line item. */
-	customAttributes: Array<Attribute>;
-	/** The discounts that have been allocated onto the checkout line item by discount applications. */
-	discountAllocations: Array<DiscountAllocation>;
-	/** A globally-unique identifier. */
-	id: string;
-	/** The quantity of the line item. */
-	quantity: number;
-	/** Title of the line item. Defaults to the product's title. */
-	title: string;
-	/** Unit price of the line item. */
-	unitPrice?: Maybe<Money>;
-	/** Product variant of the line item. */
-	variant?: Maybe<ProductVariant>;
-};
-
-/**
- * An auto-generated type for paginating through multiple CheckoutLineItems.
- *
- */
-export type CheckoutLineItemConnection = {
-	__typename?: 'CheckoutLineItemConnection';
-	/** A list of edges. */
-	edges: Array<CheckoutLineItemEdge>;
-	/** A list of the nodes contained in CheckoutLineItemEdge. */
-	nodes: Array<CheckoutLineItem>;
-	/** Information to aid in pagination. */
-	pageInfo: PageInfo;
-};
-
-/**
- * An auto-generated type which holds one CheckoutLineItem and a cursor during pagination.
- *
- */
-export type CheckoutLineItemEdge = {
-	__typename?: 'CheckoutLineItemEdge';
-	/** A cursor for use in pagination. */
-	cursor: string;
-	/** The item at the end of CheckoutLineItemEdge. */
-	node: CheckoutLineItem;
-};
-
-export type DiscountAllocation = {
-	__typename?: 'DiscountAllocation';
-	/** Amount of discount allocated. */
-	allocatedAmount: Money;
-	/** The discount this allocated amount originated from. */
-	discountApplication:
-		| AutomaticDiscountApplication
-		| DiscountCodeApplication
-		| ManualDiscountApplication
-		| ScriptDiscountApplication;
-};
-
-export type Order = HasMetafields &
-	Node & {
-		__typename?: 'Order';
-		/** The address associated with the payment method. */
-		billingAddress?: Maybe<MailingAddress>;
-		/** The reason for the order's cancellation. Returns `null` if the order wasn't canceled. */
-		cancelReason?: Maybe<OrderCancelReason>;
-		/** The date and time when the order was canceled. Returns null if the order wasn't canceled. */
-		canceledAt?: Maybe<string>;
-		/** The code of the currency used for the payment. */
-		currencyCode: CurrencyCode;
-		/** The subtotal of line items and their discounts, excluding line items that have been removed. Does not contain order-level discounts, duties, shipping costs, or shipping discounts. Taxes are not included unless the order is a taxes-included order. */
-		currentSubtotalPrice: Money;
-		/** The total cost of duties for the order, including refunds. */
-		currentTotalDuties?: Maybe<Money>;
-		/** The total amount of the order, including duties, taxes and discounts, minus amounts for line items that have been removed. */
-		currentTotalPrice: Money;
-		/** The total of all taxes applied to the order, excluding taxes for returned line items. */
-		currentTotalTax: Money;
-		/** A list of the custom attributes added to the order. */
-		customAttributes: Array<Attribute>;
-		/** The locale code in which this specific order happened. */
-		customerLocale?: Maybe<string>;
-		/** The unique URL that the customer can use to access the order. */
-		customerUrl?: Maybe<string>;
-		/** Discounts that have been applied on the order. */
-		discountApplications: DiscountApplicationConnection;
-		/** Whether the order has had any edits applied or not. */
-		edited: boolean;
-		/** The customer's email address. */
-		email?: Maybe<string>;
-		/** The financial status of the order. */
-		financialStatus?: Maybe<OrderFinancialStatus>;
-		/** The fulfillment status for the order. */
-		fulfillmentStatus: OrderFulfillmentStatus;
-		/** A globally-unique identifier. */
-		id: string;
-		/** List of the order’s line items. */
-		lineItems: OrderLineItemConnection;
-		/** Returns a metafield found by namespace and key. */
-		metafield?: Maybe<Metafield>;
-		/**
-		 * The metafields associated with the resource matching the supplied list of namespaces and keys.
-		 *
-		 */
-		metafields: Array<Maybe<Metafield>>;
-		/**
-		 * Unique identifier for the order that appears on the order.
-		 * For example, _#1000_ or _Store1001.
-		 *
-		 */
-		name: string;
-		/** A unique numeric identifier for the order for use by shop owner and customer. */
-		orderNumber: number;
-		/** The total cost of duties charged at checkout. */
-		originalTotalDuties?: Maybe<Money>;
-		/** The total price of the order before any applied edits. */
-		originalTotalPrice: Money;
-		/** The customer's phone number for receiving SMS notifications. */
-		phone?: Maybe<string>;
-		/**
-		 * The date and time when the order was imported.
-		 * This value can be set to dates in the past when importing from other systems.
-		 * If no value is provided, it will be auto-generated based on current date and time.
-		 *
-		 */
-		processedAt: string;
-		/** The address to where the order will be shipped. */
-		shippingAddress?: Maybe<MailingAddress>;
-		/**
-		 * The discounts that have been allocated onto the shipping line by discount applications.
-		 *
-		 */
-		shippingDiscountAllocations: Array<DiscountAllocation>;
-		/** The unique URL for the order's status page. */
-		statusUrl: string;
-		/** Price of the order before shipping and taxes. */
-		subtotalPrice?: Maybe<Money>;
-		/**
-		 * Price of the order before duties, shipping and taxes.
-		 * @deprecated Use `subtotalPrice` instead.
-		 */
-		subtotalPriceV2?: Maybe<Money>;
-		/** List of the order’s successful fulfillments. */
-		successfulFulfillments?: Maybe<Array<Fulfillment>>;
-		/** The sum of all the prices of all the items in the order, duties, taxes and discounts included (must be positive). */
-		totalPrice: Money;
-		/**
-		 * The sum of all the prices of all the items in the order, duties, taxes and discounts included (must be positive).
-		 * @deprecated Use `totalPrice` instead.
-		 */
-		totalPriceV2: Money;
-		/** The total amount that has been refunded. */
-		totalRefunded: Money;
-		/**
-		 * The total amount that has been refunded.
-		 * @deprecated Use `totalRefunded` instead.
-		 */
-		totalRefundedV2: Money;
-		/** The total cost of shipping. */
-		totalShippingPrice: Money;
-		/**
-		 * The total cost of shipping.
-		 * @deprecated Use `totalShippingPrice` instead.
-		 */
-		totalShippingPriceV2: Money;
-		/** The total cost of taxes. */
-		totalTax?: Maybe<Money>;
-		/**
-		 * The total cost of taxes.
-		 * @deprecated Use `totalTax` instead.
-		 */
-		totalTaxV2?: Maybe<Money>;
-	};
-
-/** Represents the reason for the order's cancellation. */
-export type OrderCancelReason =
-	/** The customer wanted to cancel the order. */
-	| 'CUSTOMER'
-	/** Payment was declined. */
-	| 'DECLINED'
-	/** The order was fraudulent. */
-	| 'FRAUD'
-	/** There was insufficient inventory. */
-	| 'INVENTORY'
-	/** The order was canceled for an unlisted reason. */
-	| 'OTHER';
-
-export type OrderFinancialStatus =
-	/** Displayed as **Authorized**. */
-	| 'AUTHORIZED'
-	/** Displayed as **Paid**. */
-	| 'PAID'
-	/** Displayed as **Partially paid**. */
-	| 'PARTIALLY_PAID'
-	/** Displayed as **Partially refunded**. */
-	| 'PARTIALLY_REFUNDED'
-	/** Displayed as **Pending**. */
-	| 'PENDING'
-	/** Displayed as **Refunded**. */
-	| 'REFUNDED'
-	/** Displayed as **Voided**. */
-	| 'VOIDED';
-
-/** Represents the order's aggregated fulfillment status for display purposes. */
-export type OrderFulfillmentStatus =
-	/** Displayed as **Fulfilled**. All of the items in the order have been fulfilled. */
-	| 'FULFILLED'
-	/** Displayed as **In progress**. Some of the items in the order have been fulfilled, or a request for fulfillment has been sent to the fulfillment service. */
-	| 'IN_PROGRESS'
-	/** Displayed as **On hold**. All of the unfulfilled items in this order are on hold. */
-	| 'ON_HOLD'
-	/** Displayed as **Open**. None of the items in the order have been fulfilled. Replaced by "UNFULFILLED" status. */
-	| 'OPEN'
-	/** Displayed as **Partially fulfilled**. Some of the items in the order have been fulfilled. */
-	| 'PARTIALLY_FULFILLED'
-	/** Displayed as **Pending fulfillment**. A request for fulfillment of some items awaits a response from the fulfillment service. Replaced by "IN_PROGRESS" status. */
-	| 'PENDING_FULFILLMENT'
-	/** Displayed as **Restocked**. All of the items in the order have been restocked. Replaced by "UNFULFILLED" status. */
-	| 'RESTOCKED'
-	/** Displayed as **Scheduled**. All of the unfulfilled items in this order are scheduled for fulfillment at later time. */
-	| 'SCHEDULED'
-	/** Displayed as **Unfulfilled**. None of the items in the order have been fulfilled. */
-	| 'UNFULFILLED';
-
 export type OrderLineItem = {
 	__typename?: 'OrderLineItem';
 	/** The number of entries associated to the line item minus the items that have been removed. */
@@ -2883,3 +3049,25 @@ export type ProductSortKeys =
 	| 'UPDATED_AT'
 	/** Sort by the `vendor` value. */
 	| 'VENDOR';
+/** A CustomerAccessToken represents the unique token required to make modifications to the customer object. */
+export type CustomerAccessToken = {
+	__typename?: 'CustomerAccessToken';
+	/** The customer’s access token. */
+	accessToken: Scalars['String'];
+	/** The date and time when the customer access token expires. */
+	expiresAt: Scalars['DateTime'];
+};
+
+/** Return type for `customerAccessTokenCreate` mutation. */
+export type CustomerAccessTokenCreatePayload = {
+	__typename?: 'CustomerAccessTokenCreatePayload';
+	/** The newly created customer access token object. */
+	customerAccessToken?: Maybe<CustomerAccessToken>;
+	/** The list of errors that occurred from executing the mutation. */
+	customerUserErrors: Array<CustomerUserError>;
+	/**
+	 * The list of errors that occurred from executing the mutation.
+	 * @deprecated Use `customerUserErrors` instead.
+	 */
+	userErrors: Array<UserError>;
+};
