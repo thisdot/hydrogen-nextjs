@@ -10,7 +10,7 @@ export async function GET() {
 			count: 4,
 		},
 	});
-	console.log(data.body.data.products.nodes);
+
 	return NextResponse.json({
 		products: data.body.data.products.nodes,
 	});
