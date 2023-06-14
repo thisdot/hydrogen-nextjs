@@ -5,7 +5,11 @@ import {
 import { isShopifyError } from '@/lib/type-guards';
 import { LAYOUT_QUERY } from './queries/layout';
 import { ALL_PRODUCTS_QUERY } from './queries/product';
-import { COLLECTIONS_QUERY, COLLECTION_QUERY } from './queries/collection';
+import {
+	COLLECTIONS_QUERY,
+	COLLECTION_QUERY,
+	SORTED_AND_FILTERED_PRODUCTS_QUERY,
+} from './queries/collection';
 import {
 	Cart,
 	Blog,
@@ -29,6 +33,7 @@ import {
 	ShopifyProduct,
 	ShopifyProductOperation,
 	ShopifyProductRecommendationsOperation,
+	ProductSortKeys,
 	CustomerAccessTokenCreatePayload,
 } from './types';
 import {
@@ -42,6 +47,7 @@ import {
 	addToCartMutation,
 	removeFromCartMutation,
 	editCartItemsMutation,
+	applyDiscountCode,
 } from './mutations/cart';
 import { getCartQuery } from './queries/cart';
 import { ARTICLE_QUERY, BLOGS_QUERY } from './queries/blog';
@@ -346,6 +352,39 @@ export async function getCart(cartId: string): Promise<Cart | null> {
 
 	return reshapeCart(res.body.data.cart);
 }
+
+export async function applyDiscountToCart({
+	cartId,
+	discountCodes,
+}: {
+	cartId: string;
+	discountCodes?: string[];
+}): Promise<Cart | null> {
+	const res = await shopifyFetch<
+		Omit<ShopifyCartOperation, 'variables'> & {
+			data: {
+				cartDiscountCodesUpdate: {
+					cart: ShopifyCart;
+				};
+			};
+			variables: {
+				cartId: string;
+				discountCodes?: string[];
+			};
+		}
+	>({
+		query: applyDiscountCode,
+		variables: { cartId, discountCodes },
+		cache: 'no-store',
+	});
+
+	if (!res.body.data.cartDiscountCodesUpdate.cart) {
+		return null;
+	}
+
+	return reshapeCart(res.body.data.cartDiscountCodesUpdate.cart);
+}
+
 export async function getAllPosts({
 	variables,
 }: {
@@ -547,4 +586,30 @@ export async function getProductRecommendations(
 	mergedProducts.splice(originalProduct, 1);
 
 	return mergedProducts;
+}
+
+export async function getFilteredAndSortedProducts({
+	variables,
+}: {
+	variables: {
+		query: string;
+		reverse: boolean;
+		sortKey: ProductSortKeys;
+		count: number;
+	};
+}) {
+	const data = await shopifyFetch<{
+		data: { products: ProductConnection };
+		variables: {
+			query: string;
+			reverse: boolean;
+			sortKey: ProductSortKeys;
+			count: number;
+		};
+	}>({
+		query: SORTED_AND_FILTERED_PRODUCTS_QUERY,
+		variables,
+	});
+
+	return data;
 }

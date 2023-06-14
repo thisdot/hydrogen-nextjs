@@ -1,31 +1,7 @@
-import { createCart, getCart } from '@/lib/shopify';
-import { Cart, CartItem } from '@/lib/shopify/types';
+import { CartLine } from '@/lib/shopify/types';
 import useCartStore from '@/store/cart-store';
-import { cookies } from 'next/headers';
-import { useCookie } from 'react-use';
 
 const useCartFetcher = () => {
-	const [, setCookie] = useCookie('cartId');
-	const cartId = cookies().get('cartId')?.value;
-	// If cart not created
-	if (!cartId) {
-		const createCart = async () => {
-			const response = await fetch(`/api/create-cart`, {
-				method: 'POST',
-			});
-			if (response.status === 200) {
-				const data = await response.json();
-				setCookie(data.cart.id, {
-					path: '/',
-					sameSite: 'strict',
-					secure: process.env.NODE_ENV === 'production',
-				});
-			}
-		};
-
-		createCart();
-	}
-
 	const getStoreCart = async () => {
 		const response = await fetch(`/api/cart`, {
 			method: 'GET',
@@ -44,8 +20,9 @@ const useCartFetcher = () => {
 			}),
 		});
 
-		if (response.status === 204) {
-			getStoreCart();
+		if (response.status === 200) {
+			const data = await response.json();
+			useCartStore.setState({ cart: data.cart });
 		}
 	};
 
@@ -54,7 +31,7 @@ const useCartFetcher = () => {
 		item,
 	}: {
 		action: 'plus' | 'minus';
-		item: CartItem;
+		item: CartLine;
 	}) => {
 		const response = await fetch(`/api/cart`, {
 			method: action === 'minus' && item.quantity - 1 === 0 ? 'DELETE' : 'PUT',
@@ -65,21 +42,23 @@ const useCartFetcher = () => {
 			}),
 		});
 
-		if (response.status === 204) {
-			getStoreCart();
+		if (response.status === 200) {
+			const data = await response.json();
+			useCartStore.setState({ cart: data.cart });
 		}
 	};
 
-	const deleteCartItem = async ({ item }: { item: CartItem }) => {
-		const response = await fetch(`/api/cart`, {
-			method: 'DELETE',
+	const deleteCartItem = async ({ item }: { item: CartLine }) => {
+		const response = await fetch(`/api/cart/delete`, {
+			method: 'POST',
 			body: JSON.stringify({
-				lineId: item.id,
+				lineIds: [item.id],
 			}),
 		});
 
-		if (response.status === 204) {
-			getStoreCart();
+		if (response.status === 200) {
+			const data = await response.json();
+			useCartStore.setState({ cart: data.cart });
 		}
 	};
 

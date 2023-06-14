@@ -20,7 +20,7 @@ export default function ProductGrid({ ...props }: { handle: string }) {
 	useEffect(() => {
 		if (inView && hasNextPage && !isLoading) {
 			const { sortKey, reverse, filters } =
-				handleCollectionProductsSearchParams(searchParams);
+				handleCollectionProductsSearchParams(Object.fromEntries(searchParams));
 			const apiSearchParams = new URLSearchParams();
 			if (filters) {
 				apiSearchParams.set('filters', JSON.stringify(filters));
@@ -51,8 +51,9 @@ export default function ProductGrid({ ...props }: { handle: string }) {
 		setProducts([]);
 		setHasNextPage(false);
 		setCursor(undefined);
-		const { sortKey, reverse, filters } =
-			handleCollectionProductsSearchParams(searchParams);
+		const { sortKey, reverse, filters } = handleCollectionProductsSearchParams(
+			Object.fromEntries(searchParams)
+		);
 		const apiSearchParams = new URLSearchParams();
 		if (filters) {
 			apiSearchParams.set('filters', JSON.stringify(filters));
