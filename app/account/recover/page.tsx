@@ -6,54 +6,64 @@ import FormHeader from '../component/FormHeader';
 import FormFooter from '../component/FormFooter';
 import FormButton from '../component/FormButton';
 import { useState } from 'react';
-import { useCookie } from 'react-use';
 
-export default function LoginPage() {
-	const [, setCookie] = useCookie('customerAccessToken');
+export default function RecoverPassword() {
 	const [nativeEmailError, setNativeEmailError] = useState(null);
 	const [sending, setSending] = useState(false);
-	const [btnText, setBtnText] = useState('Sign in');
+	const [isSubmited, setIsSubmited] = useState(false);
+	const [btnText, setBtnText] = useState('Request Reset Link');
+
+	const headings = {
+		submited: {
+			title: 'Request Sent.',
+			description: 'If that email address is in our system, you will receive an email with instructions about how to reset your password in a few minutes.',
+		},
+		default: {
+			title: 'Forgot Password.',
+			description: 'Enter the email address associated with your account to receive a link to reset your password.',
+		},
+	};
 
 	const reset = () => {
 		setNativeEmailError(null);
-		setBtnText('Sign in');
+		setBtnText('Request Reset Link');
 		setSending(false);
 	};
 
 	async function handleSubmit(data: FormData) {
 		setSending(true);
 		setBtnText('Please wait..');
-		const loginResponse = await fetch('/api/account/login', {
+		const response = await fetch('/api/account/recover', {
 			method: 'post',
 			body: JSON.stringify({
 				email: data.get('email') as string,
-				password: data.get('password') as string,
 			}),
 		}).then(async (resp: Response) => await resp.json());
 
-		if (loginResponse.customerAccessToken?.accessToken) {
-			const token = loginResponse.customerAccessToken?.accessToken;
-			const expiresAt = loginResponse.customerAccessToken?.expiresAt;
-			setCookie(token, {
-				expires: new Date(expiresAt),
-			});
-
-			redirect('/account');
-		}
-
-		if (loginResponse.customerUserErrors.length > 0) {
-			loginResponse.customerUserErrors.filter((error: any) => {
+		if (response.customerUserErrors.length > 0) {
+			response.customerUserErrors.filter((error: any) => {
 				if (error.field.includes('email')) {
 					setNativeEmailError(error.message);
+					// reset();
 				}
 			});
+		} else {
+			// reset();
+			setIsSubmited(true);
+			redirect('/account/login');
 		}
-		reset();
+
+		setTimeout(() => {
+			reset()
+		}, 2000);
 	}
 
 	return (
 		<>
-			<FormHeader title="Sign in." />
+			<FormHeader title={headings[isSubmited ? 'submited' : 'default'].title} />
+			<p className="mt-4">
+				{headings[isSubmited ? 'submited' : 'default'].description}
+			</p>
 			<form
 				action={handleSubmit}
 				noValidate
