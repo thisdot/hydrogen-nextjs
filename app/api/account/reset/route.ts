@@ -1,4 +1,5 @@
 import { resetCustomersPassword } from '@/lib/shopify';
+import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: NextResponse) {
@@ -14,8 +15,21 @@ export async function POST(request: NextResponse) {
 		},
 	});
 
-	return NextResponse.json({
-		customerAccessToken: res.body.data.customerReset.customerAccessToken,
-		customerUserErrors: res.body.data.customerReset.customerUserErrors,
-	});
+	const customerAccessToken = res.body.data.customerReset.customerAccessToken;
+
+	if (customerAccessToken) {
+		const accessToken = customerAccessToken?.accessToken;
+		const expiresAt = customerAccessToken?.expiresAt;
+
+		(cookies() as any).set('customerAccessToken', accessToken, {
+			httpOnly: true,
+			path: '/',
+			sameSite: 'strict',
+			secure: true,
+		});
+	}
+		return NextResponse.json({
+			customerAccessToken: customerAccessToken?.accessToken ? true : false,
+			customerUserErrors: res.body.data.customerReset.customerUserErrors,
+		});
 }

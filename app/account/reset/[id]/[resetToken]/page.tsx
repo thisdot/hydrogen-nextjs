@@ -5,14 +5,12 @@ import FormHeader from '@/app/account/component/FormHeader';
 import { getInputStyleClasses } from '@/lib/utils';
 import { redirect } from 'next/navigation';
 import { useState, useRef } from 'react';
-import { useCookie } from 'react-use';
 
 export default function ResetPassword({
 	params,
 }: {
 	params: { id: string; resetToken: string };
 }) {
-	const [, setCookie] = useCookie('customerAccessToken');
 	const [sending, setSending] = useState(false);
 	const [btnText, setBtnText] = useState('Save');
 	const [errorMessage, setErrorMessage] = useState(null);
@@ -77,12 +75,6 @@ export default function ResetPassword({
 
 			if (res.customerAccessToken) {
 				setBtnText('Attempting to login...');
-				const accessToken = res.customerAccessToken?.accessToken;
-				const expiresAt = res.customerAccessToken?.expiresAt;
-				setCookie(accessToken, {
-					expires: new Date(expiresAt),
-				});
-
 				redirect('/account');
 			}
 
