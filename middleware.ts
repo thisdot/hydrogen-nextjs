@@ -13,11 +13,11 @@ export function middleware(request: NextRequest) {
 	const isRegisterPage =
 		request.nextUrl.pathname.startsWith('/account/register');
 
-		if((isLoginPage || isRecoverPasswordPage || isRegisterPage) && isAuthenticated(request)) {
+		if(isLoginPage && isRecoverPasswordPage && isRegisterPage && isAuthenticated(request)) {
 			return NextResponse.redirect(new URL('/account', request.url));
 		}
 
-		if (!(isLoginPage || isRecoverPasswordPage || isRegisterPage) && !isAuthenticated(request)) {
+		if (!isLoginPage && !isRecoverPasswordPage && !isRegisterPage && !isAuthenticated(request)) {
 			return NextResponse.redirect(new URL('/account/login', request.url));
 		}
 }

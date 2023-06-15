@@ -5,11 +5,11 @@ import { redirect } from 'next/navigation';
 import FormHeader from '../component/FormHeader';
 import FormFooter from '../component/FormFooter';
 import FormButton from '../component/FormButton';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useCookie } from 'react-use';
 
 export default function LoginPage() {
-	const [customerAccessToken, setCookie] = useCookie('customerAccessToken');
+	const [, setCookie] = useCookie('customerAccessToken');
 	const [nativeEmailError, setNativeEmailError] = useState(null);
 	const [nativePasswordError, setNativePasswordError] = useState(null);
 	const [nativeUnIdentifiedUserError, setNativeUnIdentifiedUserError] =
@@ -66,12 +66,6 @@ export default function LoginPage() {
 			reset();
 		}, 2000);
 	}
-
-	useEffect(() => {
-		if(customerAccessToken) {
-			redirect('/account');
-		}
-	},[customerAccessToken])
 
 	return (
 		<>
