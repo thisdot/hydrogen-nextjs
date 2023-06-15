@@ -13,7 +13,7 @@ export const config = {
 
 export function middleware(request: NextRequest) {
 	const isLoginPage = request.nextUrl.pathname === '/account/login';
-	const isRecoverPasswordPage = request.nextUrl.pathname === '/account/recover';
+	const isRecoverPasswordPage = request.nextUrl.pathname.startsWith('/account/recover');
 	const isRegisterPage = request.nextUrl.pathname === '/account/register';
 
 	const authPages = isLoginPage || isRecoverPasswordPage || isRegisterPage;
