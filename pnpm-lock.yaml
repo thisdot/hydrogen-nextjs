@@ -20,7 +20,6 @@ specifiers:
   '@types/sanitize-html': ^2.9.0
   autoprefixer: 10.4.14
   clsx: ^1.2.1
-  cookies-next: ^2.1.2
   eslint: 8.40.0
   eslint-config-next: 13.4.1
   eslint-plugin-storybook: ^0.6.12
@@ -76,7 +75,6 @@ devDependencies:
   '@types/sanitize-html': 2.9.0
   autoprefixer: 10.4.14_postcss@8.4.23
   clsx: 1.2.1
-  cookies-next: 2.1.2
   eslint-plugin-storybook: 0.6.12_3qfatcekpgbllh6uk5ivyhkbxq
   postcss: 8.4.23
   postcss-import: 15.1.0_postcss@8.4.23
@@ -3540,10 +3538,6 @@ packages:
       '@types/node': 20.1.2
     dev: true
 
-  /@types/cookie/0.4.1:
-    resolution: {integrity: sha512-XW/Aa8APYr6jSVVA1y/DEIZX0/GMKLEVekNG727R8cs56ahETkRAy/3DR7+fJyh7oUgGwNQaRfXCun0+KbWY7Q==}
-    dev: true
-
   /@types/detect-port/1.3.2:
     resolution: {integrity: sha512-xxgAGA2SAU4111QefXPSp5eGbDm/hW6zhvYl9IeEPZEry9F4d66QAHm5qpUXjb6IsevZV/7emAEx5MhP6O192g==}
     dev: true
@@ -4816,22 +4810,9 @@ packages:
     resolution: {integrity: sha512-QADzlaHc8icV8I7vbaJXJwod9HWYp8uCqf1xa4OfNu1T7JVxQIrUgOWtHdNDtPiywmFbiS12VjotIXLrKM3orQ==}
     dev: true
 
-  /cookie/0.4.2:
-    resolution: {integrity: sha512-aSWTXFzaKWkvHO1Ny/s+ePFpvKsPnjc551iI41v3ny/ow6tBG5Vd+FuqGNhh1LxOmVzOlGUriIlOaokOvhaStA==}
-    engines: {node: '>= 0.6'}
-    dev: true
-
   /cookie/0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
     engines: {node: '>= 0.6'}
-    dev: true
-
-  /cookies-next/2.1.2:
-    resolution: {integrity: sha512-czxcfqVaQlo0Q/3xMgp/2jpspsuLJrIm6D37wlmibP3DAcYT315c8UxQmDMohhAT/GRWpaHzpDEFANBjzTFQGg==}
-    dependencies:
-      '@types/cookie': 0.4.1
-      '@types/node': 16.18.30
-      cookie: 0.4.2
     dev: true
 
   /copy-anything/2.0.6:

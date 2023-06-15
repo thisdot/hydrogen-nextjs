@@ -6,11 +6,10 @@ import FormHeader from '../component/FormHeader';
 import FormFooter from '../component/FormFooter';
 import FormButton from '../component/FormButton';
 import { useState } from 'react';
-// import { useCookie } from 'react-use';
-import { setCookie } from 'cookies-next';
+import { useCookie } from 'react-use';
 
 export default function LoginPage() {
-	// const [, setCookie] = useCookie('customerAccessToken');
+	const [, setCookie] = useCookie('customerAccessToken');
 	const [nativeEmailError, setNativeEmailError] = useState(null);
 	const [nativePasswordError, setNativePasswordError] = useState(null);
 	const [nativeUnIdentifiedUserError, setNativeUnIdentifiedUserError] =
@@ -39,7 +38,7 @@ export default function LoginPage() {
 		if (loginResponse.customerAccessToken?.accessToken) {
 			const token = loginResponse.customerAccessToken?.accessToken;
 			const expiresAt = loginResponse.customerAccessToken?.expiresAt;
-			setCookie('customerAccessToken', token, {
+			setCookie(token, {
 				expires: new Date(expiresAt),
 			});
 
