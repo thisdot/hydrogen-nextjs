@@ -1,7 +1,6 @@
 'use client';
 
 import { getInputStyleClasses } from '@/lib/utils';
-import { redirect } from 'next/navigation';
 import FormHeader from '../component/FormHeader';
 import FormFooter from '../component/FormFooter';
 import FormButton from '../component/FormButton';
@@ -28,6 +27,7 @@ export default function RecoverPassword() {
 		setNativeEmailError(null);
 		setBtnText('Request Reset Link');
 		setSending(false);
+		setIsSubmited(false);
 	};
 
 	async function handleSubmit(data: FormData) {
@@ -42,7 +42,7 @@ export default function RecoverPassword() {
 
 		if (response.customerUserErrors.length > 0) {
 			response.customerUserErrors.filter((error: any) => {
-				if (error.field.includes('email')) {
+				if (error.field && error.field.includes('email')) {
 					setNativeEmailError(error.message);
 				}
 			});

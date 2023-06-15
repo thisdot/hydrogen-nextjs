@@ -3071,6 +3071,22 @@ export type CustomerRecoverPayload = {
   userErrors: Array<UserError>;
 };
 
+/** Return type for `customerReset` mutation. */
+export type CustomerResetPayload = {
+  __typename?: 'CustomerResetPayload';
+  /** The customer object which was reset. */
+  customer?: Maybe<Customer>;
+  /** A newly created customer access token object for the customer. */
+  customerAccessToken?: Maybe<CustomerAccessToken>;
+  /** The list of errors that occurred from executing the mutation. */
+  customerUserErrors: Array<CustomerUserError>;
+  /**
+   * The list of errors that occurred from executing the mutation.
+   * @deprecated Use `customerUserErrors` instead.
+   */
+  userErrors: Array<UserError>;
+};
+
 /** Return type for `customerAccessTokenCreate` mutation. */
 export type CustomerAccessTokenCreatePayload = {
 	__typename?: 'CustomerAccessTokenCreatePayload';

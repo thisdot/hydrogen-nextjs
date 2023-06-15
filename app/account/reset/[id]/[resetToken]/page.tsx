@@ -1,30 +1,32 @@
 'use client';
 
-import FormButton from "@/app/account/component/FormButton";
-import FormHeader from "@/app/account/component/FormHeader";
-import { getInputStyleClasses } from "@/lib/utils";
-import { useState, useRef } from "react";
+import FormButton from '@/app/account/component/FormButton';
+import FormHeader from '@/app/account/component/FormHeader';
+import { getInputStyleClasses } from '@/lib/utils';
+import { redirect } from 'next/navigation';
+import { useState, useRef } from 'react';
+import { useCookie } from 'react-use';
 
 export default function ResetPassword({
 	params,
-	searchParams,
 }: {
 	params: { id: string; resetToken: string };
-	searchParams: Record<string, string>;
 }) {
+	const [, setCookie] = useCookie('customerAccessToken');
 	const [sending, setSending] = useState(false);
 	const [btnText, setBtnText] = useState('Save');
-	 const [nativePasswordError, setNativePasswordError] = useState<
-			null | string
-		>(null);
-		const [nativePasswordConfirmError, setNativePasswordConfirmError] =
-			useState<null | string>(null);
+	const [errorMessage, setErrorMessage] = useState(null);
+	const [nativePasswordError, setNativePasswordError] = useState<null | string>(
+		null
+	);
+	const [nativePasswordConfirmError, setNativePasswordConfirmError] = useState<
+		null | string
+	>(null);
 
-		const passwordInput = useRef<HTMLInputElement>(null);
-		const passwordConfirmInput = useRef<HTMLInputElement>(null);
+	const passwordInput = useRef<HTMLInputElement>(null);
+	const passwordConfirmInput = useRef<HTMLInputElement>(null);
 
-
-  const validatePasswordConfirm = () => {
+	const validatePasswordConfirm = () => {
 		if (!passwordConfirmInput.current) return;
 
 		if (
@@ -46,16 +48,59 @@ export default function ResetPassword({
 		}
 	};
 
-	const handleSubmit = (data: FormData) => {
-		const customerId = params.id;
-		const token = params.resetToken;
+	const handleSubmit = async (data: FormData) => {
+		const id = params.id;
+		const resetToken = params.resetToken;
 
+		const password = data.get('password') as string;
+		const passwordConfirm = data.get('passwordConfirm') as string;
+
+		if (
+			!password ||
+			!passwordConfirm ||
+			typeof password !== 'string' ||
+			typeof passwordConfirm !== 'string' ||
+			password !== passwordConfirm
+		) {
+			setNativePasswordConfirmError('The two passwords entered did not match.');
+		} else {
+			setSending(true);
+			setBtnText('Reseting Password..');
+			const res = await fetch('/api/account/reset', {
+				method: 'post',
+				body: JSON.stringify({
+					password,
+					id,
+					resetToken,
+				}),
+			}).then(async (resp: Response) => await resp.json());
+
+			if (res.customerAccessToken) {
+				setBtnText('Attempting to login...');
+				const accessToken = res.customerAccessToken?.accessToken;
+				const expiresAt = res.customerAccessToken?.expiresAt;
+				setCookie(accessToken, {
+					expires: new Date(expiresAt),
+				});
+
+				redirect('/account');
+			}
+
+			if (res.customerUserErrors.length > 0) {
+				res.customerUserErrors.filter((error: any) => {
+					if (error.code === 'TOKEN_INVALID') {
+						setErrorMessage(error.message);
+					}
+				});
+			}
+		}
 	};
 
 	return (
 		<>
 			<FormHeader title="Reset Password." />
 			<p className="mt-4">Enter a new password for your account.</p>
+			{errorMessage && <p className="text-red-500 mt-4">{errorMessage}</p>}
 			<form
 				action={handleSubmit}
 				noValidate
