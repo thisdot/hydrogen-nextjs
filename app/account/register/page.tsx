@@ -59,11 +59,13 @@ export default function RegisterPage() {
 
 		if (res.customerUserErrors.length > 0) {
 			res.customerUserErrors.filter((error: any) => {
-				if (error.field.includes('email')) {
-					setNativeEmailError(error.message);
-				}
-				if (error.field.includes('password')) {
-					setNativePasswordError(error.message);
+				if (error.field) {
+					if (error.field.includes('email')) {
+						setNativeEmailError(error.message);
+					}
+					if (error.field.includes('password')) {
+						setNativePasswordError(error.message);
+					}
 				}
 			});
 		}

@@ -12,6 +12,8 @@ export default function LoginPage() {
 	const [, setCookie] = useCookie('customerAccessToken');
 	const [nativeEmailError, setNativeEmailError] = useState(null);
 	const [nativePasswordError, setNativePasswordError] = useState(null);
+	const [nativeUnIdentifiedUserError, setNativeUnIdentifiedUserError] =
+		useState(null);
 	const [sending, setSending] = useState(false);
 	const [btnText, setBtnText] = useState('Sign in');
 
@@ -43,14 +45,19 @@ export default function LoginPage() {
 			redirect('/account');
 		}
 
-
 		if (loginResponse.customerUserErrors.length > 0) {
 			loginResponse.customerUserErrors.filter((error: any) => {
-				if (error.field.includes('email')) {
-					setNativeEmailError(error.message);
-				}
-				if (error.field.includes('password')) {
-					setNativePasswordError(error.message);
+				if (error.field) {
+					if (error.field.includes('email')) {
+						setNativeEmailError(error.message);
+					}
+					if (error.field.includes('password')) {
+						setNativePasswordError(error.message);
+					}
+				} else {
+					if (error.code === "UNIDENTIFIED_CUSTOMER") {
+						setNativeUnIdentifiedUserError(error.message)
+					}
 				}
 			});
 		}
@@ -63,6 +70,9 @@ export default function LoginPage() {
 	return (
 		<>
 			<FormHeader title="Sign in." />
+			{nativeUnIdentifiedUserError && (
+				<p className="text-red-500 mt-4">{nativeUnIdentifiedUserError}</p>
+			)}
 			<form
 				action={handleSubmit}
 				noValidate
