@@ -6,10 +6,8 @@ import FormHeader from '../component/FormHeader';
 import FormFooter from '../component/FormFooter';
 import FormButton from '../component/FormButton';
 import { useState } from 'react';
-import { useCookie } from 'react-use';
 
 export default function RegisterPage() {
-	const [, setCookie] = useCookie('customerAccessToken');
 	const [nativeEmailError, setNativeEmailError] = useState(null);
 	const [nativePasswordError, setNativePasswordError] = useState(null);
 	const [sending, setSending] = useState(false);
@@ -45,13 +43,7 @@ export default function RegisterPage() {
 				}),
 			}).then(async (resp: Response) => await resp.json());
 
-			if (loginResponse.customerAccessToken?.accessToken) {
-				const token = loginResponse.customerAccessToken?.accessToken;
-				const expiresAt = loginResponse.customerAccessToken?.expiresAt;
-				setCookie(token, {
-					expires: new Date(expiresAt),
-				});
-
+			if (loginResponse.customerAccessToken) {
 				redirect('/account');
 			}
 		}
