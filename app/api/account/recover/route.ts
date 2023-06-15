@@ -10,9 +10,6 @@ export async function POST(request: NextResponse) {
 		},
 	});
 
-	console.log('====================================');
-	console.log(res);
-	console.log('====================================');
 	return NextResponse.json({
 		customerUserErrors: res.body.data.customerRecover.customerUserErrors,
 	});

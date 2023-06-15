@@ -44,13 +44,10 @@ export default function RecoverPassword() {
 			response.customerUserErrors.filter((error: any) => {
 				if (error.field.includes('email')) {
 					setNativeEmailError(error.message);
-					// reset();
 				}
 			});
 		} else {
-			// reset();
 			setIsSubmited(true);
-			redirect('/account/login');
 		}
 
 		setTimeout(() => {
@@ -64,30 +61,33 @@ export default function RecoverPassword() {
 			<p className="mt-4">
 				{headings[isSubmited ? 'submited' : 'default'].description}
 			</p>
-			<form
-				action={handleSubmit}
-				noValidate
-				className="pt-6 pb-8 mt-4 mb-4 space-y-3"
-			>
-				<div>
-					<input
-						className={`mb-1 ${getInputStyleClasses(nativeEmailError)}`}
-						id="email"
-						name="email"
-						type="email"
-						autoComplete="email"
-						required
-						placeholder="Email address"
-						aria-label="Email address"
-						autoFocus
-					/>
-					{nativeEmailError && (
-						<p className="text-red-500 text-xs">{nativeEmailError} &nbsp;</p>
-					)}
-				</div>
-				<FormButton btnText={btnText} disabled={sending} />
-				<FormFooter page="recover" />
-			</form>
+			{!isSubmited && (
+				<form
+					action={handleSubmit}
+					noValidate
+					className="pt-6 pb-8 mt-4 mb-4 space-y-3"
+				>
+					<div>
+						<input
+							className={`mb-1 ${getInputStyleClasses(nativeEmailError)}`}
+							id="email"
+							name="email"
+							type="email"
+							autoComplete="email"
+							required
+							placeholder="Email address"
+							aria-label="Email address"
+							autoFocus
+						/>
+						{nativeEmailError && (
+							<p className="text-red-500 text-xs">{nativeEmailError} &nbsp;</p>
+						)}
+					</div>
+					<FormButton btnText={btnText} disabled={sending} />
+					<FormFooter page="recover" />
+				</form>
+
+			)}
 		</>
 	);
 }
