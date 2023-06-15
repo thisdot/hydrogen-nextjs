@@ -5,18 +5,22 @@ export const config = {
 	matcher: [
 		'/checkout',
 		'/account',
-		'/account/login',
-		'/account/register',
-		'/account/recover',
+		'/account/:path*',
 	],
 };
 
 export function middleware(request: NextRequest) {
+
 	const isLoginPage = request.nextUrl.pathname === '/account/login';
 	const isRecoverPasswordPage = request.nextUrl.pathname.startsWith('/account/recover');
+	const isResetPasswordPage = request.nextUrl.pathname.startsWith('/account/reset');
 	const isRegisterPage = request.nextUrl.pathname === '/account/register';
 
-	const authPages = isLoginPage || isRecoverPasswordPage || isRegisterPage;
+	const authPages =
+		isLoginPage ||
+		isRecoverPasswordPage ||
+		isRegisterPage ||
+		isResetPasswordPage;
 
 	if (authPages && isAuthenticated(request)) {
 		return NextResponse.redirect(new URL('/account', request.url));

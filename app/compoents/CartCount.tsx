@@ -15,20 +15,19 @@ function CartCount({ isHome }: { isHome: boolean }) {
 		// If cart not created
 		if (!cookie) {
 			const createCart = async () => {
-				const response = await fetch(`/api/cart/create`, {
+				await fetch(`/api/cart/create`, {
 					method: 'POST',
-				});
-				if (response.status === 200) {
+				}).then(async (response) => {
 					const data = await response.json();
-					setCookie(data.cart.id, {
-						path: '/',
-						sameSite: 'strict',
-						secure: process.env.NODE_ENV === 'production',
-					});
-					useCartStore.setState({ cart: data.cart });
-				} else {
-					console.error(response.statusText);
-				}
+						if (response.status === 200) {
+							setCookie(data.cart.id, {
+								path: '/',
+								sameSite: 'strict',
+								secure: process.env.NODE_ENV === 'production',
+							});
+							useCartStore.setState({ cart: data.cart });
+						}
+				}).catch(() => null)
 			};
 
 			createCart();
