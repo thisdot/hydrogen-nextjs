@@ -1,52 +1,23 @@
-'use client';
-
 import FormButton from '@/app/account/component/FormButton';
 import FormHeader from '@/app/account/component/FormHeader';
+import { resetCustomersPassword } from '@/lib/shopify';
 import { getInputStyleClasses } from '@/lib/utils';
+import { revalidatePath } from 'next/cache';
+import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { useState, useRef } from 'react';
+
+let errorMessage: string | null = null;
+let passwordError: string | null = null;
+let passwordConfirmError: string | null = null;
 
 export default function ResetPassword({
 	params,
 }: {
 	params: { id: string; resetToken: string };
 }) {
-	const [sending, setSending] = useState(false);
-	const [btnText, setBtnText] = useState('Save');
-	const [errorMessage, setErrorMessage] = useState(null);
-	const [nativePasswordError, setNativePasswordError] = useState<null | string>(
-		null
-	);
-	const [nativePasswordConfirmError, setNativePasswordConfirmError] = useState<
-		null | string
-	>(null);
-
-	const passwordInput = useRef<HTMLInputElement>(null);
-	const passwordConfirmInput = useRef<HTMLInputElement>(null);
-
-	const validatePasswordConfirm = () => {
-		if (!passwordConfirmInput.current) return;
-
-		if (
-			passwordConfirmInput.current.value.length &&
-			passwordConfirmInput.current.value !== passwordInput.current?.value
-		) {
-			setNativePasswordConfirmError('The two passwords entered did not match.');
-		} else if (
-			passwordConfirmInput.current.validity.valid ||
-			!passwordConfirmInput.current.value.length
-		) {
-			setNativePasswordConfirmError(null);
-		} else {
-			setNativePasswordConfirmError(
-				passwordConfirmInput.current.validity.valueMissing
-					? 'Please re-enter the password'
-					: 'Passwords must be at least 8 characters'
-			);
-		}
-	};
 
 	const handleSubmit = async (data: FormData) => {
+		'use server'
 		const id = params.id;
 		const resetToken = params.resetToken;
 
@@ -60,32 +31,52 @@ export default function ResetPassword({
 			typeof passwordConfirm !== 'string' ||
 			password !== passwordConfirm
 		) {
-			setNativePasswordConfirmError('The two passwords entered did not match.');
+			passwordConfirmError = 'The two passwords entered did not match.';
 		} else {
-			setSending(true);
-			setBtnText('Reseting Password..');
-			const res = await fetch('/api/account/reset', {
-				method: 'post',
-				body: JSON.stringify({
-					password,
-					id,
-					resetToken,
-				}),
-			}).then(async (resp: Response) => await resp.json());
 
-			if (res.customerAccessToken) {
-				setBtnText('Attempting to login...');
+			const res = await resetCustomersPassword({
+				variables: {
+					id: `gid://shopify/Customer/${id}`,
+					input: {
+						password,
+						resetToken,
+					},
+				},
+			});
+
+			const customerAccessToken =
+				res.body.data.customerReset.customerAccessToken;
+
+			if (customerAccessToken) {
+				const accessToken = customerAccessToken?.accessToken;
+				// @ts-expect-error missing type
+				cookies().set({
+					name: 'customerAccessToken',
+					value: accessToken,
+					httpOnly: true,
+					path: '/',
+					expires: new Date(Date.now() + 20 * 60 * 1000 + 5 * 1000),
+				});
 				redirect('/account');
 			}
 
-			if (res.customerUserErrors.length > 0) {
-				res.customerUserErrors.filter((error: any) => {
+			if (res.body.data.customerReset.customerUserErrors.length > 0) {
+				res.body.data.customerReset.customerUserErrors.filter((error: any) => {
+					if(error.field){
+						if (error.field.includes('password')) {
+							passwordError = error.message;
+						} else if (error.field.includes('passwordConfirm')) {
+							passwordConfirmError = error.message;
+						}
+					}
+
 					if (error.code === 'TOKEN_INVALID') {
-						setErrorMessage(error.message);
+						errorMessage = error.message;
 					}
 				});
 			}
 		}
+		revalidatePath('/account/recover');
 	};
 
 	return (
@@ -100,8 +91,7 @@ export default function ResetPassword({
 			>
 				<div>
 					<input
-						ref={passwordInput}
-						className={`mb-1 ${getInputStyleClasses(nativePasswordError)}`}
+						className={`mb-1 ${getInputStyleClasses(passwordError)}`}
 						id="password"
 						name="password"
 						type="password"
@@ -111,36 +101,15 @@ export default function ResetPassword({
 						minLength={8}
 						required
 						autoFocus
-						onBlur={event => {
-							if (
-								event.currentTarget.validity.valid ||
-								!event.currentTarget.value.length
-							) {
-								setNativePasswordError(null);
-								validatePasswordConfirm();
-							} else {
-								setNativePasswordError(
-									event.currentTarget.validity.valueMissing
-										? 'Please enter a password'
-										: 'Passwords must be at least 8 characters'
-								);
-							}
-						}}
 					/>
-					{nativePasswordError && (
-						<p className="text-red-500 text-xs">
-							{' '}
-							{nativePasswordError} &nbsp;
-						</p>
+					{passwordError && (
+						<p className="text-red-500 text-xs"> {passwordError} &nbsp;</p>
 					)}
 				</div>
 
 				<div>
 					<input
-						ref={passwordConfirmInput}
-						className={`mb-1 ${getInputStyleClasses(
-							nativePasswordConfirmError
-						)}`}
+						className={`mb-1 ${getInputStyleClasses(passwordConfirmError)}`}
 						id="passwordConfirm"
 						name="passwordConfirm"
 						type="password"
@@ -150,16 +119,15 @@ export default function ResetPassword({
 						minLength={8}
 						required
 						autoFocus
-						onBlur={validatePasswordConfirm}
 					/>
-					{nativePasswordConfirmError && (
+					{passwordConfirmError && (
 						<p className="text-red-500 text-xs">
 							{' '}
-							{nativePasswordConfirmError} &nbsp;
+							{passwordConfirmError} &nbsp;
 						</p>
 					)}
 				</div>
-				<FormButton btnText={btnText} disabled={sending} />
+				<FormButton btnText={'Save'} />
 			</form>
 		</>
 	);

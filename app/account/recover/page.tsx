@@ -1,58 +1,45 @@
-'use client';
-
 import { getInputStyleClasses } from '@/lib/utils';
 import FormHeader from '../component/FormHeader';
 import FormFooter from '../component/FormFooter';
 import FormButton from '../component/FormButton';
-import { useState } from 'react';
+import { revalidatePath } from 'next/cache';
+import { recoverCustomersPassword } from '@/lib/shopify';
+
+let emailError: string | null = null;
+let isSubmited: boolean = false;
+const headings = {
+	submited: {
+		title: 'Request Sent.',
+		description: 'If that email address is in our system, you will receive an email with instructions about how to reset your password in a few minutes.',
+	},
+	default: {
+		title: 'Forgot Password.',
+		description: 'Enter the email address associated with your account to receive a link to reset your password.',
+	},
+};
 
 export default function RecoverPassword() {
-	const [nativeEmailError, setNativeEmailError] = useState(null);
-	const [sending, setSending] = useState(false);
-	const [isSubmited, setIsSubmited] = useState(false);
-	const [btnText, setBtnText] = useState('Request Reset Link');
-
-	const headings = {
-		submited: {
-			title: 'Request Sent.',
-			description: 'If that email address is in our system, you will receive an email with instructions about how to reset your password in a few minutes.',
-		},
-		default: {
-			title: 'Forgot Password.',
-			description: 'Enter the email address associated with your account to receive a link to reset your password.',
-		},
-	};
-
-	const reset = () => {
-		setNativeEmailError(null);
-		setBtnText('Request Reset Link');
-		setSending(false);
-		setIsSubmited(false);
-	};
-
 	async function handleSubmit(data: FormData) {
-		setSending(true);
-		setBtnText('Please wait..');
-		const response = await fetch('/api/account/recover', {
-			method: 'post',
-			body: JSON.stringify({
+		'use server';
+		const response = await recoverCustomersPassword({
+			variables: {
 				email: data.get('email') as string,
-			}),
-		}).then(async (resp: Response) => await resp.json());
+			},
+		});
 
-		if (response.customerUserErrors.length > 0) {
-			response.customerUserErrors.filter((error: any) => {
-				if (error.field && error.field.includes('email')) {
-					setNativeEmailError(error.message);
+		if (response.body.data.customerRecover.customerUserErrors.length > 0) {
+			response.body.data.customerRecover.customerUserErrors.filter(
+				(error: any) => {
+					if (error.field && error.field.includes('email')) {
+						emailError = error.message;
+					}
 				}
-			});
+			);
 		} else {
-			setIsSubmited(true);
+			isSubmited = true;
 		}
 
-		setTimeout(() => {
-			reset()
-		}, 2000);
+		revalidatePath('/account/recover');
 	}
 
 	return (
@@ -69,7 +56,7 @@ export default function RecoverPassword() {
 				>
 					<div>
 						<input
-							className={`mb-1 ${getInputStyleClasses(nativeEmailError)}`}
+							className={`mb-1 ${getInputStyleClasses(emailError)}`}
 							id="email"
 							name="email"
 							type="email"
@@ -79,14 +66,13 @@ export default function RecoverPassword() {
 							aria-label="Email address"
 							autoFocus
 						/>
-						{nativeEmailError && (
-							<p className="text-red-500 text-xs">{nativeEmailError} &nbsp;</p>
+						{emailError && (
+							<p className="text-red-500 text-xs">{emailError} &nbsp;</p>
 						)}
 					</div>
-					<FormButton btnText={btnText} disabled={sending} />
+					<FormButton btnText={'Request Reset Link'} />
 					<FormFooter page="recover" />
 				</form>
-
 			)}
 		</>
 	);
