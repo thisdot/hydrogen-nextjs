@@ -821,7 +821,6 @@ export type CustomerCreatePayload = {
 	userErrors: Array<UserError>;
 };
 
-
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
 	ID: string;
@@ -865,7 +864,6 @@ export type VariantOptionFilter = {
 	/** The value of the variant option to filter on. */
 	value: Scalars['String'];
 };
-
 
 /** A single line item in the checkout, grouped by variant and attributes. */
 export type CheckoutLineItem = Node & {
@@ -1019,7 +1017,6 @@ export type DiscountApplicationAllocationMethod =
 	| 'EACH'
 	/** The value is specifically applied onto a particular line. */
 	| 'ONE';
-
 
 /**
  * An auto-generated type which holds one DiscountApplication and a cursor during pagination.
@@ -1301,7 +1298,6 @@ export type CustomerErrorCode =
 	| 'TOO_SHORT'
 	/** Unidentified customer. */
 	| 'UNIDENTIFIED_CUSTOMER';
-
 
 export type CountryCode =
 	/** Ascension Island. */
@@ -1794,7 +1790,6 @@ export type CountryCode =
 	| 'ZW'
 	/** Unknown Region. */
 	| 'ZZ';
-
 
 export type ShopifyProductOperation = {
 	data: { product: ShopifyProduct; shop: Shop };
@@ -3061,30 +3056,30 @@ export type CustomerAccessToken = {
 
 /** Return type for `customerRecover` mutation. */
 export type CustomerRecoverPayload = {
-  __typename?: 'CustomerRecoverPayload';
-  /** The list of errors that occurred from executing the mutation. */
-  customerUserErrors: Array<CustomerUserError>;
-  /**
-   * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `customerUserErrors` instead.
-   */
-  userErrors: Array<UserError>;
+	__typename?: 'CustomerRecoverPayload';
+	/** The list of errors that occurred from executing the mutation. */
+	customerUserErrors: Array<CustomerUserError>;
+	/**
+	 * The list of errors that occurred from executing the mutation.
+	 * @deprecated Use `customerUserErrors` instead.
+	 */
+	userErrors: Array<UserError>;
 };
 
 /** Return type for `customerReset` mutation. */
 export type CustomerResetPayload = {
-  __typename?: 'CustomerResetPayload';
-  /** The customer object which was reset. */
-  customer?: Maybe<Customer>;
-  /** A newly created customer access token object for the customer. */
-  customerAccessToken?: Maybe<CustomerAccessToken>;
-  /** The list of errors that occurred from executing the mutation. */
-  customerUserErrors: Array<CustomerUserError>;
-  /**
-   * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `customerUserErrors` instead.
-   */
-  userErrors: Array<UserError>;
+	__typename?: 'CustomerResetPayload';
+	/** The customer object which was reset. */
+	customer?: Maybe<Customer>;
+	/** A newly created customer access token object for the customer. */
+	customerAccessToken?: Maybe<CustomerAccessToken>;
+	/** The list of errors that occurred from executing the mutation. */
+	customerUserErrors: Array<CustomerUserError>;
+	/**
+	 * The list of errors that occurred from executing the mutation.
+	 * @deprecated Use `customerUserErrors` instead.
+	 */
+	userErrors: Array<UserError>;
 };
 
 /** Return type for `customerAccessTokenCreate` mutation. */

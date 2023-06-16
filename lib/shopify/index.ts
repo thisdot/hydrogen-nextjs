@@ -37,6 +37,7 @@ import {
 	CustomerAccessTokenCreatePayload,
 	CustomerRecoverPayload,
 	CustomerResetPayload,
+	Customer,
 } from './types';
 import {
 	HOMEPAGE_FEATURED_PRODUCTS_QUERY,
@@ -54,8 +55,14 @@ import {
 import { getCartQuery } from './queries/cart';
 import { ARTICLE_QUERY, BLOGS_QUERY } from './queries/blog';
 import { FiltersQueryParams } from '@/app/collections/[collectionHandle]/page';
-import { CUSTOMER_CREATE_MUTATION, CUSTOMER_RECOVER_MUTATION, CUSTOMER_RESET_MUTATION, LOGIN_MUTATION } from './mutations/auth';
+import {
+	CUSTOMER_CREATE_MUTATION,
+	CUSTOMER_RECOVER_MUTATION,
+	CUSTOMER_RESET_MUTATION,
+	LOGIN_MUTATION,
+} from './mutations/auth';
 import { PRODUCT_QUERY, RECOMMENDED_PRODUCTS_QUERY } from './queries/fragments';
+import { CUSTOMER_QUERY } from './queries/user';
 
 const domain = `https://${process.env.PUBLIC_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
@@ -564,7 +571,6 @@ export async function recoverCustomersPassword({
 	return data;
 }
 
-
 export async function resetCustomersPassword({
 	variables,
 }: {
@@ -592,6 +598,31 @@ export async function resetCustomersPassword({
 		variables,
 	});
 	return data;
+}
+
+export async function getCustomer(
+	customerAccessToken: string
+): Promise<Customer> {
+	const res = await shopifyFetch<{
+		data: { customer: Customer };
+		variables: {
+			customerAccessToken: string;
+		};
+	}>({
+		query: CUSTOMER_QUERY,
+		variables: {
+			customerAccessToken,
+		},
+	});
+
+	/**
+	 * If the customer failed to load, we assume their access token is invalid.
+	 */
+	if (!res || !res.body.data.customer) {
+		// log out customer
+	}
+
+	return res.body.data.customer;
 }
 
 export async function getProduct(

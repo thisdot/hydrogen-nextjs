@@ -8,10 +8,9 @@ function formatErrorMessage(err: Error): string {
 }
 
 export async function POST(req: NextRequest): Promise<Response> {
+	const cartIdCookie = req.cookies.get('cartId');
 
-	const cartIdCookie = req.cookies.get('cartId')
-
-	if(cartIdCookie) {
+	if (cartIdCookie) {
 		try {
 			const cart = await getCart(cartIdCookie.value);
 			return NextResponse.json({ status: 200, cart });
@@ -22,27 +21,24 @@ export async function POST(req: NextRequest): Promise<Response> {
 					{ status: e.status }
 				);
 			}
-	
+
 			return NextResponse.json({ status: 500 });
 		}
 	} else {
 		try {
 			const cart: Cart = await createCart();
-			
-			const response = NextResponse.json({ ...cart }, { status: 200})
+
+			const response = NextResponse.json({ ...cart }, { status: 200 });
 
 			response.cookies.set({
-				name: 'cartId', 
+				name: 'cartId',
 				value: cart.id,
 				httpOnly: true,
 				path: '/',
-				expires: new Date(
-					Date.now() + 20 * 60 * 1000 + 5 * 1000
-				)
-			})
+				expires: new Date(Date.now() + 20 * 60 * 1000 + 5 * 1000),
+			});
 
 			return response;
-			
 		} catch (e) {
 			if (isShopifyError(e)) {
 				return NextResponse.json(

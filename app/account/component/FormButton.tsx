@@ -1,11 +1,7 @@
-'use client'
-import { experimental_useFormStatus as useFormStatus } from "react-dom";
-export default function FormButton({
-	btnText,
-}: {
-	btnText: string;
-}) {
-	const { pending } = useFormStatus()
+'use client';
+import { experimental_useFormStatus as useFormStatus } from 'react-dom';
+export default function FormButton({ btnText }: { btnText: string }) {
+	const { pending } = useFormStatus();
 	return (
 		<div className="flex items-center justify-between">
 			<button

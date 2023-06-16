@@ -1,3 +1,4 @@
+import AuthLayout from '@/app/account/component/AuthLayout';
 import FormButton from '@/app/account/component/FormButton';
 import FormHeader from '@/app/account/component/FormHeader';
 import { resetCustomersPassword } from '@/lib/shopify';
@@ -15,9 +16,8 @@ export default function ResetPassword({
 }: {
 	params: { id: string; resetToken: string };
 }) {
-
 	const handleSubmit = async (data: FormData) => {
-		'use server'
+		'use server';
 		const id = params.id;
 		const resetToken = params.resetToken;
 
@@ -33,7 +33,6 @@ export default function ResetPassword({
 		) {
 			passwordConfirmError = 'The two passwords entered did not match.';
 		} else {
-
 			const res = await resetCustomersPassword({
 				variables: {
 					id: `gid://shopify/Customer/${id}`,
@@ -62,7 +61,7 @@ export default function ResetPassword({
 
 			if (res.body.data.customerReset.customerUserErrors.length > 0) {
 				res.body.data.customerReset.customerUserErrors.filter((error: any) => {
-					if(error.field){
+					if (error.field) {
 						if (error.field.includes('password')) {
 							passwordError = error.message;
 						} else if (error.field.includes('passwordConfirm')) {
@@ -80,7 +79,7 @@ export default function ResetPassword({
 	};
 
 	return (
-		<>
+		<AuthLayout>
 			<FormHeader title="Reset Password." />
 			<p className="mt-4">Enter a new password for your account.</p>
 			{errorMessage && <p className="text-red-500 mt-4">{errorMessage}</p>}
@@ -129,6 +128,6 @@ export default function ResetPassword({
 				</div>
 				<FormButton btnText={'Save'} />
 			</form>
-		</>
+		</AuthLayout>
 	);
 }
