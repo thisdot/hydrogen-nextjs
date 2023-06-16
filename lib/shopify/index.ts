@@ -35,6 +35,8 @@ import {
 	ShopifyProductRecommendationsOperation,
 	ProductSortKeys,
 	CustomerAccessTokenCreatePayload,
+	CustomerRecoverPayload,
+	CustomerResetPayload,
 } from './types';
 import {
 	HOMEPAGE_FEATURED_PRODUCTS_QUERY,
@@ -52,7 +54,7 @@ import {
 import { getCartQuery } from './queries/cart';
 import { ARTICLE_QUERY, BLOGS_QUERY } from './queries/blog';
 import { FiltersQueryParams } from '@/app/collections/[collectionHandle]/page';
-import { CUSTOMER_CREATE_MUTATION, LOGIN_MUTATION } from './mutations/auth';
+import { CUSTOMER_CREATE_MUTATION, CUSTOMER_RECOVER_MUTATION, CUSTOMER_RESET_MUTATION, LOGIN_MUTATION } from './mutations/auth';
 import { PRODUCT_QUERY, RECOMMENDED_PRODUCTS_QUERY } from './queries/fragments';
 
 const domain = `https://${process.env.PUBLIC_STORE_DOMAIN!}`;
@@ -536,6 +538,57 @@ export async function loginCustomer({
 		};
 	}>({
 		query: LOGIN_MUTATION,
+		variables,
+	});
+	return data;
+}
+
+export async function recoverCustomersPassword({
+	variables,
+}: {
+	variables: {
+		email: string;
+	};
+}) {
+	const data = await shopifyFetch<{
+		data: {
+			customerRecover: CustomerRecoverPayload;
+		};
+		variables: {
+			email: string;
+		};
+	}>({
+		query: CUSTOMER_RECOVER_MUTATION,
+		variables,
+	});
+	return data;
+}
+
+
+export async function resetCustomersPassword({
+	variables,
+}: {
+	variables: {
+		id: string;
+		input: {
+			password: string;
+			resetToken: string;
+		};
+	};
+}) {
+	const data = await shopifyFetch<{
+		data: {
+			customerReset: CustomerResetPayload;
+		};
+		variables: {
+			id: string;
+			input: {
+				password: string;
+				resetToken: string;
+			};
+		};
+	}>({
+		query: CUSTOMER_RESET_MUTATION,
 		variables,
 	});
 	return data;
