@@ -3049,6 +3049,7 @@ export type ProductSortKeys =
 	| 'UPDATED_AT'
 	/** Sort by the `vendor` value. */
 	| 'VENDOR';
+
 /** A CustomerAccessToken represents the unique token required to make modifications to the customer object. */
 export type CustomerAccessToken = {
 	__typename?: 'CustomerAccessToken';
@@ -3056,6 +3057,34 @@ export type CustomerAccessToken = {
 	accessToken: Scalars['String'];
 	/** The date and time when the customer access token expires. */
 	expiresAt: Scalars['DateTime'];
+};
+
+/** Return type for `customerRecover` mutation. */
+export type CustomerRecoverPayload = {
+  __typename?: 'CustomerRecoverPayload';
+  /** The list of errors that occurred from executing the mutation. */
+  customerUserErrors: Array<CustomerUserError>;
+  /**
+   * The list of errors that occurred from executing the mutation.
+   * @deprecated Use `customerUserErrors` instead.
+   */
+  userErrors: Array<UserError>;
+};
+
+/** Return type for `customerReset` mutation. */
+export type CustomerResetPayload = {
+  __typename?: 'CustomerResetPayload';
+  /** The customer object which was reset. */
+  customer?: Maybe<Customer>;
+  /** A newly created customer access token object for the customer. */
+  customerAccessToken?: Maybe<CustomerAccessToken>;
+  /** The list of errors that occurred from executing the mutation. */
+  customerUserErrors: Array<CustomerUserError>;
+  /**
+   * The list of errors that occurred from executing the mutation.
+   * @deprecated Use `customerUserErrors` instead.
+   */
+  userErrors: Array<UserError>;
 };
 
 /** Return type for `customerAccessTokenCreate` mutation. */
