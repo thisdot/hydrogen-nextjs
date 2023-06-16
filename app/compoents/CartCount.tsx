@@ -1,44 +1,26 @@
 import { IconBag } from '@/components/Icon';
-import useCartFetcher from '@/hooks/useCartFetcher';
 import useAppStore from '@/store/app-store';
 import useCartStore from '@/store/cart-store';
 import clsx from 'clsx';
-import { useEffect, useMemo } from 'react';
-import { useCookie } from 'react-use';
+import { useEffect, useMemo, useState } from 'react';
 
 function CartCount({ isHome }: { isHome: boolean }) {
-	const [cookie, setCookie] = useCookie('cartId');
-	const { getStoreCart } = useCartFetcher();
 	const cart = useCartStore(state => state.cart);
 
 	useEffect(() => {
-		// If cart not created
-		if (!cookie) {
 			const createCart = async () => {
 				await fetch(`/api/cart/create`, {
 					method: 'POST',
 				}).then(async (response) => {
 					const data = await response.json();
 						if (response.status === 200) {
-							setCookie(data.cart.id, {
-								path: '/',
-								sameSite: 'strict',
-								secure: process.env.NODE_ENV === 'production',
-							});
 							useCartStore.setState({ cart: data.cart });
 						}
 				}).catch(() => null)
 			};
-
 			createCart();
-		}
 	}, []);
 
-	useEffect(() => {
-		if (cookie) {
-			getStoreCart();
-		}
-	}, [cookie]);
 
 	return <Badge dark={isHome} count={cart?.totalQuantity || 0} />;
 }

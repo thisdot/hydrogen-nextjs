@@ -34,7 +34,15 @@ export default function RegisterPage() {
 				
 				if (loginRes.body.data.customerAccessTokenCreate.customerAccessToken?.accessToken) {
 					// @ts-expect-error missing type
-					cookies().set('customerAccessToken', loginRes.body.data.customerAccessTokenCreate.customerAccessToken.accessToken);
+					cookies().set({
+						name: 'customerAccessToken', 
+						value: loginRes.body.data.customerAccessTokenCreate.customerAccessToken.accessToken,
+						httpOnly: true,
+						path: '/',
+						expires: new Date(
+								Date.now() + 20 * 60 * 1000 + 5 * 1000
+							)
+					});
 					redirect('/account');
 				}
 
