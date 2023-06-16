@@ -1,17 +1,13 @@
 import { IconAccount, IconLogin } from '@/components/Icon';
 import { Link } from '@/components/Link';
 
-function AccountLink({ className }: { className?: string }) {
-	const isLoggedIn = false; // TODO: replace with real auth check
-	return isLoggedIn ? (
+function AccountLink({ className, isUser }: { className?: string, isUser: boolean }) {
+
+	return (
 		<Link href="/account" className={className}>
-			<IconAccount />
+			{isUser ? <IconAccount /> : <IconLogin/> }
 		</Link>
-	) : (
-		<Link href="/account/login" className={className}>
-			<IconLogin />
-		</Link>
-	);
+	)
 }
 
 export default AccountLink;

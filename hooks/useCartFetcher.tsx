@@ -2,16 +2,6 @@ import { CartLine } from '@/lib/shopify/types';
 import useCartStore from '@/store/cart-store';
 
 const useCartFetcher = () => {
-	const getStoreCart = async () => {
-		const response = await fetch(`/api/cart`, {
-			method: 'GET',
-		});
-		if (response.status === 200) {
-			const data = await response.json();
-			useCartStore.setState({ cart: data.cart });
-		}
-	};
-
 	const addCatItem = async ({ variantId }: { variantId: string }) => {
 		const response = await fetch(`/api/cart`, {
 			method: 'POST',
@@ -62,7 +52,7 @@ const useCartFetcher = () => {
 		}
 	};
 
-	return { editCartItem, getStoreCart, deleteCartItem, addCatItem };
+	return { editCartItem, deleteCartItem, addCatItem };
 };
 
 export default useCartFetcher;
