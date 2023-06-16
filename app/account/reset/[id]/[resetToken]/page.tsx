@@ -76,7 +76,7 @@ export default function ResetPassword({
 				});
 			}
 		}
-		revalidatePath('/account/recover');
+		revalidatePath('/account/reset');
 	};
 
 	return (
