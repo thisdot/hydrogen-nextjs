@@ -13,10 +13,12 @@ function DesktopHeader({
 	title,
 	isHome,
 	menu,
+	isUser, 
 }: {
 	isHome: boolean;
 	title: string;
 	menu: ShopifyHeaderMenu;
+	isUser: boolean;
 }) {
 	const searchTerm = useSearchParam('q');
 	const { y } = useWindowScroll();
@@ -79,7 +81,7 @@ function DesktopHeader({
 						<IconSearch />
 					</button>
 				</form>
-				<AccountLink className="relative flex items-center justify-center w-8 h-8 focus:ring-primary/5" />
+				<AccountLink className="relative flex items-center justify-center w-8 h-8 focus:ring-primary/5" isUser={isUser}/>
 				<CartCount isHome={isHome} />
 			</div>
 		</header>

@@ -1,118 +1,110 @@
-'use client';
-
 import { getInputStyleClasses } from '@/lib/utils';
+import { revalidatePath } from 'next/cache';
+import { createCustomer, loginCustomer } from '@/lib/shopify';
 import { redirect } from 'next/navigation';
-import FormHeader from '../component/FormHeader';
-import FormFooter from '../component/FormFooter';
+import { cookies } from 'next/headers';
 import FormButton from '../component/FormButton';
-import { useState } from 'react';
+import FormFooter from '../component/FormFooter';
+import FormHeader from '../component/FormHeader';
+
+let emailError: string | null = null;
+let passwordError: string | null = null;
 
 export default function RegisterPage() {
-	const [nativeEmailError, setNativeEmailError] = useState(null);
-	const [nativePasswordError, setNativePasswordError] = useState(null);
-	const [sending, setSending] = useState(false);
-	const [btnText, setBtnText] = useState('Create Account');
-
-	const reset = () => {
-		setNativeEmailError(null);
-		setNativePasswordError(null);
-		setBtnText('Create Account');
-		setSending(false);
-	};
-
 	async function handleSubmit(data: FormData) {
-		setSending(true);
-		setBtnText('Creating Account..');
-		const res = await fetch('/api/account/register', {
-			method: 'post',
-			body: JSON.stringify({
-				email: data.get('email') as string,
-				password: data.get('password') as string,
-			}),
-		}).then(async (resp: Response) => await resp.json());
-
-		if (res.customer) {
-			//If custome created, Log in user
-			setBtnText('Attempting to login...');
-
-			const loginResponse = await fetch('/api/account/login', {
-				method: 'post',
-				body: JSON.stringify({
+		'use server';
+		const res = await createCustomer({
+			variables: {
+				input: {
 					email: data.get('email') as string,
 					password: data.get('password') as string,
-				}),
-			}).then(async (resp: Response) => await resp.json());
+				},
+			},
+		});
 
-			if (loginResponse.customerAccessToken) {
-				redirect('/account');
-			}
+		if (res.body.data.customerCreate.customer) {
+        const loginRes = await loginCustomer({
+					variables: {
+						input: {
+							email: data.get('email') as string,
+							password: data.get('password') as string,
+						},
+					},
+				});
+				
+				if (loginRes.body.data.customerAccessTokenCreate.customerAccessToken?.accessToken) {
+					// @ts-expect-error missing type
+					cookies().set('customerAccessToken', loginRes.body.data.customerAccessTokenCreate.customerAccessToken.accessToken);
+					redirect('/account');
+				}
+
+			redirect('/account/login');
 		}
 
-		if (res.customerUserErrors.length > 0) {
-			res.customerUserErrors.filter((error: any) => {
-				if (error.field) {
-					if (error.field.includes('email')) {
-						setNativeEmailError(error.message);
-					}
-					if (error.field.includes('password')) {
-						setNativePasswordError(error.message);
-					}
+		if (res.body.data.customerCreate.customerUserErrors.length > 0) {
+			res.body.data.customerCreate.customerUserErrors.filter((error: any) => {
+				if (error.field.includes('email')) {
+					emailError = error.message;
+				}
+				if (error.field.includes('password')) {
+					passwordError = error.message;
 				}
 			});
 		}
 
-		setTimeout(() => {
-			reset();
-		}, 2000);
+		revalidatePath('/account/register');
 	}
 
+
 	return (
-		<>
-			<FormHeader title="Create an Account." />
-			<form
-				action={handleSubmit}
-				noValidate
-				className="pt-6 pb-8 mt-4 mb-4 space-y-3"
-			>
-				<div>
-					<input
-						className={`mb-1 ${getInputStyleClasses(nativeEmailError)}`}
-						id="email"
-						name="email"
-						type="email"
-						autoComplete="email"
-						required
-						placeholder="Email address"
-						aria-label="Email address"
-						autoFocus
-					/>
-					{nativeEmailError && (
-						<p className="text-red-500 text-xs">{nativeEmailError} &nbsp;</p>
-					)}
-				</div>
-				<div>
-					<input
-						className={`mb-1 ${getInputStyleClasses(nativePasswordError)}`}
-						id="password"
-						name="password"
-						type="password"
-						autoComplete="current-password"
-						placeholder="Password"
-						aria-label="Password"
-						minLength={8}
-						required
-						autoFocus
-					/>
-					{nativePasswordError && (
-						<p className="text-red-500 text-xs">
-							{' '}
-							{nativePasswordError} &nbsp;
-						</p>
-					)}
-				</div>
-				<FormButton btnText={btnText} disabled={sending} />
-				<FormFooter page="register" />
-			</form>
-		</>
+		<div className="flex justify-center my-24 px-4">
+			<div className="max-w-md w-full">
+			<FormHeader title='Create an Account'/>
+				<form
+					action={handleSubmit}
+					noValidate
+					className="pt-6 pb-8 mt-4 mb-4 space-y-3"
+				>
+					<div>
+						<input
+							className={`mb-1 ${getInputStyleClasses(emailError)}`}
+							id="email"
+							name="email"
+							type="email"
+							autoComplete="email"
+							required
+							placeholder="Email address"
+							aria-label="Email address"
+							autoFocus
+						/>
+						{emailError && (
+							<p className="text-red-500 text-xs">{emailError} &nbsp;</p>
+						)}
+					</div>
+					<div>
+						<input
+							className={`mb-1 ${getInputStyleClasses(passwordError)}`}
+							id="password"
+							name="password"
+							type="password"
+							autoComplete="current-password"
+							placeholder="Password"
+							aria-label="Password"
+							minLength={8}
+							required
+							autoFocus
+						/>
+						{passwordError && (
+							<p className="text-red-500 text-xs">
+								{' '}
+								{passwordError} &nbsp;
+							</p>
+						)}
+					</div>
+					<FormButton btnText='Create Account' />
+					<FormFooter page="register" />
+				</form>
+			</div>
+		</div>
 	);
 }

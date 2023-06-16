@@ -30,9 +30,11 @@ export async function POST(request: NextResponse) {
 			sameSite: 'strict',
 			secure: true,
 		});
+		
+		return NextResponse.redirect(new URL('/account', request.url));
 	}
 	return NextResponse.json({
-		customerAccessToken: customerAccessToken?.accessToken ? true :  false,
+		customerAccessToken: false,
 		customerUserErrors:
 			res.body.data.customerAccessTokenCreate.customerUserErrors,
 	});

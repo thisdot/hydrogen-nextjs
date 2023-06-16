@@ -5,6 +5,7 @@ import { Inter } from 'next/font/google';
 import { getLayoutData } from '@/lib/shopify';
 import Footer from './compoents/Footer';
 import Header from './compoents/Header';
+import { cookies } from 'next/headers';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,6 +20,7 @@ export default async function RootLayout({
 	children: React.ReactNode;
 }) {
 	const data = await getLayoutData();
+	const accessToken = cookies().get('customerAccessToken');
 	return (
 		<html lang="en">
 			<body className={inter.className}>
@@ -31,6 +33,7 @@ export default async function RootLayout({
 					<Header
 						menu={data.body.data.headerMenu}
 						title={data.body.data.shop.name}
+						isUser={Boolean(accessToken)}
 					/>
 					<main role="main" id="mainContent" className="flex-grow">
 						{children}

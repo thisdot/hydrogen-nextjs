@@ -1,69 +1,58 @@
-'use client';
-
 import { getInputStyleClasses } from '@/lib/utils';
 import { redirect } from 'next/navigation';
 import FormHeader from '../component/FormHeader';
 import FormFooter from '../component/FormFooter';
 import FormButton from '../component/FormButton';
-import { useState } from 'react';
+import { loginCustomer } from '@/lib/shopify';
+import { revalidatePath } from 'next/cache';
+import { cookies } from 'next/headers';
 
+let emailError: string | null = null;
+let passwordError: string | null = null;
+let unidentifiedUserError: string | null = null;
 export default function LoginPage() {
-	const [nativeEmailError, setNativeEmailError] = useState(null);
-	const [nativePasswordError, setNativePasswordError] = useState(null);
-	const [nativeUnIdentifiedUserError, setNativeUnIdentifiedUserError] =
-		useState(null);
-	const [sending, setSending] = useState(false);
-	const [btnText, setBtnText] = useState('Sign in');
-
-	const reset = () => {
-		setNativeEmailError(null);
-		setNativePasswordError(null);
-		setBtnText('Sign in');
-		setSending(false);
-	};
-
 	async function handleSubmit(data: FormData) {
-		setSending(true);
-		setBtnText('Please wait..');
-		const loginResponse = await fetch('/api/account/login', {
-			method: 'post',
-			body: JSON.stringify({
-				email: data.get('email') as string,
-				password: data.get('password') as string,
-			}),
-		}).then(async (resp: Response) => await resp.json());
+		'use server';
+		const loginRes = await loginCustomer({
+				variables: {
+					input: {
+						email: data.get('email') as string,
+						password: data.get('password') as string,
+					},
+				},
+			});
+			
+			if (loginRes.body.data.customerAccessTokenCreate.customerAccessToken?.accessToken) {
+				// @ts-expect-error missing type
+				cookies().set('customerAccessToken', loginRes.body.data.customerAccessTokenCreate.customerAccessToken.accessToken);
+				redirect('/account');
+			}
 
-		if (loginResponse.customerAccessToken) {
-			redirect('/account');
-		}
-
-		if (loginResponse.customerUserErrors.length > 0) {
-			loginResponse.customerUserErrors.filter((error: any) => {
+		if (loginRes.body.data.customerAccessTokenCreate.customerUserErrors.length > 0) {
+			loginRes.body.data.customerAccessTokenCreate.customerUserErrors.filter((error: any) => {
 				if (error.field) {
 					if (error.field.includes('email')) {
-						setNativeEmailError(error.message);
+						emailError = error.message;
 					}
 					if (error.field.includes('password')) {
-						setNativePasswordError(error.message);
+						passwordError = error.message;
 					}
 				} else {
 					if (error.code === "UNIDENTIFIED_CUSTOMER") {
-						setNativeUnIdentifiedUserError(error.message)
+						unidentifiedUserError = error.message
 					}
 				}
 			});
 		}
-
-		setTimeout(() => {
-			reset();
-		}, 2000);
+		
+		revalidatePath('/account/login');
 	}
 
 	return (
 		<>
 			<FormHeader title="Sign in." />
-			{nativeUnIdentifiedUserError && (
-				<p className="text-red-500 mt-4">{nativeUnIdentifiedUserError}</p>
+			{unidentifiedUserError && (
+				<p className="text-red-500 mt-4">{unidentifiedUserError}</p>
 			)}
 			<form
 				action={handleSubmit}
@@ -72,7 +61,7 @@ export default function LoginPage() {
 			>
 				<div>
 					<input
-						className={`mb-1 ${getInputStyleClasses(nativeEmailError)}`}
+						className={`mb-1 ${getInputStyleClasses(emailError)}`}
 						id="email"
 						name="email"
 						type="email"
@@ -82,13 +71,13 @@ export default function LoginPage() {
 						aria-label="Email address"
 						autoFocus
 					/>
-					{nativeEmailError && (
-						<p className="text-red-500 text-xs">{nativeEmailError} &nbsp;</p>
+					{emailError && (
+						<p className="text-red-500 text-xs">{emailError} &nbsp;</p>
 					)}
 				</div>
 				<div>
 					<input
-						className={`mb-1 ${getInputStyleClasses(nativePasswordError)}`}
+						className={`mb-1 ${getInputStyleClasses(passwordError)}`}
 						id="password"
 						name="password"
 						type="password"
@@ -99,14 +88,14 @@ export default function LoginPage() {
 						required
 						autoFocus
 					/>
-					{nativePasswordError && (
+					{passwordError && (
 						<p className="text-red-500 text-xs">
 							{' '}
-							{nativePasswordError} &nbsp;
+							{passwordError} &nbsp;
 						</p>
 					)}
 				</div>
-				<FormButton btnText={btnText} disabled={sending} />
+				<FormButton btnText='Sign in' />
 				<FormFooter page="login" />
 			</form>
 		</>
