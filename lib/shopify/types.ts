@@ -90,6 +90,9 @@ export type Maybe<T> = T | null;
 
 export type Product = Omit<ShopifyProduct, 'variants' | 'images'> & {
 	images: Image[];
+	media: {
+		nodes: MediaImage[];
+	};
 	variants: {
 		nodes: ProductVariant[];
 		edges: {
@@ -97,6 +100,23 @@ export type Product = Omit<ShopifyProduct, 'variants' | 'images'> & {
 		}[];
 	};
 };
+
+export type MediaImage = Media &
+	Node & {
+		__typename?: 'MediaImage';
+		/** A word or phrase to share the nature or contents of a media. */
+		alt?: Maybe<Scalars['String']>;
+		/** A globally-unique identifier. */
+		id: Scalars['ID'];
+		/** The image for the media. */
+		image?: Maybe<Image>;
+		/** The media content type. */
+		mediaContentType: MediaContentType;
+		/** The presentation for a media. */
+		presentation?: Maybe<MediaPresentation>;
+		/** The preview image for the media. */
+		previewImage?: Maybe<Image>;
+	};
 
 export type ProductVariant = {
 	id: string;
@@ -3095,3 +3115,144 @@ export type CustomerAccessTokenCreatePayload = {
 	 */
 	userErrors: Array<UserError>;
 };
+
+export type ShopType = HasMetafields &
+	Node & {
+		__typename?: 'Shop';
+		/** The shop's branding configuration. */
+		brand?: Maybe<Brand>;
+		/** A description of the shop. */
+		description?: Maybe<Scalars['String']>;
+		/** A globally-unique identifier. */
+		id: Scalars['ID'];
+		/** Returns a metafield found by namespace and key. */
+		metafield?: Maybe<Metafield>;
+		/**
+		 * The metafields associated with the resource matching the supplied list of namespaces and keys.
+		 *
+		 */
+		metafields: Array<Maybe<Metafield>>;
+		/** A string representing the way currency is formatted when the currency isn’t specified. */
+		moneyFormat: Scalars['String'];
+		/** The shop’s name. */
+		name: Scalars['String'];
+		/** Settings related to payments. */
+		paymentSettings: PaymentSettings;
+		/** The primary domain of the shop’s Online Store. */
+		primaryDomain: Domain;
+		/** The shop’s privacy policy. */
+		privacyPolicy?: Maybe<ShopPolicy>;
+		/** The shop’s refund policy. */
+		refundPolicy?: Maybe<ShopPolicy>;
+		/** The shop’s shipping policy. */
+		shippingPolicy?: Maybe<ShopPolicy>;
+		/** Countries that the shop ships to. */
+		shipsToCountries: Array<CountryCode>;
+		/** The shop’s subscription policy. */
+		subscriptionPolicy?: Maybe<ShopPolicyWithDefault>;
+		/** The shop’s terms of service. */
+		termsOfService?: Maybe<ShopPolicy>;
+	};
+
+export type Brand = {
+	__typename?: 'Brand';
+	/** The colors of the store's brand. */
+	colors: BrandColors;
+	/** The store's cover image. */
+	coverImage?: Maybe<MediaImage>;
+	/** The store's default logo. */
+	logo?: Maybe<MediaImage>;
+	/** The store's short description. */
+	shortDescription?: Maybe<Scalars['String']>;
+	/** The store's slogan. */
+	slogan?: Maybe<Scalars['String']>;
+	/** The store's preferred logo for square UI elements. */
+	squareLogo?: Maybe<MediaImage>;
+};
+
+export type ShopPolicy = Node & {
+	__typename?: 'ShopPolicy';
+	/** Policy text, maximum size of 64kb. */
+	body: Scalars['String'];
+	/** Policy’s handle. */
+	handle: Scalars['String'];
+	/** A globally-unique identifier. */
+	id: Scalars['ID'];
+	/** Policy’s title. */
+	title: Scalars['String'];
+	/** Public URL to the policy. */
+	url: Scalars['URL'];
+};
+
+export type ShopPolicyWithDefault = {
+	__typename?: 'ShopPolicyWithDefault';
+	/** The text of the policy. Maximum size: 64KB. */
+	body: Scalars['String'];
+	/** The handle of the policy. */
+	handle: Scalars['String'];
+	/** The unique identifier of the policy. A default policy doesn't have an ID. */
+	id?: Maybe<Scalars['ID']>;
+	/** The title of the policy. */
+	title: Scalars['String'];
+	/** Public URL to the policy. */
+	url: Scalars['URL'];
+};
+
+export type PaymentSettings = {
+	__typename?: 'PaymentSettings';
+	/** List of the card brands which the shop accepts. */
+	acceptedCardBrands: Array<CardBrand>;
+	/** The url pointing to the endpoint to vault credit cards. */
+	cardVaultUrl: Scalars['URL'];
+	/** The country where the shop is located. */
+	countryCode: CountryCode;
+	/** The three-letter code for the shop's primary currency. */
+	currencyCode: CurrencyCode;
+	/** A list of enabled currencies (ISO 4217 format) that the shop accepts. Merchants can enable currencies from their Shopify Payments settings in the Shopify admin. */
+	enabledPresentmentCurrencies: Array<CurrencyCode>;
+	/** The shop’s Shopify Payments account id. */
+	shopifyPaymentsAccountId?: Maybe<Scalars['String']>;
+	/** List of the digital wallets which the shop supports. */
+	supportedDigitalWallets: Array<DigitalWallet>;
+};
+
+export type BrandColors = {
+	__typename?: 'BrandColors';
+	/** The shop's primary brand colors. */
+	primary: Array<BrandColorGroup>;
+	/** The shop's secondary brand colors. */
+	secondary: Array<BrandColorGroup>;
+};
+
+/** Card brand, such as Visa or Mastercard, which can be used for payments. */
+export type CardBrand =
+	/** American Express. */
+	| 'AMERICAN_EXPRESS'
+	/** Diners Club. */
+	| 'DINERS_CLUB'
+	/** Discover. */
+	| 'DISCOVER'
+	/** JCB. */
+	| 'JCB'
+	/** Mastercard. */
+	| 'MASTERCARD'
+	/** Visa. */
+	| 'VISA';
+
+export type BrandColorGroup = {
+	__typename?: 'BrandColorGroup';
+	/** The background color. */
+	background?: Maybe<Scalars['Color']>;
+	/** The foreground color. */
+	foreground?: Maybe<Scalars['Color']>;
+};
+
+export type DigitalWallet =
+	/** Android Pay. */
+	| 'ANDROID_PAY'
+	/** Apple Pay. */
+	| 'APPLE_PAY'
+	/** Google Pay. */
+	| 'GOOGLE_PAY'
+	/** Shopify Pay. */
+	| 'SHOPIFY_PAY';
