@@ -63,6 +63,7 @@ import {
 } from './mutations/auth';
 import { PRODUCT_QUERY, RECOMMENDED_PRODUCTS_QUERY } from './queries/fragments';
 import { CUSTOMER_QUERY } from './queries/user';
+import { REMOVE_ADDRESS } from './mutations/address';
 
 const domain = `https://${process.env.PUBLIC_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
@@ -693,6 +694,33 @@ export async function getFilteredAndSortedProducts({
 	}>({
 		query: SORTED_AND_FILTERED_PRODUCTS_QUERY,
 		variables,
+	});
+
+	return data;
+}
+
+export async function deleteAddress(payload: {
+	customerAccessToken: string;
+	id: string;
+}) {
+	const data = await shopifyFetch<{
+		data: {
+			customerAddressDelete: {
+				customerUserErrors: {
+					code: string;
+					field: string[];
+					message: string;
+				}[];
+			};
+			deletedCustomerAddressId: string;
+		};
+		variables: {
+			customerAccessToken: string;
+			id: string;
+		};
+	}>({
+		query: REMOVE_ADDRESS,
+		variables: payload,
 	});
 
 	return data;
