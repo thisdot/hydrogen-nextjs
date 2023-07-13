@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
 	});
 }
 
-export async function GET(request: NextResponse) {
+export async function GET(request: NextRequest) {
 	const featuredProductsResponse = await getFeaturedProducts();
 	const featuredCollectionsResponse = await getFeaturedCollections();
 
