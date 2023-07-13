@@ -41,6 +41,7 @@ const mockedProduct = {
 		title: 'seotitle',
 		description: 'seodescription',
 	},
+	media: { nodes: [] },
 	tags: [],
 	updatedAt: '2022-01-01T00:00:00Z',
 	vendor: 'vendore',
