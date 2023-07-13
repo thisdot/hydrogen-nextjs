@@ -26,14 +26,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
+          cache: "pnpm"
           cache-dependency-path: ./pnpm-lock.yaml
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm ci
 
       - name: Check formatting
-        run: npm run format:check
+        run: pnpm run format:check
 
   build:
     runs-on: ubuntu-latest
@@ -57,13 +57,13 @@ jobs:
           cache: ''
 
       - name: Install dependencies
-        run: npm i
+        run: pnpm i
         working-directory: ./
 
       - name: Lint files
-        run: npm run lint && npm run format
+        run: pnpm run lint && npm run format
         working-directory: ./
 
       - name: Build Project
-        run: npm run build
+        run: pnpm run build
         working-directory: ./
