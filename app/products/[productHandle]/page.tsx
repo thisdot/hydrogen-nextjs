@@ -23,10 +23,13 @@ export default async function Product({
 		selectedOptions.push({ name, value });
 	});
 
-	const { shop, product }: { shop: ShopType, product: Product & { selectedVariant: ProductVariant } } = await getProduct(
-		params.productHandle,
-		selectedOptions
-	);
+	const {
+		shop,
+		product,
+	}: {
+		shop: ShopType;
+		product: Product & { selectedVariant: ProductVariant };
+	} = await getProduct(params.productHandle, selectedOptions);
 
 	const url = `/products/${product.handle}`;
 	const STORE_DOMAIN = `${process.env.PUBLIC_STORE_DOMAIN!}`;
@@ -106,7 +109,6 @@ export default async function Product({
 	const { media, title, vendor, descriptionHtml, id } = product;
 	const { shippingPolicy, refundPolicy } = shop;
 	const relatedProducts = await getProductRecommendations(id);
-
 
 	return (
 		<>
