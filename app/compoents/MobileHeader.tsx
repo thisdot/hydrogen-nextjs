@@ -80,7 +80,10 @@ function MobileHeader({
 			</Link>
 
 			<div className="flex items-center justify-end w-full gap-4">
-				<AccountLink className="relative flex items-center justify-center w-8 h-8" isUser={isUser} />
+				<AccountLink
+					className="relative flex items-center justify-center w-8 h-8"
+					isUser={isUser}
+				/>
 				<CartCount isHome={isHome} />
 			</div>
 		</header>

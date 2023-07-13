@@ -207,7 +207,7 @@ export const ProductForm = ({
 		selectedVariant?.price?.amount < selectedVariant?.compareAtPrice?.amount;
 
 	return (
-		<div className="grid gap-10" >
+		<div className="grid gap-10">
 			<div className="grid gap-4">
 				<ProductOptions options={product.options} />
 				{selectedVariant && (
@@ -260,7 +260,7 @@ export const ProductForm = ({
 			</div>
 		</div>
 	);
-}
+};
 
 const ProductOptions = ({ options }: { options: ProductOption[] }) => {
 	return (
