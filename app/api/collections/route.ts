@@ -1,8 +1,8 @@
 import { PAGE_BY } from '@/lib/const';
 import { getAllCollections } from '@/lib/shopify';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(request: NextResponse) {
+export async function GET(request: NextRequest) {
 	const params = new URL(request.url).searchParams;
 
 	const data = await getAllCollections({
