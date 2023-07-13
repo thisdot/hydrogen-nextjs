@@ -63,7 +63,6 @@ import {
 } from './mutations/auth';
 import { PRODUCT_QUERY, RECOMMENDED_PRODUCTS_QUERY } from './queries/fragments';
 import { CUSTOMER_QUERY } from './queries/user';
-import { REMOVE_ADDRESS } from './mutations/address';
 
 const domain = `https://${process.env.PUBLIC_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
@@ -131,7 +130,7 @@ export async function shopifyFetch<T>({
 	query,
 	variables,
 	headers,
-	cache = 'force-cache',
+	cache = 'no-store',
 }: {
 	query: string;
 	variables?: ExtractVariables<T>;
@@ -418,7 +417,6 @@ export async function getAllPosts({
 		variables: {
 			...variables,
 		},
-		cache: 'no-store',
 	});
 	return data;
 }
@@ -444,7 +442,6 @@ export async function getArticleByHandle({
 		variables: {
 			...variables,
 		},
-		cache: 'no-store',
 	});
 	return data;
 }
@@ -476,7 +473,6 @@ export async function getSearchedProducts({
 		variables: {
 			...variables,
 		},
-		cache: 'no-store',
 	});
 	return data;
 }
@@ -496,7 +492,6 @@ export async function getCollectionProducts({
 	const data = await shopifyFetch<ShopifyCollectionProducts>({
 		query: COLLECTION_QUERY,
 		variables,
-		cache: 'no-store',
 	});
 	return data;
 }
@@ -524,7 +519,6 @@ export async function createCustomer({
 	}>({
 		query: CUSTOMER_CREATE_MUTATION,
 		variables,
-		cache: 'no-store',
 	});
 	return data;
 }
@@ -552,7 +546,6 @@ export async function loginCustomer({
 	}>({
 		query: LOGIN_MUTATION,
 		variables,
-		cache: 'no-store',
 	});
 	return data;
 }
@@ -574,7 +567,6 @@ export async function recoverCustomersPassword({
 	}>({
 		query: CUSTOMER_RECOVER_MUTATION,
 		variables,
-		cache: 'no-store',
 	});
 	return data;
 }
@@ -604,7 +596,6 @@ export async function resetCustomersPassword({
 	}>({
 		query: CUSTOMER_RESET_MUTATION,
 		variables,
-		cache: 'no-store',
 	});
 	return data;
 }
@@ -622,7 +613,6 @@ export async function getCustomer(
 		variables: {
 			customerAccessToken,
 		},
-		cache: 'no-store',
 	});
 
 	/**
@@ -645,7 +635,6 @@ export async function getProduct(
 			handle,
 			selectedOptions,
 		},
-		cache: 'no-store',
 	});
 
 	return {
@@ -663,7 +652,6 @@ export async function getProductRecommendations(
 			productId,
 			count: 12,
 		},
-		cache: 'no-store',
 	});
 
 	const products = res.body.data;
@@ -705,35 +693,6 @@ export async function getFilteredAndSortedProducts({
 	}>({
 		query: SORTED_AND_FILTERED_PRODUCTS_QUERY,
 		variables,
-		cache: 'no-store',
-	});
-
-	return data;
-}
-
-export async function deleteAddress(payload: {
-	customerAccessToken: string;
-	id: string;
-}) {
-	const data = await shopifyFetch<{
-		data: {
-			customerAddressDelete: {
-				customerUserErrors: {
-					code: string;
-					field: string[];
-					message: string;
-				}[];
-			};
-			deletedCustomerAddressId: string;
-		};
-		variables: {
-			customerAccessToken: string;
-			id: string;
-		};
-	}>({
-		query: REMOVE_ADDRESS,
-		variables: payload,
-		cache: 'no-store',
 	});
 
 	return data;
