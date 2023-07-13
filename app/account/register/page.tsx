@@ -6,6 +6,7 @@ import { cookies } from 'next/headers';
 import FormButton from '../component/FormButton';
 import FormFooter from '../component/FormFooter';
 import FormHeader from '../component/FormHeader';
+import AuthLayout from '../component/AuthLayout';
 
 let emailError: string | null = null;
 let passwordError: string | null = null;
@@ -23,28 +24,31 @@ export default function RegisterPage() {
 		});
 
 		if (res.body.data.customerCreate.customer) {
-        const loginRes = await loginCustomer({
-					variables: {
-						input: {
-							email: data.get('email') as string,
-							password: data.get('password') as string,
-						},
+			const loginRes = await loginCustomer({
+				variables: {
+					input: {
+						email: data.get('email') as string,
+						password: data.get('password') as string,
 					},
+				},
+			});
+
+			if (
+				loginRes.body.data.customerAccessTokenCreate.customerAccessToken
+					?.accessToken
+			) {
+				// @ts-expect-error missing type
+				cookies().set({
+					name: 'customerAccessToken',
+					value:
+						loginRes.body.data.customerAccessTokenCreate.customerAccessToken
+							.accessToken,
+					httpOnly: true,
+					path: '/',
+					expires: new Date(Date.now() + 20 * 60 * 1000 + 5 * 1000),
 				});
-				
-				if (loginRes.body.data.customerAccessTokenCreate.customerAccessToken?.accessToken) {
-					// @ts-expect-error missing type
-					cookies().set({
-						name: 'customerAccessToken', 
-						value: loginRes.body.data.customerAccessTokenCreate.customerAccessToken.accessToken,
-						httpOnly: true,
-						path: '/',
-						expires: new Date(
-								Date.now() + 20 * 60 * 1000 + 5 * 1000
-							)
-					});
-					redirect('/account');
-				}
+				redirect('/account');
+			}
 
 			redirect('/account/login');
 		}
@@ -63,56 +67,50 @@ export default function RegisterPage() {
 		revalidatePath('/account/register');
 	}
 
-
 	return (
-		<div className="flex justify-center my-24 px-4">
-			<div className="max-w-md w-full">
-			<FormHeader title='Create an Account'/>
-				<form
-					action={handleSubmit}
-					noValidate
-					className="pt-6 pb-8 mt-4 mb-4 space-y-3"
-				>
-					<div>
-						<input
-							className={`mb-1 ${getInputStyleClasses(emailError)}`}
-							id="email"
-							name="email"
-							type="email"
-							autoComplete="email"
-							required
-							placeholder="Email address"
-							aria-label="Email address"
-							autoFocus
-						/>
-						{emailError && (
-							<p className="text-red-500 text-xs">{emailError} &nbsp;</p>
-						)}
-					</div>
-					<div>
-						<input
-							className={`mb-1 ${getInputStyleClasses(passwordError)}`}
-							id="password"
-							name="password"
-							type="password"
-							autoComplete="current-password"
-							placeholder="Password"
-							aria-label="Password"
-							minLength={8}
-							required
-							autoFocus
-						/>
-						{passwordError && (
-							<p className="text-red-500 text-xs">
-								{' '}
-								{passwordError} &nbsp;
-							</p>
-						)}
-					</div>
-					<FormButton btnText='Create Account' />
-					<FormFooter page="register" />
-				</form>
-			</div>
-		</div>
+		<AuthLayout>
+			<FormHeader title="Create an Account" />
+			<form
+				action={handleSubmit}
+				noValidate
+				className="pt-6 pb-8 mt-4 mb-4 space-y-3"
+			>
+				<div>
+					<input
+						className={`mb-1 ${getInputStyleClasses(emailError)}`}
+						id="email"
+						name="email"
+						type="email"
+						autoComplete="email"
+						required
+						placeholder="Email address"
+						aria-label="Email address"
+						autoFocus
+					/>
+					{emailError && (
+						<p className="text-red-500 text-xs">{emailError} &nbsp;</p>
+					)}
+				</div>
+				<div>
+					<input
+						className={`mb-1 ${getInputStyleClasses(passwordError)}`}
+						id="password"
+						name="password"
+						type="password"
+						autoComplete="current-password"
+						placeholder="Password"
+						aria-label="Password"
+						minLength={8}
+						required
+						autoFocus
+					/>
+					{passwordError && (
+						<p className="text-red-500 text-xs"> {passwordError} &nbsp;</p>
+					)}
+				</div>
+				<FormButton btnText="Create Account" />
+				<FormFooter page="register" />
+			</form>
+		</AuthLayout>
 	);
 }

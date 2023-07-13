@@ -4,17 +4,20 @@ import FormFooter from '../component/FormFooter';
 import FormButton from '../component/FormButton';
 import { revalidatePath } from 'next/cache';
 import { recoverCustomersPassword } from '@/lib/shopify';
+import AuthLayout from '../component/AuthLayout';
 
 let emailError: string | null = null;
 let isSubmited: boolean = false;
 const headings = {
 	submited: {
 		title: 'Request Sent.',
-		description: 'If that email address is in our system, you will receive an email with instructions about how to reset your password in a few minutes.',
+		description:
+			'If that email address is in our system, you will receive an email with instructions about how to reset your password in a few minutes.',
 	},
 	default: {
 		title: 'Forgot Password.',
-		description: 'Enter the email address associated with your account to receive a link to reset your password.',
+		description:
+			'Enter the email address associated with your account to receive a link to reset your password.',
 	},
 };
 
@@ -43,7 +46,7 @@ export default function RecoverPassword() {
 	}
 
 	return (
-		<>
+		<AuthLayout>
 			<FormHeader title={headings[isSubmited ? 'submited' : 'default'].title} />
 			<p className="mt-4">
 				{headings[isSubmited ? 'submited' : 'default'].description}
@@ -74,6 +77,6 @@ export default function RecoverPassword() {
 					<FormFooter page="recover" />
 				</form>
 			)}
-		</>
+		</AuthLayout>
 	);
 }

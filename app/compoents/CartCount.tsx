@@ -8,19 +8,20 @@ function CartCount({ isHome }: { isHome: boolean }) {
 	const cart = useCartStore(state => state.cart);
 
 	useEffect(() => {
-			const createCart = async () => {
-				await fetch(`/api/cart/create`, {
-					method: 'POST',
-				}).then(async (response) => {
+		const createCart = async () => {
+			await fetch(`/api/cart/create`, {
+				method: 'POST',
+			})
+				.then(async response => {
 					const data = await response.json();
-						if (response.status === 200) {
-							useCartStore.setState({ cart: data.cart });
-						}
-				}).catch(() => null)
-			};
-			createCart();
+					if (response.status === 200) {
+						useCartStore.setState({ cart: data.cart });
+					}
+				})
+				.catch(() => null);
+		};
+		createCart();
 	}, []);
-
 
 	return <Badge dark={isHome} count={cart?.totalQuantity || 0} />;
 }

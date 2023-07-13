@@ -7,7 +7,15 @@ import { ShopifyHeaderMenu } from '@/lib/shopify/types';
 import { Cart } from '@/components/Cart';
 import useAppStore from '@/store/app-store';
 
-function Header({ menu, title, isUser }: { menu: ShopifyHeaderMenu; title: string; isUser: boolean }) {
+function Header({
+	menu,
+	title,
+	isUser,
+}: {
+	menu: ShopifyHeaderMenu;
+	title: string;
+	isUser: boolean;
+}) {
 	const isHome = true;
 
 	return (
@@ -16,7 +24,12 @@ function Header({ menu, title, isUser }: { menu: ShopifyHeaderMenu; title: strin
 
 			<MenuDrawer menu={menu} />
 
-			<DesktopHeader isHome={isHome} title={title} menu={menu} isUser={isUser}/>
+			<DesktopHeader
+				isHome={isHome}
+				title={title}
+				menu={menu}
+				isUser={isUser}
+			/>
 			<MobileHeader menu={menu} isHome={isHome} title={title} />
 		</>
 	);
