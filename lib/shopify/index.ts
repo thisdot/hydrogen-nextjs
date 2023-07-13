@@ -418,6 +418,7 @@ export async function getAllPosts({
 		variables: {
 			...variables,
 		},
+		cache: 'no-store',
 	});
 	return data;
 }
@@ -443,6 +444,7 @@ export async function getArticleByHandle({
 		variables: {
 			...variables,
 		},
+		cache: 'no-store',
 	});
 	return data;
 }
@@ -474,6 +476,7 @@ export async function getSearchedProducts({
 		variables: {
 			...variables,
 		},
+		cache: 'no-store',
 	});
 	return data;
 }
@@ -493,6 +496,7 @@ export async function getCollectionProducts({
 	const data = await shopifyFetch<ShopifyCollectionProducts>({
 		query: COLLECTION_QUERY,
 		variables,
+		cache: 'no-store',
 	});
 	return data;
 }
@@ -520,6 +524,7 @@ export async function createCustomer({
 	}>({
 		query: CUSTOMER_CREATE_MUTATION,
 		variables,
+		cache: 'no-store',
 	});
 	return data;
 }
@@ -547,6 +552,7 @@ export async function loginCustomer({
 	}>({
 		query: LOGIN_MUTATION,
 		variables,
+		cache: 'no-store',
 	});
 	return data;
 }
@@ -568,6 +574,7 @@ export async function recoverCustomersPassword({
 	}>({
 		query: CUSTOMER_RECOVER_MUTATION,
 		variables,
+		cache: 'no-store',
 	});
 	return data;
 }
@@ -597,6 +604,7 @@ export async function resetCustomersPassword({
 	}>({
 		query: CUSTOMER_RESET_MUTATION,
 		variables,
+		cache: 'no-store',
 	});
 	return data;
 }
@@ -614,6 +622,7 @@ export async function getCustomer(
 		variables: {
 			customerAccessToken,
 		},
+		cache: 'no-store',
 	});
 
 	/**
@@ -636,6 +645,7 @@ export async function getProduct(
 			handle,
 			selectedOptions,
 		},
+		cache: 'no-store',
 	});
 
 	return {
@@ -653,6 +663,7 @@ export async function getProductRecommendations(
 			productId,
 			count: 12,
 		},
+		cache: 'no-store',
 	});
 
 	const products = res.body.data;
@@ -694,6 +705,7 @@ export async function getFilteredAndSortedProducts({
 	}>({
 		query: SORTED_AND_FILTERED_PRODUCTS_QUERY,
 		variables,
+		cache: 'no-store',
 	});
 
 	return data;
@@ -721,6 +733,7 @@ export async function deleteAddress(payload: {
 	}>({
 		query: REMOVE_ADDRESS,
 		variables: payload,
+		cache: 'no-store',
 	});
 
 	return data;
