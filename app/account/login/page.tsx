@@ -27,7 +27,6 @@ export default function LoginPage() {
 			loginRes.body.data.customerAccessTokenCreate.customerAccessToken
 				?.accessToken
 		) {
-			// @ts-expect-error missing type
 			cookies().set({
 				name: 'customerAccessToken',
 				value:
