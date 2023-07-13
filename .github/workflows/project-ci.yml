@@ -46,7 +46,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [16.x]
+        node-version: [14.x, 16.x]
 
     steps:
       - uses: actions/checkout@v3
@@ -60,7 +60,7 @@ jobs:
       - name: Use Node.js with pnpm
         uses: actions/setup-node@v3
         with:
-          node-version-file: ${{ matrix.node-version }}
+          node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
           always-auth: false
