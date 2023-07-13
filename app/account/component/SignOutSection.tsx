@@ -4,7 +4,6 @@ import { redirect } from 'next/navigation';
 export default function SignOutSection() {
 	const signOut = async () => {
 		'use server';
-		// @ts-expect-error missing type
 		cookies().set({
 			name: 'customerAccessToken',
 			value: '',
