@@ -21,7 +21,7 @@ jobs:
 
       - uses: pnpm/action-setup@v2
         with:
-          version: 8  
+          version: 8.6.3  
 
       - name: Use Node.js with pnpm
         uses: actions/setup-node@v3
@@ -33,7 +33,7 @@ jobs:
           always-auth: false
 
       - name: Install dependencies with pnpm
-        run: pnpm install --frozen-lockfile
+        run: pnpm install 
 
       - name: Check formatting
         run: pnpm run format:check
@@ -62,7 +62,7 @@ jobs:
           always-auth: false
 
       - name: Install dependencies with pnpm
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
         working-directory: ./
 
       - name: Lint files
