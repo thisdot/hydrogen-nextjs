@@ -1,3 +1,24 @@
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+
 export default function SignOutSection() {
-	return <h3>Sign out button here...</h3>;
+	const signOut = async () => {
+		'use server';
+		// @ts-expect-error missing type
+		cookies().set({
+			name: 'customerAccessToken',
+			value: '',
+			httpOnly: true,
+			path: '/',
+			expires: new Date(Date.now()),
+		});
+		redirect('/account/login');
+	};
+	return (
+		<form action={signOut} noValidate>
+			<button type="submit" className="text-primary/50">
+				Sign out
+			</button>
+		</form>
+	);
 }
