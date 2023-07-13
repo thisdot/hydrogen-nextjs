@@ -14,11 +14,7 @@ function AddressCard({
 			method: 'POST',
 			body: JSON.stringify({ addressId: id }),
 		})
-			.then(data => {
-				console.log('====================================');
-				console.log(data);
-				console.log('====================================');
-			})
+			.then(() => {})
 			.catch(() => {});
 	};
 	return (
