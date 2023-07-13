@@ -9,6 +9,7 @@ export default {
 
 const Template: StoryFn = () => (
 	<ProductListBox
+		//@ts-expect-error is just a story
 		options={[
 			{ optionName: 'Material', optionValue: 'Carbon-fiber' },
 			{ optionName: 'Material', optionValue: 'Polycarbonate' },

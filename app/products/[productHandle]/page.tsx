@@ -13,7 +13,6 @@ import ProductListBox from '@/components/ProductListBox';
 import { truncate } from '@/lib/truncate';
 import Head from 'next/head';
 import { Product, ProductOption, ProductVariant } from '@/lib/shopify/types';
-import useCartFetcher from '@/hooks/useCartFetcher';
 
 export default async function Product({
 	params,
@@ -185,11 +184,11 @@ export default async function Product({
 	);
 }
 
-export function ProductForm({
+export const ProductForm = ({
 	product,
 }: {
 	product: Product & { selectedVariant: ProductVariant };
-}) {
+}) => {
 	const STORE_DOMAIN = `${process.env.PUBLIC_STORE_DOMAIN!}`;
 
 	const firstVariant = product.variants.nodes[0];
@@ -208,7 +207,7 @@ export function ProductForm({
 		selectedVariant?.price?.amount < selectedVariant?.compareAtPrice?.amount;
 
 	return (
-		<div className="grid gap-10">
+		<div className="grid gap-10" >
 			<div className="grid gap-4">
 				<ProductOptions options={product.options} />
 				{selectedVariant && (

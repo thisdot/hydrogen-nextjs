@@ -12,9 +12,11 @@ import useAppStore from '@/store/app-store';
 function MobileHeader({
 	title,
 	isHome,
+	isUser,
 	menu,
 }: {
 	isHome: boolean;
+	isUser: boolean;
 	title: string;
 	menu: ShopifyHeaderMenu;
 }) {
@@ -78,7 +80,7 @@ function MobileHeader({
 			</Link>
 
 			<div className="flex items-center justify-end w-full gap-4">
-				<AccountLink className="relative flex items-center justify-center w-8 h-8" />
+				<AccountLink className="relative flex items-center justify-center w-8 h-8" isUser={isUser} />
 				<CartCount isHome={isHome} />
 			</div>
 		</header>

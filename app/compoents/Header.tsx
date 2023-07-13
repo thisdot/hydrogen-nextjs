@@ -30,7 +30,7 @@ function Header({
 				menu={menu}
 				isUser={isUser}
 			/>
-			<MobileHeader menu={menu} isHome={isHome} title={title} />
+			<MobileHeader menu={menu} isHome={isHome} title={title} isUser={isUser} />
 		</>
 	);
 }
