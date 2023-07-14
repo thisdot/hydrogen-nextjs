@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 import { getFeaturedProducts, getFeaturedCollections } from '@/lib/shopify';
 import { NextResponse } from 'next/server';
 
