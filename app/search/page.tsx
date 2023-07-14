@@ -9,7 +9,11 @@ import SearchResult from './components/SearchResult';
 import { Grid } from '@/components/Grid';
 import CardLoader from './components/CardLoader';
 
-export default function SearchPage({ searchParams }: { searchParams: Record<string, string> }) {
+export default function SearchPage({
+	searchParams,
+}: {
+	searchParams: Record<string, string>;
+}) {
 	const searchTerm = searchParams.q;
 
 	const {
