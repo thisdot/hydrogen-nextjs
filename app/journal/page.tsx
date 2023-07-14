@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic';
+'use server';
 import ArticleCard from '@/components/ArticleCard';
 import { Grid } from '@/components/Grid';
 import { PageHeader, Section } from '@/components/Text';
@@ -13,6 +13,7 @@ export default async function JournalPage() {
 			blogHandle: BLOG_HANDLE,
 		},
 	});
+
 	return (
 		<>
 			<PageHeader heading="Journal" />

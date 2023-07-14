@@ -1,9 +1,7 @@
 'use client';
-export const dynamic = 'force-dynamic';
 import { Input } from '@/components/Input';
 import { PageHeader, Heading } from '@/components/Text';
 import useLoadSearchData from '@/hooks/useLoadSearchData';
-import { useSearchParam } from 'react-use';
 import NoSearchResults from './components/NoSearchResults';
 import SearchResult from './components/SearchResult';
 import { Grid } from '@/components/Grid';
