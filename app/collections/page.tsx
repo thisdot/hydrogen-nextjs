@@ -1,4 +1,3 @@
-'use server';
 import CollectionCard from '@/components/CollectionCard';
 import { Grid } from '@/components/Grid';
 import { PageHeader, Section } from '@/components/Text';

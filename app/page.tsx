@@ -1,4 +1,3 @@
-'use server';
 import { Hero } from '../components/Hero';
 import { ProductSwimlane } from '@/components/ProductSwimlane';
 import { FeaturedCollections } from '@/components/FeaturedCollection';
