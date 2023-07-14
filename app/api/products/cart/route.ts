@@ -1,4 +1,3 @@
-'use server';
 import { getFilteredAndSortedProducts } from '@/lib/shopify';
 import { NextResponse } from 'next/server';
 
