@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { Hero } from '../components/Hero';
 import { ProductSwimlane } from '@/components/ProductSwimlane';
 import { FeaturedCollections } from '@/components/FeaturedCollection';

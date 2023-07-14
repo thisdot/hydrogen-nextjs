@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { getFilteredAndSortedProducts } from '@/lib/shopify';
 import { NextResponse } from 'next/server';
 

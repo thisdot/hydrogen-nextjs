@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import ArticleCard from '@/components/ArticleCard';
 import { Grid } from '@/components/Grid';
 import { PageHeader, Section } from '@/components/Text';
