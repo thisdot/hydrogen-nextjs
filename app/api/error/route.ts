@@ -1,4 +1,3 @@
-'use server';
 import { getFeaturedProducts, getFeaturedCollections } from '@/lib/shopify';
 import { NextResponse } from 'next/server';
 
