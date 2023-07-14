@@ -131,7 +131,7 @@ export async function shopifyFetch<T>({
 	query,
 	variables,
 	headers,
-	cache = 'no-store',
+	cache = 'force-cache',
 }: {
 	query: string;
 	variables?: ExtractVariables<T>;
