@@ -1,5 +1,5 @@
-'use client';
 export const dynamic = 'force-dynamic';
+('use client');
 import { Input } from '@/components/Input';
 import { PageHeader, Heading } from '@/components/Text';
 import useLoadSearchData from '@/hooks/useLoadSearchData';
