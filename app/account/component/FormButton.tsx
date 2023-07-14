@@ -7,7 +7,7 @@ export default function FormButton({
 	btnText: string;
 	state?: string;
 }) {
-	const status = useFormStatus?.();
+	const status = useFormStatus?.(); //this hack is needed to make AddressForm component work on storybook
 	return (
 		<div className="flex items-center justify-between">
 			<button
