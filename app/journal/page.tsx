@@ -12,6 +12,7 @@ export default async function JournalPage() {
 			blogHandle: BLOG_HANDLE,
 		},
 	});
+
 	return (
 		<>
 			<PageHeader heading="Journal" />
