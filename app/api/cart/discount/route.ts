@@ -1,8 +1,8 @@
 import { isShopifyError } from '@/lib/type-guards';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
-import { formatErrorMessage } from '../route';
 import { applyDiscountToCart } from '@/lib/shopify';
+import { formatErrorMessage } from '@/lib/utils';
 
 export async function PUT(req: NextRequest): Promise<Response> {
 	const cartId = cookies().get('cartId')?.value;

@@ -1,8 +1,8 @@
 import { removeFromCart } from '@/lib/shopify';
 import { isShopifyError } from '@/lib/type-guards';
+import { formatErrorMessage } from '@/lib/utils';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
-import { formatErrorMessage } from '../route';
 
 export async function POST(req: NextRequest): Promise<any> {
 	const cartId = cookies().get('cartId')?.value;

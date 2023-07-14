@@ -1,11 +1,8 @@
 import { deleteAddress } from '@/lib/shopify';
 import { isShopifyError } from '@/lib/type-guards';
+import { formatErrorMessage } from '@/lib/utils';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
-
-function formatErrorMessage(err: Error): string {
-	return JSON.stringify(err, Object.getOwnPropertyNames(err));
-}
 
 export async function POST(req: NextRequest): Promise<any> {
 	const accessToken = cookies().get('customerAccessToken')?.value;
