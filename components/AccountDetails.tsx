@@ -1,5 +1,5 @@
-import { Link } from "@/components/Link";
-import { Customer } from "@/lib/shopify/types";
+import { Link } from '@/components/Link';
+import { Customer } from '@/lib/shopify/types';
 function AccountDetails({ customer }: { customer: Customer }) {
 	const { firstName, lastName, email, phone } = customer;
 
@@ -38,4 +38,4 @@ function AccountDetails({ customer }: { customer: Customer }) {
 	);
 }
 
-export default AccountDetails
+export default AccountDetails;
