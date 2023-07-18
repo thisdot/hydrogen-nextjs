@@ -20,7 +20,7 @@ interface IAddressForm {
 let formError: string | null = null;
 
 function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
-		const addressFormError = cookies().get('addressFormError')?.value as string;
+	const addressFormError = cookies().get('addressFormError')?.value as string;
 	const handleSubmit = async (formData: FormData) => {
 		'use server';
 		formError = null;
@@ -79,7 +79,6 @@ function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
 					});
 					formError = message;
 				});
-
 			} catch (error) {
 				console.log(error);
 			}
@@ -121,7 +120,6 @@ function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
 		}
 
 		revalidatePath('/account');
-
 	};
 
 	return (
