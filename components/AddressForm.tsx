@@ -29,6 +29,17 @@ function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
 		const token = cookies().get('customerAccessToken')?.value as string;
 		const addressInput: MailingAddressInput = {};
 
+		const setAddressError = (message: string) => {
+			const date = new Date();
+			cookies().set({
+				name: 'addressFormError',
+				value: message,
+				httpOnly: true,
+				path: '/',
+				expires: date,
+			});
+		};
+
 		const keys: (keyof MailingAddressInput)[] = [
 			'lastName',
 			'firstName',
@@ -70,13 +81,7 @@ function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
 				}
 
 				customerUserErrors.forEach(({ message }) => {
-					cookies().set({
-						name: 'addressFormError',
-						value: message,
-						httpOnly: true,
-						path: '/',
-						expires: date,
-					});
+					setAddressError(message);
 					formError = message;
 				});
 			} catch (error) {
@@ -102,13 +107,7 @@ function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
 				}
 
 				customerUserErrors.forEach(({ code, field, message }) => {
-					cookies().set({
-						name: 'addressFormError',
-						value: message,
-						httpOnly: true,
-						path: '/',
-						expires: date,
-					});
+					setAddressError(message);
 					formError = message;
 				});
 			} catch (error) {
