@@ -54,3 +54,12 @@ export function getExcerpt(text: string) {
 	const match = regex.exec(text);
 	return match?.length ? match[0] : text;
 }
+
+export function getMailingAddressId(addressId: string) {
+	const [mailingAddressId, key] = addressId.split('/').pop()?.split('?') || [
+		'',
+		'',
+	];
+
+	return mailingAddressId;
+}

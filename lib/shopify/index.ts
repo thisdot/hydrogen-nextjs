@@ -38,6 +38,8 @@ import {
 	CustomerRecoverPayload,
 	CustomerResetPayload,
 	Customer,
+	MailingAddress,
+	MailingAddressInput,
 } from './types';
 import {
 	HOMEPAGE_FEATURED_PRODUCTS_QUERY,
@@ -63,7 +65,12 @@ import {
 } from './mutations/auth';
 import { PRODUCT_QUERY, RECOMMENDED_PRODUCTS_QUERY } from './queries/fragments';
 import { CUSTOMER_QUERY } from './queries/user';
-import { REMOVE_ADDRESS } from './mutations/address';
+import {
+	ADD_ADDRESS,
+	REMOVE_ADDRESS,
+	UPDATE_ADDRESS,
+	UPDATE_DEFAULT_ADDRESS_MUTATION,
+} from './mutations/address';
 
 const domain = `https://${process.env.PUBLIC_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
@@ -601,19 +608,26 @@ export async function resetCustomersPassword({
 	return data;
 }
 
+let cacheCustomer = {};
+
 export async function getCustomer(
-	customerAccessToken: string
+	customerAccessToken: string,
+	from?: 'account'
 ): Promise<Customer> {
+	if (!from) return cacheCustomer as Customer;
+
 	const res = await shopifyFetch<{
 		data: { customer: Customer };
 		variables: {
 			customerAccessToken: string;
+			from?: 'account';
 		};
 	}>({
 		query: CUSTOMER_QUERY,
 		variables: {
 			customerAccessToken,
 		},
+		cache: 'no-cache',
 	});
 
 	/**
@@ -622,6 +636,10 @@ export async function getCustomer(
 	if (!res || !res.body.data.customer) {
 		// log out customer
 	}
+
+	cacheCustomer = {
+		...res.body.data.customer,
+	};
 
 	return res.body.data.customer;
 }
@@ -720,6 +738,88 @@ export async function deleteAddress(payload: {
 		};
 	}>({
 		query: REMOVE_ADDRESS,
+		variables: payload,
+	});
+
+	return data;
+}
+
+export async function addAddress(payload: {
+	address: MailingAddressInput;
+	customerAccessToken: string;
+}) {
+	const data = await shopifyFetch<{
+		data: {
+			customerAddressCreate: {
+				customerAddress: MailingAddress;
+				customerUserErrors: {
+					code: string;
+					field: string[];
+					message: string;
+				}[];
+			};
+		};
+		variables: {
+			address: MailingAddressInput;
+			customerAccessToken: string;
+		};
+	}>({
+		query: ADD_ADDRESS,
+		variables: payload,
+	});
+
+	return data;
+}
+
+export async function updateAddress(payload: {
+	address: MailingAddressInput;
+	customerAccessToken: string;
+	id: string;
+}) {
+	const data = await shopifyFetch<{
+		data: {
+			customerAddressUpdate: {
+				customerAddress: MailingAddress;
+				customerUserErrors: {
+					code: string;
+					field: string[];
+					message: string;
+				}[];
+			};
+		};
+		variables: {
+			address: MailingAddressInput;
+			customerAccessToken: string;
+			id: string;
+		};
+	}>({
+		query: UPDATE_ADDRESS,
+		variables: payload,
+	});
+
+	return data;
+}
+
+export async function updateDefaultAddress(payload: {
+	addressId: string;
+	customerAccessToken: string;
+}) {
+	const data = await shopifyFetch<{
+		data: {
+			customerDefaultAddressUpdate: {
+				customerUserErrors: {
+					code: string;
+					field: string[];
+					message: string;
+				}[];
+			};
+		};
+		variables: {
+			addressId: string;
+			customerAccessToken: string;
+		};
+	}>({
+		query: UPDATE_DEFAULT_ADDRESS_MUTATION,
 		variables: payload,
 	});
 
