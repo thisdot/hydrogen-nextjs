@@ -46,7 +46,6 @@ function AddressCard({
 				<Link
 					href={`/account/address/${encodeURIComponent(address.id)}`}
 					className="text-left underline text-sm"
-					prefetch={true}
 				>
 					Edit
 				</Link>

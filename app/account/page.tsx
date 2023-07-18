@@ -15,7 +15,7 @@ import { Customer, MailingAddress, Order } from '@/lib/shopify/types';
 
 export default async function AccountPage() {
 	const token = cookies().get('customerAccessToken')?.value as string;
-	const customer = await getCustomer(token, 'account');
+	const customer = await getCustomer(token);
 	const { orders, firstName } = customer;
 	const heading = customer
 		? firstName

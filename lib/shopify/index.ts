@@ -610,17 +610,15 @@ export async function resetCustomersPassword({
 
 let cacheCustomer = {};
 
-export async function getCustomer(
-	customerAccessToken: string,
-	from?: 'account'
-): Promise<Customer> {
-	if (!from) return cacheCustomer as Customer;
+export const getCachedCustomer = () => cacheCustomer;
 
+export async function getCustomer(
+	customerAccessToken: string
+): Promise<Customer> {
 	const res = await shopifyFetch<{
 		data: { customer: Customer };
 		variables: {
 			customerAccessToken: string;
-			from?: 'account';
 		};
 	}>({
 		query: CUSTOMER_QUERY,
