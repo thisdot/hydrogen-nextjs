@@ -3,6 +3,7 @@ import { Link } from './Link';
 import { revalidatePath } from 'next/cache';
 import { deleteAddress } from '@/lib/shopify';
 import { cookies } from 'next/headers';
+import FormButton from '@/app/account/component/FormButton';
 
 function AddressCard({
 	address,
@@ -51,13 +52,7 @@ function AddressCard({
 				</Link>
 				<form action={removeAddress}>
 					<input type="hidden" name="id" value={address.id} />
-
-					<button
-						type="submit"
-						className="text-left text-primary/50 ml-6 text-sm"
-					>
-						Remove
-					</button>
+					<FormButton btnText="Remove" state="Removing" variant="outline" />
 				</form>
 			</div>
 		</div>

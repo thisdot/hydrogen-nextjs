@@ -158,7 +158,7 @@ export async function shopifyFetch<T>({
 				...(variables && { variables }),
 			}),
 			cache,
-			next: { revalidate: 900 }, // 15 minutes
+			next: cache !== 'force-cache' ? { revalidate: 900 } : undefined, // 15 minutes
 		});
 
 		const body = await result.json();
@@ -608,26 +608,19 @@ export async function resetCustomersPassword({
 	return data;
 }
 
-let cacheCustomer = {};
-
 export async function getCustomer(
-	customerAccessToken: string,
-	from?: 'account'
+	customerAccessToken: string
 ): Promise<Customer> {
-	if (!from) return cacheCustomer as Customer;
-
 	const res = await shopifyFetch<{
 		data: { customer: Customer };
 		variables: {
 			customerAccessToken: string;
-			from?: 'account';
 		};
 	}>({
 		query: CUSTOMER_QUERY,
 		variables: {
 			customerAccessToken,
 		},
-		cache: 'no-cache',
 	});
 
 	/**
@@ -636,10 +629,6 @@ export async function getCustomer(
 	if (!res || !res.body.data.customer) {
 		// log out customer
 	}
-
-	cacheCustomer = {
-		...res.body.data.customer,
-	};
 
 	return res.body.data.customer;
 }

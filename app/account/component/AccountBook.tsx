@@ -21,13 +21,12 @@ export default function AccountBook({
 						</Text>
 					)}
 					<div className="w-48">
-						<Button
-							to="account/address/add"
-							className="mt-2 text-sm w-full mb-6"
-							variant="secondary"
+						<a
+							href="account/address/add"
+							className="inline-block rounded font-medium text-center py-3 px-6 border border-primary/10 bg-contrast text-primary mt-2 text-sm w-full mb-6"
 						>
 							Add an Address
-						</Button>
+						</a>
 					</div>
 					{Boolean(addresses?.length) && (
 						<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

@@ -1,5 +1,4 @@
 import { getInputStyleClasses } from '@/lib/utils';
-import { Button } from './Button';
 import FormModal from './FormModal';
 import {
 	MailingAddress,
@@ -10,20 +9,23 @@ import FormButton from '@/app/account/component/FormButton';
 import { cookies } from 'next/headers';
 import { addAddress, updateAddress, updateDefaultAddress } from '@/lib/shopify';
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 interface IAddressForm {
 	isNewAddress: boolean;
 	address?: MailingAddress;
 	defaultAddress?: Maybe<MailingAddress>;
 }
-let phoneError: string | null = null;
-let address1Error: string | null = null;
-let countryError: string | null = null;
+
 let formError: string | null = null;
 
 function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
+		const addressFormError = cookies().get('addressFormError')?.value as string;
 	const handleSubmit = async (formData: FormData) => {
 		'use server';
+		formError = null;
+		let date = new Date();
+
 		const token = cookies().get('customerAccessToken')?.value as string;
 		const addressInput: MailingAddressInput = {};
 
@@ -40,12 +42,12 @@ function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
 			'company',
 		];
 
-		for (const key of keys) {
-			const value = formData.get(key) as string;
+		keys.forEach(key => {
+			const value = formData.get(key);
 			if (typeof value === 'string') {
 				addressInput[key] = value;
 			}
-		}
+		});
 
 		const defaultAddress = formData.get('defaultAddress') as string;
 
@@ -66,21 +68,18 @@ function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
 						customerAccessToken: token,
 					});
 				}
-				customerUserErrors.forEach(({ code, field, message }) => {
-					if (field) {
-						if (field.includes('phone')) {
-							phoneError = message;
-						}
-						if (field.includes('address') && !field.includes('country')) {
-							address1Error = message;
-						}
-						if (field.includes('country')) {
-							countryError = message;
-						}
-					} else {
-						formError = message;
-					}
+
+				customerUserErrors.forEach(({ message }) => {
+					cookies().set({
+						name: 'addressFormError',
+						value: message,
+						httpOnly: true,
+						path: '/',
+						expires: date,
+					});
+					formError = message;
 				});
+
 			} catch (error) {
 				console.log(error);
 			}
@@ -102,35 +101,35 @@ function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
 						customerAccessToken: token,
 					});
 				}
+
 				customerUserErrors.forEach(({ code, field, message }) => {
-					if (field) {
-						if (field.includes('phone')) {
-							phoneError = message;
-						}
-						if (field.includes('address') && !field.includes('country')) {
-							address1Error = message;
-						}
-						if (field.includes('country')) {
-							countryError = message;
-						}
-					} else {
-						formError = message;
-					}
+					cookies().set({
+						name: 'addressFormError',
+						value: message,
+						httpOnly: true,
+						path: '/',
+						expires: date,
+					});
+					formError = message;
 				});
 			} catch (error) {
 				console.log(error);
 			}
 		}
+		if (!formError) {
+			redirect('/account');
+		}
 
 		revalidatePath('/account');
+
 	};
 
 	return (
 		<FormModal heading={isNewAddress ? 'Add address' : 'Edit address'}>
 			<form action={handleSubmit}>
-				{formError && (
+				{addressFormError && (
 					<div className="flex items-center justify-center mb-6 bg-red-100 rounded">
-						<p className="m-4 text-sm text-red-900">{formError}</p>
+						<p className="m-4 text-sm text-red-900">{addressFormError}</p>
 					</div>
 				)}
 				<div className="mt-3">
@@ -183,9 +182,6 @@ function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
 						aria-label="Address line 1"
 						defaultValue={address?.address1 ?? ''}
 					/>
-					{address1Error && (
-						<p className="text-red-500 text-xs">{address1Error} &nbsp;</p>
-					)}
 				</div>
 				<div className="mt-3">
 					<input
@@ -250,9 +246,6 @@ function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
 						aria-label="Country"
 						defaultValue={address?.country ?? ''}
 					/>
-					{countryError && (
-						<p className="text-red-500 text-xs">{countryError} &nbsp;</p>
-					)}
 				</div>
 				<div className="mt-3">
 					<input
@@ -265,9 +258,6 @@ function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
 						aria-label="Phone"
 						defaultValue={address?.phone ?? ''}
 					/>
-					{phoneError && (
-						<p className="text-red-500 text-xs">{phoneError} &nbsp;</p>
-					)}
 				</div>
 				<div className="mt-4">
 					<input
