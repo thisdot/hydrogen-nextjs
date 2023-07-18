@@ -1,4 +1,3 @@
-'use server';
 import { Grid } from '@/components/Grid';
 import { ProductCard } from '@/components/ProductCard';
 import { PageHeader, Section } from '@/components/Text';

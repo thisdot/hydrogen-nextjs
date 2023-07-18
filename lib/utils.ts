@@ -63,3 +63,7 @@ export function getMailingAddressId(addressId: string) {
 
 	return mailingAddressId;
 }
+
+export function formatErrorMessage(err: Error): string {
+	return JSON.stringify(err, Object.getOwnPropertyNames(err));
+}

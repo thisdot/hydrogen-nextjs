@@ -3,7 +3,7 @@ import { FeaturedSection } from '@/components/FeaturedSection';
 import { PageHeader, Text } from '@/components/Text';
 import { getFeaturedProducts, getFeaturedCollections } from '@/lib/shopify';
 
-export default async function Error() {
+export default async function NotFound() {
 	const featuredProductsResponse = await getFeaturedProducts();
 	const featuredCollectionsResponse = await getFeaturedCollections();
 

@@ -6,7 +6,7 @@ import {
 } from '@/lib/shopify';
 import SignOutSection from './component/SignOutSection';
 import OrderHistory from './component/OrderHistory';
-import AccountDetails from './component/AccountDetails';
+import AccountDetails from '../../components/AccountDetails';
 import AccountBook from './component/AccountBook';
 import { cookies } from 'next/headers';
 import { PageHeader } from '@/components/Text';
@@ -35,7 +35,7 @@ export default async function AccountPage() {
 				<SignOutSection />
 			</PageHeader>
 			{customerOrders && <OrderHistory />}
-			<AccountDetails />
+			<AccountDetails customer={customer} />
 			<AccountBook addresses={addresses} customer={customer as Customer} />
 			{!customerOrders.length && (
 				<FeaturedSection

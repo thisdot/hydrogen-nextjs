@@ -11,6 +11,7 @@ export async function GET(request: NextRequest) {
 			endCursor: params.get('cursor') ?? undefined,
 		},
 	});
+
 	return NextResponse.json({
 		collections: data.body.data.collections.nodes,
 		pageInfo: data.body.data.collections.pageInfo,

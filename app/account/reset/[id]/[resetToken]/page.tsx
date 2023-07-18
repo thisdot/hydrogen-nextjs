@@ -48,7 +48,6 @@ export default function ResetPassword({
 
 			if (customerAccessToken) {
 				const accessToken = customerAccessToken?.accessToken;
-				// @ts-expect-error missing type
 				cookies().set({
 					name: 'customerAccessToken',
 					value: accessToken,
