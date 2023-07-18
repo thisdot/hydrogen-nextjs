@@ -158,7 +158,7 @@ export async function shopifyFetch<T>({
 				...(variables && { variables }),
 			}),
 			cache,
-			next: cache !== 'force-cache' ? { revalidate: 900 } : undefined, // 15 minutes
+			next: { revalidate: 900 }, // 15 minutes
 		});
 
 		const body = await result.json();
@@ -610,15 +610,17 @@ export async function resetCustomersPassword({
 
 let cacheCustomer = {};
 
-export const getCachedCustomer = () => cacheCustomer;
-
 export async function getCustomer(
-	customerAccessToken: string
+	customerAccessToken: string,
+	from?: 'account'
 ): Promise<Customer> {
+	if (!from) return cacheCustomer as Customer;
+
 	const res = await shopifyFetch<{
 		data: { customer: Customer };
 		variables: {
 			customerAccessToken: string;
+			from?: 'account';
 		};
 	}>({
 		query: CUSTOMER_QUERY,

@@ -1,14 +1,14 @@
-import { getCachedCustomer } from '@/lib/shopify';
+import { getCustomer } from '@/lib/shopify';
 import { cookies } from 'next/headers';
 import AccountPage from '../../page';
 import { flattenConnection } from '@/lib/flattenConnection';
-import { Customer, MailingAddress } from '@/lib/shopify/types';
+import { MailingAddress } from '@/lib/shopify/types';
 import AddressForm from '@/components/AddressForm';
 import { getMailingAddressId } from '@/lib/utils';
 
-function Address({ params }: { params: { id: string } }) {
+async function Address({ params }: { params: { id: string } }) {
 	const token = cookies().get('customerAccessToken')?.value as string;
-	const customer = getCachedCustomer() as Customer;
+	const customer = await getCustomer(token);
 	const addresses = flattenConnection(customer.addresses) as MailingAddress[];
 	const address = addresses.find(res => {
 		const editId = decodeURIComponent(params.id);
