@@ -127,7 +127,7 @@ function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
 
 	return (
 		<FormModal heading={isNewAddress ? 'Add address' : 'Edit address'}>
-			<form action={handleSubmit} noValidate>
+			<form action={handleSubmit}>
 				{formError && (
 					<div className="flex items-center justify-center mb-6 bg-red-100 rounded">
 						<p className="m-4 text-sm text-red-900">{formError}</p>
