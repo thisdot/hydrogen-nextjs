@@ -1,13 +1,13 @@
-import { statusMessage } from '@/lib/utils';
+import { getIdFromURL, statusMessage } from '@/lib/utils';
 import { Heading, Text } from './Text';
 import { flattenConnection } from '@/lib/flattenConnection';
 import { Order } from '@/lib/shopify/types';
-import { Image } from './ImageComponent';
 import { Link } from './Link';
+import Image from 'next/image';
 
 export function OrderCard({ order }: { order: Order }) {
 	if (!order?.id) return null;
-	const [legacyOrderId, key] = order!.id!.split('/').pop()!.split('?');
+	const { id: legacyOrderId, key } = getIdFromURL(order!.id);
 	const lineItems = flattenConnection(order?.lineItems);
 
 	return (

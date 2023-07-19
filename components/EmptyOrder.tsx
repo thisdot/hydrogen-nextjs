@@ -8,7 +8,7 @@ export default function EmptyOrders() {
 				You haven&apos;t placed any orders yet.
 			</Text>
 			<div className="w-48">
-				<Button className="w-full mt-2 text-sm" variant="secondary" to={'/'}>
+				<Button className="w-full mt-2 text-sm" variant="secondary" to="/">
 					Start Shopping
 				</Button>
 			</div>

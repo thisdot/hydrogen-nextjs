@@ -1,6 +1,6 @@
-import EmptyOrders from "@/components/EmptyOrder";
-import Orders from "@/components/Orders";
-import { Order } from "@/lib/shopify/types";
+import EmptyOrders from '@/components/EmptyOrder';
+import Orders from '@/components/Orders';
+import { Order } from '@/lib/shopify/types';
 
 export default function OrderHistory({ orders }: { orders: Order[] }) {
 	return (
