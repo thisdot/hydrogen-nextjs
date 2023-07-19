@@ -4,7 +4,7 @@ import AccountPage from '../../page';
 import { flattenConnection } from '@/lib/flattenConnection';
 import { MailingAddress } from '@/lib/shopify/types';
 import AddressForm from '@/components/AddressForm';
-import { getMailingAddressId } from '@/lib/utils';
+import { getIdFromURL } from '@/lib/utils';
 
 async function Address({ params }: { params: { id: string } }) {
 	const token = cookies().get('customerAccessToken')?.value as string;
@@ -12,8 +12,8 @@ async function Address({ params }: { params: { id: string } }) {
 	const addresses = flattenConnection(customer.addresses) as MailingAddress[];
 	const address = addresses.find(res => {
 		const editId = decodeURIComponent(params.id);
-		const editMailingId = getMailingAddressId(editId);
-		const mailingId = getMailingAddressId(res.id);
+		const { id: editMailingId } = getIdFromURL(editId);
+		const { id: mailingId } = getIdFromURL(res.id);
 		return mailingId == editMailingId && params.id !== 'add';
 	});
 

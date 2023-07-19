@@ -34,7 +34,7 @@ export default async function AccountPage() {
 			<PageHeader heading={heading}>
 				<SignOutSection />
 			</PageHeader>
-			{customerOrders && <OrderHistory />}
+			{customerOrders && <OrderHistory orders={customerOrders} />}
 			<AccountDetails customer={customer} />
 			<AccountBook addresses={addresses} customer={customer} />
 			{!customerOrders.length && (

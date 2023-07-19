@@ -55,13 +55,10 @@ export function getExcerpt(text: string) {
 	return match?.length ? match[0] : text;
 }
 
-export function getMailingAddressId(addressId: string) {
-	const [mailingAddressId, key] = addressId.split('/').pop()?.split('?') || [
-		'',
-		'',
-	];
+export function getIdFromURL(addressId: string): { id: string; key: string } {
+	const [id, key] = addressId.split('/').pop()?.split('?') || ['', ''];
 
-	return mailingAddressId;
+	return { id, key };
 }
 
 export function formatErrorMessage(err: Error): string {
