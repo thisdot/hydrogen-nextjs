@@ -135,7 +135,7 @@ function AccountForm({ customer }: IAccountForm) {
 				<Password
 					name="currentPassword"
 					label="Current password"
-				// passwordError={actionData?.fieldErrors?.currentPassword}
+					// passwordError={actionData?.fieldErrors?.currentPassword}
 				/>
 				{/* {actionData?.fieldErrors?.currentPassword && (
           <Text size="fine" className="mt-1 text-red-500">
@@ -145,20 +145,20 @@ function AccountForm({ customer }: IAccountForm) {
 				<Password
 					name="newPassword"
 					label="New password"
-				// passwordError={actionData?.fieldErrors?.newPassword}
+					// passwordError={actionData?.fieldErrors?.newPassword}
 				/>
 				<Password
 					name="newPassword2"
 					label="Re-enter new password"
-				// passwordError={actionData?.fieldErrors?.newPassword2}
+					// passwordError={actionData?.fieldErrors?.newPassword2}
 				/>
 				<Text
 					size="fine"
 					color="subtle"
-				// className={clsx(
-				//   'mt-1',
-				//   actionData?.fieldErrors?.newPassword && 'text-red-500',
-				// )}
+					// className={clsx(
+					//   'mt-1',
+					//   actionData?.fieldErrors?.newPassword && 'text-red-500',
+					// )}
 				>
 					Passwords must be at least 8 characters.
 				</Text>
