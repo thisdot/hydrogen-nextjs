@@ -158,7 +158,7 @@ export async function shopifyFetch<T>({
 				...(variables && { variables }),
 			}),
 			cache,
-			next: cache !== 'force-cache' ? { revalidate: 900 } : undefined, // 15 minutes
+			next: cache === 'only-if-cached' ? { revalidate: 900 } : undefined, // 15 minutes
 		});
 
 		const body = await result.json();
