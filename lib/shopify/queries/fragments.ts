@@ -365,3 +365,20 @@ export const RECOMMENDED_PRODUCTS_QUERY = `#graphql
   }
   ${PRODUCT_CARD_FRAGMENT}
 `;
+
+export const addressFragment = `#graphql
+	fragment mailingAddress on MailingAddress {
+		address1
+      address2
+      firstName
+      lastName
+      phone
+			formatted
+      name
+      id
+      zip
+      country
+      province
+      provinceCode
+	}
+`;

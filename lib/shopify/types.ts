@@ -2446,6 +2446,47 @@ export type MailingAddress = Node & {
 	zip?: Maybe<string>;
 };
 
+/** Specifies the fields accepted to create or update a mailing address. */
+export type MailingAddressInput = {
+	/**
+	 * The first line of the address. Typically the street address or PO Box number.
+	 *
+	 */
+	address1?: InputMaybe<Scalars['String']>;
+	/**
+	 * The second line of the address. Typically the number of the apartment, suite, or unit.
+	 *
+	 */
+	address2?: InputMaybe<Scalars['String']>;
+	/**
+	 * The name of the city, district, village, or town.
+	 *
+	 */
+	city?: InputMaybe<Scalars['String']>;
+	/**
+	 * The name of the customer's company or organization.
+	 *
+	 */
+	company?: InputMaybe<Scalars['String']>;
+	/** The name of the country. */
+	country?: InputMaybe<Scalars['String']>;
+	/** The first name of the customer. */
+	firstName?: InputMaybe<Scalars['String']>;
+	/** The last name of the customer. */
+	lastName?: InputMaybe<Scalars['String']>;
+	/**
+	 * A unique phone number for the customer.
+	 *
+	 * Formatted using E.164 standard. For example, _+16135551111_.
+	 *
+	 */
+	phone?: InputMaybe<Scalars['String']>;
+	/** The region of the address, such as the province, state, or district. */
+	province?: InputMaybe<Scalars['String']>;
+	/** The zip or postal code of the address. */
+	zip?: InputMaybe<Scalars['String']>;
+};
+
 export type Checkout = Node & {
 	__typename?: 'Checkout';
 	/** The gift cards used on the checkout. */

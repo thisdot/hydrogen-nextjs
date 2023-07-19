@@ -55,6 +55,15 @@ export function getExcerpt(text: string) {
 	return match?.length ? match[0] : text;
 }
 
+export function getMailingAddressId(addressId: string) {
+	const [mailingAddressId, key] = addressId.split('/').pop()?.split('?') || [
+		'',
+		'',
+	];
+
+	return mailingAddressId;
+}
+
 export function formatErrorMessage(err: Error): string {
 	return JSON.stringify(err, Object.getOwnPropertyNames(err));
 }

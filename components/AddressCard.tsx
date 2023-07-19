@@ -1,6 +1,9 @@
-'use client';
 import { MailingAddress } from '@/lib/shopify/types';
 import { Link } from './Link';
+import { revalidatePath } from 'next/cache';
+import { deleteAddress } from '@/lib/shopify';
+import { cookies } from 'next/headers';
+import FormButton from '@/app/account/component/FormButton';
 
 function AddressCard({
 	address,
@@ -9,13 +12,15 @@ function AddressCard({
 	address: MailingAddress;
 	defaultAddress?: boolean;
 }) {
-	const removeAddress = (id: string) => {
-		fetch('/api/address/remove', {
-			method: 'POST',
-			body: JSON.stringify({ addressId: id }),
-		})
-			.then(() => {})
-			.catch(() => {});
+	const removeAddress = async (formData: FormData) => {
+		'use server';
+		const token = cookies().get('customerAccessToken')?.value as string;
+		const id = formData.get('id') as string;
+		await deleteAddress({
+			customerAccessToken: token,
+			id,
+		});
+		revalidatePath('/account');
 	};
 	return (
 		<div className="lg:p-8 p-6 border border-gray-200 rounded flex flex-col">
@@ -42,16 +47,13 @@ function AddressCard({
 				<Link
 					href={`/account/address/${encodeURIComponent(address.id)}`}
 					className="text-left underline text-sm"
-					prefetch={true}
 				>
 					Edit
 				</Link>
-				<button
-					onClick={() => removeAddress(address.id)}
-					className="text-left text-primary/50 ml-6 text-sm"
-				>
-					Remove
-				</button>
+				<form action={removeAddress}>
+					<input type="hidden" name="id" value={address.id} />
+					<FormButton btnText="Remove" state="Removing" variant="outline" />
+				</form>
 			</div>
 		</div>
 	);
