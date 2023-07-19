@@ -16,8 +16,10 @@ export async function POST(req: NextRequest): Promise<any> {
 	}
 	try {
 		const deletedCustomerAddress = await deleteAddress({
-			customerAccessToken: accessToken,
-			id: addressId,
+			variables: {
+				customerAccessToken: accessToken,
+				id: addressId,
+			},
 		});
 		return NextResponse.json({ status: 204, deletedCustomerAddress });
 	} catch (e) {
