@@ -66,8 +66,10 @@ function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
 		if (isNewAddress) {
 			try {
 				const addAddressResponse = await addAddress({
-					address: addressInput,
-					customerAccessToken: token,
+					variables: {
+						address: addressInput,
+						customerAccessToken: token,
+					}
 				});
 				const customerAddressCreate =
 					addAddressResponse.body.data.customerAddressCreate;
@@ -76,8 +78,10 @@ function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
 
 				if (customerAddress && defaultAddress) {
 					await updateDefaultAddress({
-						addressId: customerAddress.id,
-						customerAccessToken: token,
+						variables: {
+							addressId: customerAddress.id,
+							customerAccessToken: token,
+						}
 					});
 				}
 
@@ -91,9 +95,11 @@ function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
 		} else {
 			try {
 				const updateAddressResponse = await updateAddress({
-					address: addressInput,
-					customerAccessToken: token,
-					id: decodeURIComponent(address?.id as any),
+					variables: {
+						address: addressInput,
+						customerAccessToken: token,
+						id: decodeURIComponent(address?.id as any),
+					}
 				});
 				const customerAddressCreate =
 					updateAddressResponse.body.data.customerAddressUpdate;
@@ -102,8 +108,10 @@ function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
 
 				if (customerAddress && defaultAddress) {
 					await updateDefaultAddress({
-						addressId: customerAddress.id,
-						customerAccessToken: token,
+						variables: {
+							addressId: customerAddress.id,
+							customerAccessToken: token,
+						}
 					});
 				}
 

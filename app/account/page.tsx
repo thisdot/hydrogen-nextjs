@@ -11,7 +11,7 @@ import AccountBook from './component/AccountBook';
 import { cookies } from 'next/headers';
 import { PageHeader } from '@/components/Text';
 import { flattenConnection } from '@/lib/flattenConnection';
-import { Customer, MailingAddress, Order } from '@/lib/shopify/types';
+import { MailingAddress, Order } from '@/lib/shopify/types';
 
 export default async function AccountPage() {
 	const token = cookies().get('customerAccessToken')?.value as string;

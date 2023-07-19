@@ -40,6 +40,8 @@ import {
 	Customer,
 	MailingAddress,
 	MailingAddressInput,
+	CustomerUpdatePayload,
+	CustomerUpdateInput,
 } from './types';
 import {
 	HOMEPAGE_FEATURED_PRODUCTS_QUERY,
@@ -71,6 +73,7 @@ import {
 	UPDATE_ADDRESS,
 	UPDATE_DEFAULT_ADDRESS_MUTATION,
 } from './mutations/address';
+import { CUSTOMER_UPDATE_MUTATION } from './mutations/customer';
 
 const domain = `https://${process.env.PUBLIC_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
@@ -706,9 +709,10 @@ export async function getFilteredAndSortedProducts({
 	return data;
 }
 
-export async function deleteAddress(payload: {
-	customerAccessToken: string;
-	id: string;
+export async function deleteAddress({
+	variables,
+}: {
+	variables: { customerAccessToken: string; id: string };
 }) {
 	const data = await shopifyFetch<{
 		data: {
@@ -727,15 +731,15 @@ export async function deleteAddress(payload: {
 		};
 	}>({
 		query: REMOVE_ADDRESS,
-		variables: payload,
+		variables,
 	});
 
 	return data;
 }
 
-export async function addAddress(payload: {
-	address: MailingAddressInput;
-	customerAccessToken: string;
+export async function addAddress({variables}: {
+	variables: {address: MailingAddressInput;
+	customerAccessToken: string;}
 }) {
 	const data = await shopifyFetch<{
 		data: {
@@ -754,16 +758,16 @@ export async function addAddress(payload: {
 		};
 	}>({
 		query: ADD_ADDRESS,
-		variables: payload,
+		variables,
 	});
 
 	return data;
 }
 
-export async function updateAddress(payload: {
-	address: MailingAddressInput;
+export async function updateAddress({variables}: {
+	variables: {address: MailingAddressInput;
 	customerAccessToken: string;
-	id: string;
+	id: string;}
 }) {
 	const data = await shopifyFetch<{
 		data: {
@@ -783,15 +787,15 @@ export async function updateAddress(payload: {
 		};
 	}>({
 		query: UPDATE_ADDRESS,
-		variables: payload,
+		variables,
 	});
 
 	return data;
 }
 
-export async function updateDefaultAddress(payload: {
-	addressId: string;
-	customerAccessToken: string;
+export async function updateDefaultAddress({variables}: {
+	variables: {addressId: string;
+	customerAccessToken: string;}
 }) {
 	const data = await shopifyFetch<{
 		data: {
@@ -809,7 +813,27 @@ export async function updateDefaultAddress(payload: {
 		};
 	}>({
 		query: UPDATE_DEFAULT_ADDRESS_MUTATION,
-		variables: payload,
+		variables,
+	});
+
+	return data;
+}
+
+export async function updateAccount({variables}: {
+	variables: {customer: CustomerUpdateInput;
+	customerAccessToken: string;}
+}) {
+	const data = await shopifyFetch<{
+		data: {
+			customerUpdate: CustomerUpdatePayload;
+		};
+		variables: {
+			customerAccessToken: string;
+			customer: CustomerUpdateInput;
+		};
+	}>({
+		query: CUSTOMER_UPDATE_MUTATION,
+		variables,
 	});
 
 	return data;

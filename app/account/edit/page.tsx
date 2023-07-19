@@ -1,6 +1,20 @@
-export default function AccountDetailsEdit() {
+import { getCustomer } from '@/lib/shopify';
+import { cookies } from 'next/headers';
+import AccountPage from '../page';
+import AccountForm from '@/components/AccountForm';
 
-  return (
-    <div>cane</div>
-  );
+async function AccountDetailsEdit() {
+	const token = cookies().get('customerAccessToken')?.value as string;
+	const customer = await getCustomer(token);
+
+	return (
+		<>
+			<AccountForm customer={customer} />
+			{
+				//@ts-ignore
+				<AccountPage />
+			}
+		</>
+	);
 }
+export default AccountDetailsEdit;
