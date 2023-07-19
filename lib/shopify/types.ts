@@ -2997,7 +2997,7 @@ export type OrderLineItem = {
 	/** The title of the product combined with title of the variant. */
 	title: string;
 	/** The product variant object associated to the line item. */
-	variant?: Maybe<ProductVariant>;
+	variant?: Maybe<ProductVariant & { product: Product }>;
 };
 
 /**

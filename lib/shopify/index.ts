@@ -42,6 +42,7 @@ import {
 	MailingAddressInput,
 	CustomerUpdatePayload,
 	CustomerUpdateInput,
+	Order,
 } from './types';
 import {
 	HOMEPAGE_FEATURED_PRODUCTS_QUERY,
@@ -841,6 +842,17 @@ export async function updateAccount({
 	}>({
 		query: CUSTOMER_UPDATE_MUTATION,
 		variables,
+	});
+
+	return data;
+}
+
+export async function getCustomerOrder(orderId: string) {
+	const data = await shopifyFetch<{  data: {
+		node: Order
+	}; variables: { orderId: string } }>({
+		query: CUSTOMER_ORDER_QUERY,
+		variables: { orderId },
 	});
 
 	return data;
