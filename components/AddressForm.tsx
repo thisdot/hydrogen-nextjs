@@ -279,12 +279,13 @@ function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
 					<Button
 						to="/account"
 						className="w-full mt-2 rounded focus:shadow-outline"
-						variant="secondary">
+						variant="secondary"
+					>
 						Cancel
 					</Button>
 				</div>
 			</form>
-		</FormModal >
+		</FormModal>
 	);
 }
 
