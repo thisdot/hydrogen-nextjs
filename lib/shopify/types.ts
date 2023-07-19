@@ -3297,3 +3297,42 @@ export type DigitalWallet =
 	| 'GOOGLE_PAY'
 	/** Shopify Pay. */
 	| 'SHOPIFY_PAY';
+
+export type CustomerUpdatePayload = {
+	__typename?: 'CustomerUpdatePayload';
+	/** The updated customer object. */
+	customer?: Maybe<Customer>;
+	/**
+	 * The newly created customer access token. If the customer's password is updated, all previous access tokens
+	 * (including the one used to perform this mutation) become invalid, and a new token is generated.
+	 *
+	 */
+	customerAccessToken?: Maybe<CustomerAccessToken>;
+	/** The list of errors that occurred from executing the mutation. */
+	customerUserErrors: Array<CustomerUserError>;
+	/**
+	 * The list of errors that occurred from executing the mutation.
+	 * @deprecated Use `customerUserErrors` instead.
+	 */
+	userErrors: Array<UserError>;
+};
+
+export type CustomerUpdateInput = {
+	/** Indicates whether the customer has consented to be sent marketing material via email. */
+	acceptsMarketing?: InputMaybe<Scalars['Boolean']>;
+	/** The customer’s email. */
+	email?: InputMaybe<Scalars['String']>;
+	/** The customer’s first name. */
+	firstName?: InputMaybe<Scalars['String']>;
+	/** The customer’s last name. */
+	lastName?: InputMaybe<Scalars['String']>;
+	/** The login password used by the customer. */
+	password?: InputMaybe<Scalars['String']>;
+	/**
+	 * A unique phone number for the customer.
+	 *
+	 * Formatted using E.164 standard. For example, _+16135551111_. To remove the phone number, specify `null`.
+	 *
+	 */
+	phone?: InputMaybe<Scalars['String']>;
+};

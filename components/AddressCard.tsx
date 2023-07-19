@@ -17,8 +17,10 @@ function AddressCard({
 		const token = cookies().get('customerAccessToken')?.value as string;
 		const id = formData.get('id') as string;
 		await deleteAddress({
-			customerAccessToken: token,
-			id,
+			variables: {
+				customerAccessToken: token,
+				id,
+			},
 		});
 		revalidatePath('/account');
 	};
