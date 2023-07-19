@@ -1,22 +1,135 @@
 import { getInputStyleClasses } from '@/lib/utils';
-import { Button } from './Button';
 import FormModal from './FormModal';
-import { MailingAddress } from '@/lib/shopify/types';
+import {
+	MailingAddress,
+	MailingAddressInput,
+	Maybe,
+} from '@/lib/shopify/types';
 import FormButton from '@/app/account/component/FormButton';
+import { cookies } from 'next/headers';
+import { addAddress, updateAddress, updateDefaultAddress } from '@/lib/shopify';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
+import { Button } from './Button';
 
 interface IAddressForm {
 	isNewAddress: boolean;
 	address?: MailingAddress;
-	defaultAddress?: MailingAddress;
+	defaultAddress?: Maybe<MailingAddress>;
 }
+
+let formError: string | null = null;
+
 function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
+	// const addressFormError = cookies().get('addressFormError')?.value as string;
 	const handleSubmit = async (formData: FormData) => {
 		'use server';
+		formError = null;
+		// let date = new Date();
+
+		const token = cookies().get('customerAccessToken')?.value as string;
+		const addressInput: MailingAddressInput = {};
+
+		// const setAddressError = (message: string) => {
+		// 	const date = new Date();
+		// 	cookies().set({
+		// 		name: 'addressFormError',
+		// 		value: message,
+		// 		httpOnly: true,
+		// 		path: '/',
+		// 		expires: date,
+		// 	});
+		// };
+
+		const keys: (keyof MailingAddressInput)[] = [
+			'lastName',
+			'firstName',
+			'address1',
+			'address2',
+			'city',
+			'province',
+			'country',
+			'zip',
+			'phone',
+			'company',
+		];
+
+		keys.forEach(key => {
+			const value = formData.get(key);
+			if (typeof value === 'string') {
+				addressInput[key] = value;
+			}
+		});
+
+		const defaultAddress = formData.get('defaultAddress') as string;
+
+		if (isNewAddress) {
+			try {
+				const addAddressResponse = await addAddress({
+					address: addressInput,
+					customerAccessToken: token,
+				});
+				const customerAddressCreate =
+					addAddressResponse.body.data.customerAddressCreate;
+				const customerAddress = customerAddressCreate.customerAddress;
+				const customerUserErrors = customerAddressCreate.customerUserErrors;
+
+				if (customerAddress && defaultAddress) {
+					await updateDefaultAddress({
+						addressId: customerAddress.id,
+						customerAccessToken: token,
+					});
+				}
+
+				customerUserErrors.forEach(({ message }) => {
+					// setAddressError(message);
+					formError = message;
+				});
+			} catch (error) {
+				console.log(error);
+			}
+		} else {
+			try {
+				const updateAddressResponse = await updateAddress({
+					address: addressInput,
+					customerAccessToken: token,
+					id: decodeURIComponent(address?.id as any),
+				});
+				const customerAddressCreate =
+					updateAddressResponse.body.data.customerAddressUpdate;
+				const customerAddress = customerAddressCreate.customerAddress;
+				const customerUserErrors = customerAddressCreate.customerUserErrors;
+
+				if (customerAddress && defaultAddress) {
+					await updateDefaultAddress({
+						addressId: customerAddress.id,
+						customerAccessToken: token,
+					});
+				}
+
+				customerUserErrors.forEach(({ code, field, message }) => {
+					// setAddressError(message);
+					formError = message;
+				});
+			} catch (error) {
+				console.log(error);
+			}
+		}
+		if (!formError) {
+			redirect('/account');
+		}
+
+		revalidatePath('/account');
 	};
 
 	return (
 		<FormModal heading={isNewAddress ? 'Add address' : 'Edit address'}>
-			<form action={handleSubmit} noValidate>
+			<form action={handleSubmit}>
+				{formError && (
+					<div className="flex items-center justify-center mb-6 bg-red-100 rounded">
+						<p className="m-4 text-sm text-red-900">{formError}</p>
+					</div>
+				)}
 				<div className="mt-3">
 					<input
 						className={getInputStyleClasses()}

@@ -11,7 +11,7 @@ import AccountBook from './component/AccountBook';
 import { cookies } from 'next/headers';
 import { PageHeader } from '@/components/Text';
 import { flattenConnection } from '@/lib/flattenConnection';
-import { Order } from '@/lib/shopify/types';
+import { Customer, MailingAddress, Order } from '@/lib/shopify/types';
 
 export default async function AccountPage() {
 	const token = cookies().get('customerAccessToken')?.value as string;
@@ -24,6 +24,7 @@ export default async function AccountPage() {
 		: 'Account Details';
 
 	const customerOrders = flattenConnection(orders) as Order[];
+	const addresses = flattenConnection(customer.addresses) as MailingAddress[];
 
 	const featuredProductsResponse = await getFeaturedProducts();
 	const featuredCollectionsResponse = await getFeaturedCollections();
@@ -35,7 +36,7 @@ export default async function AccountPage() {
 			</PageHeader>
 			{customerOrders && <OrderHistory />}
 			<AccountDetails customer={customer} />
-			<AccountBook />
+			<AccountBook addresses={addresses} customer={customer} />
 			{!customerOrders.length && (
 				<FeaturedSection
 					featuredProducts={featuredProductsResponse.body.data.products.nodes}
