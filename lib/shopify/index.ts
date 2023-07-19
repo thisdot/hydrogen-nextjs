@@ -737,9 +737,10 @@ export async function deleteAddress({
 	return data;
 }
 
-export async function addAddress({variables}: {
-	variables: {address: MailingAddressInput;
-	customerAccessToken: string;}
+export async function addAddress({
+	variables,
+}: {
+	variables: { address: MailingAddressInput; customerAccessToken: string };
 }) {
 	const data = await shopifyFetch<{
 		data: {
@@ -764,10 +765,14 @@ export async function addAddress({variables}: {
 	return data;
 }
 
-export async function updateAddress({variables}: {
-	variables: {address: MailingAddressInput;
-	customerAccessToken: string;
-	id: string;}
+export async function updateAddress({
+	variables,
+}: {
+	variables: {
+		address: MailingAddressInput;
+		customerAccessToken: string;
+		id: string;
+	};
 }) {
 	const data = await shopifyFetch<{
 		data: {
@@ -793,9 +798,10 @@ export async function updateAddress({variables}: {
 	return data;
 }
 
-export async function updateDefaultAddress({variables}: {
-	variables: {addressId: string;
-	customerAccessToken: string;}
+export async function updateDefaultAddress({
+	variables,
+}: {
+	variables: { addressId: string; customerAccessToken: string };
 }) {
 	const data = await shopifyFetch<{
 		data: {
@@ -819,9 +825,10 @@ export async function updateDefaultAddress({variables}: {
 	return data;
 }
 
-export async function updateAccount({variables}: {
-	variables: {customer: CustomerUpdateInput;
-	customerAccessToken: string;}
+export async function updateAccount({
+	variables,
+}: {
+	variables: { customer: CustomerUpdateInput; customerAccessToken: string };
 }) {
 	const data = await shopifyFetch<{
 		data: {

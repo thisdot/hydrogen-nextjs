@@ -69,7 +69,7 @@ function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
 					variables: {
 						address: addressInput,
 						customerAccessToken: token,
-					}
+					},
 				});
 				const customerAddressCreate =
 					addAddressResponse.body.data.customerAddressCreate;
@@ -81,7 +81,7 @@ function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
 						variables: {
 							addressId: customerAddress.id,
 							customerAccessToken: token,
-						}
+						},
 					});
 				}
 
@@ -99,7 +99,7 @@ function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
 						address: addressInput,
 						customerAccessToken: token,
 						id: decodeURIComponent(address?.id as any),
-					}
+					},
 				});
 				const customerAddressCreate =
 					updateAddressResponse.body.data.customerAddressUpdate;
@@ -111,7 +111,7 @@ function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
 						variables: {
 							addressId: customerAddress.id,
 							customerAccessToken: token,
-						}
+						},
 					});
 				}
 
