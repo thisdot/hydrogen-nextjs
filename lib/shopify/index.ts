@@ -848,9 +848,12 @@ export async function updateAccount({
 }
 
 export async function getCustomerOrder(orderId: string) {
-	const data = await shopifyFetch<{  data: {
-		node: Order
-	}; variables: { orderId: string } }>({
+	const data = await shopifyFetch<{
+		data: {
+			node: Order;
+		};
+		variables: { orderId: string };
+	}>({
 		query: CUSTOMER_ORDER_QUERY,
 		variables: { orderId },
 	});
