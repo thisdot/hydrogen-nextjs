@@ -74,8 +74,6 @@ import {
 	UPDATE_DEFAULT_ADDRESS_MUTATION,
 } from './mutations/address';
 import { CUSTOMER_UPDATE_MUTATION } from './mutations/customer';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 
 const domain = `https://${process.env.PUBLIC_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
@@ -633,14 +631,6 @@ export async function getCustomer(
 	 */
 	if (!res || !res.body.data.customer) {
 		// log out customer
-		cookies().set({
-			name: 'customerAccessToken',
-			value: '',
-			httpOnly: true,
-			path: '/',
-			expires: new Date(Date.now()),
-		});
-		redirect('/account/login');
 	}
 
 	return res.body.data.customer;
