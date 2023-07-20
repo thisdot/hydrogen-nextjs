@@ -1,19 +1,24 @@
+import React from 'react';
 import { FeaturedSection } from '@/components/FeaturedSection';
 import {
 	getFeaturedProducts,
 	getFeaturedCollections,
 	getCustomer,
 } from '@/lib/shopify';
-import SignOutSection from './component/SignOutSection';
-import OrderHistory from './component/OrderHistory';
-import AccountDetails from '../../components/AccountDetails';
-import AccountBook from './component/AccountBook';
+import SignOutSection from '../component/SignOutSection';
+import OrderHistory from '../component/OrderHistory';
+import AccountDetails from '../../../components/AccountDetails';
+import AccountBook from '../component/AccountBook';
 import { cookies } from 'next/headers';
 import { PageHeader } from '@/components/Text';
 import { flattenConnection } from '@/lib/flattenConnection';
 import { MailingAddress, Order } from '@/lib/shopify/types';
 
-export default async function AccountPage() {
+export default async function AccountPage({
+	children,
+}: {
+	children: React.ReactNode;
+}) {
 	const token = cookies().get('customerAccessToken')?.value as string;
 	const customer = await getCustomer(token);
 	const { orders, firstName } = customer;
@@ -45,6 +50,7 @@ export default async function AccountPage() {
 					}
 				/>
 			)}
+			{children}
 		</div>
 	);
 }
