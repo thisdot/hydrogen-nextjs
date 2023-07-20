@@ -5,7 +5,7 @@ import { Text } from './Text';
 interface IFormModal {
 	heading: string;
 	children: React.ReactNode;
-	action: any;
+	action: () => void;
 }
 
 function FormModal({ heading, children, action }: IFormModal) {
