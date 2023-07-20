@@ -625,7 +625,6 @@ export async function getCustomer(
 			customerAccessToken,
 		},
 	});
-	console.log(res)
 
 	/**
 	 * If the customer failed to load, we assume their access token is invalid.
