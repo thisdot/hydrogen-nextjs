@@ -14,7 +14,11 @@ import { PageHeader } from '@/components/Text';
 import { flattenConnection } from '@/lib/flattenConnection';
 import { MailingAddress, Order } from '@/lib/shopify/types';
 
-export default async function AccountPage({ children }: { children: React.ReactNode }) {
+export default async function AccountPage({
+	children,
+}: {
+	children: React.ReactNode;
+}) {
 	const token = cookies().get('customerAccessToken')?.value as string;
 	const customer = await getCustomer(token);
 	const { orders, firstName } = customer;
@@ -50,4 +54,3 @@ export default async function AccountPage({ children }: { children: React.ReactN
 		</div>
 	);
 }
-
