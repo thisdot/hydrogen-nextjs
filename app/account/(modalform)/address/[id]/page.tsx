@@ -1,6 +1,5 @@
 import { getCustomer } from '@/lib/shopify';
 import { cookies } from 'next/headers';
-import AccountPage from '../../page';
 import { flattenConnection } from '@/lib/flattenConnection';
 import { MailingAddress } from '@/lib/shopify/types';
 import AddressForm from '@/components/AddressForm';
@@ -26,11 +25,6 @@ async function Address({ params }: { params: { id: string } }) {
 					defaultAddress={customer.defaultAddress}
 				/>
 			)}
-
-			{
-				//@ts-ignore
-				<AccountPage />
-			}
 		</>
 	);
 }

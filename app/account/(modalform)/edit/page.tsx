@@ -1,6 +1,5 @@
 import { getCustomer } from '@/lib/shopify';
 import { cookies } from 'next/headers';
-import AccountPage from '../page';
 import AccountForm from '@/components/AccountForm';
 
 async function AccountDetailsEdit() {
@@ -10,10 +9,6 @@ async function AccountDetailsEdit() {
 	return (
 		<>
 			<AccountForm customer={customer} />
-			{
-				//@ts-ignore
-				<AccountPage />
-			}
 		</>
 	);
 }
