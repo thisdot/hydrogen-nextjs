@@ -21,25 +21,12 @@ interface IAddressForm {
 let formError: string | null = null;
 
 function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
-	// const addressFormError = cookies().get('addressFormError')?.value as string;
 	const handleSubmit = async (formData: FormData) => {
 		'use server';
 		formError = null;
-		// let date = new Date();
 
 		const token = cookies().get('customerAccessToken')?.value as string;
 		const addressInput: MailingAddressInput = {};
-
-		// const setAddressError = (message: string) => {
-		// 	const date = new Date();
-		// 	cookies().set({
-		// 		name: 'addressFormError',
-		// 		value: message,
-		// 		httpOnly: true,
-		// 		path: '/',
-		// 		expires: date,
-		// 	});
-		// };
 
 		const keys: (keyof MailingAddressInput)[] = [
 			'lastName',
@@ -86,7 +73,6 @@ function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
 				}
 
 				customerUserErrors.forEach(({ message }) => {
-					// setAddressError(message);
 					formError = message;
 				});
 			} catch (error) {
@@ -115,8 +101,7 @@ function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
 					});
 				}
 
-				customerUserErrors.forEach(({ code, field, message }) => {
-					// setAddressError(message);
+				customerUserErrors.forEach(({ message }) => {
 					formError = message;
 				});
 			} catch (error) {
@@ -130,8 +115,18 @@ function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
 		revalidatePath('/account');
 	};
 
+	async function handleCleanError() {
+		'use server';
+		formError = null;
+		revalidatePath(`/account/address/${isNewAddress ? 'add' : address?.id}`);
+		redirect('/account');
+	}
+
 	return (
-		<FormModal heading={isNewAddress ? 'Add address' : 'Edit address'}>
+		<FormModal
+			heading={isNewAddress ? 'Add address' : 'Edit address'}
+			action={handleCleanError}
+		>
 			<form action={handleSubmit}>
 				{formError && (
 					<div className="flex items-center justify-center mb-6 bg-red-100 rounded">

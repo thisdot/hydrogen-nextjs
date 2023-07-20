@@ -1,14 +1,14 @@
-'use client';
-
+import { Button } from './Button';
 import { IconClose } from './Icon';
 import { Text } from './Text';
 
 interface IFormModal {
 	heading: string;
 	children: React.ReactNode;
+	action: () => void;
 }
 
-function FormModal({ heading, children }: IFormModal) {
+function FormModal({ heading, children, action }: IFormModal) {
 	return (
 		<>
 			<div className="fixed inset-0 z-20 transition-opacity bg-opacity-75 bg-primary/40" />
@@ -18,14 +18,18 @@ function FormModal({ heading, children }: IFormModal) {
 						<Text className="mt-4 mb-6" as="h3" size="lead">
 							{heading}
 						</Text>
-						<div className="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
-							<a
+						<form
+							className="absolute top-0 right-0 hidden pt-4 pr-4 sm:block"
+							action={action}
+						>
+							<Button
 								className="p-4 -m-4 transition text-primary hover:text-primary/50"
-								href="/account"
+								type="submit"
+								variant="outline"
 							>
 								<IconClose />
-							</a>
-						</div>
+							</Button>
+						</form>
 						<div className="max-w-lg">{children}</div>
 					</div>
 				</div>
