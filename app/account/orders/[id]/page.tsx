@@ -94,16 +94,15 @@ export default async function Orders({
 										<td className="w-full py-4 pl-0 pr-3 align-top sm:align-middle max-w-0 sm:w-auto sm:max-w-none">
 											<div className="flex gap-6">
 												<Link
-													href={`/products/${
-														lineItem.variant!.product!.handle
-													}`}
+													href={`/products/${lineItem.variant!.product!.handle
+														}`}
 												>
 													{lineItem?.variant?.image && (
 														<div className="w-24 card-image aspect-square">
 															<Image
 																width={lineItem.variant.image.width || 96}
 																height={lineItem.variant.image.height || 96}
-																//@ts-expect-error
+																//@ts-expect-error the Image type is wrong also in the remix hydrogen project, we receive src instead of url inside lineItem.variant.image object
 																src={lineItem.variant.image.src}
 																alt={lineItem.variant.image.altText}
 															/>
@@ -158,31 +157,31 @@ export default async function Orders({
 							<tfoot>
 								{((discountValue && discountValue.amount) ||
 									discountPercentage) && (
-									<tr>
-										<th
-											scope="row"
-											colSpan={3}
-											className="hidden pt-6 pl-6 pr-3 font-normal text-right sm:table-cell md:pl-0"
-										>
-											<Text>Discounts</Text>
-										</th>
-										<th
-											scope="row"
-											className="pt-6 pr-3 font-normal text-left sm:hidden"
-										>
-											<Text>Discounts</Text>
-										</th>
-										<td className="pt-6 pl-3 pr-4 font-medium text-right text-green-700 md:pr-3">
-											{discountPercentage ? (
-												<span className="text-sm">
-													-{discountPercentage}% OFF
-												</span>
-											) : (
-												discountValue && <Money data={discountValue!} />
-											)}
-										</td>
-									</tr>
-								)}
+										<tr>
+											<th
+												scope="row"
+												colSpan={3}
+												className="hidden pt-6 pl-6 pr-3 font-normal text-right sm:table-cell md:pl-0"
+											>
+												<Text>Discounts</Text>
+											</th>
+											<th
+												scope="row"
+												className="pt-6 pr-3 font-normal text-left sm:hidden"
+											>
+												<Text>Discounts</Text>
+											</th>
+											<td className="pt-6 pl-3 pr-4 font-medium text-right text-green-700 md:pr-3">
+												{discountPercentage ? (
+													<span className="text-sm">
+														-{discountPercentage}% OFF
+													</span>
+												) : (
+													discountValue && <Money data={discountValue!} />
+												)}
+											</td>
+										</tr>
+									)}
 								<tr>
 									<th
 										scope="row"
