@@ -42,6 +42,7 @@ import {
 	MailingAddressInput,
 	CustomerUpdatePayload,
 	CustomerUpdateInput,
+	Order,
 } from './types';
 import {
 	HOMEPAGE_FEATURED_PRODUCTS_QUERY,
@@ -74,6 +75,7 @@ import {
 	UPDATE_DEFAULT_ADDRESS_MUTATION,
 } from './mutations/address';
 import { CUSTOMER_UPDATE_MUTATION } from './mutations/customer';
+import { CUSTOMER_ORDER_QUERY } from './queries/orders';
 
 const domain = `https://${process.env.PUBLIC_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
@@ -841,6 +843,20 @@ export async function updateAccount({
 	}>({
 		query: CUSTOMER_UPDATE_MUTATION,
 		variables,
+	});
+
+	return data;
+}
+
+export async function getCustomerOrder(orderId: string) {
+	const data = await shopifyFetch<{
+		data: {
+			node: Order;
+		};
+		variables: { orderId: string };
+	}>({
+		query: CUSTOMER_ORDER_QUERY,
+		variables: { orderId },
 	});
 
 	return data;
