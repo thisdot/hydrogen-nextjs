@@ -75,6 +75,7 @@ import {
 	UPDATE_DEFAULT_ADDRESS_MUTATION,
 } from './mutations/address';
 import { CUSTOMER_UPDATE_MUTATION } from './mutations/customer';
+import { CUSTOMER_ORDER_QUERY } from './queries/orders';
 
 const domain = `https://${process.env.PUBLIC_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;

@@ -1,4 +1,4 @@
-const CUSTOMER_ORDER_QUERY = `#graphql
+export const CUSTOMER_ORDER_QUERY = `#graphql
   fragment Money on MoneyV2 {
     amount
     currencyCode

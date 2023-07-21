@@ -103,7 +103,8 @@ export default async function Orders({
 															<Image
 																width={lineItem.variant.image.width || 96}
 																height={lineItem.variant.image.height || 96}
-																src={lineItem.variant.image.url}
+																//@ts-expect-error
+																src={lineItem.variant.image.src}
 																alt={lineItem.variant.image.altText}
 															/>
 														</div>
