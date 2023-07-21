@@ -24,22 +24,30 @@ const headings = {
 export default function RecoverPassword() {
 	async function handleSubmit(data: FormData) {
 		'use server';
-		const response = await recoverCustomersPassword({
-			variables: {
-				email: data.get('email') as string,
-			},
-		});
+		try {
+			const response = await recoverCustomersPassword({
+				variables: {
+					email: data.get('email') as string,
+				},
+			});
 
-		if (response.body.data.customerRecover.customerUserErrors.length > 0) {
-			response.body.data.customerRecover.customerUserErrors.filter(
-				(error: any) => {
-					if (error.field && error.field.includes('email')) {
-						emailError = error.message;
+			if (response.body.data.customerRecover.customerUserErrors.length > 0) {
+				response.body.data.customerRecover.customerUserErrors.filter(
+					(error: any) => {
+						if (error.field && error.field.includes('email')) {
+							emailError = error.message;
+						}
 					}
-				}
-			);
-		} else {
-			isSubmited = true;
+				);
+			} else {
+				isSubmited = true;
+			}
+		} catch (error) {
+			interface ERROR {
+				message: string;
+			}
+			const err = error as { error: ERROR };
+			emailError = err.error.message;
 		}
 
 		revalidatePath('/account/recover');
