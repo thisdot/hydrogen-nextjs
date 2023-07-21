@@ -9,19 +9,16 @@ export default {
 
 const Template: StoryFn = () => (
 	<ProductListBox
-		//@ts-expect-error is just a story
-		options={[
-			{ optionName: 'Material', optionValue: 'Carbon-fiber' },
-			{ optionName: 'Material', optionValue: 'Polycarbonate' },
-			{ optionName: 'Material', optionValue: 'Fiberglass' },
-			{ optionName: 'Material', optionValue: 'Kevlar®' },
-			{ optionName: 'Material', optionValue: 'Polyethylene' },
-			{ optionName: 'Material', optionValue: 'Vectran®' },
-			{
-				optionName: 'Material',
-				optionValue: 'Ultra-high-molecular-weight polyethylene',
-			},
-			{ optionName: 'Material', optionValue: 'Wood-composite' },
+		name="Material"
+		values={[
+			'Carbon-fiber',
+			'Polycarbonate',
+			'Fiberglass',
+			'Kevlar®',
+			'Polyethylene',
+			'Vectran®',
+			'Ultra-high-molecular-weight polyethylene',
+			'Wood-composite',
 		]}
 	/>
 );
