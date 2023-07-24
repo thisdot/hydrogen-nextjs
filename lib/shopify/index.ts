@@ -43,6 +43,7 @@ import {
 	CustomerUpdatePayload,
 	CustomerUpdateInput,
 	Order,
+	ShopPolicy,
 } from './types';
 import {
 	HOMEPAGE_FEATURED_PRODUCTS_QUERY,
@@ -76,6 +77,7 @@ import {
 } from './mutations/address';
 import { CUSTOMER_UPDATE_MUTATION } from './mutations/customer';
 import { CUSTOMER_ORDER_QUERY } from './queries/orders';
+import { POLICIES_QUERY, POLICY_CONTENT_QUERY } from './queries/policies';
 
 const domain = `https://${process.env.PUBLIC_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
@@ -857,6 +859,44 @@ export async function getCustomerOrder(orderId: string) {
 	}>({
 		query: CUSTOMER_ORDER_QUERY,
 		variables: { orderId },
+	});
+
+	return data;
+}
+
+export async function getPolicies() {
+	const data = await shopifyFetch<{
+		data: {
+			shop: Record<string, ShopPolicy>;
+		};
+	}>({
+		query: POLICIES_QUERY,
+	});
+
+	return data;
+}
+
+export async function getPolicyContent(variables: { policyName: string }) {
+	const data = await shopifyFetch<{
+		data: {
+			shop: Record<string, ShopPolicy>;
+		};
+		variables: {
+			privacyPolicy: false;
+			shippingPolicy: false;
+			termsOfService: false;
+			refundPolicy: false;
+			[policyName: string]: boolean;
+		};
+	}>({
+		query: POLICY_CONTENT_QUERY,
+		variables: {
+			privacyPolicy: false,
+			shippingPolicy: false,
+			termsOfService: false,
+			refundPolicy: false,
+			[variables.policyName]: true,
+		},
 	});
 
 	return data;
