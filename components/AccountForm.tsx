@@ -23,27 +23,6 @@ function AccountForm({ customer }: IAccountForm) {
 		const token = cookies().get('customerAccessToken')?.value as string;
 		const customerInput: CustomerUpdateInput = {};
 
-		const handleUpdateAccount = async () => {
-			try {
-				const updateAccountResponse = await updateAccount({
-					variables: {
-						customer: customerInput,
-						customerAccessToken: token,
-					},
-				});
-
-				const accountUpdated = updateAccountResponse.body.data.customerUpdate;
-
-				const customerUserErrors = accountUpdated.customerUserErrors;
-
-				customerUserErrors.forEach(({ message }) => {
-					formError = message;
-				});
-			} catch (error) {
-				console.log(error);
-			}
-		};
-
 		const keys: (keyof CustomerUpdateInput)[] = [
 			'lastName',
 			'firstName',
@@ -68,7 +47,24 @@ function AccountForm({ customer }: IAccountForm) {
 				formData.get('newPassword') === formData.get('newPassword2') &&
 				formData.get('currentPassword') !== ''
 			) {
-				handleUpdateAccount();
+				try {
+					const updateAccountResponse = await updateAccount({
+						variables: {
+							customer: customerInput,
+							customerAccessToken: token,
+						},
+					});
+
+					const accountUpdated = updateAccountResponse.body.data.customerUpdate;
+
+					const customerUserErrors = accountUpdated.customerUserErrors;
+
+					customerUserErrors.forEach(({ message }) => {
+						formError = message;
+					});
+				} catch (error) {
+					console.log(error);
+				}
 				cookies().set({
 					name: 'customerAccessToken',
 					value: '',
@@ -81,15 +77,30 @@ function AccountForm({ customer }: IAccountForm) {
 				formError = 'There is something wrong with your new passswordd';
 			}
 		} else {
-			handleUpdateAccount();
+			try {
+				const updateAccountResponse = await updateAccount({
+					variables: {
+						customer: customerInput,
+						customerAccessToken: token,
+					},
+				});
+
+				const accountUpdated = updateAccountResponse.body.data.customerUpdate;
+
+				const customerUserErrors = accountUpdated.customerUserErrors;
+
+				customerUserErrors.forEach(({ message }) => {
+					formError = message;
+				});
+			} catch (error) {
+				console.log(error);
+			}
 		}
 
 		if (!formError) {
 			revalidatePath('/account');
 			redirect('/account');
 		}
-
-		revalidatePath('/account');
 	};
 
 	async function handleCleanError() {

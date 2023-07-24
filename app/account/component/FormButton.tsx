@@ -10,7 +10,7 @@ export default function FormButton({
 	state?: string;
 	variant?: 'primary' | 'outline';
 }) {
-	const status = useFormStatus?.(); //this hack is needed to make AddressForm component work on storybook
+	const status = useFormStatus();
 
 	const buttonClasses = cn({
 		'bg-primary text-contrast rounded py-2 px-4 focus:shadow-outline block w-full':

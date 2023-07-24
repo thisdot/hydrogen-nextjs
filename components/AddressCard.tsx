@@ -47,7 +47,9 @@ function AddressCard({
 
 			<div className="flex flex-row font-medium mt-6 items-baseline">
 				<Link
-					href={`/account/address/${encodeURIComponent(address.id)}`}
+					href={`/account?modal=address-edit&id=${encodeURIComponent(
+						address.id
+					)}`}
 					className="text-left underline text-sm"
 				>
 					Edit

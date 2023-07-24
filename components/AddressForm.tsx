@@ -108,11 +108,11 @@ function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
 				console.log(error);
 			}
 		}
+
 		if (!formError) {
+			revalidatePath('/account');
 			redirect('/account');
 		}
-
-		revalidatePath('/account');
 	};
 
 	async function handleCleanError() {
