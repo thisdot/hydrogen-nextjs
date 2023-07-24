@@ -68,7 +68,24 @@ function AccountForm({ customer }: IAccountForm) {
 				formData.get('newPassword') === formData.get('newPassword2') &&
 				formData.get('currentPassword') !== ''
 			) {
-				handleUpdateAccount();
+				try {
+					const updateAccountResponse = await updateAccount({
+						variables: {
+							customer: customerInput,
+							customerAccessToken: token,
+						},
+					});
+
+					const accountUpdated = updateAccountResponse.body.data.customerUpdate;
+
+					const customerUserErrors = accountUpdated.customerUserErrors;
+
+					customerUserErrors.forEach(({ message }) => {
+						formError = message;
+					});
+				} catch (error) {
+					console.log(error);
+				}
 				cookies().set({
 					name: 'customerAccessToken',
 					value: '',
@@ -81,8 +98,26 @@ function AccountForm({ customer }: IAccountForm) {
 				formError = 'There is something wrong with your new passswordd';
 			}
 		} else {
-			handleUpdateAccount();
+			try {
+				const updateAccountResponse = await updateAccount({
+					variables: {
+						customer: customerInput,
+						customerAccessToken: token,
+					},
+				});
+
+				const accountUpdated = updateAccountResponse.body.data.customerUpdate;
+
+				const customerUserErrors = accountUpdated.customerUserErrors;
+
+				customerUserErrors.forEach(({ message }) => {
+					formError = message;
+				});
+			} catch (error) {
+				console.log(error);
+			};
 		}
+
 
 		if (!formError) {
 			revalidatePath('/account');

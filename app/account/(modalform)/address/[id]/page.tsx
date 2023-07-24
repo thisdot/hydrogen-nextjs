@@ -4,6 +4,7 @@ import { flattenConnection } from '@/lib/flattenConnection';
 import { MailingAddress } from '@/lib/shopify/types';
 import AddressForm from '@/components/AddressForm';
 import { getIdFromURL } from '@/lib/utils';
+import AccountPage from '../../../page';
 
 async function Address({ params }: { params: { id: string } }) {
 	const token = cookies().get('customerAccessToken')?.value as string;
@@ -25,6 +26,11 @@ async function Address({ params }: { params: { id: string } }) {
 					defaultAddress={customer.defaultAddress}
 				/>
 			)}
+
+			{
+				//@ts-ignore
+				<AccountPage />
+			}
 		</>
 	);
 }
