@@ -23,7 +23,7 @@ export default async function Policy({
 			className="flex-col items-baseline w-full gap-8 md:flex-row"
 		>
 			<PageHeader
-				heading={policy.title}
+				heading={policy?.title}
 				className="grid items-start flex-grow gap-4 md:sticky top-36 md:w-5/12"
 			>
 				<Button
@@ -36,7 +36,7 @@ export default async function Policy({
 			</PageHeader>
 			<div className="flex-grow w-full md:w-7/12">
 				<div
-					dangerouslySetInnerHTML={{ __html: policy.body }}
+					dangerouslySetInnerHTML={{ __html: policy?.body || '' }}
 					className="prose dark:prose-invert"
 				/>
 			</div>

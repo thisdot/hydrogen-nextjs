@@ -4,7 +4,15 @@ import { getPolicies } from '@/lib/shopify';
 
 export default async function Policies() {
 	const data = await getPolicies();
-	const policies = Object.values(data.body.data.shop || {});
+	let policies: { id: string; handle: string; title: string }[] = [];
+	for (const key in data.body.data.shop) {
+		if (data.body.data.shop.hasOwnProperty(key)) {
+			const element = data.body.data.shop[key];
+			if (element.handle !== 'subscription-policy') {
+				policies = [...policies, element];
+			}
+		}
+	}
 
 	return (
 		<>
