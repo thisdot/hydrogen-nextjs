@@ -2,6 +2,7 @@ import AddressCard from '@/components/AddressCard';
 import { Button } from '@/components/Button';
 import { Text } from '@/components/Text';
 import { Customer, MailingAddress } from '@/lib/shopify/types';
+import { convertObjectToQueryString } from '@/lib/utils';
 
 export default function AccountBook({
 	customer,
@@ -22,7 +23,9 @@ export default function AccountBook({
 					)}
 					<div className="w-48">
 						<a
-							href="account?modal=address-add"
+							href={`account?${convertObjectToQueryString({
+								modal: 'address-add',
+							})}`}
 							className="inline-block rounded font-medium text-center py-3 px-6 border border-primary/10 bg-contrast text-primary mt-2 text-sm w-full mb-6"
 						>
 							Add an Address

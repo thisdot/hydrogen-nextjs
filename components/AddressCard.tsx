@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { deleteAddress } from '@/lib/shopify';
 import { cookies } from 'next/headers';
 import FormButton from '@/app/account/component/FormButton';
+import { convertObjectToQueryString } from '@/lib/utils';
 
 function AddressCard({
 	address,
@@ -47,9 +48,10 @@ function AddressCard({
 
 			<div className="flex flex-row font-medium mt-6 items-baseline">
 				<Link
-					href={`/account?modal=address-edit&id=${encodeURIComponent(
-						address.id
-					)}`}
+					href={`/account?${convertObjectToQueryString({
+						modal: 'address-edit',
+						id: encodeURIComponent(address.id),
+					})}`}
 					className="text-left underline text-sm"
 				>
 					Edit
