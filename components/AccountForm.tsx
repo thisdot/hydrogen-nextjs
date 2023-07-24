@@ -115,9 +115,8 @@ function AccountForm({ customer }: IAccountForm) {
 				});
 			} catch (error) {
 				console.log(error);
-			};
+			}
 		}
-
 
 		if (!formError) {
 			revalidatePath('/account');

@@ -10,7 +10,7 @@ export default function AccountBook({
 	customer: Customer;
 	addresses: MailingAddress[];
 }) {
-	console.log(addresses)
+	console.log(addresses);
 	return (
 		<>
 			<div className="grid w-full gap-4 p-4 py-6 md:gap-8 md:p-8 lg:p-12">
