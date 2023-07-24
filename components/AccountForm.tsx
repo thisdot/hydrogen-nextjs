@@ -23,27 +23,6 @@ function AccountForm({ customer }: IAccountForm) {
 		const token = cookies().get('customerAccessToken')?.value as string;
 		const customerInput: CustomerUpdateInput = {};
 
-		const handleUpdateAccount = async () => {
-			try {
-				const updateAccountResponse = await updateAccount({
-					variables: {
-						customer: customerInput,
-						customerAccessToken: token,
-					},
-				});
-
-				const accountUpdated = updateAccountResponse.body.data.customerUpdate;
-
-				const customerUserErrors = accountUpdated.customerUserErrors;
-
-				customerUserErrors.forEach(({ message }) => {
-					formError = message;
-				});
-			} catch (error) {
-				console.log(error);
-			}
-		};
-
 		const keys: (keyof CustomerUpdateInput)[] = [
 			'lastName',
 			'firstName',
@@ -122,8 +101,6 @@ function AccountForm({ customer }: IAccountForm) {
 			revalidatePath('/account');
 			redirect('/account');
 		}
-
-		revalidatePath('/account');
 	};
 
 	async function handleCleanError() {

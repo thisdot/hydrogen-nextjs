@@ -18,11 +18,9 @@ import { getIdFromURL } from '@/lib/utils';
 import AddressForm from '@/components/AddressForm';
 
 async function AccountPage({
-	children,
 	searchParams,
 }: {
-	children: React.ReactNode;
-	searchParams: Record<string, string> | undefined | null;
+	searchParams: { [key: string]: string };
 }) {
 	const token = cookies().get('customerAccessToken')?.value as string;
 	const customer = await getCustomer(token);
@@ -81,7 +79,6 @@ async function AccountPage({
 			{searchParams?.modal === 'account-edit' && (
 				<AccountForm customer={customer} />
 			)}
-			{children}
 		</div>
 	);
 }
