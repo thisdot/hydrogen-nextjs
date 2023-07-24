@@ -19,11 +19,6 @@ export const POLICIES_QUERY = `#graphql
       refundPolicy {
         ...PolicyIndex
       }
-      subscriptionPolicy {
-        id
-        title
-        handle
-      }
     }
   }
 `;
