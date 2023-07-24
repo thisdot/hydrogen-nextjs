@@ -12,7 +12,7 @@ function AccountDetails({ customer }: { customer: Customer }) {
 						<h3 className="font-bold text-base flex-1">Profile & Security</h3>
 						<Link
 							className="underline text-sm font-normal"
-							href="/account/edit"
+							href="/account?modal=account-edit"
 						>
 							Edit
 						</Link>

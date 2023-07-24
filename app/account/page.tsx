@@ -13,11 +13,16 @@ import { cookies } from 'next/headers';
 import { PageHeader } from '@/components/Text';
 import { flattenConnection } from '@/lib/flattenConnection';
 import { MailingAddress, Order } from '@/lib/shopify/types';
+import AccountForm from '@/components/AccountForm';
+import { getIdFromURL } from '@/lib/utils';
+import AddressForm from '@/components/AddressForm';
 
 async function AccountPage({
   children,
+  searchParams
 }: {
   children: React.ReactNode;
+  searchParams: Record<string, string> | undefined | null;
 }) {
   const token = cookies().get('customerAccessToken')?.value as string;
   const customer = await getCustomer(token);
@@ -30,6 +35,12 @@ async function AccountPage({
 
   const customerOrders = flattenConnection(orders) as Order[];
   const addresses = flattenConnection(customer.addresses) as MailingAddress[];
+  const address = searchParams && addresses.find(res => {
+    const editId = decodeURIComponent(searchParams?.id);
+    const { id: editMailingId } = getIdFromURL(editId);
+    const { id: mailingId } = getIdFromURL(res.id);
+    return mailingId === editMailingId && searchParams?.id;
+  }) || undefined;
 
   const featuredProductsResponse = await getFeaturedProducts();
   const featuredCollectionsResponse = await getFeaturedCollections();
@@ -50,6 +61,21 @@ async function AccountPage({
           }
         />
       )}
+      {searchParams?.modal === 'address-edit' &&
+        <AddressForm
+          isNewAddress={false}
+          address={address}
+          defaultAddress={customer.defaultAddress}
+        />
+      }
+      {searchParams?.modal === 'address-add' &&
+        <AddressForm
+          isNewAddress={true}
+          address={address}
+          defaultAddress={customer.defaultAddress}
+        />
+      }
+      {searchParams?.modal === 'account-edit' && <AccountForm customer={customer} />}
       {children}
     </div>
   );

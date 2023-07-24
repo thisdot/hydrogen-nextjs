@@ -10,6 +10,7 @@ export default function AccountBook({
 	customer: Customer;
 	addresses: MailingAddress[];
 }) {
+	console.log(addresses)
 	return (
 		<>
 			<div className="grid w-full gap-4 p-4 py-6 md:gap-8 md:p-8 lg:p-12">
@@ -22,7 +23,7 @@ export default function AccountBook({
 					)}
 					<div className="w-48">
 						<a
-							href="account/address/add"
+							href="account?modal=address-add"
 							className="inline-block rounded font-medium text-center py-3 px-6 border border-primary/10 bg-contrast text-primary mt-2 text-sm w-full mb-6"
 						>
 							Add an Address
