@@ -9,7 +9,12 @@ import {
 	ShopifyFeaturedCollectionOperation,
 	ShopifyFeaturedProductOperation,
 } from '@/lib/shopify/types';
+import { Metadata } from 'next';
 import { useEffect, useRef, useState } from 'react';
+
+export const metadata: Metadata = {
+	title: 'Error',
+};
 
 export default function Error({
 	error,
