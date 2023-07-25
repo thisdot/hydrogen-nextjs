@@ -9,6 +9,12 @@ import {
 	getTertiaryHero,
 } from '@/lib/shopify';
 import Head from 'next/head';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+	title: 'Home | This Dot Demo Store',
+	robots: 'index, follow',
+};
 
 export default async function Homepage() {
 	const seoStructuredData = {
@@ -26,12 +32,6 @@ export default async function Homepage() {
 	return (
 		<>
 			<Head>
-				<title>Home | This Dot Demo Store</title>
-				<meta
-					name="description"
-					content="The best place to buy snowboarding products offered by This Dot"
-				/>
-				<meta name="robots" content="index, follow" />
 				<script type="application/ld+json">
 					{JSON.stringify(seoStructuredData)}
 				</script>
