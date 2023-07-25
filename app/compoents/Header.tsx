@@ -6,6 +6,7 @@ import { Drawer } from '@/components/Drawer';
 import { ShopifyHeaderMenu } from '@/lib/shopify/types';
 import { Cart } from '@/components/Cart';
 import useAppStore from '@/store/app-store';
+import { usePathname } from 'next/navigation';
 
 function Header({
 	menu,
@@ -16,7 +17,8 @@ function Header({
 	title: string;
 	isUser: boolean;
 }) {
-	const isHome = true;
+	const pathname = usePathname();
+	const isHome = pathname === '/';
 
 	return (
 		<>
