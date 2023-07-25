@@ -1,5 +1,6 @@
 import { Link } from '@/components/Link';
 import { Customer } from '@/lib/shopify/types';
+import { convertObjectToQueryString } from '@/lib/utils';
 function AccountDetails({ customer }: { customer: Customer }) {
 	const { firstName, lastName, email, phone } = customer;
 
@@ -12,7 +13,9 @@ function AccountDetails({ customer }: { customer: Customer }) {
 						<h3 className="font-bold text-base flex-1">Profile & Security</h3>
 						<Link
 							className="underline text-sm font-normal"
-							href="/account?modal=account-edit"
+							href={`/account?${convertObjectToQueryString({
+								modal: 'account-edit',
+							})}`}
 						>
 							Edit
 						</Link>

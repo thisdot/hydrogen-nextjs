@@ -98,3 +98,7 @@ export function statusMessage(status: string) {
 		return status;
 	}
 }
+
+export function convertObjectToQueryString(object: Record<string, any>) {
+	return new URLSearchParams(object).toString();
+}
