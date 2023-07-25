@@ -100,7 +100,6 @@ function AccountForm({ customer }: IAccountForm) {
 		revalidatePath('/account');
 
 		if (!formError) {
-			revalidatePath('/account');
 			redirect('/account');
 		}
 	};
