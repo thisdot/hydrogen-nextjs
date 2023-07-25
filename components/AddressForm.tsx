@@ -109,6 +109,8 @@ function AddressForm({ isNewAddress, address, defaultAddress }: IAddressForm) {
 			}
 		}
 
+		revalidatePath('/account');
+
 		if (!formError) {
 			revalidatePath('/account');
 			redirect('/account');
