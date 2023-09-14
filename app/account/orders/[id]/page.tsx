@@ -3,10 +3,7 @@ import { Money } from '@/components/MoneyComponent';
 import { PageHeader, Heading, Text } from '@/components/Text';
 import { flattenConnection } from '@/lib/flattenConnection';
 import { getCustomerOrder } from '@/lib/shopify';
-import {
-	OrderLineItem,
-	DiscountApplicationConnection,
-} from '@/lib/shopify/types';
+import { OrderLineItem } from '@/lib/shopify/types';
 import { statusMessage } from '@/lib/utils';
 import clsx from 'clsx';
 import Image from 'next/image';
@@ -28,11 +25,9 @@ export default async function Orders({
 		throw new Response('Order not found', { status: 404 });
 	}
 
-	const lineItems = flattenConnection(order.lineItems!) as Array<OrderLineItem>;
+	const lineItems = flattenConnection(order.lineItems) as Array<OrderLineItem>;
 
-	const discountApplications = flattenConnection(
-		order.discountApplications as DiscountApplicationConnection
-	);
+	const discountApplications = flattenConnection(order.discountApplications);
 
 	const firstDiscount = discountApplications[0]?.value;
 
@@ -56,7 +51,7 @@ export default async function Orders({
 						Order No. {order.name}
 					</Text>
 					<Text className="mt-2" as="p">
-						Placed on {new Date(order.processedAt!).toDateString()}
+						Placed on {new Date(order.processedAt).toDateString()}
 					</Text>
 					<div className="grid items-start gap-12 sm:grid-cols-1 md:grid-cols-4 md:gap-16 sm:divide-y sm:divide-gray-200">
 						<table className="min-w-full my-8 divide-y divide-gray-300 md:col-span-3">
@@ -94,9 +89,7 @@ export default async function Orders({
 										<td className="w-full py-4 pl-0 pr-3 align-top sm:align-middle max-w-0 sm:w-auto sm:max-w-none">
 											<div className="flex gap-6">
 												<Link
-													href={`/products/${
-														lineItem.variant!.product!.handle
-													}`}
+													href={`/products/${lineItem.variant!.product.handle}`}
 												>
 													{lineItem?.variant?.image && (
 														<div className="w-24 card-image aspect-square">
@@ -129,7 +122,7 @@ export default async function Orders({
 													<dt className="sr-only">Price</dt>
 													<dd className="truncate sm:hidden">
 														<Text size="fine" className="mt-4">
-															<Money data={lineItem.variant!.price!} />
+															<Money data={lineItem.variant!.price} />
 														</Text>
 													</dd>
 													<dt className="sr-only">Quantity</dt>
@@ -142,22 +135,21 @@ export default async function Orders({
 											</div>
 										</td>
 										<td className="hidden px-3 py-4 text-right align-top sm:align-middle sm:table-cell">
-											<Money data={lineItem.variant!.price!} />
+											<Money data={lineItem.variant!.price} />
 										</td>
 										<td className="hidden px-3 py-4 text-right align-top sm:align-middle sm:table-cell">
 											{lineItem.quantity}
 										</td>
 										<td className="px-3 py-4 text-right align-top sm:align-middle sm:table-cell">
 											<Text>
-												<Money data={lineItem.discountedTotalPrice!} />
+												<Money data={lineItem.discountedTotalPrice} />
 											</Text>
 										</td>
 									</tr>
 								))}
 							</tbody>
 							<tfoot>
-								{((discountValue && discountValue.amount) ||
-									discountPercentage) && (
+								{(discountValue?.amount || discountPercentage) && (
 									<tr>
 										<th
 											scope="row"
@@ -178,7 +170,7 @@ export default async function Orders({
 													-{discountPercentage}% OFF
 												</span>
 											) : (
-												discountValue && <Money data={discountValue!} />
+												discountValue && <Money data={discountValue} />
 											)}
 										</td>
 									</tr>
@@ -198,7 +190,9 @@ export default async function Orders({
 										<Text>Subtotal</Text>
 									</th>
 									<td className="pt-6 pl-3 pr-4 text-right md:pr-3">
-										<Money data={order.subtotalPrice!} />
+										{order.subtotalPrice && (
+											<Money data={order.subtotalPrice} />
+										)}
 									</td>
 								</tr>
 								<tr>
@@ -216,7 +210,7 @@ export default async function Orders({
 										<Text>Tax</Text>
 									</th>
 									<td className="pt-4 pl-3 pr-4 text-right md:pr-3">
-										<Money data={order.totalTax!} />
+										{order.totalTax && <Money data={order.totalTax} />}
 									</td>
 								</tr>
 								<tr>
@@ -234,7 +228,7 @@ export default async function Orders({
 										<Text>Total</Text>
 									</th>
 									<td className="pt-4 pl-3 pr-4 font-semibold text-right md:pr-3">
-										<Money data={order.totalPrice!} />
+										<Money data={order.totalPrice} />
 									</td>
 								</tr>
 							</tfoot>
@@ -277,7 +271,7 @@ export default async function Orders({
 								)}
 							>
 								<Text size="fine">
-									{statusMessage(order.fulfillmentStatus!)}
+									{statusMessage(order.fulfillmentStatus)}
 								</Text>
 							</div>
 						</div>

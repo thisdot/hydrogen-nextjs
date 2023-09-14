@@ -2,10 +2,12 @@
 const nextConfig = {
 	experimental: {
 		serverActions: true,
+		browsersListForSwc: true,
+		legacyBrowsers: false,
 	},
 	images: {
 		dangerouslyAllowSVG: true,
-		domains: ['cdn.shopify.com'],
+		domains: ['cdn.shopify.com', 'www.netlify.com'],
 	},
 };
 

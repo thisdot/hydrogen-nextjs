@@ -1,13 +1,12 @@
 'use client';
 import { SyntheticEvent, useMemo, useState } from 'react';
-import { Menu } from '@headlessui/react';
+import { Menu, Disclosure } from '@headlessui/react';
 import { useDebounce, useLocation } from 'react-use';
-import { Disclosure } from '@headlessui/react';
 import { IconCaret, IconFilters, IconXMark } from './Icon';
 import { Heading, Text } from './Text';
 import { Link } from './Link';
 import { Filter, Collection, FilterType } from '@/lib/shopify/types';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
 
 export type AppliedFilter = {
@@ -85,48 +84,31 @@ export function FiltersDrawer({
 	const location = window.location || '';
 	const params = new URLSearchParams(location.search);
 	const filterMarkup = (filter: Filter, option: Filter['values'][0]) => {
-		switch (filter.type) {
-			case 'PRICE_RANGE':
-				const min =
-					params.has('minPrice') && !isNaN(Number(params.get('minPrice')))
-						? Number(params.get('minPrice'))
-						: undefined;
+		if (filter.type === 'PRICE_RANGE') {
+			const min =
+				params.has('minPrice') && !isNaN(Number(params.get('minPrice')))
+					? Number(params.get('minPrice'))
+					: undefined;
 
-				const max =
-					params.has('maxPrice') && !isNaN(Number(params.get('maxPrice')))
-						? Number(params.get('maxPrice'))
-						: undefined;
-
-				return <PriceRangeFilter min={min} max={max} />;
-
-			default:
-				const to = getFilterLink(
-					filter,
-					option.input as string,
-					params,
-					location
-				);
-				return (
-					<Link className="focus:underline hover:underline" href={to}>
-						{option.label}
-					</Link>
-				);
+			const max =
+				params.has('maxPrice') && !isNaN(Number(params.get('maxPrice')))
+					? Number(params.get('maxPrice'))
+					: undefined;
+			return <PriceRangeFilter min={min} max={max} />;
+		} else {
+			const to = getFilterLink(
+				filter,
+				option.input as string,
+				params,
+				location
+			);
+			return (
+				<Link className="focus:underline hover:underline" href={to}>
+					{option.label}
+				</Link>
+			);
 		}
 	};
-
-	const collectionsMarkup = collections.map(collection => {
-		return (
-			<li key={collection.handle} className="pb-4">
-				<Link
-					href={`/collections/${collection.handle}`}
-					className="focus:underline hover:underline"
-					key={collection.handle}
-				>
-					{collection.title}
-				</Link>
-			</li>
-		);
-	});
 
 	return (
 		<>
@@ -143,7 +125,7 @@ export function FiltersDrawer({
 				<div className="divide-y">
 					{filters.map(
 						(filter: Filter) =>
-							filter.values.length > 1 && (
+							filter.values.length > 0 && (
 								<Disclosure as="div" key={filter.id} className="w-full">
 									{({ open }) => (
 										<>
@@ -374,7 +356,7 @@ function SortMenu() {
 			<Menu.Button className="flex items-center">
 				<span className="px-2">
 					<span className="px-2 font-medium">Sort by:</span>
-					<span>{(activeItem || items[0]).label}</span>
+					<span>{(activeItem ?? items[0]).label}</span>
 				</span>
 				<IconCaret />
 			</Menu.Button>
