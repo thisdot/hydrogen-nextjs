@@ -5,8 +5,8 @@ import {
 	getFeaturedCollections,
 	getFeaturedProducts,
 	getHomepageSeo,
-	getSecondaryHero,
-	getTertiaryHero,
+	// getSecondaryHero,
+	// getTertiaryHero,
 } from '@/lib/shopify';
 import Head from 'next/head';
 import { Metadata } from 'next';
@@ -25,9 +25,9 @@ export default async function Homepage() {
 
 	const primaryHero = await getHomepageSeo();
 	const featuredProducts = await getFeaturedProducts();
-	const secondaryHero = await getSecondaryHero();
+	// const secondaryHero = await getSecondaryHero();
 	const featuredCollections = await getFeaturedCollections();
-	const tertiaryHero = await getTertiaryHero();
+	// const tertiaryHero = await getTertiaryHero();
 
 	return (
 		<>
@@ -40,6 +40,13 @@ export default async function Homepage() {
 				<Hero {...primaryHero.body.data.hero} height="full" top />
 			)}
 
+			{featuredCollections?.body.data.collections.nodes && (
+				<FeaturedCollections
+					collections={featuredCollections.body.data.collections.nodes}
+					title="Collections"
+				/>
+			)}
+
 			{featuredProducts?.body.data.products.nodes && (
 				<ProductSwimlane
 					products={featuredProducts.body.data.products.nodes}
@@ -48,16 +55,10 @@ export default async function Homepage() {
 				/>
 			)}
 
-			{secondaryHero && <Hero {...secondaryHero.body.data.hero} />}
+			{/* {secondaryHero && <Hero {...secondaryHero.body.data.hero} />} */}
 
-			{featuredCollections?.body.data.collections.nodes && (
-				<FeaturedCollections
-					collections={featuredCollections.body.data.collections.nodes}
-					title="Collections"
-				/>
-			)}
 
-			{tertiaryHero && <Hero {...tertiaryHero.body.data.hero} />}
+			{/* {tertiaryHero && <Hero {...tertiaryHero.body.data.hero} />} */}
 		</>
 	);
 }

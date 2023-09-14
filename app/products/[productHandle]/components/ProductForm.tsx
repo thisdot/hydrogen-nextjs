@@ -32,7 +32,7 @@ const ProductForm = ({
 	return (
 		<div className="grid gap-10">
 			<div className="grid gap-4">
-				<ProductOptions options={product.options} />
+				{/* <ProductOptions options={product.options} /> */}
 				{selectedVariant && (
 					<div className="grid items-stretch gap-4">
 						{isOutOfStock ? (

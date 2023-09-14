@@ -16,7 +16,7 @@ function ProductDetail({
 	learnMore?: string;
 }) {
 	return (
-		<Disclosure key={title} as="div" className="grid w-full gap-2">
+		<Disclosure key={title} as="div" className="grid w-full gap-2" defaultOpen>
 			{({ open }) => (
 				<>
 					<Disclosure.Button className="text-left">
