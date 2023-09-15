@@ -267,7 +267,7 @@ export async function getHomepageSeo() {
 	const data = await shopifyFetch<ShopifyHomePageSeoOperation>({
 		query: COLLECTION_HERO_QUERY,
 		variables: {
-			handle: 'hydrogen',
+			handle: 'frontpage',
 		},
 	});
 	return data;
