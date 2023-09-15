@@ -267,7 +267,7 @@ export async function getHomepageSeo() {
 	const data = await shopifyFetch<ShopifyHomePageSeoOperation>({
 		query: COLLECTION_HERO_QUERY,
 		variables: {
-			handle: 'hydrogen',
+			handle: 'frontpage',
 		},
 	});
 	return data;
@@ -284,7 +284,7 @@ export async function getSecondaryHero() {
 	const data = await shopifyFetch<ShopifyHeroOperation>({
 		query: COLLECTION_HERO_QUERY,
 		variables: {
-			handle: 'automated-collection',
+			handle: 'books',
 		},
 	});
 	return data;
