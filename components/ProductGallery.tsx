@@ -35,6 +35,7 @@ const ProductGallery = ({
 					'aspect-square snap-center card-image bg-white dark:bg-contrast/10 w-mobileGallery md:w-full',
 				].join(' ');
 
+
 				return (
 					<div className={style} key={med.id || med.image.id}>
 						{med.image && (

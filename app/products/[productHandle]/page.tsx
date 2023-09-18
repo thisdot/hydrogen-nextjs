@@ -8,6 +8,7 @@ import { truncate } from '@/lib/truncate';
 import Head from 'next/head';
 import { Product, ProductVariant, ShopType } from '@/lib/shopify/types';
 import ProductForm from './components/ProductForm';
+import InstructorsDetail from '../components/InstructorsDetails';
 
 export default async function Product({
 	params,
@@ -26,9 +27,11 @@ export default async function Product({
 	const {
 		shop,
 		product,
+		instructors
 	}: {
+		instructors: {id: string, fields: {key: "image" | "src" | "name", value:string}[]}[]
 		shop: ShopType;
-		product: Product & { selectedVariant: ProductVariant };
+		product: Product & { selectedVariant: ProductVariant } & {courseOutline: {value: string}, level: {value: string}, curriculum: {value: string}};
 	} = await getProduct(params.productHandle, selectedOptions);
 
 	const url = `/products/${product.handle}`;
@@ -59,6 +62,37 @@ export default async function Product({
 			url,
 		};
 	});
+
+
+	function formatCurriculumString(input: string): string {
+		const lines = input.split('\n');
+		const rewrittenLines = [];
+	
+		for (const line of lines) {
+			if (line.trim().startsWith('Lesson')) {
+				rewrittenLines.push('<br>' + line);
+			} else {
+				rewrittenLines.push(line);
+			}
+		}
+	
+		return rewrittenLines.join('');
+	}
+
+	type Field = {
+		key: "name" | "src" | "image";
+		value: string;
+	};
+	
+	function parseInstructors(array: Field[][]): {name: string, src: string, image: string}[] {
+		return array.map((subArray: Field[]) =>
+			subArray.reduce((obj: { name: string, src: string, image: string }, field: Field) => {
+				obj[field.key] = field.value;
+				return obj;
+			}, {} as {name: string, src: string, image: string})
+		);
+	}
+	
 
 	const seo = {
 		openGraph: {
@@ -106,9 +140,10 @@ export default async function Product({
 		],
 	};
 
-	const { media, title, vendor, descriptionHtml, id } = product;
+	const { media, title, vendor, descriptionHtml, id, level, courseOutline, curriculum } = product;
 	const { shippingPolicy, refundPolicy } = shop;
 	const relatedProducts = await getProductRecommendations(id);
+	
 
 	return (
 		<>
@@ -133,13 +168,14 @@ export default async function Product({
 				<script type="application/ld+json">{JSON.stringify(seo.jsonLd)}</script>
 			</Head>
 			<Section className="px-0 md:px-8 lg:px-12">
-				<div className="grid items-start md:gap-6 lg:gap-20 md:grid-cols-2 lg:grid-cols-3">
+				<div className="grid items-start md:gap-6 lg:gap-20 md:grid-cols-2 lg:grid-cols-6">
+					<div className="hidden lg:flex lg:w-full lg:col-span-1"/>
 					<ProductGallery
 						media={media.nodes}
 						className="w-full lg:col-span-2"
 					/>
-					<div className="sticky md:-mb-nav md:top-nav md:-translate-y-nav md:h-screen md:pt-nav hiddenScroll md:overflow-y-scroll">
-						<section className="flex flex-col w-full max-w-xl gap-8 p-6 md:mx-auto md:max-w-sm md:px-0">
+					<div className="sticky md:-mb-nav md:top-nav md:-translate-y-nav md:h-screen md:pt-nav hiddenScroll md:overflow-y-scroll lg:col-span-2">
+						<section className="flex flex-col w-full max-w-xl gap-8 p-6 md:mx-auto md:max-w-xl md:px-0">
 							<div className="grid gap-2">
 								<Heading as="h1" className="whitespace-normal">
 									{title}
@@ -152,8 +188,32 @@ export default async function Product({
 							<div className="grid gap-4 py-4">
 								{descriptionHtml && (
 									<ProductDetail
-										title="Product Details"
+										title="Details"
 										content={descriptionHtml}
+									/>
+								)}
+								{level && (
+									<ProductDetail
+										title="Course Level"
+										content={level.value}
+									/>
+								)}
+								{courseOutline && (
+									<ProductDetail
+										title="Outline"
+										content={courseOutline.value}
+									/>
+								)}
+								{instructors.length > 0 && (
+									<InstructorsDetail
+										title="Instructors"
+										instructors={parseInstructors(instructors.map(i => i.fields))}
+									/>
+								)}
+								{curriculum && (
+									<ProductDetail
+										title="Curriculum"
+										content={formatCurriculumString(curriculum.value)}
 									/>
 								)}
 								{shippingPolicy?.body && (
