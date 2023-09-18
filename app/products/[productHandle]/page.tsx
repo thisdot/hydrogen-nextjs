@@ -143,6 +143,7 @@ export default async function Product({
 	const { media, title, vendor, descriptionHtml, id, level, courseOutline, curriculum } = product;
 	const { shippingPolicy, refundPolicy } = shop;
 	const relatedProducts = await getProductRecommendations(id);
+	
 
 	return (
 		<>
@@ -167,13 +168,14 @@ export default async function Product({
 				<script type="application/ld+json">{JSON.stringify(seo.jsonLd)}</script>
 			</Head>
 			<Section className="px-0 md:px-8 lg:px-12">
-				<div className="grid items-start md:gap-6 lg:gap-20 md:grid-cols-2 lg:grid-cols-2">
+				<div className="grid items-start md:gap-6 lg:gap-20 md:grid-cols-2 lg:grid-cols-6">
+					<div className="hidden lg:flex lg:w-full lg:col-span-1"/>
 					<ProductGallery
 						media={media.nodes}
-						className="w-full lg:col-span-1"
+						className="w-full lg:col-span-2"
 					/>
-					<div className="sticky md:-mb-nav md:top-nav md:-translate-y-nav md:h-screen md:pt-nav hiddenScroll md:overflow-y-scroll">
-						<section className="flex flex-col w-full max-w-xl gap-8 p-6 md:mx-auto md:max-w-sm md:px-0">
+					<div className="sticky md:-mb-nav md:top-nav md:-translate-y-nav md:h-screen md:pt-nav hiddenScroll md:overflow-y-scroll lg:col-span-2">
+						<section className="flex flex-col w-full max-w-xl gap-8 p-6 md:mx-auto md:max-w-xl md:px-0">
 							<div className="grid gap-2">
 								<Heading as="h1" className="whitespace-normal">
 									{title}
