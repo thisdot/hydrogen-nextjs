@@ -323,9 +323,27 @@ export const PRODUCT_QUERY = `#graphql
           ...ProductVariantFragment
         }
       }
+      curriculum: metafield(namespace: "custom", key: "curriculum") {
+        value
+      }
+      courseOutline: metafield(namespace: "custom", key: "courseOutline") {
+        value
+      }
+      level: metafield(namespace: "custom", key: "level") {
+        value
+      }
       seo {
         description
         title
+      }
+    }
+    instructors: metaobjects(first: 100, type: "instructors") {
+      nodes {
+        fields {
+          key
+          value
+        }
+        id
       }
     }
     shop {
@@ -382,3 +400,19 @@ export const addressFragment = `#graphql
       provinceCode
 	}
 `;
+
+export const INSTRUCTORS_IMAGES_QUERY = `#graphql 
+  query instructorImage($imageId: ID!) {
+    node(id: $imageId) {
+      ... on MediaImage {
+        id
+        image {
+          url
+          width
+          height
+          altText
+        }
+      }
+    }
+  }
+`

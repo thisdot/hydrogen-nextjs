@@ -67,7 +67,7 @@ import {
 	CUSTOMER_RESET_MUTATION,
 	LOGIN_MUTATION,
 } from './mutations/auth';
-import { PRODUCT_QUERY, RECOMMENDED_PRODUCTS_QUERY } from './queries/fragments';
+import { INSTRUCTORS_IMAGES_QUERY, PRODUCT_QUERY, RECOMMENDED_PRODUCTS_QUERY } from './queries/fragments';
 import { CUSTOMER_QUERY } from './queries/user';
 import {
 	ADD_ADDRESS,
@@ -652,10 +652,74 @@ export async function getProduct(
 		},
 	});
 
+	const instructors = res.body.data.instructors?.nodes || [];
+
+
+	const instructorsWithImages:  {
+    fields: {
+        key: "image" | "name" | "src";
+        value: string | null;
+    }[];
+    id: string;
+}[] = await Promise.all(
+    instructors.map(async (instructor: { id: string;
+			fields: {
+					key: "image" | "name";
+					value: string;
+			}[]}) => {
+      const fields = instructor.fields || [];
+      const imageField = fields.find((field: {
+				key: "image" | "name";
+				value: string;
+		}) => field.key === "image");
+      const originalSrc = imageField ? await getInstructorImage(imageField.value) : null;
+			return {
+        ...instructor,
+        fields: [
+          ...fields,
+          {
+            key: "src",
+            value: originalSrc,
+          },
+        ],
+      };
+    })
+  );
+
 	return {
 		product: res.body.data.product,
 		shop: res.body.data.shop,
+		instructors: instructorsWithImages
 	};
+}
+
+
+type ShopifyInstructorsImages = {
+	data: { node: {
+    id: string,
+    image: {
+      url: string,
+      width: number,
+      height: number,
+      altText: string | null
+    }
+  } };
+	variables: {
+		imageId: string;
+	};
+}
+async function getInstructorImage(imageId: string): Promise<string | null> {
+  // Make a request to Shopify API to fetch the image using the ID
+  const response = await shopifyFetch<ShopifyInstructorsImages>({
+    query: INSTRUCTORS_IMAGES_QUERY,
+    variables: {
+      imageId,
+    },
+  });
+
+  // Extract the original source URL from the response
+  const image = response.body.data.node;
+  return image ? image.image.url : null;
 }
 
 export async function getProductRecommendations(

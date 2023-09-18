@@ -8,6 +8,7 @@ import { truncate } from '@/lib/truncate';
 import Head from 'next/head';
 import { Product, ProductVariant, ShopType } from '@/lib/shopify/types';
 import ProductForm from './components/ProductForm';
+import InstructorsDetail from '../components/InstructorsDetails';
 
 export default async function Product({
 	params,
@@ -26,9 +27,11 @@ export default async function Product({
 	const {
 		shop,
 		product,
+		instructors
 	}: {
+		instructors: {id: string, fields: {key: "image" | "src" | "name", value:string}[]}[]
 		shop: ShopType;
-		product: Product & { selectedVariant: ProductVariant };
+		product: Product & { selectedVariant: ProductVariant } & {courseOutline: {value: string}, level: {value: string}, curriculum: {value: string}};
 	} = await getProduct(params.productHandle, selectedOptions);
 
 	const url = `/products/${product.handle}`;
@@ -59,6 +62,37 @@ export default async function Product({
 			url,
 		};
 	});
+
+
+	function formatCurriculumString(input: string): string {
+		const lines = input.split('\n');
+		const rewrittenLines = [];
+	
+		for (const line of lines) {
+			if (line.trim().startsWith('Lesson')) {
+				rewrittenLines.push('<br>' + line);
+			} else {
+				rewrittenLines.push(line);
+			}
+		}
+	
+		return rewrittenLines.join('');
+	}
+
+	type Field = {
+		key: "name" | "src" | "image";
+		value: string;
+	};
+	
+	function parseInstructors(array: Field[][]): {name: string, src: string, image: string}[] {
+		return array.map((subArray: Field[]) =>
+			subArray.reduce((obj: { name: string, src: string, image: string }, field: Field) => {
+				obj[field.key] = field.value;
+				return obj;
+			}, {} as {name: string, src: string, image: string})
+		);
+	}
+	
 
 	const seo = {
 		openGraph: {
@@ -106,7 +140,7 @@ export default async function Product({
 		],
 	};
 
-	const { media, title, vendor, descriptionHtml, id } = product;
+	const { media, title, vendor, descriptionHtml, id, level, courseOutline, curriculum } = product;
 	const { shippingPolicy, refundPolicy } = shop;
 	const relatedProducts = await getProductRecommendations(id);
 
@@ -152,8 +186,32 @@ export default async function Product({
 							<div className="grid gap-4 py-4">
 								{descriptionHtml && (
 									<ProductDetail
-										title="Product Details"
+										title="Details"
 										content={descriptionHtml}
+									/>
+								)}
+								{level && (
+									<ProductDetail
+										title="Course Level"
+										content={level.value}
+									/>
+								)}
+								{courseOutline && (
+									<ProductDetail
+										title="Outline"
+										content={courseOutline.value}
+									/>
+								)}
+								{instructors.length > 0 && (
+									<InstructorsDetail
+										title="Instructors"
+										instructors={parseInstructors(instructors.map(i => i.fields))}
+									/>
+								)}
+								{curriculum && (
+									<ProductDetail
+										title="Curriculum"
+										content={formatCurriculumString(curriculum.value)}
 									/>
 								)}
 								{shippingPolicy?.body && (

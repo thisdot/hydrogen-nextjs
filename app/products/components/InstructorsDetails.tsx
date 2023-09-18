@@ -4,17 +4,19 @@ import { IconClose } from '@/components';
 import { Link } from '@/components/Link';
 import { Text } from '@/components/Text';
 import { Disclosure } from '@headlessui/react';
+import Image from 'next/image';
 import clsx from 'clsx';
 
-function ProductDetail({
+function InstructorsDetail({
 	title,
-	content,
+	instructors,
 	learnMore,
 }: {
 	title: string;
-	content: string;
+	instructors: {name: string, src: string, image: string}[];
 	learnMore?: string;
 }) {
+
 	return (
 		<Disclosure key={title} as="div" className="grid w-full gap-2" defaultOpen>
 			{({ open }) => (
@@ -34,11 +36,11 @@ function ProductDetail({
 					</Disclosure.Button>
 
 					<Disclosure.Panel className={'pb-4 pt-2 grid gap-2'}>
-						{title !== 'Instructors' ? <div
-							className="prose dark:prose-invert"
-							dangerouslySetInnerHTML={{ __html: content }}
-						/> : null}
-						{title === 'Instructors' ? (<div>cane</div>) : null}
+				{instructors.map(i => 
+        <div key={i.image} className='flex row items-center my-3'>
+          <Image src={i.src} alt={i.name} width={80} height={80} />
+          <span className='ml-5'>{i.name}</span>
+        </div>)}
 						{learnMore && (
 							<div className="">
 								<Link
@@ -56,4 +58,4 @@ function ProductDetail({
 	);
 }
 
-export default ProductDetail;
+export default InstructorsDetail;

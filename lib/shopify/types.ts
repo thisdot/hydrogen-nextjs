@@ -1812,7 +1812,7 @@ export type CountryCode =
 	| 'ZZ';
 
 export type ShopifyProductOperation = {
-	data: { product: ShopifyProduct; shop: Shop };
+	data: { product: ShopifyProduct; shop: Shop, instructors?: {nodes: {id: string, fields: {key: 'name' | 'image', value:string}[]}[]} };
 	variables: {
 		handle: string;
 		selectedOptions: any[];
