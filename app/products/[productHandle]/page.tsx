@@ -204,7 +204,7 @@ export default async function Product({
 										content={courseOutline.value}
 									/>
 								)}
-								{instructors.length > 0 && (
+								{instructors.length > 0 && courseOutline && (
 									<InstructorsDetail
 										title="Instructors"
 										instructors={parseInstructors(instructors.map(i => i.fields))}
