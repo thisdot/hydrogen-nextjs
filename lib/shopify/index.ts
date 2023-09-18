@@ -284,7 +284,7 @@ export async function getSecondaryHero() {
 	const data = await shopifyFetch<ShopifyHeroOperation>({
 		query: COLLECTION_HERO_QUERY,
 		variables: {
-			handle: 'automated-collection',
+			handle: 'books',
 		},
 	});
 	return data;
